@@ -1,1 +1,320 @@
-[]
+[
+    {
+        "id": "d65c4d9.db2ebb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b1e5d283.a0af3",
+        "type": "uibuilder",
+        "z": "d65c4d9.db2ebb",
+        "name": "noderig",
+        "topic": "",
+        "url": "noderig",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "useSecurity": false,
+        "sessionLength": 432000,
+        "tokenAutoExtend": false,
+        "x": 390,
+        "y": 260,
+        "wires": [
+            [
+                "ee83e4a6.01af48"
+            ],
+            [
+                "d51f7bd1.3c8538"
+            ]
+        ]
+    },
+    {
+        "id": "13b0a01c.294cd",
+        "type": "inject",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 260,
+        "wires": [
+            [
+                "b1e5d283.a0af3"
+            ]
+        ]
+    },
+    {
+        "id": "ee83e4a6.01af48",
+        "type": "debug",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d51f7bd1.3c8538",
+        "type": "debug",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "5fa864bd.e87d2c",
+        "type": "uibuilder",
+        "z": "d65c4d9.db2ebb",
+        "name": "noderig",
+        "topic": "",
+        "url": "gauge",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "useSecurity": false,
+        "sessionLength": 432000,
+        "tokenAutoExtend": false,
+        "x": 390,
+        "y": 120,
+        "wires": [
+            [
+                "d7830e3.de0cdf"
+            ],
+            [
+                "e6c22190.589b6"
+            ]
+        ]
+    },
+    {
+        "id": "23a5a8de.37d808",
+        "type": "inject",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "5fa864bd.e87d2c"
+            ]
+        ]
+    },
+    {
+        "id": "d7830e3.de0cdf",
+        "type": "debug",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e6c22190.589b6",
+        "type": "debug",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "df81cc9e.a9171",
+        "type": "inject",
+        "z": "d65c4d9.db2ebb",
+        "name": "repeat every 10s",
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 460,
+        "wires": [
+            [
+                "6ca36476.d0597c"
+            ]
+        ]
+    },
+    {
+        "id": "76678044.5aaeb",
+        "type": "debug",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 750,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "bd9b5761.fb4918",
+        "type": "debug",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 730,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "b18a50dd.f7e5c",
+        "type": "uibuilder",
+        "z": "d65c4d9.db2ebb",
+        "d": true,
+        "name": "",
+        "topic": "",
+        "url": "vue-file",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": true,
+        "useSecurity": false,
+        "sessionLength": "",
+        "tokenAutoExtend": false,
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "76678044.5aaeb"
+            ],
+            [
+                "bd9b5761.fb4918"
+            ]
+        ]
+    },
+    {
+        "id": "6ca36476.d0597c",
+        "type": "change",
+        "z": "d65c4d9.db2ebb",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"greeting\":\"Goodness gracious me\",\"who\":\"little fishy\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 320,
+        "y": 460,
+        "wires": [
+            [
+                "b18a50dd.f7e5c"
+            ]
+        ]
+    },
+    {
+        "id": "3ebfbce9.6ccd84",
+        "type": "comment",
+        "z": "d65c4d9.db2ebb",
+        "name": "index.html",
+        "info": "copy the following and paste into `index.html`\n\n```html\n<!doctype html><html lang=\"en\"><head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes\">\n\n    <title>http-vue-loader/VueJS Example - Node-RED UI Builder</title>\n    <meta name=\"description\" content=\"Node-RED UI Builder - http-vue-loader/VueJS Example\">\n\n    <link rel=\"icon\" href=\"./images/node-blue.ico\">\n\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"../uibuilder/vendor/bootstrap/dist/css/bootstrap.min.css\" />\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"../uibuilder/vendor/bootstrap-vue/dist/bootstrap-vue.css\" />\n\n    <link rel=\"stylesheet\" href=\"./index.css\" media=\"all\">\n</head><body>\n    <div id=\"app\">\n        <b-container id=\"app_container\">\n\n            <h1>\n                Example of loading a .vue file\n            </h1>\n\n            <p>\n                Uses <a href=\"https://github.com/FranckFreiburger/http-vue-loader#readme\" target=\"_blank\">http-vue-loader</a>\n                in order to avoid a build step. Also see the\n                <a href=\"https://vuejs.org/v2/guide/single-file-components.html\" target=\"_blank\">Vue documentation on single file components</a>.\n            </p>\n            <p>\n                This example uses a custom VueJS component called &lt;my-component&gt; which is defined in the file <code>my-compontent.vue</code>.\n            </p>\n            <p>\n                The custom component has two \"props\" (properties) that allow you to send data to it. These override the default greeting and name.\n                By passing <code>msg.payload.greeting</code> and/or <code>msg.payload.who</code> in the msg from Node-RED, you will see the text\n                change on-screen dynamically.\n            </p>\n\n            <my-component :greeting=\"myGreeting\" :who=\"myWho\">\n                <p>This text goes into the &lt;slot&gt; tags in the component. try removing this from index.html to see the default text.</p>\n            </my-component>\n\n        </b-container>\n    </div>\n\n    <script src=\"../uibuilder/vendor/socket.io/socket.io.js\"></script>\n    <!-- Use vue.min.js for production use -->\n    <script src=\"../uibuilder/vendor/vue/dist/vue.js\"></script>\n    <script src=\"../uibuilder/vendor/bootstrap-vue/dist/bootstrap-vue.js\"></script>\n\n    <!-- Loading from CDN -->\n    <script src=\"https://unpkg.com/http-vue-loader\"></script>\n    <!-- Loading from npm installed version -->\n    <!-- <script src=\"../uibuilder/vendor/http-vue-loader/src/httpVueLoader.js\"></script> -->\n\n    <script src=\"./uibuilderfe.min.js\"></script> <!--    //prod version -->\n    <script src=\"./index.js\"></script>\n\n</body></html>\n```",
+        "x": 100,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "7254bbb9.903ce4",
+        "type": "comment",
+        "z": "d65c4d9.db2ebb",
+        "name": "index.js",
+        "info": "Copy the following and paste into `index.js`\n\n```javascript\n/* jshint browser: true, esversion: 5 */\n/* globals document,Vue,window,uibuilder,httpVueLoader */\n// @ts-nocheck\n/*\n  Copyright (c) 2019 Julian Knight (Totally Information)\n\n  Licensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n\n  http://www.apache.org/licenses/LICENSE-2.0\n\n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.\n*/\n'use strict'\n\n/** @see https://github.com/TotallyInformation/node-red-contrib-uibuilder/wiki/Front-End-Library---available-properties-and-methods */\n\n// eslint-disable-next-line no-unused-vars\nvar app1 = new Vue({\n    el: '#app',\n\n    /** Load external component files\n     *  Make sure there is no leading / in the name\n     *  To load from the common folder use like: 'common/component-name.vue' */\n    components: {\n        'my-component': httpVueLoader('my-component.vue'),\n    }, // --- End of components --- //\n\n    data: {\n        myGreeting: 'Hi there',\n        myWho: 'oh wise one!',\n    }, // --- End of data --- //\n\n    computed: {\n    }, // --- End of computed --- //\n\n    methods: {\n    }, // --- End of methods --- //\n\n    // Available hooks: init,mounted,updated,destroyed\n    mounted: function(){\n        /** **REQUIRED** Start uibuilder comms with Node-RED @since v2.0.0-dev3\n         * Pass the namespace and ioPath variables if hosting page is not in the instance root folder\n         * e.g. If you get continual `uibuilderfe:ioSetup: SOCKET CONNECT ERROR` error messages.\n         * e.g. uibuilder.start('/nr/uib', '/nr/uibuilder/vendor/socket.io') // change to use your paths/names\n         */\n        uibuilder.start()\n\n        var vueApp = this\n\n        // Process new messages from Node-RED\n        uibuilder.onChange('msg', function (msg) {\n            // We are assuming that msg.payload is an number between zero and 10\n\n            // Change value\n            if (msg.payload.hasOwnProperty('greeting')) vueApp.myGreeting = msg.payload.greeting\n            if (msg.payload.hasOwnProperty('who')) vueApp.myWho = msg.payload.who\n\n            //console.log(msg)\n        })\n\n    } // --- End of mounted hook --- //\n\n}) // --- End of app1 --- //\n\n// EOF\n```\n",
+        "x": 230,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "4f7ddf94.c4dde",
+        "type": "comment",
+        "z": "d65c4d9.db2ebb",
+        "name": "my-component.vue",
+        "info": "Copy the following and paste into `my-component.vue`\n\n```\n<template>\n    <b-row>\n        <b-col class=\"hello\" cols=\"12\">\n            {{greeting}} {{who}}\n        </b-col>\n        <slot>\n            Default slot content, replace with your own text between the component tags.\n            See the <a href=\"https://vuejs.org/v2/guide/components-slots.html\" target=\"_blank\">VueJS documentation for slots</a> for more information.\n        </slot>\n    </b-row>\n</template>\n\n<script>\nmodule.exports = {\n    /** Allow greeting and who to be passed as parameters but provide defaults\n     * @see https://vuejs.org/v2/guide/components-props.html#Prop-Validation\n     */\n    props: {\n        'greeting': {type: String, default: 'Hello'},\n         'who': {type: String, default: 'World'},\n    },\n\n    /** Any data must be wrapped in a fn to isolate it in case this component is used multiple times */\n    data: function() { return {\n\n    }}\n}\n</script>\n\n<style scoped>\n.hello {\n    background-color: #ffe;\n    font-size: 2rem;\n    text-align: center;\n}\n</style>\n```\n",
+        "x": 390,
+        "y": 420,
+        "wires": []
+    }
+]
