@@ -28,8 +28,7 @@ var app1 = new Vue({
      *  Make sure there is no leading / in the name
      *  To load from the common folder use like: 'common/component-name.vue' */
     components: {
-	'data-hr': httpVueLoader('data-hr.vue'),
-//      'my-component': httpVueLoader('my-component.vue'),
+	'data-hf': httpVueLoader('data-hf.vue'),
     }, // --- End of components --- //
 
     data: {

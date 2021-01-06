@@ -1,16 +1,1004 @@
 [
     {
-        "id": "d65c4d9.db2ebb",
+        "id": "652a5441.cb9314",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Serial I/O",
         "disabled": false,
         "info": ""
     },
     {
-        "id": "b1e5d283.a0af3",
+        "id": "36d8cfa8.00955",
+        "type": "tab",
+        "label": "UI",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "edcc4f6a.561ef",
+        "type": "tab",
+        "label": "DATA_HF",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d4566878.b28b98",
+        "type": "tab",
+        "label": "Support",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "cae287c4.41e458",
+        "type": "subflow",
+        "name": "PC Controler",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "67ad823e.86a52c"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 360,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "a6ce963d.01ac08",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "fc3722c5.66e46",
+        "type": "subflow",
+        "name": "S Meter Controller",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 400,
+                "y": 70,
+                "wires": [
+                    {
+                        "id": "8638ffb0.36fb7",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "3e3ccf6.ec80a3",
+        "type": "subflow",
+        "name": "PA Status",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 480,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "6c26bc60.bcfe04",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "8091ab8d.d33a98",
+        "type": "subflow",
+        "name": "MD Status",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 440,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "82d6a59c.638338",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "c94e51ad.835a",
+        "type": "subflow",
+        "name": "LK Status",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 440,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "8d07652b.7bbce8",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "ed46e184.9131c",
+        "type": "subflow",
+        "name": "AC Status",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 480,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "4a980fb5.74c62",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "fc9fa722.ddf298",
+        "type": "subflow",
+        "name": "Freq Display Controller",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [
+            {
+                "x": 475,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "7ad1eca6.ecd2a4",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 476,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "fa106960.75ff18",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "3ef5815c.6122be",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": ";",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "269a3122.a0068e",
+        "type": "serial-port",
+        "serialport": "/dev/tty98",
+        "serialbaud": "38400",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": ";",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "6c96fe35.7c759",
+        "type": "serial in",
+        "z": "652a5441.cb9314",
+        "name": "",
+        "serial": "269a3122.a0068e",
+        "x": 100,
+        "y": 493,
+        "wires": [
+            [
+                "101240ee.33a9bf",
+                "e1d4204e.0e378"
+            ]
+        ]
+    },
+    {
+        "id": "3865250f.ebd2fa",
+        "type": "serial out",
+        "z": "652a5441.cb9314",
+        "name": "",
+        "serial": "269a3122.a0068e",
+        "x": 700,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b34fd6b7.0e6228",
+        "type": "serial in",
+        "z": "652a5441.cb9314",
+        "name": "",
+        "serial": "3ef5815c.6122be",
+        "x": 116,
+        "y": 349.00000953674316,
+        "wires": [
+            [
+                "cb18f448.d4bd48",
+                "7f5aed82.d7cc34"
+            ]
+        ]
+    },
+    {
+        "id": "9c910d99.8851a",
+        "type": "serial out",
+        "z": "652a5441.cb9314",
+        "name": "",
+        "serial": "3ef5815c.6122be",
+        "x": 320,
+        "y": 237,
+        "wires": []
+    },
+    {
+        "id": "7ad1eca6.ecd2a4",
+        "type": "function",
+        "z": "fc9fa722.ddf298",
+        "name": "Format freq",
+        "func": "let p = msg.payload,\n    freq = '999.999999';\n    \nif(p) {\n    freq = p.substring(2, 5) + '.' + p.substring(5,12);\n}\n\nreturn {payload: freq};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 334,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae7230cc.34f8b",
+        "type": "inject",
+        "z": "d4566878.b28b98",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 75,
+        "y": 100,
+        "wires": [
+            [
+                "36231317.538acc"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "36231317.538acc",
+        "type": "function",
+        "z": "d4566878.b28b98",
+        "name": "Set Globals",
+        "func": "",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 250,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4a980fb5.74c62",
+        "type": "function",
+        "z": "ed46e184.9131c",
+        "name": "AC",
+        "func": "let p = msg.payload;\n\nif(p) {\n    switch(p.substring(4,5)) {\n    case '0':   return {tuner: false};\n    case '1':   return {tuner: true};\n    case '2':   return {};\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb18f448.d4bd48",
+        "type": "function",
+        "z": "652a5441.cb9314",
+        "name": "USB  input",
+        "func": "node.log(msg.payload);",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "101240ee.33a9bf",
+        "type": "function",
+        "z": "652a5441.cb9314",
+        "name": "pty  input",
+        "func": "node.log(msg.payload);",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "eed6ae93.ef2d6",
+        "type": "function",
+        "z": "652a5441.cb9314",
+        "name": "USB output",
+        "func": "node.log(msg.payload);",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 177,
+        "wires": []
+    },
+    {
+        "id": "8d07652b.7bbce8",
+        "type": "function",
+        "z": "c94e51ad.835a",
+        "name": "LK",
+        "func": "let p = msg.payload;\n\nif(p) {\n    return {lock: p.substring(2,3) === '1'};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 330,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "82d6a59c.638338",
+        "type": "function",
+        "z": "8091ab8d.d33a98",
+        "name": "MD",
+        "func": "let p = msg.payload,\n    ft_modes = global.get('ft_modes');\n\nif(p) {\n    let mode_no = p.substring(3,4),\n        mode = ft_modes[mode_no];\n        \n    return {mode: mode};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 330,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b119008.acfc1",
+        "type": "comment",
+        "z": "edcc4f6a.561ef",
+        "name": "RM",
+        "info": "",
+        "x": 70,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "7f5aed82.d7cc34",
+        "type": "function",
+        "z": "652a5441.cb9314",
+        "name": "Handle rig Input",
+        "func": "const menu_cacheable = flow.get('menu_cacheable'),\n      menu_state = global.get('menu_state'),\n      config_state = global.get('config_state'),\n      needs_update = flow.get('needs_update'),\n      debounce = global.get('debounce'),\n      p = msg.payload;\n\nif(p) {\n    const cmd = p.substring(0,2);\n\n    if(cmd === '?;') {\n        return null;\n    }\n\n    if(debounce.hasOwnProperty(cmd)) {\n\n        // Debounce the frequency changes\n\n        debounce[cmd] = p;\n        \n        global.set('debounce', debounce);\n    }\n    else {\n\n        // Send other updates in real time.\n\n        node.send([{topic: cmd, payload: p}, null]);\n    }\n\n    // Send any replies to queries back to tye aux tty\n\n    if(needs_update.length) {\n        const still_needs_updating = [];\n\n        needs_update.forEach(cmd => {\n            if(cmd.length <= p.length && cmd === p.substring(0, cmd.length)) {\n                node.send([null, {payload: p}]);\n            }\n            else {\n                still_needs_updating.push(cmd);\n            }\n        });\n        flow.set('needs_update', still_needs_updating);\n    }\n\n    node.done();\n\n    // Cache non transient query commands\n\n    if(cmd !== 'EX') {\n        for(const [key, value] of Object.entries(menu_cacheable)) {\n            if(key.length <= p.length && key === p.substring(0, key.length)) {\n                menu_state[key] = p;\n            }\n        }\n    }\n    else {\n        const config_no = p.substring(2, 5);\n        \n        config_state[config_no] = p;\n    }\n\n    return null;\n}\n\nnode.warn('Received empty payload?');\n\nreturn [null, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\n\nflow.set('menu_cacheable', {\n    \"AC\": true,\n    \"AG0\": true,\n    \"AI\": true,\n    \"BC0\": true,\n    \"BI\": true,\n    \"BP00\": true,\n    \"BP01\": true,\n    \"BY\": true,\n    \"CN00\": true,\n    \"CN01\": true,\n    \"CO00\": true,\n    \"CO01\": true,\n    \"CO02\": true,\n    \"CO03\": true,\n    \"CS\": true,\n    \"CT0\": true,\n    \"FA\": true,\n    \"FB\": true,\n    \"FS\": true,\n    \"FT\": true,\n    \"GT0\": true,\n    \"ID\": true,\n    \"IF\": true,\n    \"IS0\": true,\n    \"KP\": true,\n    \"KR\": true,\n    \"KS\": true,\n    \"LK\": true,\n    \"MC\": true,\n    \"MD0\": true,\n    \"MG\": true,\n    \"ML0\": true,\n    \"ML1\": true,\n    \"MS\": true,\n    \"MX\": true,\n    \"NA0\": true,\n    \"NB0\": true,\n    \"NL0\": true,\n    \"NR0\": true,\n    \"OI\": true,\n    \"OS0\": true,\n    \"PA0\": true,\n    \"PC\": true,\n    \"PL\": true,\n    \"PR0\": true,\n    \"PR1\": true,\n    \"RA0\": true,\n    \"RG0\": true,\n    \"RI0\": true,\n    \"RI3\": true,\n    \"RI4\": true,\n    \"RI5\": true,\n    \"RI6\": true,\n    \"RI7\": true,\n    \"RIA\": true,\n    \"RL0\": true,\n    \"RS\": true,\n    \"RT\": true,\n    \"SD\": true,\n    \"SH0\": true,\n    \"SQ0\": true,\n    \"TS\": true,\n    \"TX\": true,\n    \"UL\": true,\n    \"VD\": true,\n    \"VG\": true,\n    \"VX\": true,\n    \"XT\": true,\n});\n\nflow.set('config_items', {\n\t\"001\": \"AGC FAST DELAY\",\n\t\"002\": \"AGC MID DELAY\",\n\t\"003\": \"AGC SLOW DELAY\",\n\t\"004\": \"HOME FUNCTION\",\n\t\"005\": \"MY CALL INDICATION\",\n\t\"006\": \"DISPLAY COLOR\",\n\t\"007\": \"DIMMER LED\",\n\t\"008\": \"DIMMER TFT\",\n\t\"009\": \"BAR MTR PEAK HOLD\",\n\t\"010\": \"DVS RX OUT LEVEL\",\n\t\"011\": \"DVS TX OUT LEVEL\",\n\t\"012\": \"KEYER TYPE\",\n\t\"013\": \"KEYER DOT/DASH\",\n\t\"014\": \"CW WEIGHT\",\n\t\"015\": \"BEACON INTERVAL\",\n\t\"016\": \"NUMBER STYLE\",\n\t\"017\": \"CONTEST NUMBER\",\n\t\"018\": \"CW MEMORY 1\",\n\t\"019\": \"CW MEMORY 2\",\n\t\"020\": \"CW MEMORY 3\",\n\t\"021\": \"CW MEMORY 4\",\n\t\"022\": \"CW MEMORY 5\",\n\t\"023\": \"NB WIDTH\",\n\t\"024\": \"NB REJECTION\",\n\t\"025\": \"NB LEVEL\",\n\t\"026\": \"BEEP LEVEL\",\n\t\"027\": \"TIME ZONE\",\n\t\"028\": \"GPS/232C SELECT\",\n\t\"029\": \"232C RATE\",\n\t\"030\": \"232C TOT\",\n\t\"031\": \"CAT RATE\",\n\t\"032\": \"CAT TOT\",\n\t\"033\": \"CAT RTS\",\n\t\"034\": \"MEM GROUP\",\n\t\"035\": \"QUICK SPLIT FREQ\",\n\t\"036\": \"TX TOT\",\n\t\"037\": \"MIC SCAN\",\n\t\"038\": \"MIC SCAN RESUME\",\n\t\"039\": \"REF FREQ ADJ\",\n\t\"040\": \"CLAR MODE SELECT\",\n\t\"041\": \"AM LCUT FREQ\",\n\t\"042\": \"AM LCUT SLOPE\",\n\t\"043\": \"AM HCUT FREQ\",\n\t\"044\": \"AM HCUT SLOPE\",\n\t\"045\": \"AM MIC SELECT\",\n\t\"046\": \"AM OUT LEVEL\",\n\t\"047\": \"AM PTT SELECT\",\n\t\"048\": \"AM PORT SELECT\",\n\t\"049\": \"AM DATA GAIN\",\n\t\"050\": \"CW LCUT FREQ\",\n\t\"051\": \"CW LCUT SLOPE\",\n\t\"052\": \"CW HCUT FREQ\",\n\t\"053\": \"CW HCUT SLOPE\",\n\t\"054\": \"CW OUT LEVEL\",\n\t\"055\": \"CW AUTO MODE\",\n\t\"056\": \"CW BK-IN TYPE\",\n\t\"057\": \"CW BK-IN DELAY\",\n\t\"058\": \"CW WAVE SHAPE\",\n\t\"059\": \"CW FREQ DISPLAY\",\n\t\"060\": \"PC KEYING\",\n\t\"061\": \"QSK DELAY TIME\",\n\t\"062\": \"DATA MODE\",\n\t\"063\": \"PSK TONE\",\n\t\"064\": \"OTHER DISP (SSB)\",\n\t\"065\": \"OTHER SHIFT (SSB)\",\n\t\"066\": \"DATA LCUT FREQ\",\n\t\"067\": \"DATA LCUT SLOPE\",\n\t\"068\": \"DATA HCUT FREQ\",\n\t\"069\": \"DATA HCUT SLOPE\",\n\t\"070\": \"DATA IN SELECT\",\n\t\"071\": \"DATA PTT SELECT\",\n\t\"072\": \"DATA PORT SELECT\",\n\t\"073\": \"DATA OUT LEVEL\",\n\t\"074\": \"FM MIC SELECT\",\n\t\"075\": \"FM OUT LEVEL\",\n\t\"076\": \"FM PKT PTT SELECT\",\n\t\"077\": \"FM PKT PORT SELECT\",\n\t\"078\": \"FM PKT TX GAIN\",\n\t\"079\": \"FM PKT MODE\",\n\t\"080\": \"RPT SHIFT 28MHz\",\n\t\"081\": \"RPT SHIFT 50MHz\",\n\t\"082\": \"RPT SHIFT 144MHz\",\n\t\"083\": \"RPT SHIFT 430MHz\",\n\t\"084\": \"ARS 144MHz\",\n\t\"085\": \"ARS 430MHz\",\n\t\"086\": \"DCS POLARITY\",\n\t\"087\": \"RADIO ID\",\n\t\"088\": \"GM DISPLY\",\n\t\"089\": \"DISTANCE\",\n\t\"090\": \"AMS TX MODE\",\n\t\"091\": \"STANDBY BEEP\",\n\t\"092\": \"RTTY LCUT FREQ\",\n\t\"093\": \"RTTY LCUT SLOPE\",\n\t\"094\": \"RTTY HCUT FREQ\",\n\t\"095\": \"RTTY HCUT SLOPE\",\n\t\"096\": \"RTTY SHIFT PORT\",\n\t\"097\": \"RTTY POLARITY-RX\",\n\t\"098\": \"RTTY POLARITY-TX\",\n\t\"099\": \"RTTY OUT LEVEL\",\n\t\"100\": \"RTTY SHIFT FREQ\",\n\t\"101\": \"RTTY MARK FREQ\",\n\t\"102\": \"SSB LCUT FREQ\",\n\t\"103\": \"SSB LCUT SLOPE\",\n\t\"104\": \"SSB HCUT FREQ\",\n\t\"105\": \"SSB HCUT SLOPE\",\n\t\"106\": \"SSB MIC SELECT\",\n\t\"107\": \"SSB OUT LEVEL\",\n\t\"108\": \"SSB PTT SELECT\",\n\t\"109\": \"SSB PORT SELECT\",\n\t\"110\": \"SSB TX BPF\",\n\t\"111\": \"APF WIDTH\",\n\t\"112\": \"CONTOUR LEVEL\",\n\t\"113\": \"CONTOUR WIDTH\",\n\t\"114\": \"IF NOTCH WIDTH\",\n\t\"115\": \"SCP DISPLAY MODE\",\n\t\"116\": \"SCP SPAN FREQ\",\n\t\"117\": \"SPECTRUM COLOR\",\n\t\"118\": \"WATER FALL COLOR\",\n\t\"119\": \"PRMTRC EQ1 FREQ\",\n\t\"120\": \"PRMTRC EQ1 LEVEL\",\n\t\"121\": \"PRMTRC EQ1 BWTH\",\n\t\"122\": \"PRMTRC EQ2 FREQ\",\n\t\"123\": \"PRMTRC EQ2 LEVEL\",\n\t\"124\": \"PRMTRC EQ2 BWTH\",\n\t\"125\": \"PRMTRC EQ3 FREQ\",\n\t\"126\": \"PRMTRC EQ3 LEVEL\",\n\t\"127\": \"PRMTRC EQ3 BWTH\",\n\t\"128\": \"P-PRMTRC EQ1 FREQ\",\n\t\"129\": \"P-PRMTRC EQ1 LEVEL\",\n\t\"130\": \"P-PRMTRC EQ1 BWTH\",\n\t\"131\": \"P-PRMTRC EQ2 FREQ\",\n\t\"132\": \"P-PRMTRC EQ2 LEVEL\",\n\t\"133\": \"P-PRMTRC EQ2 BWTH\",\n\t\"134\": \"P-PRMTRC EQ3 FREQ\",\n\t\"135\": \"P-PRMTRC EQ3 LEVEL\",\n\t\"136\": \"P-PRMTRC EQ3 BWTH\",\n\t\"137\": \"HF TX MAX POWER\",\n\t\"138\": \"50M TX MAX POWER\",\n\t\"139\": \"144M TX MAX POWER\",\n\t\"140\": \"430M TX MAX POWER\",\n\t\"141\": \"TUNER SELECT\",\n\t\"142\": \"VOX SELECT\",\n\t\"143\": \"VOX GAIN\",\n\t\"144\": \"VOX DELAY\",\n\t\"145\": \"ANTI VOX GAIN\",\n\t\"146\": \"DATA VOX GAIN\",\n\t\"147\": \"DATA VOX DELAY\",\n\t\"148\": \"ANTI DVOX GAIN\",\n\t\"149\": \"EMERGENCY FREQ TX\",\n\t\"150\": \"PRT/WIRES FREQ\",\n\t\"151\": \"PRESET FREQUENCY\",\n\t\"152\": \"SEARCH SETUP\",\n\t\"153\": \"WIRES DG-ID\"\n});\n\nflow.set('auto_inform', false);\n\nflow.set('needs_update', []);\n\nglobal.set('debounce', {'FA': 'FA', 'FB': 'FB', 'IF': 'IF', 'OB': 'OB'});\n\nglobal.set('menu_state', {});\nglobal.set('config_state', {});",
+        "finalize": "",
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "88c2513f.bcbec"
+            ],
+            [
+                "208400b8.01f3c"
+            ]
+        ]
+    },
+    {
+        "id": "e1d4204e.0e378",
+        "type": "function",
+        "z": "652a5441.cb9314",
+        "name": "Check cache",
+        "func": "let menu_cacheable = flow.get('menu_cacheable'),\n    menu_state = global.get('menu_state'),\n    needs_update = flow.get('needs_update'),\n    p = msg.payload.toUpperCase();\n\nif(p) {\n    if(p.substring(0,2) === 'AI') {\n        if(p === 'AI0;') {\n            node.warn('### Got AI0;');\n        }\n        if(p === 'Ai1;') {\n            node.warn('### Got AI1;');\n        }\n        return [{payload: '?;'}, null];\n    }\n\n    let t = p.substring(0, p.length - 1);\n\n    if(menu_state.hasOwnProperty(t)) {\n        return [{payload: menu_state[t]}, null];\n    }\n\n    if(menu_cacheable.hasOwnProperty(t)) {\n        needs_update.push(t);\n        \n        flow.set('needs_update', needs_update);\n    }\n\n    // Non-cacheable commands always go out, as well\n    // as cache misses\n    \n    return [null, {payload: p}];\n}\n\nnode.warn('Received empty payload?');\n\nreturn [null, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 460,
+        "wires": [
+            [
+                "208400b8.01f3c"
+            ],
+            [
+                "2ed9f9d1.e157a6"
+            ]
+        ]
+    },
+    {
+        "id": "88c2513f.bcbec",
+        "type": "flowcontrolIn",
+        "z": "652a5441.cb9314",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "208400b8.01f3c",
+        "type": "function",
+        "z": "652a5441.cb9314",
+        "name": "pty output",
+        "func": "node.log(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 420,
+        "wires": [
+            [
+                "3865250f.ebd2fa"
+            ]
+        ]
+    },
+    {
+        "id": "6c26bc60.bcfe04",
+        "type": "function",
+        "z": "3e3ccf6.ec80a3",
+        "name": "PA",
+        "func": "let p = msg.payload,\n    ft_preamp = global.get('ft_preamp');\n\nif(p) {\n    let ipo_no = p.substring(3,4),\n        ipo = ft_preamp[ipo_no];\n        \n    return {ipo: ipo};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 350,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "61c03e3e.59251",
+        "type": "flowcontrolOut",
+        "z": "ed46e184.9131c",
+        "topic": "AC",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "4a980fb5.74c62"
+            ]
+        ]
+    },
+    {
+        "id": "e22c6cb1.9608d",
+        "type": "flowcontrolOut",
+        "z": "c94e51ad.835a",
+        "topic": "LK",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "8d07652b.7bbce8"
+            ]
+        ]
+    },
+    {
+        "id": "3c163925.c532a6",
+        "type": "flowcontrolOut",
+        "z": "3e3ccf6.ec80a3",
+        "topic": "PA",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "6c26bc60.bcfe04"
+            ]
+        ]
+    },
+    {
+        "id": "a6cb5762.dee7d8",
+        "type": "flowcontrolOut",
+        "z": "8091ab8d.d33a98",
+        "topic": "MD",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "82d6a59c.638338"
+            ]
+        ]
+    },
+    {
+        "id": "34406777.7b7c48",
+        "type": "flowcontrolOut",
+        "z": "fc9fa722.ddf298",
+        "topic": "FA",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 173,
+        "y": 80,
+        "wires": [
+            [
+                "7ad1eca6.ecd2a4"
+            ]
+        ]
+    },
+    {
+        "id": "9b156a41.1e5828",
+        "type": "flowcontrolOut",
+        "z": "fc9fa722.ddf298",
+        "topic": "RI",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "fa106960.75ff18"
+            ]
+        ]
+    },
+    {
+        "id": "fa106960.75ff18",
+        "type": "function",
+        "z": "fc9fa722.ddf298",
+        "name": "RI",
+        "func": "// 0: Hi-SWR\n// 3: REC\n// 4: PLAY\n// 5: VFO-A TX\n// 6: VFO-B TX\n// 7: VFO-A RX\n// A: TX LED\n\nlet p = msg.payload;\n\nif(p) {\n    let truth = p.substring(3,4) === '1';\n    \n    switch(p.substring(2, 3)) {\n    case 'A': return {tx: truth};\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 312,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67ad823e.86a52c",
+        "type": "function",
+        "z": "cae287c4.41e458",
+        "name": "Update rig",
+        "func": "let p = msg.payload;\n\nif(p) {\n    let power = p.toString();\n\n    if(power.length === 1) {\n        power = '00' + power;\n    }\n    else if(power.length === 2) {\n        power = '0' + power;\n    }\n    \n    return {payload: 'PC' + power + ';'};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 230,
+        "y": 140,
+        "wires": [
+            [
+                "d63c5eea.b644"
+            ]
+        ],
+        "outputLabels": [
+            "Widget",
+            "Serial out"
+        ]
+    },
+    {
+        "id": "d63c5eea.b644",
+        "type": "flowcontrolIn",
+        "z": "cae287c4.41e458",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 410,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4b2e856c.e60dec",
+        "type": "flowcontrolOut",
+        "z": "652a5441.cb9314",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 206,
+        "wires": [
+            [
+                "eed6ae93.ef2d6",
+                "9c910d99.8851a"
+            ]
+        ]
+    },
+    {
+        "id": "2515562e.2e497a",
+        "type": "flowcontrolOut",
+        "z": "cae287c4.41e458",
+        "topic": "PC",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 70,
+        "y": 60,
+        "wires": [
+            [
+                "a6ce963d.01ac08"
+            ]
+        ]
+    },
+    {
+        "id": "a6ce963d.01ac08",
+        "type": "function",
+        "z": "cae287c4.41e458",
+        "name": "To widget",
+        "func": "let p = msg.payload;\n\nif(p) {\n    return {value: parseInt(p.substring(2,5), 10)};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 220,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "add16f90.15ebf",
+        "type": "flowcontrolOut",
+        "z": "fc3722c5.66e46",
+        "topic": "RM",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "RM",
+        "x": 126.00000381469727,
+        "y": 70.00000190734863,
+        "wires": [
+            [
+                "8638ffb0.36fb7"
+            ]
+        ]
+    },
+    {
+        "id": "8638ffb0.36fb7",
+        "type": "function",
+        "z": "fc3722c5.66e46",
+        "name": "RM",
+        "func": "let p = msg.payload;\n\nif(p && p.length > 2 && p.substring(2, 3) === '0') {\n    return {payload: p.substring(3, 6)};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 266.00000381469727,
+        "y": 70.00000190734863,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "91a6da2d.da5408",
+        "type": "subflow:fc3722c5.66e46",
+        "z": "edcc4f6a.561ef",
+        "name": "",
+        "env": [],
+        "x": 190,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2ed9f9d1.e157a6",
+        "type": "flowcontrolIn",
+        "z": "652a5441.cb9314",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 530,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "a7a1894c.5cffc8",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "TO_UI",
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "32d66e09.a27d62",
+                "6507dd2a.b388d4"
+            ]
+        ]
+    },
+    {
+        "id": "2f69877c.f1a878",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fe0474ed.9a78e8",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Parse IF",
+        "func": "let p = msg.payload,\n    ft_modes = flow.get('ft_modes'),\n    ft_offset = flow.get('ft_offset');\n\nif(p && p.length === 28) {\n    let parsed_if = {\n        raw: p,\n        mem_chan: parseInt(p.substring(2,5)),\n        freq: p.substring(5,14),\n        clarifier: p.substring(14,19),\n        rx_clar: p.substring(19, 20) != '0',\n        tx_clar: p.substring(20, 21) != '0',\n        mode: ft_modes[p.substring(21, 22)] || p.substring(21, 22),\n        p7: p.substring(22, 23),\n        tone: p.substring(23, 24),\n        offset: ft_offset[p.substring(26, 27)] || p.substring(26, 27)\n    };\n    \n    node.send([parsed_if, null]);\n    node.send([null, {topic: 'FA', payload: 'FA' + p.substring(5,14)}]);\n    node.send([null, {topic: 'MD', payload: 'MD0' + p.substring(21, 22)}]);\n    \n    node.done();\n}\nelse {\n    return [msg, null];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 1020,
+        "wires": [
+            [
+                "d56ea408.310f78"
+            ],
+            [
+                "6689c559.7dd08c"
+            ]
+        ],
+        "outputLabels": [
+            "Raw",
+            "FA"
+        ]
+    },
+    {
+        "id": "d56ea408.310f78",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "bc828930.141608",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "IF",
+        "info": "",
+        "x": 70,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "7679043f.b3c27c",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "IF",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 1020,
+        "wires": [
+            [
+                "fe0474ed.9a78e8"
+            ]
+        ]
+    },
+    {
+        "id": "6689c559.7dd08c",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 500,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "73ba80c7.20d9",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "FA -> frequency",
+        "func": "let p = msg.payload,\n    frequency = 'MMMKKKHHH';\n    \nif(p) {\n    frequency = p.substring(2, 12);\n}\n\nreturn {payload: {frequency: frequency}};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 320,
+        "y": 880,
+        "wires": [
+            [
+                "f4957c97.d011b"
+            ]
+        ]
+    },
+    {
+        "id": "878e3d25.f3563",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "FA",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 149,
+        "y": 880,
+        "wires": [
+            [
+                "73ba80c7.20d9"
+            ]
+        ]
+    },
+    {
+        "id": "38f94d9a.621b32",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Frequency",
+        "info": "",
+        "x": 90,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "f4957c97.d011b",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 490,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "c229a01c.c9c49",
         "type": "uibuilder",
-        "z": "d65c4d9.db2ebb",
-        "name": "noderig",
+        "z": "36d8cfa8.00955",
+        "name": "",
         "topic": "",
         "url": "noderig",
         "fwdInMessages": false,
@@ -21,21 +1009,324 @@
         "useSecurity": false,
         "sessionLength": 432000,
         "tokenAutoExtend": false,
-        "x": 390,
-        "y": 260,
+        "x": 500,
+        "y": 380,
         "wires": [
             [
-                "ee83e4a6.01af48"
+                "2f69877c.f1a878",
+                "4d9903e1.a7ad7c"
             ],
             [
-                "d51f7bd1.3c8538"
+                "bfbcfc9e.c6d8f"
             ]
         ]
     },
     {
-        "id": "13b0a01c.294cd",
+        "id": "32d66e09.a27d62",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Send UI Update",
+        "func": "\nreturn msg.payload;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 319,
+        "y": 380,
+        "wires": [
+            [
+                "c229a01c.c9c49"
+            ]
+        ]
+    },
+    {
+        "id": "bfbcfc9e.c6d8f",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Refresh UI",
+        "func": "\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const [key, value] of Object.entries(global.get('menu_state'))) {\n    node.send({topic: key, payload: value});\n}\n\nnode.done();",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 690,
+        "y": 400,
+        "wires": [
+            [
+                "5254abbf.2aaab4"
+            ]
+        ]
+    },
+    {
+        "id": "5254abbf.2aaab4",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 880,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "1c4a71e4.2855ce",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "AC -> tuner",
+        "func": "let p = msg.payload;\n\nif(p) {\n    switch(p.substring(4,5)) {\n    case '0':   return {payload: {tuner: false}};\n    case '1':   return {payload: {tuner: true}};\n    case '2':   return {payload: {}};\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 680,
+        "wires": [
+            [
+                "3217ca4b.1be0c6"
+            ]
+        ]
+    },
+    {
+        "id": "98c509ae.1f24e8",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "AC",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 680,
+        "wires": [
+            [
+                "1c4a71e4.2855ce"
+            ]
+        ]
+    },
+    {
+        "id": "8ff43417.662838",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Tuner status",
+        "info": "",
+        "x": 95,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "3217ca4b.1be0c6",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 470,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "4d9903e1.a7ad7c",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 700,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "2fd3d6a1.8a6dda",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "TUNER_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 180,
+        "y": 738,
+        "wires": [
+            [
+                "299f4698.81a6aa"
+            ]
+        ]
+    },
+    {
+        "id": "299f4698.81a6aa",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Handle tuner event",
+        "func": "const tuner_off = 'AC000;',\n      tuner_on = 'AC001;',\n      tune = 'AC002;';\n\nif(msg.payload === 'click') {\n    const menu_state = global.get('menu_state');\n\n    switch(menu_state['AC']) {\n    case tuner_off: return {payload: tuner_on};\n    case tuner_on:  return {payload: tuner_off};\n    default:        return {payload: tuner_on};\n    }\n}\n\nif(msg.payload === 'dblclick') {\n    return {payload: tune};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 390,
+        "y": 738,
+        "wires": [
+            [
+                "96fc3f21.ca5c3"
+            ]
+        ]
+    },
+    {
+        "id": "96fc3f21.ca5c3",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 590,
+        "y": 738,
+        "wires": []
+    },
+    {
+        "id": "615827bd.14ab08",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "LK -> lock",
+        "func": "let p = msg.payload;\n\nif(p) {\n    return {payload: {lock: p.substring(2,3) === '1'}};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 1160,
+        "wires": [
+            [
+                "5c966a43.6ca814"
+            ]
+        ]
+    },
+    {
+        "id": "1ba35fd8.f2d5b",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "LK",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 1160,
+        "wires": [
+            [
+                "615827bd.14ab08"
+            ]
+        ]
+    },
+    {
+        "id": "66519439.ef50ac",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Dial lock status",
+        "info": "",
+        "x": 105,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "5c966a43.6ca814",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 469,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "c2d2e3f0.672f1",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "LOCK_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 170,
+        "y": 1218,
+        "wires": [
+            [
+                "29c9ad6f.f10de2"
+            ]
+        ]
+    },
+    {
+        "id": "29c9ad6f.f10de2",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Handle tuner event",
+        "func": "const lock_off = 'LK0;',\n      lock_on = 'LK1;';\n\nif(msg.payload === 'click') {\n    const menu_state = global.get('menu_state');\n\n    switch(menu_state['LK']) {\n    case lock_off:  return {payload: lock_on};\n    case lock_on:   return {payload: lock_off};\n    default:        return {payload: lock_on};\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 375,
+        "y": 1218,
+        "wires": [
+            [
+                "324563b3.8a6bec"
+            ]
+        ]
+    },
+    {
+        "id": "324563b3.8a6bec",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 590,
+        "y": 1218,
+        "wires": []
+    },
+    {
+        "id": "f37c19d1.ee3968",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Refresh GUI",
+        "func": "\nlet menu_state = global.get('menu_state'),\n    debounce = global.get('debounce'),\n    gui_state = flow.get('gui_state');\n    \nfor (const [key, value] of Object.entries(menu_state)) {\n  if(gui_state.hasOwnProperty(key)) {\n      if(gui_state[key] !== value) {\n          gui_state[key] = value;\n          \n          node.send({topic: key, payload: value});\n      }\n  }\n  else {\n      gui_state[key] = value;\n      \n      node.send({topic: key, payload: value});\n  }\n}\n\nflow.set('gui_state', gui_state);\n\nnode.done();\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 270,
+        "y": 240,
+        "wires": [
+            [
+                "98e20c03.d9025"
+            ]
+        ]
+    },
+    {
+        "id": "6a26ab56.d53c74",
         "type": "inject",
-        "z": "d65c4d9.db2ebb",
+        "z": "36d8cfa8.00955",
         "name": "",
         "props": [
             {
@@ -46,85 +1337,355 @@
                 "vt": "str"
             }
         ],
-        "repeat": "",
+        "repeat": "1",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 200,
-        "y": 260,
+        "x": 135,
+        "y": 240,
         "wires": [
             [
-                "b1e5d283.a0af3"
+                "f37c19d1.ee3968"
             ]
-        ]
+        ],
+        "l": false
     },
     {
-        "id": "ee83e4a6.01af48",
-        "type": "debug",
-        "z": "d65c4d9.db2ebb",
+        "id": "98e20c03.d9025",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 600,
+        "x": 460,
         "y": 240,
         "wires": []
     },
     {
-        "id": "d51f7bd1.3c8538",
-        "type": "debug",
-        "z": "d65c4d9.db2ebb",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 590,
-        "y": 280,
+        "id": "ca6a1871.9322a8",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Update UI",
+        "info": "",
+        "x": 80,
+        "y": 180,
         "wires": []
     },
     {
-        "id": "5fa864bd.e87d2c",
-        "type": "uibuilder",
-        "z": "d65c4d9.db2ebb",
-        "name": "noderig",
-        "topic": "",
-        "url": "gauge",
-        "fwdInMessages": false,
-        "allowScripts": false,
-        "allowStyles": false,
-        "copyIndex": true,
-        "showfolder": false,
-        "useSecurity": false,
-        "sessionLength": 432000,
-        "tokenAutoExtend": false,
-        "x": 390,
-        "y": 120,
+        "id": "eb4acb73.9aa218",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "UI interface",
+        "info": "",
+        "x": 90,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "44f940cc.6e0d8",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "MD -> mode",
+        "func": "let p = msg.payload,\n    ft_modes = flow.get('ft_modes');\n\nif(p) {\n    let mode_no = p.substring(3,4),\n        mode = ft_modes[mode_no];\n        \n    return {payload: {mode: mode}};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 1340,
         "wires": [
             [
-                "d7830e3.de0cdf"
-            ],
-            [
-                "e6c22190.589b6"
+                "7b45ceb6.f23ed"
             ]
         ]
     },
     {
-        "id": "23a5a8de.37d808",
+        "id": "dd11d45.b7b1428",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "MD",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 1340,
+        "wires": [
+            [
+                "44f940cc.6e0d8"
+            ]
+        ]
+    },
+    {
+        "id": "a8e86238.c5e45",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "RF mode status",
+        "info": "",
+        "x": 100,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "7b45ceb6.f23ed",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 430,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "58188918.128018",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Pre amp status",
+        "info": "",
+        "x": 101,
+        "y": 1420,
+        "wires": []
+    },
+    {
+        "id": "8966cf54.edcbc",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "PA -> pre_amp",
+        "func": "let p = msg.payload,\n    ft_preamp = flow.get('ft_preamp');\n\nif(p) {\n    let ipo_no = p.substring(3,4),\n        pre_amp = ft_preamp[ipo_no];\n        \n    return {payload: {pre_amp: pre_amp}};\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 320,
+        "y": 1480,
+        "wires": [
+            [
+                "ff3678f2.db8be8"
+            ]
+        ]
+    },
+    {
+        "id": "f3d95bd.78392a8",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "PA0",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 151,
+        "y": 1480,
+        "wires": [
+            [
+                "8966cf54.edcbc"
+            ]
+        ]
+    },
+    {
+        "id": "ff3678f2.db8be8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 490,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "6507dd2a.b388d4",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "bfc70c4c.2e021",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "PRE_AMP_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 190,
+        "y": 1540,
+        "wires": [
+            [
+                "a46ebafd.b79ee8"
+            ]
+        ]
+    },
+    {
+        "id": "a46ebafd.b79ee8",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Handle pre amp event",
+        "func": "const ipo = 'PA00;',\n      amp1 = 'PA01;',\n      amp2 = 'PA02;'\n\nif(msg.payload === 'click') {\n    const menu_state = global.get('menu_state');\n\n    switch(menu_state['PA0']) {\n    case ipo:   return {payload: amp1};\n    case amp1:  return {payload: amp2};\n    case amp2:  return {payload: ipo};\n    default:    return {payload: ipo};\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 420,
+        "y": 1540,
+        "wires": [
+            [
+                "5ff01c89.535f64"
+            ]
+        ]
+    },
+    {
+        "id": "5ff01c89.535f64",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 630,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "407bcb2b.b76c44",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "ALC Status",
+        "func": "let p = msg.payload;\n\nif(p && p.length > 2) {\n    const meter = p.substring(2, 3),\n          value = parseInt(p.substring(3, 6), 10);\n\n    if(meter === '4') {\n        return {payload: {alc_status: (value >= 5), value: value}};\n    }\n\n    if(meter === '6') {\n        return {payload: {swr_status: (value >= 5), value: value}};\n    }\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 1680,
+        "wires": [
+            [
+                "964a7cf9.21d06"
+            ]
+        ]
+    },
+    {
+        "id": "5853dcf5.0ebaa4",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Data ALC status",
+        "info": "",
+        "x": 100,
+        "y": 1620,
+        "wires": []
+    },
+    {
+        "id": "37037542.441caa",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "RM",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 1680,
+        "wires": [
+            [
+                "407bcb2b.b76c44"
+            ]
+        ]
+    },
+    {
+        "id": "964a7cf9.21d06",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 490,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "c253dfc7.84c8f",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Transmit",
+        "info": "",
+        "x": 80,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "967ffaba.c72ea8",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Power Level",
+        "info": "",
+        "x": 90,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "3bae5845.6b7d98",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "S Meter",
+        "info": "",
+        "x": 70,
+        "y": 2100,
+        "wires": []
+    },
+    {
+        "id": "a7f8e61b.7258f8",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Send initial commands",
+        "func": "\nconst menu_init = [\n          'AI1;',\n          'IF;',\n          'AC;',\n          'GT0;',\n          'LK;',\n          'MS;',\n          'PA0;',\n          'PC;',\n          'PA0;',\n          'PC;',\n          'RIA;'\n      ],\n      config_init = [\n          '062',  // DATA MODE\n          '066',  // DATA LCUT FREQ\n          '067',  // DATA LCUT SLOPE\n          '068',  // DATA HCUT FREQ\n          '069',  // DATA HCUT SLOPE\n          '070',  // DATA IN SELECT\n          '071',  // DATA PTT SELECT\n          '072',  // DATA PORT SELECT\n          '073',  // DATA OUT LEVEL\n          '146',  // DATA VOX GAIN\n          '147'   // DATA VOX DELAY\n      ];\n\nmenu_init.forEach( cmd => node.send({ payload: cmd }) );\n\nconfig_init.forEach(no => node.send({payload: 'EX' + no + ';'}));\n\nnode.done();\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set('ft_modes', {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n});\n\nflow.set('modes_ft', {\n    'LSB': '1',\n    'USB': '2',\n    'CW': '3',\n    'FM': '4',\n    'AM': '5',\n    'RTTY-LSB': '6',\n    'CW-R': '7',\n    'DATA-LSB': '8',\n    'RTTY-USB': '9',\n    'DATA-FM': 'A',\n    'FM-N': 'B',\n    'DATA-USB': 'C',\n    'AM-N': 'D',\n    'C4FM': 'E'\n});\n\nflow.set('ft_offset', {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n});\n\nflow.set('offset_ft', {\n    'Simplex': '0',\n    '+': '1',\n    '-': '2'\n});\n\nflow.set('ft_preamp', {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n});\nflow.set('preamp_ft', {\n    IPO: '0',\n    AMP1: '1',\n    AMP2: '2'\n});\n\nflow.set('config_items', {\n\t\"001\": \"AGC FAST DELAY\",\n\t\"002\": \"AGC MID DELAY\",\n\t\"003\": \"AGC SLOW DELAY\",\n\t\"004\": \"HOME FUNCTION\",\n\t\"005\": \"MY CALL INDICATION\",\n\t\"006\": \"DISPLAY COLOR\",\n\t\"007\": \"DIMMER LED\",\n\t\"008\": \"DIMMER TFT\",\n\t\"009\": \"BAR MTR PEAK HOLD\",\n\t\"010\": \"DVS RX OUT LEVEL\",\n\t\"011\": \"DVS TX OUT LEVEL\",\n\t\"012\": \"KEYER TYPE\",\n\t\"013\": \"KEYER DOT/DASH\",\n\t\"014\": \"CW WEIGHT\",\n\t\"015\": \"BEACON INTERVAL\",\n\t\"016\": \"NUMBER STYLE\",\n\t\"017\": \"CONTEST NUMBER\",\n\t\"018\": \"CW MEMORY 1\",\n\t\"019\": \"CW MEMORY 2\",\n\t\"020\": \"CW MEMORY 3\",\n\t\"021\": \"CW MEMORY 4\",\n\t\"022\": \"CW MEMORY 5\",\n\t\"023\": \"NB WIDTH\",\n\t\"024\": \"NB REJECTION\",\n\t\"025\": \"NB LEVEL\",\n\t\"026\": \"BEEP LEVEL\",\n\t\"027\": \"TIME ZONE\",\n\t\"028\": \"GPS/232C SELECT\",\n\t\"029\": \"232C RATE\",\n\t\"030\": \"232C TOT\",\n\t\"031\": \"CAT RATE\",\n\t\"032\": \"CAT TOT\",\n\t\"033\": \"CAT RTS\",\n\t\"034\": \"MEM GROUP\",\n\t\"035\": \"QUICK SPLIT FREQ\",\n\t\"036\": \"TX TOT\",\n\t\"037\": \"MIC SCAN\",\n\t\"038\": \"MIC SCAN RESUME\",\n\t\"039\": \"REF FREQ ADJ\",\n\t\"040\": \"CLAR MODE SELECT\",\n\t\"041\": \"AM LCUT FREQ\",\n\t\"042\": \"AM LCUT SLOPE\",\n\t\"043\": \"AM HCUT FREQ\",\n\t\"044\": \"AM HCUT SLOPE\",\n\t\"045\": \"AM MIC SELECT\",\n\t\"046\": \"AM OUT LEVEL\",\n\t\"047\": \"AM PTT SELECT\",\n\t\"048\": \"AM PORT SELECT\",\n\t\"049\": \"AM DATA GAIN\",\n\t\"050\": \"CW LCUT FREQ\",\n\t\"051\": \"CW LCUT SLOPE\",\n\t\"052\": \"CW HCUT FREQ\",\n\t\"053\": \"CW HCUT SLOPE\",\n\t\"054\": \"CW OUT LEVEL\",\n\t\"055\": \"CW AUTO MODE\",\n\t\"056\": \"CW BK-IN TYPE\",\n\t\"057\": \"CW BK-IN DELAY\",\n\t\"058\": \"CW WAVE SHAPE\",\n\t\"059\": \"CW FREQ DISPLAY\",\n\t\"060\": \"PC KEYING\",\n\t\"061\": \"QSK DELAY TIME\",\n\t\"062\": \"DATA MODE\",\n\t\"063\": \"PSK TONE\",\n\t\"064\": \"OTHER DISP (SSB)\",\n\t\"065\": \"OTHER SHIFT (SSB)\",\n\t\"066\": \"DATA LCUT FREQ\",\n\t\"067\": \"DATA LCUT SLOPE\",\n\t\"068\": \"DATA HCUT FREQ\",\n\t\"069\": \"DATA HCUT SLOPE\",\n\t\"070\": \"DATA IN SELECT\",\n\t\"071\": \"DATA PTT SELECT\",\n\t\"072\": \"DATA PORT SELECT\",\n\t\"073\": \"DATA OUT LEVEL\",\n\t\"074\": \"FM MIC SELECT\",\n\t\"075\": \"FM OUT LEVEL\",\n\t\"076\": \"FM PKT PTT SELECT\",\n\t\"077\": \"FM PKT PORT SELECT\",\n\t\"078\": \"FM PKT TX GAIN\",\n\t\"079\": \"FM PKT MODE\",\n\t\"080\": \"RPT SHIFT 28MHz\",\n\t\"081\": \"RPT SHIFT 50MHz\",\n\t\"082\": \"RPT SHIFT 144MHz\",\n\t\"083\": \"RPT SHIFT 430MHz\",\n\t\"084\": \"ARS 144MHz\",\n\t\"085\": \"ARS 430MHz\",\n\t\"086\": \"DCS POLARITY\",\n\t\"087\": \"RADIO ID\",\n\t\"088\": \"GM DISPLY\",\n\t\"089\": \"DISTANCE\",\n\t\"090\": \"AMS TX MODE\",\n\t\"091\": \"STANDBY BEEP\",\n\t\"092\": \"RTTY LCUT FREQ\",\n\t\"093\": \"RTTY LCUT SLOPE\",\n\t\"094\": \"RTTY HCUT FREQ\",\n\t\"095\": \"RTTY HCUT SLOPE\",\n\t\"096\": \"RTTY SHIFT PORT\",\n\t\"097\": \"RTTY POLARITY-RX\",\n\t\"098\": \"RTTY POLARITY-TX\",\n\t\"099\": \"RTTY OUT LEVEL\",\n\t\"100\": \"RTTY SHIFT FREQ\",\n\t\"101\": \"RTTY MARK FREQ\",\n\t\"102\": \"SSB LCUT FREQ\",\n\t\"103\": \"SSB LCUT SLOPE\",\n\t\"104\": \"SSB HCUT FREQ\",\n\t\"105\": \"SSB HCUT SLOPE\",\n\t\"106\": \"SSB MIC SELECT\",\n\t\"107\": \"SSB OUT LEVEL\",\n\t\"108\": \"SSB PTT SELECT\",\n\t\"109\": \"SSB PORT SELECT\",\n\t\"110\": \"SSB TX BPF\",\n\t\"111\": \"APF WIDTH\",\n\t\"112\": \"CONTOUR LEVEL\",\n\t\"113\": \"CONTOUR WIDTH\",\n\t\"114\": \"IF NOTCH WIDTH\",\n\t\"115\": \"SCP DISPLAY MODE\",\n\t\"116\": \"SCP SPAN FREQ\",\n\t\"117\": \"SPECTRUM COLOR\",\n\t\"118\": \"WATER FALL COLOR\",\n\t\"119\": \"PRMTRC EQ1 FREQ\",\n\t\"120\": \"PRMTRC EQ1 LEVEL\",\n\t\"121\": \"PRMTRC EQ1 BWTH\",\n\t\"122\": \"PRMTRC EQ2 FREQ\",\n\t\"123\": \"PRMTRC EQ2 LEVEL\",\n\t\"124\": \"PRMTRC EQ2 BWTH\",\n\t\"125\": \"PRMTRC EQ3 FREQ\",\n\t\"126\": \"PRMTRC EQ3 LEVEL\",\n\t\"127\": \"PRMTRC EQ3 BWTH\",\n\t\"128\": \"P-PRMTRC EQ1 FREQ\",\n\t\"129\": \"P-PRMTRC EQ1 LEVEL\",\n\t\"130\": \"P-PRMTRC EQ1 BWTH\",\n\t\"131\": \"P-PRMTRC EQ2 FREQ\",\n\t\"132\": \"P-PRMTRC EQ2 LEVEL\",\n\t\"133\": \"P-PRMTRC EQ2 BWTH\",\n\t\"134\": \"P-PRMTRC EQ3 FREQ\",\n\t\"135\": \"P-PRMTRC EQ3 LEVEL\",\n\t\"136\": \"P-PRMTRC EQ3 BWTH\",\n\t\"137\": \"HF TX MAX POWER\",\n\t\"138\": \"50M TX MAX POWER\",\n\t\"139\": \"144M TX MAX POWER\",\n\t\"140\": \"430M TX MAX POWER\",\n\t\"141\": \"TUNER SELECT\",\n\t\"142\": \"VOX SELECT\",\n\t\"143\": \"VOX GAIN\",\n\t\"144\": \"VOX DELAY\",\n\t\"145\": \"ANTI VOX GAIN\",\n\t\"146\": \"DATA VOX GAIN\",\n\t\"147\": \"DATA VOX DELAY\",\n\t\"148\": \"ANTI DVOX GAIN\",\n\t\"149\": \"EMERGENCY FREQ TX\",\n\t\"150\": \"PRT/WIRES FREQ\",\n\t\"151\": \"PRESET FREQUENCY\",\n\t\"152\": \"SEARCH SETUP\",\n\t\"153\": \"WIRES DG-ID\"\n});\n\nflow.set('config_save', [\n    062,    // DATA MODE\n    066,    // DATA LCUT FREQ\n    067,    // DATA LCUT SLOPE\n    068,    // DATA HCUT FREQ\n    069,    // DATA HCUT SLOPE\n    070,    // DATA IN SELECT\n    071,    // DATA PTT SELECT\n    072,    // DATA PORT SELECT\n    073,    // DATA OUT LEVEL\n    146,    // DATA VOX GAIN\n    147     // DATA VOX DELAY\n]);\n\nflow.set('menu_save', [\n    'AI1;',\n    'IF;',\n    'AC;',\n    'GT0;',\n    'LK;',\n    'MS;',\n    'PA0;',\n    'PC;',\n    'PA0;',\n    'PC;',\n    'RIA;',\n    'MS1',\n    'RM2'\n]);\n\nflow.set('gui_state', {});",
+        "finalize": "",
+        "x": 300,
+        "y": 100,
+        "wires": [
+            [
+                "ddb3e679.c08de8"
+            ]
+        ]
+    },
+    {
+        "id": "46845026.38c89",
         "type": "inject",
-        "z": "d65c4d9.db2ebb",
+        "z": "36d8cfa8.00955",
         "name": "",
         "props": [
             {
@@ -137,184 +1698,171 @@
         ],
         "repeat": "",
         "crontab": "",
-        "once": false,
+        "once": true,
         "onceDelay": 0.1,
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
-        "y": 120,
+        "x": 135,
+        "y": 100,
         "wires": [
             [
-                "5fa864bd.e87d2c"
+                "a7f8e61b.7258f8"
             ]
-        ]
+        ],
+        "l": false
     },
     {
-        "id": "d7830e3.de0cdf",
-        "type": "debug",
-        "z": "d65c4d9.db2ebb",
+        "id": "ddb3e679.c08de8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 610,
+        "x": 510,
         "y": 100,
         "wires": []
     },
     {
-        "id": "e6c22190.589b6",
-        "type": "debug",
-        "z": "d65c4d9.db2ebb",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 600,
-        "y": 140,
+        "id": "44cffdc0.ab3c94",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Init",
+        "info": "",
+        "x": 72,
+        "y": 40,
         "wires": []
     },
     {
-        "id": "df81cc9e.a9171",
-        "type": "inject",
-        "z": "d65c4d9.db2ebb",
-        "name": "repeat every 10s",
-        "repeat": "10",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 130,
-        "y": 460,
+        "id": "e4e4c199.7dd2",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "TX",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 540,
         "wires": [
             [
-                "6ca36476.d0597c"
+                "b49c81d6.a9d11",
+                "f7a86e4b.3428a"
             ]
         ]
     },
     {
-        "id": "76678044.5aaeb",
-        "type": "debug",
-        "z": "d65c4d9.db2ebb",
+        "id": "84528388.0ba3e",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
         "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 750,
-        "y": 440,
-        "wires": []
-    },
-    {
-        "id": "bd9b5761.fb4918",
-        "type": "debug",
-        "z": "d65c4d9.db2ebb",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
         "x": 730,
-        "y": 480,
+        "y": 540,
         "wires": []
     },
     {
-        "id": "b18a50dd.f7e5c",
-        "type": "uibuilder",
-        "z": "d65c4d9.db2ebb",
-        "d": true,
+        "id": "dbe11b76.d2f108",
+        "type": "trigger",
+        "z": "36d8cfa8.00955",
         "name": "",
-        "topic": "",
-        "url": "vue-file",
-        "fwdInMessages": false,
-        "allowScripts": false,
-        "allowStyles": false,
-        "copyIndex": true,
-        "showfolder": true,
-        "useSecurity": false,
-        "sessionLength": "",
-        "tokenAutoExtend": false,
-        "x": 500,
-        "y": 460,
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 520,
         "wires": [
             [
-                "76678044.5aaeb"
-            ],
-            [
-                "bd9b5761.fb4918"
+                "84528388.0ba3e"
             ]
         ]
     },
     {
-        "id": "6ca36476.d0597c",
-        "type": "change",
-        "z": "d65c4d9.db2ebb",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"greeting\":\"Goodness gracious me\",\"who\":\"little fishy\"}",
-                "tot": "json"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 320,
-        "y": 460,
+        "id": "b49c81d6.a9d11",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Read ALC",
+        "func": "const p = msg.payload;\n\nif(p.length > 2) {\n    if(p.substring(2, 3) === '1') {\n        return {payload: 'RM4;'};\n    }\n    else {\n        return {reset: true};\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 520,
         "wires": [
             [
-                "b18a50dd.f7e5c"
+                "dbe11b76.d2f108"
             ]
         ]
     },
     {
-        "id": "3ebfbce9.6ccd84",
-        "type": "comment",
-        "z": "d65c4d9.db2ebb",
-        "name": "index.html",
-        "info": "copy the following and paste into `index.html`\n\n```html\n<!doctype html><html lang=\"en\"><head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes\">\n\n    <title>http-vue-loader/VueJS Example - Node-RED UI Builder</title>\n    <meta name=\"description\" content=\"Node-RED UI Builder - http-vue-loader/VueJS Example\">\n\n    <link rel=\"icon\" href=\"./images/node-blue.ico\">\n\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"../uibuilder/vendor/bootstrap/dist/css/bootstrap.min.css\" />\n    <link type=\"text/css\" rel=\"stylesheet\" href=\"../uibuilder/vendor/bootstrap-vue/dist/bootstrap-vue.css\" />\n\n    <link rel=\"stylesheet\" href=\"./index.css\" media=\"all\">\n</head><body>\n    <div id=\"app\">\n        <b-container id=\"app_container\">\n\n            <h1>\n                Example of loading a .vue file\n            </h1>\n\n            <p>\n                Uses <a href=\"https://github.com/FranckFreiburger/http-vue-loader#readme\" target=\"_blank\">http-vue-loader</a>\n                in order to avoid a build step. Also see the\n                <a href=\"https://vuejs.org/v2/guide/single-file-components.html\" target=\"_blank\">Vue documentation on single file components</a>.\n            </p>\n            <p>\n                This example uses a custom VueJS component called &lt;my-component&gt; which is defined in the file <code>my-compontent.vue</code>.\n            </p>\n            <p>\n                The custom component has two \"props\" (properties) that allow you to send data to it. These override the default greeting and name.\n                By passing <code>msg.payload.greeting</code> and/or <code>msg.payload.who</code> in the msg from Node-RED, you will see the text\n                change on-screen dynamically.\n            </p>\n\n            <my-component :greeting=\"myGreeting\" :who=\"myWho\">\n                <p>This text goes into the &lt;slot&gt; tags in the component. try removing this from index.html to see the default text.</p>\n            </my-component>\n\n        </b-container>\n    </div>\n\n    <script src=\"../uibuilder/vendor/socket.io/socket.io.js\"></script>\n    <!-- Use vue.min.js for production use -->\n    <script src=\"../uibuilder/vendor/vue/dist/vue.js\"></script>\n    <script src=\"../uibuilder/vendor/bootstrap-vue/dist/bootstrap-vue.js\"></script>\n\n    <!-- Loading from CDN -->\n    <script src=\"https://unpkg.com/http-vue-loader\"></script>\n    <!-- Loading from npm installed version -->\n    <!-- <script src=\"../uibuilder/vendor/http-vue-loader/src/httpVueLoader.js\"></script> -->\n\n    <script src=\"./uibuilderfe.min.js\"></script> <!--    //prod version -->\n    <script src=\"./index.js\"></script>\n\n</body></html>\n```",
-        "x": 100,
-        "y": 420,
-        "wires": []
+        "id": "66a16e14.52e4d",
+        "type": "trigger",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 560,
+        "wires": [
+            [
+                "84528388.0ba3e"
+            ]
+        ]
     },
     {
-        "id": "7254bbb9.903ce4",
-        "type": "comment",
-        "z": "d65c4d9.db2ebb",
-        "name": "index.js",
-        "info": "Copy the following and paste into `index.js`\n\n```javascript\n/* jshint browser: true, esversion: 5 */\n/* globals document,Vue,window,uibuilder,httpVueLoader */\n// @ts-nocheck\n/*\n  Copyright (c) 2019 Julian Knight (Totally Information)\n\n  Licensed under the Apache License, Version 2.0 (the \"License\");\n  you may not use this file except in compliance with the License.\n  You may obtain a copy of the License at\n\n  http://www.apache.org/licenses/LICENSE-2.0\n\n  Unless required by applicable law or agreed to in writing, software\n  distributed under the License is distributed on an \"AS IS\" BASIS,\n  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n  See the License for the specific language governing permissions and\n  limitations under the License.\n*/\n'use strict'\n\n/** @see https://github.com/TotallyInformation/node-red-contrib-uibuilder/wiki/Front-End-Library---available-properties-and-methods */\n\n// eslint-disable-next-line no-unused-vars\nvar app1 = new Vue({\n    el: '#app',\n\n    /** Load external component files\n     *  Make sure there is no leading / in the name\n     *  To load from the common folder use like: 'common/component-name.vue' */\n    components: {\n        'my-component': httpVueLoader('my-component.vue'),\n    }, // --- End of components --- //\n\n    data: {\n        myGreeting: 'Hi there',\n        myWho: 'oh wise one!',\n    }, // --- End of data --- //\n\n    computed: {\n    }, // --- End of computed --- //\n\n    methods: {\n    }, // --- End of methods --- //\n\n    // Available hooks: init,mounted,updated,destroyed\n    mounted: function(){\n        /** **REQUIRED** Start uibuilder comms with Node-RED @since v2.0.0-dev3\n         * Pass the namespace and ioPath variables if hosting page is not in the instance root folder\n         * e.g. If you get continual `uibuilderfe:ioSetup: SOCKET CONNECT ERROR` error messages.\n         * e.g. uibuilder.start('/nr/uib', '/nr/uibuilder/vendor/socket.io') // change to use your paths/names\n         */\n        uibuilder.start()\n\n        var vueApp = this\n\n        // Process new messages from Node-RED\n        uibuilder.onChange('msg', function (msg) {\n            // We are assuming that msg.payload is an number between zero and 10\n\n            // Change value\n            if (msg.payload.hasOwnProperty('greeting')) vueApp.myGreeting = msg.payload.greeting\n            if (msg.payload.hasOwnProperty('who')) vueApp.myWho = msg.payload.who\n\n            //console.log(msg)\n        })\n\n    } // --- End of mounted hook --- //\n\n}) // --- End of app1 --- //\n\n// EOF\n```\n",
-        "x": 230,
-        "y": 420,
-        "wires": []
+        "id": "f7a86e4b.3428a",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Read SWR",
+        "func": "const p = msg.payload;\n\nif(p.length > 2) {\n    if(p.substring(2, 3) === '1') {\n        return {payload: 'RM6;'};\n    }\n    else {\n        return {reset: true};\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 560,
+        "wires": [
+            [
+                "66a16e14.52e4d"
+            ]
+        ]
     },
     {
-        "id": "4f7ddf94.c4dde",
+        "id": "bb569b87.045828",
         "type": "comment",
-        "z": "d65c4d9.db2ebb",
-        "name": "my-component.vue",
-        "info": "Copy the following and paste into `my-component.vue`\n\n```\n<template>\n    <b-row>\n        <b-col class=\"hello\" cols=\"12\">\n            {{greeting}} {{who}}\n        </b-col>\n        <slot>\n            Default slot content, replace with your own text between the component tags.\n            See the <a href=\"https://vuejs.org/v2/guide/components-slots.html\" target=\"_blank\">VueJS documentation for slots</a> for more information.\n        </slot>\n    </b-row>\n</template>\n\n<script>\nmodule.exports = {\n    /** Allow greeting and who to be passed as parameters but provide defaults\n     * @see https://vuejs.org/v2/guide/components-props.html#Prop-Validation\n     */\n    props: {\n        'greeting': {type: String, default: 'Hello'},\n         'who': {type: String, default: 'World'},\n    },\n\n    /** Any data must be wrapped in a fn to isolate it in case this component is used multiple times */\n    data: function() { return {\n\n    }}\n}\n</script>\n\n<style scoped>\n.hello {\n    background-color: #ffe;\n    font-size: 2rem;\n    text-align: center;\n}\n</style>\n```\n",
-        "x": 390,
-        "y": 420,
+        "z": "36d8cfa8.00955",
+        "name": "Monitor ALC and SWR during transmit",
+        "info": "",
+        "x": 173,
+        "y": 460,
         "wires": []
     }
 ]
