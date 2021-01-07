@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'frequency-digits': true, tx: false}">
+    <div :class="{'frequency-digits': true, tx: on}">
         {{ mhz }}&nbsp;{{ khz }}&nbsp;{{ hz }}
     </div>
 </template>
@@ -25,7 +25,6 @@ module.exports = {
             }
 
             if(msg.hasOwnProperty('transmit')) {
-                console.log('transmit: ', msg.transmit);
                 self.on = msg.transmit;
             }
         });
@@ -39,7 +38,7 @@ module.exports = {
     font-size: 32px;
         color: green;
     }
-    .frequency-digits.on {
+    .frequency-digits.tx {
         color: red;
     }
 </style>
