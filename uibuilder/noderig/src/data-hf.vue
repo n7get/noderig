@@ -17,12 +17,16 @@
     <b-row>
         <power-level></power-level>
     </b-row>
+    <b-row>
+        <config :items="['62', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></config>
+    </b-row>
 </div>
 </template>
 
 <script>
 module.exports = {
     components: {
+        'config':           httpVueLoader('config.vue'),
         'alc-status':       httpVueLoader('alc-status.vue'),
         'frequency':        httpVueLoader('frequency.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
