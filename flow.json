@@ -261,7 +261,7 @@
         "blObj": "",
         "name": "TO_UI",
         "x": 150,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "32d66e09.a27d62",
@@ -283,7 +283,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 670,
-        "y": 320,
+        "y": 420,
         "wires": []
     },
     {
@@ -297,7 +297,7 @@
         "initialize": "",
         "finalize": "",
         "x": 300,
-        "y": 1020,
+        "y": 1120,
         "wires": [
             [
                 "d56ea408.310f78"
@@ -325,7 +325,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 470,
-        "y": 1000,
+        "y": 1100,
         "wires": []
     },
     {
@@ -335,7 +335,7 @@
         "name": "IF",
         "info": "",
         "x": 70,
-        "y": 960,
+        "y": 1060,
         "wires": []
     },
     {
@@ -349,7 +349,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 1020,
+        "y": 1120,
         "wires": [
             [
                 "fe0474ed.9a78e8"
@@ -367,7 +367,7 @@
         "blObj": "",
         "name": "",
         "x": 500,
-        "y": 1040,
+        "y": 1140,
         "wires": []
     },
     {
@@ -381,7 +381,7 @@
         "initialize": "",
         "finalize": "",
         "x": 320,
-        "y": 880,
+        "y": 980,
         "wires": [
             [
                 "f4957c97.d011b"
@@ -399,7 +399,7 @@
         "blObj": "",
         "name": "",
         "x": 149,
-        "y": 880,
+        "y": 980,
         "wires": [
             [
                 "73ba80c7.20d9"
@@ -413,7 +413,7 @@
         "name": "Frequency",
         "info": "",
         "x": 90,
-        "y": 820,
+        "y": 920,
         "wires": []
     },
     {
@@ -427,7 +427,7 @@
         "blObj": "",
         "name": "",
         "x": 490,
-        "y": 880,
+        "y": 980,
         "wires": []
     },
     {
@@ -446,7 +446,7 @@
         "sessionLength": 432000,
         "tokenAutoExtend": false,
         "x": 500,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "2f69877c.f1a878",
@@ -468,7 +468,7 @@
         "initialize": "",
         "finalize": "",
         "x": 319,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "c229a01c.c9c49"
@@ -480,13 +480,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Refresh UI",
-        "func": "\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const [key, value] of Object.entries(global.get('menu_state'))) {\n    node.send({topic: key, payload: value});\n}\n\nnode.done();",
+        "func": "\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const [key, value] of Object.entries(global.get('menu_state'))) {\n    node.send({topic: key, payload: value});\n}\n\nfor(const [key, value] of Object.entries(global.get('config_state'))) {\n    node.send({topic: 'EX', payload: value});\n}\n\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 690,
-        "y": 400,
+        "y": 500,
         "wires": [
             [
                 "5254abbf.2aaab4"
@@ -504,7 +504,7 @@
         "blObj": "",
         "name": "",
         "x": 880,
-        "y": 400,
+        "y": 500,
         "wires": []
     },
     {
@@ -518,7 +518,7 @@
         "initialize": "",
         "finalize": "",
         "x": 310,
-        "y": 680,
+        "y": 780,
         "wires": [
             [
                 "3217ca4b.1be0c6"
@@ -536,7 +536,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 680,
+        "y": 780,
         "wires": [
             [
                 "1c4a71e4.2855ce"
@@ -550,7 +550,7 @@
         "name": "Tuner status",
         "info": "",
         "x": 95,
-        "y": 640,
+        "y": 740,
         "wires": []
     },
     {
@@ -564,7 +564,7 @@
         "blObj": "",
         "name": "",
         "x": 470,
-        "y": 680,
+        "y": 780,
         "wires": []
     },
     {
@@ -578,7 +578,7 @@
         "blObj": "",
         "name": "",
         "x": 700,
-        "y": 360,
+        "y": 460,
         "wires": []
     },
     {
@@ -592,7 +592,7 @@
         "blObj": "",
         "name": "",
         "x": 180,
-        "y": 738,
+        "y": 838,
         "wires": [
             [
                 "299f4698.81a6aa"
@@ -610,7 +610,7 @@
         "initialize": "",
         "finalize": "",
         "x": 390,
-        "y": 738,
+        "y": 838,
         "wires": [
             [
                 "96fc3f21.ca5c3"
@@ -628,7 +628,7 @@
         "blObj": "",
         "name": "",
         "x": 590,
-        "y": 738,
+        "y": 838,
         "wires": []
     },
     {
@@ -642,7 +642,7 @@
         "initialize": "",
         "finalize": "",
         "x": 310,
-        "y": 1160,
+        "y": 1260,
         "wires": [
             [
                 "5c966a43.6ca814"
@@ -660,7 +660,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 1160,
+        "y": 1260,
         "wires": [
             [
                 "615827bd.14ab08"
@@ -674,7 +674,7 @@
         "name": "Dial lock status",
         "info": "",
         "x": 105,
-        "y": 1100,
+        "y": 1200,
         "wires": []
     },
     {
@@ -688,7 +688,7 @@
         "blObj": "",
         "name": "",
         "x": 469,
-        "y": 1160,
+        "y": 1260,
         "wires": []
     },
     {
@@ -702,7 +702,7 @@
         "blObj": "",
         "name": "",
         "x": 170,
-        "y": 1218,
+        "y": 1318,
         "wires": [
             [
                 "29c9ad6f.f10de2"
@@ -720,7 +720,7 @@
         "initialize": "",
         "finalize": "",
         "x": 375,
-        "y": 1218,
+        "y": 1318,
         "wires": [
             [
                 "324563b3.8a6bec"
@@ -738,7 +738,7 @@
         "blObj": "",
         "name": "",
         "x": 590,
-        "y": 1218,
+        "y": 1318,
         "wires": []
     },
     {
@@ -752,7 +752,7 @@
         "initialize": "",
         "finalize": "",
         "x": 270,
-        "y": 240,
+        "y": 340,
         "wires": [
             [
                 "98e20c03.d9025"
@@ -781,7 +781,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 135,
-        "y": 240,
+        "y": 340,
         "wires": [
             [
                 "f37c19d1.ee3968"
@@ -800,7 +800,7 @@
         "blObj": "",
         "name": "",
         "x": 460,
-        "y": 240,
+        "y": 340,
         "wires": []
     },
     {
@@ -810,7 +810,7 @@
         "name": "Update UI",
         "info": "",
         "x": 80,
-        "y": 180,
+        "y": 280,
         "wires": []
     },
     {
@@ -820,7 +820,7 @@
         "name": "UI interface",
         "info": "",
         "x": 90,
-        "y": 320,
+        "y": 420,
         "wires": []
     },
     {
@@ -834,7 +834,7 @@
         "initialize": "",
         "finalize": "",
         "x": 300,
-        "y": 1340,
+        "y": 1440,
         "wires": [
             [
                 "7b45ceb6.f23ed"
@@ -852,7 +852,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 1340,
+        "y": 1440,
         "wires": [
             [
                 "44f940cc.6e0d8"
@@ -866,7 +866,7 @@
         "name": "RF mode status",
         "info": "",
         "x": 100,
-        "y": 1300,
+        "y": 1400,
         "wires": []
     },
     {
@@ -880,7 +880,7 @@
         "blObj": "",
         "name": "",
         "x": 450,
-        "y": 1340,
+        "y": 1440,
         "wires": []
     },
     {
@@ -890,7 +890,7 @@
         "name": "Pre amp status",
         "info": "",
         "x": 101,
-        "y": 1420,
+        "y": 1520,
         "wires": []
     },
     {
@@ -904,7 +904,7 @@
         "initialize": "",
         "finalize": "",
         "x": 320,
-        "y": 1480,
+        "y": 1580,
         "wires": [
             [
                 "ff3678f2.db8be8"
@@ -922,7 +922,7 @@
         "blObj": "",
         "name": "",
         "x": 151,
-        "y": 1480,
+        "y": 1580,
         "wires": [
             [
                 "8966cf54.edcbc"
@@ -940,7 +940,7 @@
         "blObj": "",
         "name": "",
         "x": 490,
-        "y": 1480,
+        "y": 1580,
         "wires": []
     },
     {
@@ -957,7 +957,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 310,
-        "y": 320,
+        "y": 420,
         "wires": []
     },
     {
@@ -971,7 +971,7 @@
         "blObj": "",
         "name": "",
         "x": 190,
-        "y": 1540,
+        "y": 1640,
         "wires": [
             [
                 "a46ebafd.b79ee8"
@@ -989,7 +989,7 @@
         "initialize": "",
         "finalize": "",
         "x": 420,
-        "y": 1540,
+        "y": 1640,
         "wires": [
             [
                 "5ff01c89.535f64"
@@ -1007,7 +1007,7 @@
         "blObj": "",
         "name": "",
         "x": 630,
-        "y": 1540,
+        "y": 1640,
         "wires": []
     },
     {
@@ -1021,7 +1021,7 @@
         "initialize": "",
         "finalize": "",
         "x": 330,
-        "y": 1680,
+        "y": 1780,
         "wires": [
             [
                 "3ec17c54.34b114"
@@ -1035,7 +1035,7 @@
         "name": "Data ALC status",
         "info": "",
         "x": 100,
-        "y": 1620,
+        "y": 1720,
         "wires": []
     },
     {
@@ -1049,7 +1049,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 1680,
+        "y": 1780,
         "wires": [
             [
                 "407bcb2b.b76c44"
@@ -1063,7 +1063,7 @@
         "name": "Power Level",
         "info": "",
         "x": 90,
-        "y": 1760,
+        "y": 1860,
         "wires": []
     },
     {
@@ -1073,7 +1073,7 @@
         "name": "S Meter",
         "info": "",
         "x": 70,
-        "y": 2100,
+        "y": 2060,
         "wires": []
     },
     {
@@ -1081,10 +1081,10 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Send initial commands",
-        "func": "\nconst menu_init = [\n          'AI1;',\n          'IF;',\n          'AC;',\n          'GT0;',\n          'LK;',\n          'MS;',\n          'PA0;',\n          'PC;',\n          'PA0;',\n          'PC;',\n          'RIA;'\n      ],\n      config_init = [\n          '062',  // DATA MODE\n          '066',  // DATA LCUT FREQ\n          '067',  // DATA LCUT SLOPE\n          '068',  // DATA HCUT FREQ\n          '069',  // DATA HCUT SLOPE\n          '070',  // DATA IN SELECT\n          '071',  // DATA PTT SELECT\n          '072',  // DATA PORT SELECT\n          '073',  // DATA OUT LEVEL\n          '146',  // DATA VOX GAIN\n          '147'   // DATA VOX DELAY\n      ];\n\nmenu_init.forEach( cmd => node.send({ payload: cmd }) );\n\nconfig_init.forEach(no => node.send({payload: 'EX' + no + ';'}));\n\nnode.done();\n",
+        "func": "const ConfigItem = flow.get('ConfigItem');\nconst menu_init = [\n          'AI1;',\n          'IF;',\n          'AC;',\n          'GT0;',\n          'LK;',\n          'MS;',\n          'PA0;',\n          'PC;',\n          'PA0;',\n          'PC;',\n          'RIA;'\n      ];\n\nmenu_init.forEach( cmd => node.send({ payload: cmd }) );\n\n// This starts the rig's config being loaded\n\nnode.send({payload: ConfigItem.toCat(1)});\nflow.set('next_config', 2);\n\nnode.done();\n",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "flow.set('ft_modes', {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n});\n\nflow.set('modes_ft', {\n    'LSB': '1',\n    'USB': '2',\n    'CW': '3',\n    'FM': '4',\n    'AM': '5',\n    'RTTY-LSB': '6',\n    'CW-R': '7',\n    'DATA-LSB': '8',\n    'RTTY-USB': '9',\n    'DATA-FM': 'A',\n    'FM-N': 'B',\n    'DATA-USB': 'C',\n    'AM-N': 'D',\n    'C4FM': 'E'\n});\n\nflow.set('ft_offset', {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n});\n\nflow.set('offset_ft', {\n    'Simplex': '0',\n    '+': '1',\n    '-': '2'\n});\n\nflow.set('ft_preamp', {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n});\nflow.set('preamp_ft', {\n    IPO: '0',\n    AMP1: '1',\n    AMP2: '2'\n});\n\nflow.set('config_items', {\n\t\"001\": \"AGC FAST DELAY\",\n\t\"002\": \"AGC MID DELAY\",\n\t\"003\": \"AGC SLOW DELAY\",\n\t\"004\": \"HOME FUNCTION\",\n\t\"005\": \"MY CALL INDICATION\",\n\t\"006\": \"DISPLAY COLOR\",\n\t\"007\": \"DIMMER LED\",\n\t\"008\": \"DIMMER TFT\",\n\t\"009\": \"BAR MTR PEAK HOLD\",\n\t\"010\": \"DVS RX OUT LEVEL\",\n\t\"011\": \"DVS TX OUT LEVEL\",\n\t\"012\": \"KEYER TYPE\",\n\t\"013\": \"KEYER DOT/DASH\",\n\t\"014\": \"CW WEIGHT\",\n\t\"015\": \"BEACON INTERVAL\",\n\t\"016\": \"NUMBER STYLE\",\n\t\"017\": \"CONTEST NUMBER\",\n\t\"018\": \"CW MEMORY 1\",\n\t\"019\": \"CW MEMORY 2\",\n\t\"020\": \"CW MEMORY 3\",\n\t\"021\": \"CW MEMORY 4\",\n\t\"022\": \"CW MEMORY 5\",\n\t\"023\": \"NB WIDTH\",\n\t\"024\": \"NB REJECTION\",\n\t\"025\": \"NB LEVEL\",\n\t\"026\": \"BEEP LEVEL\",\n\t\"027\": \"TIME ZONE\",\n\t\"028\": \"GPS/232C SELECT\",\n\t\"029\": \"232C RATE\",\n\t\"030\": \"232C TOT\",\n\t\"031\": \"CAT RATE\",\n\t\"032\": \"CAT TOT\",\n\t\"033\": \"CAT RTS\",\n\t\"034\": \"MEM GROUP\",\n\t\"035\": \"QUICK SPLIT FREQ\",\n\t\"036\": \"TX TOT\",\n\t\"037\": \"MIC SCAN\",\n\t\"038\": \"MIC SCAN RESUME\",\n\t\"039\": \"REF FREQ ADJ\",\n\t\"040\": \"CLAR MODE SELECT\",\n\t\"041\": \"AM LCUT FREQ\",\n\t\"042\": \"AM LCUT SLOPE\",\n\t\"043\": \"AM HCUT FREQ\",\n\t\"044\": \"AM HCUT SLOPE\",\n\t\"045\": \"AM MIC SELECT\",\n\t\"046\": \"AM OUT LEVEL\",\n\t\"047\": \"AM PTT SELECT\",\n\t\"048\": \"AM PORT SELECT\",\n\t\"049\": \"AM DATA GAIN\",\n\t\"050\": \"CW LCUT FREQ\",\n\t\"051\": \"CW LCUT SLOPE\",\n\t\"052\": \"CW HCUT FREQ\",\n\t\"053\": \"CW HCUT SLOPE\",\n\t\"054\": \"CW OUT LEVEL\",\n\t\"055\": \"CW AUTO MODE\",\n\t\"056\": \"CW BK-IN TYPE\",\n\t\"057\": \"CW BK-IN DELAY\",\n\t\"058\": \"CW WAVE SHAPE\",\n\t\"059\": \"CW FREQ DISPLAY\",\n\t\"060\": \"PC KEYING\",\n\t\"061\": \"QSK DELAY TIME\",\n\t\"062\": \"DATA MODE\",\n\t\"063\": \"PSK TONE\",\n\t\"064\": \"OTHER DISP (SSB)\",\n\t\"065\": \"OTHER SHIFT (SSB)\",\n\t\"066\": \"DATA LCUT FREQ\",\n\t\"067\": \"DATA LCUT SLOPE\",\n\t\"068\": \"DATA HCUT FREQ\",\n\t\"069\": \"DATA HCUT SLOPE\",\n\t\"070\": \"DATA IN SELECT\",\n\t\"071\": \"DATA PTT SELECT\",\n\t\"072\": \"DATA PORT SELECT\",\n\t\"073\": \"DATA OUT LEVEL\",\n\t\"074\": \"FM MIC SELECT\",\n\t\"075\": \"FM OUT LEVEL\",\n\t\"076\": \"FM PKT PTT SELECT\",\n\t\"077\": \"FM PKT PORT SELECT\",\n\t\"078\": \"FM PKT TX GAIN\",\n\t\"079\": \"FM PKT MODE\",\n\t\"080\": \"RPT SHIFT 28MHz\",\n\t\"081\": \"RPT SHIFT 50MHz\",\n\t\"082\": \"RPT SHIFT 144MHz\",\n\t\"083\": \"RPT SHIFT 430MHz\",\n\t\"084\": \"ARS 144MHz\",\n\t\"085\": \"ARS 430MHz\",\n\t\"086\": \"DCS POLARITY\",\n\t\"087\": \"RADIO ID\",\n\t\"088\": \"GM DISPLY\",\n\t\"089\": \"DISTANCE\",\n\t\"090\": \"AMS TX MODE\",\n\t\"091\": \"STANDBY BEEP\",\n\t\"092\": \"RTTY LCUT FREQ\",\n\t\"093\": \"RTTY LCUT SLOPE\",\n\t\"094\": \"RTTY HCUT FREQ\",\n\t\"095\": \"RTTY HCUT SLOPE\",\n\t\"096\": \"RTTY SHIFT PORT\",\n\t\"097\": \"RTTY POLARITY-RX\",\n\t\"098\": \"RTTY POLARITY-TX\",\n\t\"099\": \"RTTY OUT LEVEL\",\n\t\"100\": \"RTTY SHIFT FREQ\",\n\t\"101\": \"RTTY MARK FREQ\",\n\t\"102\": \"SSB LCUT FREQ\",\n\t\"103\": \"SSB LCUT SLOPE\",\n\t\"104\": \"SSB HCUT FREQ\",\n\t\"105\": \"SSB HCUT SLOPE\",\n\t\"106\": \"SSB MIC SELECT\",\n\t\"107\": \"SSB OUT LEVEL\",\n\t\"108\": \"SSB PTT SELECT\",\n\t\"109\": \"SSB PORT SELECT\",\n\t\"110\": \"SSB TX BPF\",\n\t\"111\": \"APF WIDTH\",\n\t\"112\": \"CONTOUR LEVEL\",\n\t\"113\": \"CONTOUR WIDTH\",\n\t\"114\": \"IF NOTCH WIDTH\",\n\t\"115\": \"SCP DISPLAY MODE\",\n\t\"116\": \"SCP SPAN FREQ\",\n\t\"117\": \"SPECTRUM COLOR\",\n\t\"118\": \"WATER FALL COLOR\",\n\t\"119\": \"PRMTRC EQ1 FREQ\",\n\t\"120\": \"PRMTRC EQ1 LEVEL\",\n\t\"121\": \"PRMTRC EQ1 BWTH\",\n\t\"122\": \"PRMTRC EQ2 FREQ\",\n\t\"123\": \"PRMTRC EQ2 LEVEL\",\n\t\"124\": \"PRMTRC EQ2 BWTH\",\n\t\"125\": \"PRMTRC EQ3 FREQ\",\n\t\"126\": \"PRMTRC EQ3 LEVEL\",\n\t\"127\": \"PRMTRC EQ3 BWTH\",\n\t\"128\": \"P-PRMTRC EQ1 FREQ\",\n\t\"129\": \"P-PRMTRC EQ1 LEVEL\",\n\t\"130\": \"P-PRMTRC EQ1 BWTH\",\n\t\"131\": \"P-PRMTRC EQ2 FREQ\",\n\t\"132\": \"P-PRMTRC EQ2 LEVEL\",\n\t\"133\": \"P-PRMTRC EQ2 BWTH\",\n\t\"134\": \"P-PRMTRC EQ3 FREQ\",\n\t\"135\": \"P-PRMTRC EQ3 LEVEL\",\n\t\"136\": \"P-PRMTRC EQ3 BWTH\",\n\t\"137\": \"HF TX MAX POWER\",\n\t\"138\": \"50M TX MAX POWER\",\n\t\"139\": \"144M TX MAX POWER\",\n\t\"140\": \"430M TX MAX POWER\",\n\t\"141\": \"TUNER SELECT\",\n\t\"142\": \"VOX SELECT\",\n\t\"143\": \"VOX GAIN\",\n\t\"144\": \"VOX DELAY\",\n\t\"145\": \"ANTI VOX GAIN\",\n\t\"146\": \"DATA VOX GAIN\",\n\t\"147\": \"DATA VOX DELAY\",\n\t\"148\": \"ANTI DVOX GAIN\",\n\t\"149\": \"EMERGENCY FREQ TX\",\n\t\"150\": \"PRT/WIRES FREQ\",\n\t\"151\": \"PRESET FREQUENCY\",\n\t\"152\": \"SEARCH SETUP\",\n\t\"153\": \"WIRES DG-ID\"\n});\n\nflow.set('config_save', [\n    062,    // DATA MODE\n    066,    // DATA LCUT FREQ\n    067,    // DATA LCUT SLOPE\n    068,    // DATA HCUT FREQ\n    069,    // DATA HCUT SLOPE\n    070,    // DATA IN SELECT\n    071,    // DATA PTT SELECT\n    072,    // DATA PORT SELECT\n    073,    // DATA OUT LEVEL\n    146,    // DATA VOX GAIN\n    147     // DATA VOX DELAY\n]);\n\nflow.set('menu_save', [\n    'AI1;',\n    'IF;',\n    'AC;',\n    'GT0;',\n    'LK;',\n    'MS;',\n    'PA0;',\n    'PC;',\n    'PA0;',\n    'PC;',\n    'RIA;',\n    'MS1',\n    'RM2'\n]);\n\nflow.set('gui_state', {});",
+        "initialize": "'use strict';\n\n// UI Iterface functions\n\nfunction uiMessage(no, value) {\n\treturn {topic: 'config', payload: {no: no, value: value}};\n}\n\nfunction defaultToUi (no, value) {\n\treturn uiMessage(no, value);\n}\n\nfunction toUiDataMode(no, value) {\n\treturn uiMessage(no, value === '0' ? 'PSK' : 'OTHER');\n}\n\nfunction toUiDataPortSelect(no, value) {\n\treturn uiMessage(no, value === '1' ? 'DATA' : 'USB');\n}\n\nfunction toUiFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\n\nfunction toUiMicSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'MIC' : 'REAR');\n}\n\nfunction toUiPttSelect(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'DAKY');\n    case '1': return uiMessage(no, 'RTS');\n    case '2': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiSimpleValue(no, value) {\n\treturn uiMessage(no, parseInt(value, 10).toString());\n}\n\nfunction toUiPcKeying(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'OFF');\n    case '1': return uiMessage(no, 'DAKY');\n    case '2': return uiMessage(no, 'RTS');\n    case '3': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiVoicePortSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'DATA' : 'USB');\n}\n\nfunction cutFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\nfunction toUiLCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 1));\n}\nfunction toUiSlope(no, value) {\n\treturn uiMessage(no, value === '0' ? '6 dB' : '18 dB');\n}\nfunction toUiHCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 13));\n}\n\nfunction defaultFromUi (arg) {\n    return null;\n}\n\nfunction toCat(no, value) {\n    let prefix;\n\n    if(no < 10) {\n        prefix = 'EX00' + no;\n    }\n    else if(no < 100) {\n        prefix = 'EX0' + no;\n    }\n    else {\n        prefix = 'EX' + no;\n    }\n\n    if(value) {\n        return prefix + value + ';';\n    }\n    return prefix + ';';\n}\n\nconst config_items = {\n\t1: {desc: 'AGC FAST DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t2: {desc: 'AGC MID DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t3: {desc: 'AGC SLOW DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t4: {desc: 'HOME FUNCTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t5: {desc: 'MY CALL INDICATION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t6: {desc: 'DISPLAY COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t7: {desc: 'DIMMER LED', toUi: defaultToUi, fromUi: defaultFromUi},\n\t8: {desc: 'DIMMER TFT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t9: {desc: 'BAR MTR PEAK HOLD', toUi: defaultToUi, fromUi: defaultFromUi},\n\t10: {desc: 'DVS RX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t11: {desc: 'DVS TX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t12: {desc: 'KEYER TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t13: {desc: 'KEYER DOT/DASH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t14: {desc: 'CW WEIGHT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t15: {desc: 'BEACON INTERVAL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t16: {desc: 'NUMBER STYLE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t17: {desc: 'CONTEST NUMBER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t18: {desc: 'CW MEMORY 1', toUi: defaultToUi, fromUi: defaultFromUi},\n\t19: {desc: 'CW MEMORY 2', toUi: defaultToUi, fromUi: defaultFromUi},\n\t20: {desc: 'CW MEMORY 3', toUi: defaultToUi, fromUi: defaultFromUi},\n\t21: {desc: 'CW MEMORY 4', toUi: defaultToUi, fromUi: defaultFromUi},\n\t22: {desc: 'CW MEMORY 5', toUi: defaultToUi, fromUi: defaultFromUi},\n\t23: {desc: 'NB WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t24: {desc: 'NB REJECTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t25: {desc: 'NB LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t26: {desc: 'BEEP LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t27: {desc: 'TIME ZONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t28: {desc: 'GPS/232C SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t29: {desc: '232C RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t30: {desc: '232C TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t31: {desc: 'CAT RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t32: {desc: 'CAT TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t33: {desc: 'CAT RTS', toUi: defaultToUi, fromUi: defaultFromUi},\n\t34: {desc: 'MEM GROUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t35: {desc: 'QUICK SPLIT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t36: {desc: 'TX TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t37: {desc: 'MIC SCAN', toUi: defaultToUi, fromUi: defaultFromUi},\n\t38: {desc: 'MIC SCAN RESUME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t39: {desc: 'REF FREQ ADJ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t40: {desc: 'CLAR MODE SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t41: {desc: 'AM LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t42: {desc: 'AM LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t43: {desc: 'AM HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t44: {desc: 'AM HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t45: {desc: 'AM MIC SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t46: {desc: 'AM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t47: {desc: 'AM PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t48: {desc: 'AM PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t49: {desc: 'AM DATA GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t50: {desc: 'CW LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t51: {desc: 'CW LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t52: {desc: 'CW HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t53: {desc: 'CW HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t54: {desc: 'CW OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t55: {desc: 'CW AUTO MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t56: {desc: 'CW BK-IN TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t57: {desc: 'CW BK-IN DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t58: {desc: 'CW WAVE SHAPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t59: {desc: 'CW FREQ DISPLAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t60: {desc: 'PC KEYING', toUi: toUiPcKeying, fromUi: defaultFromUi},\n\t61: {desc: 'QSK DELAY TIME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t62: {desc: 'DATA MODE', toUi: toUiDataMode, fromUi: defaultFromUi},\n\t63: {desc: 'PSK TONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t64: {desc: 'OTHER DISP (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t65: {desc: 'OTHER SHIFT (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t66: {desc: 'DATA LCUT FREQ', toUi: toUiLCutFreq, fromUi: defaultFromUi},\n\t67: {desc: 'DATA LCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t68: {desc: 'DATA HCUT FREQ', toUi: toUiHCutFreq, fromUi: defaultFromUi},\n\t69: {desc: 'DATA HCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t70: {desc: 'DATA IN SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t71: {desc: 'DATA PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t72: {desc: 'DATA PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t73: {desc: 'DATA OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t74: {desc: 'FM MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t75: {desc: 'FM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t76: {desc: 'FM PKT PTT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t77: {desc: 'FM PKT PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t78: {desc: 'FM PKT TX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t79: {desc: 'FM PKT MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t80: {desc: 'RPT SHIFT 28MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t81: {desc: 'RPT SHIFT 50MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t82: {desc: 'RPT SHIFT 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t83: {desc: 'RPT SHIFT 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t84: {desc: 'ARS 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t85: {desc: 'ARS 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t86: {desc: 'DCS POLARITY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t87: {desc: 'RADIO ID', toUi: defaultToUi, fromUi: defaultFromUi},\n\t88: {desc: 'GM DISPLY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t89: {desc: 'DISTANCE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t90: {desc: 'AMS TX MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t91: {desc: 'STANDBY BEEP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t92: {desc: 'RTTY LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t93: {desc: 'RTTY LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t94: {desc: 'RTTY HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t95: {desc: 'RTTY HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t96: {desc: 'RTTY SHIFT PORT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t97: {desc: 'RTTY POLARITY-RX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t98: {desc: 'RTTY POLARITY-TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t99: {desc: 'RTTY OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t100: {desc: 'RTTY SHIFT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t101: {desc: 'RTTY MARK FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t102: {desc: 'SSB LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t103: {desc: 'SSB LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t104: {desc: 'SSB HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t105: {desc: 'SSB HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t106: {desc: 'SSB MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t107: {desc: 'SSB OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t108: {desc: 'SSB PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t109: {desc: 'SSB PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t110: {desc: 'SSB TX BPF', toUi: defaultToUi, fromUi: defaultFromUi},\n\t111: {desc: 'APF WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t112: {desc: 'CONTOUR LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t113: {desc: 'CONTOUR WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t114: {desc: 'IF NOTCH WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t115: {desc: 'SCP DISPLAY MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t116: {desc: 'SCP SPAN FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t117: {desc: 'SPECTRUM COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t118: {desc: 'WATER FALL COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t119: {desc: 'PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t120: {desc: 'PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t121: {desc: 'PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t122: {desc: 'PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t123: {desc: 'PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t124: {desc: 'PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t125: {desc: 'PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t126: {desc: 'PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t127: {desc: 'PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t128: {desc: 'P-PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t129: {desc: 'P-PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t130: {desc: 'P-PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t131: {desc: 'P-PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t132: {desc: 'P-PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t133: {desc: 'P-PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t134: {desc: 'P-PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t135: {desc: 'P-PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t136: {desc: 'P-PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t137: {desc: 'HF TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t138: {desc: '50M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t139: {desc: '144M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t140: {desc: '430M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t141: {desc: 'TUNER SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t142: {desc: 'VOX SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t143: {desc: 'VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t144: {desc: 'VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t145: {desc: 'ANTI VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t146: {desc: 'DATA VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t147: {desc: 'DATA VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t148: {desc: 'ANTI DVOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t149: {desc: 'EMERGENCY FREQ TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t150: {desc: 'PRT/WIRES FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t151: {desc: 'PRESET FREQUENCY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t152: {desc: 'SEARCH SETUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t153: {desc: 'WIRES DG-ID', toUi: defaultToUi, fromUi: defaultFromUi}\n};\n\nflow.set('config_items', config_items);\n\nconst ConfigItem = class {\n    constructor(no, value) {\n        this._no = no;\n        this._value = value;\n    }\n    \n    get no() { return this._no; }\n    get value() { return this._value; }\n\n    get desc() {\n        const ci = config_items[this._no];\n\n        return ci.desc;\n    }\n\n    get toCat() {\n        return toCat(this._no, this._value);\n    }\n\n    get toUi() {\n        const ci = config_items[this._no];\n\n        return ci.toUi(this._no, this._value);\n    }\n\n    static toCat(no) {\n        return toCat(no);\n    }\n    \n    static fromCat(arg) {\n        const no = parseInt(arg.substring(2, 5), 10),\n\t\t\t  value = arg.substring(arg.length - 1) === ';' ?  arg.substring(5, arg.length - 1) : arg.substring(5);\n\n\t\treturn new ConfigItem(no, value);\n    }\n    \n    static fromUi(arg) {\n        throw new Error('Not implemented yet');\n    }\n}\n\nflow.set('ConfigItem', ConfigItem);\n\nflow.set('ft_modes', {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n});\n\nflow.set('modes_ft', {\n    'LSB': '1',\n    'USB': '2',\n    'CW': '3',\n    'FM': '4',\n    'AM': '5',\n    'RTTY-LSB': '6',\n    'CW-R': '7',\n    'DATA-LSB': '8',\n    'RTTY-USB': '9',\n    'DATA-FM': 'A',\n    'FM-N': 'B',\n    'DATA-USB': 'C',\n    'AM-N': 'D',\n    'C4FM': 'E'\n});\n\nflow.set('ft_offset', {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n});\n\nflow.set('offset_ft', {\n    'Simplex': '0',\n    '+': '1',\n    '-': '2'\n});\n\nflow.set('ft_preamp', {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n});\nflow.set('preamp_ft', {\n    IPO: '0',\n    AMP1: '1',\n    AMP2: '2'\n});\n\nflow.set('config_save', [\n    062,    // DATA MODE\n    066,    // DATA LCUT FREQ\n    067,    // DATA LCUT SLOPE\n    068,    // DATA HCUT FREQ\n    069,    // DATA HCUT SLOPE\n    070,    // DATA IN SELECT\n    071,    // DATA PTT SELECT\n    072,    // DATA PORT SELECT\n    073,    // DATA OUT LEVEL\n    146,    // DATA VOX GAIN\n    147     // DATA VOX DELAY\n]);\n\nflow.set('menu_save', [\n    'AI1;',\n    'IF;',\n    'AC;',\n    'GT0;',\n    'LK;',\n    'MS;',\n    'PA0;',\n    'PC;',\n    'PA0;',\n    'PC;',\n    'RIA;',\n    'MS1',\n    'RM2'\n]);\n\nflow.set('gui_state', {});",
         "finalize": "",
         "x": 300,
         "y": 100,
@@ -1159,7 +1159,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 560,
+        "y": 660,
         "wires": [
             [
                 "b49c81d6.a9d11",
@@ -1179,7 +1179,7 @@
         "blObj": "",
         "name": "",
         "x": 730,
-        "y": 540,
+        "y": 640,
         "wires": []
     },
     {
@@ -1200,7 +1200,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 520,
-        "y": 520,
+        "y": 620,
         "wires": [
             [
                 "84528388.0ba3e"
@@ -1218,7 +1218,7 @@
         "initialize": "",
         "finalize": "",
         "x": 310,
-        "y": 520,
+        "y": 620,
         "wires": [
             [
                 "dbe11b76.d2f108"
@@ -1243,7 +1243,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 520,
-        "y": 560,
+        "y": 660,
         "wires": [
             [
                 "84528388.0ba3e"
@@ -1261,7 +1261,7 @@
         "initialize": "",
         "finalize": "",
         "x": 310,
-        "y": 560,
+        "y": 660,
         "wires": [
             [
                 "66a16e14.52e4d"
@@ -1275,7 +1275,7 @@
         "name": "Monitor ALC and SWR during transmit",
         "info": "",
         "x": 173,
-        "y": 460,
+        "y": 560,
         "wires": []
     },
     {
@@ -1289,7 +1289,7 @@
         "blObj": "",
         "name": "RM",
         "x": 130,
-        "y": 2160,
+        "y": 2120,
         "wires": [
             [
                 "521af92f.676338"
@@ -1307,7 +1307,7 @@
         "initialize": "",
         "finalize": "",
         "x": 280,
-        "y": 2160,
+        "y": 2120,
         "wires": [
             [
                 "e83b48b0.1e1f38"
@@ -1325,7 +1325,7 @@
         "blObj": "",
         "name": "",
         "x": 430,
-        "y": 2160,
+        "y": 2120,
         "wires": []
     },
     {
@@ -1339,7 +1339,7 @@
         "initialize": "",
         "finalize": "",
         "x": 310,
-        "y": 600,
+        "y": 700,
         "wires": [
             [
                 "90f12983.192f58"
@@ -1357,7 +1357,7 @@
         "blObj": "",
         "name": "",
         "x": 470,
-        "y": 600,
+        "y": 700,
         "wires": []
     },
     {
@@ -1371,7 +1371,7 @@
         "blObj": "",
         "name": "",
         "x": 510,
-        "y": 1680,
+        "y": 1780,
         "wires": []
     },
     {
@@ -1385,7 +1385,7 @@
         "initialize": "",
         "finalize": "",
         "x": 330,
-        "y": 1820,
+        "y": 1920,
         "wires": [
             [
                 "e2b33926.96bdb8"
@@ -1403,7 +1403,7 @@
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 1820,
+        "y": 1920,
         "wires": [
             [
                 "b70b668c.9fc0f8"
@@ -1421,7 +1421,7 @@
         "blObj": "",
         "name": "",
         "x": 510,
-        "y": 1820,
+        "y": 1920,
         "wires": []
     },
     {
@@ -1435,7 +1435,7 @@
         "blObj": "",
         "name": "",
         "x": 210,
-        "y": 1880,
+        "y": 1980,
         "wires": [
             [
                 "5de6016b.1dd4a"
@@ -1453,7 +1453,7 @@
         "initialize": "",
         "finalize": "",
         "x": 430,
-        "y": 1880,
+        "y": 1980,
         "wires": [
             [
                 "ea279eb4.5dddd"
@@ -1474,7 +1474,184 @@
         "blObj": "",
         "name": "",
         "x": 610,
-        "y": 1880,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "6b6a1689.3afd08",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "Config items",
+        "info": "",
+        "x": 92,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "a5059d4f.8ff6c",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "EX",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "RM",
+        "x": 130,
+        "y": 2260,
+        "wires": [
+            [
+                "9197749a.bfee18"
+            ]
+        ]
+    },
+    {
+        "id": "9197749a.bfee18",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "EX -> config",
+        "func": "'use strict;'\n\nfunction cut_freq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n    \n    return ((value + offset) * 50).toString();\n}\n\nconst p = msg.payload;\n\nif(p) {\n    const ConfigItem = flow.get('ConfigItem'),\n          ci = ConfigItem.fromCat(p),\n          next_config = flow.get('next_config');\n    \n    let next_EX = null;\n    \n    if(next_config <= 153) {\n        next_EX = {payload: ConfigItem.toCat(next_config)};\n    \n        flow.set('next_config', next_config + 1);\n    }\n    \n    return [{payload: ci.toUi}, next_EX];\n}\n\nreturn null;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 290,
+        "y": 2260,
+        "wires": [
+            [
+                "d11c8fcb.4bdc5",
+                "9ed4d668.ecbef8"
+            ],
+            [
+                "be6ad21.4a8d53",
+                "7247fb78.df0b24"
+            ]
+        ]
+    },
+    {
+        "id": "d11c8fcb.4bdc5",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 450,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "9ed4d668.ecbef8",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "be6ad21.4a8d53",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 470,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "7247fb78.df0b24",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 2320,
+        "wires": []
+    },
+    {
+        "id": "407677ad.560a58",
+        "type": "inject",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 135,
+        "y": 200,
+        "wires": [
+            [
+                "bd47f514.3c2478"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "bd47f514.3c2478",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "func": "\nconst ConfigItem = flow.get('ConfigItem');\n\n['EX0018;', 'EX099012;', 'EX123456;'].forEach(e => {\n    let ci = ConfigItem.fromCat(e);\n\n    node.send({payload: ci.toCat});\n    node.send({payload: ci.toUi});\n\n    if(ci.toCat !== e) {\n        throw new Error('ConfigItem.toCat() failed for ' + e);\n    }\n});\n\nif(ConfigItem.toCat(2) !== 'EX002;') {\n    throw new Error('ConfigItem.toCat(2) failed');\n}\nif(ConfigItem.toCat(42) !== 'EX042;') {\n    throw new Error('ConfigItem.toCat(42) failed');\n}\nif(ConfigItem.toCat(142) !== 'EX142;') {\n    throw new Error('ConfigItem.toCat(142) failed');\n}\n\nnode.done();\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ce1ab306.58aea",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "NOTE: The flow context values are defined in the Setup tab of this function",
+        "info": "",
+        "x": 460,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "be54efbb.d0cc2",
+        "type": "comment",
+        "z": "36d8cfa8.00955",
+        "name": "This function runs a simple unit test for ConfigItem",
+        "info": "",
+        "x": 390,
+        "y": 160,
         "wires": []
     }
 ]
