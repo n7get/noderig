@@ -1,10 +1,12 @@
 <template>
-<div class="s-meter" v-show="!tx_on">
-    <div>
+<b-row v-show="!tx_on">
+    <div class="col-4">
         S-Meter:
     </div>
-    <b-progress :value="value" max="255"></b-progress>
-<div>
+    <div class="s-meter col mt-1">
+        <b-progress :value="value" max="255"></b-progress>
+    </div>
+</b-row>
 </template>
 
 <script>
@@ -30,8 +32,9 @@ module.exports = {
     }
 }
 </script>
+
 <style scoped>
-    .s-meter {
-        width: 100%;
-    }
+.s-meter {
+    padding-left:0;
+}
 </style>

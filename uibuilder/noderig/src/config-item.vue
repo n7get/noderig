@@ -1,9 +1,9 @@
 <template>
-    <div>
-	<span>{{ no }}</span>
-	<span>{{ desc }}</span>
-	<span>{{ value }}</span>
-    </div>
+    <b-row>
+	<div class="col-1">{{ no }}</div>
+	<div class="col-7">{{ desc }}</div>
+	<div class="col-3">{{ value }}</div>
+    </b-row>
 </template>
 
 <script>

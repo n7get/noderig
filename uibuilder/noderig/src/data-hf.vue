@@ -1,25 +1,19 @@
 <template>
 <div>
     <b-row>
-        <div>Data-HF</div>
-        <frequency></frequency>
+        <b-button class="col-3">Data HF</b-button>
+        <frequency class="col-9"></frequency>
     </b-row>
-    <b-row>
-        <tuner-status></tuner-status>&nbsp;
-        <lock-status></lock-status>&nbsp;
-        <pre-amp-status></pre-amp-status>&nbsp;
-        <alc-status></alc-status>&nbsp;
+    <b-row class="mt-2">
+        <tuner-status class="mr-2"></tuner-status>
+        <lock-status class="mr-2">></lock-status>
+        <pre-amp-status class="mr-2">></pre-amp-status>
+        <alc-status class="mr-2">></alc-status>
         <mode-status></mode-status>
     </b-row>
-    <b-row>
-        <s-meter></s-meter>
-    </b-row>
-    <b-row>
-        <power-level></power-level>
-    </b-row>
-    <b-row>
-        <config :items="['62', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></config>
-    </b-row>
+    <s-meter class="mt-2"></s-meter>
+    <power-level class="mt-2 mb-2"></power-level>
+    <config :items="['62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></config>
 </div>
 </template>
 

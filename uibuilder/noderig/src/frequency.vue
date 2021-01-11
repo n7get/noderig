@@ -1,5 +1,5 @@
 <template>
-    <div :class="{'frequency-digits': true, tx: on}">
+    <div class="mt-2" :class="{'frequency-digits': true, tx: on}">
         {{ mhz }}&nbsp;{{ khz }}&nbsp;{{ hz }}
     </div>
 </template>

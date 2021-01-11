@@ -1,14 +1,15 @@
 <template>
-    <div class="power_level">
-        <p>Power({{ value }})</p>
+    <b-row>
+        <div class="col-4">Power({{ value }})</div>
         <b-form-input
+	    class="col-7"
             v-model="value"
             type="range"
             min="0"
             max="100"
             @change="sendChange"
         ></b-form-input>
-    </div>
+    </b-row>
 </template>
 
 <script>
@@ -36,7 +37,4 @@ module.exports = {
 </script>
 
 <style scoped>
-    .power_level {
-        width: 100%;
-    }
 </style>
