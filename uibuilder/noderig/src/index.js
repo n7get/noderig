@@ -20,6 +20,36 @@
 
 /** @see https://github.com/TotallyInformation/node-red-contrib-uibuilder/wiki/Front-End-Library---available-properties-and-methods */
 
+window.noderig = {
+    op_mode_mixin: {
+        data: function () {
+            return {
+                op_mode: ''
+            }
+        },
+        created() {
+            const self = this;
+
+            uibuilder.onChange('msg', msg => {
+                if(msg.hasOwnProperty('op_mode')) {
+                    self.$data.op_mode = msg.op_mode;
+                }
+            });
+        },
+        methods: {
+            isOpMode(arg) {
+                if(typeof(arg) === 'string') {
+                    return this.op_mode === arg;
+                }
+
+                if(Array.isArray(arg)) {
+                    return arg.find( e => e === this.op_mode );
+                }
+            }
+        }
+    },
+};
+
 Vue.prototype.$noderig = {
     config_items: {
         1:   {desc: 'AGC FAST DELAY',},

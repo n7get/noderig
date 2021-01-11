@@ -4,6 +4,7 @@
         <b-button class="col-3">Data HF</b-button>
         <frequency class="col-9"></frequency>
     </b-row>
+    <!-- <b-row v-show="isOpMode(['data-hf', 'voice-ssh'])" class="mt-2"> -->
     <b-row class="mt-2">
         <tuner-status class="mr-2"></tuner-status>
         <lock-status class="mr-2">></lock-status>
@@ -19,6 +20,7 @@
 
 <script>
 module.exports = {
+    mixins: [window.noderig.op_mode_mixin],
     components: {
         'config':           httpVueLoader('config.vue'),
         'alc-status':       httpVueLoader('alc-status.vue'),
