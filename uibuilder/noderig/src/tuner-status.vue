@@ -1,6 +1,6 @@
 
 <template>
-    <div class="tuner" @click="sendClick" @dblclick="sendDblclick">
+    <div :class="{tuner: true, on: on}" @click="sendClick" @dblclick="sendDblclick">
         TUNER
     </div>
 </template>
