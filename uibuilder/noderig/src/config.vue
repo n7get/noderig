@@ -1,13 +1,14 @@
 <template>
     <div>
-        <template v-for="(ci, no) in this.$noderig.config_items">
-            <config-item
-	        v-show="showConfigItem(no)"
+            <b-row
+                v-for="(ci, no) in config_items"
                 :key="no"
-                :no="no"
-	        :desc="ci.desc"
-            ></config-item>
-        </template>
+		v-show="showConfigItem(no)"
+            >
+	        <div class="col-1">{{ no }}</div>
+	        <div class="col-7">{{ ci.desc }}</div>
+	        <div class="col-3">{{ ci.value }}</div>
+            </b-row>
     </div>
 </template>
 
@@ -21,7 +22,7 @@ module.exports = {
     ],
     data() {
         return {
-            values: {},
+            config_items: this.$noderig.config_items,
         };
     },
     methods: {
@@ -42,6 +43,7 @@ module.exports = {
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('config')) {
+                self.config_items[msg.config.no].value = msg.config.value;
             }
         });
     }
