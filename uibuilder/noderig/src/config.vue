@@ -20,7 +20,7 @@ module.exports = {
     props: [
         'items',
     ],
-    data() {
+    data: function() {
         return {
             config_items: this.$noderig.config_items,
         };
@@ -38,8 +38,8 @@ module.exports = {
             uibuilder.send({topic: 'CONFIG_EVENT', payload: 'click'});
         },
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('config')) {

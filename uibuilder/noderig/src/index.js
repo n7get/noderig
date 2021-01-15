@@ -28,7 +28,7 @@ window.noderig = {
             }
         },
         created() {
-            const self = this;
+            var self = this;
 
             uibuilder.onChange('msg', msg => {
                 if(msg.hasOwnProperty('op_mode')) {

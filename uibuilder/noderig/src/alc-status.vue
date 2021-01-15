@@ -6,13 +6,13 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             on: false
         }
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg =>{
             if(msg.hasOwnProperty('alc_status')) {

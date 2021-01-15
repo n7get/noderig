@@ -43,7 +43,7 @@ module.exports = {
             default: 30,
         },
     },
-    data() {
+    data: function() {
         return {
             counter: 0,
             tx_on: false,
@@ -51,16 +51,16 @@ module.exports = {
         }
     },
     computed: {
-        minutes() {
+        minutes: function() {
             return Math.floor(this.counter / 60);
         },
-        seconds() {
+        seconds: function() {
             return pad2(this.counter % 60);
         },
     },
-    mounted() {
-        const self = this;
-        let intervalID;
+    mounted: function() {
+        var self = this,
+            intervalID;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('transmit')) {

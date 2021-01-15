@@ -20,19 +20,19 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             s_meter: '025',
             tx_on: false,
         }
     },
     computed: {
-         value() {
+         value: function() {
                 return "width: " + this.s_meter + "%";
          }
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('s_meter')) {

@@ -7,7 +7,7 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             on: false
         }
@@ -17,8 +17,8 @@ module.exports = {
             uibuilder.send({topic: 'LOCK_EVENT', payload: 'click'});
         },
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('lock')) {

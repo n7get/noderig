@@ -7,13 +7,13 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             mode: 'mode'
         }
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('mode')) {

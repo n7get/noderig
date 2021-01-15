@@ -14,7 +14,7 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             value: 5,
         }
@@ -24,8 +24,8 @@ module.exports = {
             uibuilder.send({topic: 'POWER_CHANGE_EVENT', payload: new_value});
         },
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('power_level')) {

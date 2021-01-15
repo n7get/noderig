@@ -11,14 +11,14 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             value: 0,
             tx_on: false,
         }
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('s_meter')) {

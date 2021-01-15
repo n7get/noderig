@@ -7,7 +7,7 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             on: false
         }
@@ -20,8 +20,8 @@ module.exports = {
             uibuilder.send({topic: 'TUNER_EVENT', payload: 'dblclick'});
         }
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg =>{
             if(msg.hasOwnProperty('tuner')) {

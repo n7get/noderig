@@ -6,7 +6,7 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             mhz: 'mmm',
             khz: 'kkk',
@@ -14,8 +14,8 @@ module.exports = {
             on:  false
         }
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('frequency')) {

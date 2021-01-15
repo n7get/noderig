@@ -7,7 +7,7 @@
 
 <script>
 module.exports = {
-    data() {
+    data: function() {
         return {
             pre_amp: 'unk'
         }
@@ -17,8 +17,8 @@ module.exports = {
             uibuilder.send({topic: 'PRE_AMP_EVENT', payload: 'click'});
         },
     },
-    mounted() {
-        const self = this;
+    mounted: function() {
+        var self = this;
     
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('pre_amp')) {

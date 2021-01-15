@@ -1,10 +1,12 @@
 <template>
-    <div v-show="!tx_on">
-        <div>
-            S-Meter:
-        </div>
-        <progress class="s_meter" max="100" :value="value"></progress>
+<b-row v-show="tx_on">
+    <div class="col-4">
+        SWR:
     </div>
+    <div class="swr-meter col mt-1">
+        <b-progress :value="value" max="255"></b-progress>
+    </div>
+</b-row>
 </template>
 
 <script>
@@ -19,8 +21,8 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('s_meter')) {
-                self.value = parseInt(msg.s_meter, 10);
+            if(msg.hasOwnProperty('swr_meter')) {
+                self.value = parseInt(msg.swr_meter, 10);
             }
             
             if(msg.hasOwnProperty('transmit')) {
@@ -30,10 +32,9 @@ module.exports = {
     }
 }
 </script>
+
 <style scoped>
-    .s_meter {
-        color: red;
-        font-size: 2em;
-        width: 100%;
-    }
+.swr-meter {
+    padding-left:0;
+}
 </style>
