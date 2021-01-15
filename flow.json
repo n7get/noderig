@@ -1,6 +1,6 @@
 [
     {
-        "id": "652a5441.cb9314",
+        "id": "32b9106a.4589e",
         "type": "tab",
         "label": "Serial I/O",
         "disabled": false,
@@ -52,205 +52,6 @@
         "responsetimeout": "10000"
     },
     {
-        "id": "6c96fe35.7c759",
-        "type": "serial in",
-        "z": "652a5441.cb9314",
-        "name": "",
-        "serial": "269a3122.a0068e",
-        "x": 100,
-        "y": 493,
-        "wires": [
-            [
-                "101240ee.33a9bf",
-                "e1d4204e.0e378"
-            ]
-        ]
-    },
-    {
-        "id": "3865250f.ebd2fa",
-        "type": "serial out",
-        "z": "652a5441.cb9314",
-        "name": "",
-        "serial": "269a3122.a0068e",
-        "x": 700,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "b34fd6b7.0e6228",
-        "type": "serial in",
-        "z": "652a5441.cb9314",
-        "name": "",
-        "serial": "3ef5815c.6122be",
-        "x": 116,
-        "y": 349.00000953674316,
-        "wires": [
-            [
-                "cb18f448.d4bd48",
-                "7f5aed82.d7cc34"
-            ]
-        ]
-    },
-    {
-        "id": "9c910d99.8851a",
-        "type": "serial out",
-        "z": "652a5441.cb9314",
-        "name": "",
-        "serial": "3ef5815c.6122be",
-        "x": 320,
-        "y": 237,
-        "wires": []
-    },
-    {
-        "id": "cb18f448.d4bd48",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "USB  input",
-        "func": "node.log(msg.payload);",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "101240ee.33a9bf",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "pty  input",
-        "func": "node.log(msg.payload);",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 300,
-        "y": 520,
-        "wires": []
-    },
-    {
-        "id": "eed6ae93.ef2d6",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "USB output",
-        "func": "node.log(msg.payload);",
-        "outputs": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 177,
-        "wires": []
-    },
-    {
-        "id": "7f5aed82.d7cc34",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "Handle rig Input",
-        "func": "const menu_cacheable = flow.get('menu_cacheable'),\n      menu_state = global.get('menu_state'),\n      config_state = global.get('config_state'),\n      needs_update = flow.get('needs_update'),\n      debounce = global.get('debounce'),\n      p = msg.payload;\n\nif(p) {\n    const cmd = p.substring(0,2);\n\n    if(cmd === '?;') {\n        return null;\n    }\n\n    if(debounce.hasOwnProperty(cmd)) {\n\n        // Debounce the frequency changes\n\n        debounce[cmd] = p;\n        \n        global.set('debounce', debounce);\n    }\n    else {\n\n        // Send other updates in real time.\n\n        node.send([{topic: cmd, payload: p}, null]);\n    }\n\n    // Send any replies to queries back to tye aux tty\n\n    if(needs_update.length) {\n        const still_needs_updating = [];\n\n        needs_update.forEach(cmd => {\n            if(cmd.length <= p.length && cmd === p.substring(0, cmd.length)) {\n                node.send([null, {payload: p}]);\n            }\n            else {\n                still_needs_updating.push(cmd);\n            }\n        });\n        flow.set('needs_update', still_needs_updating);\n    }\n\n    node.done();\n\n    // Cache non transient query commands\n\n    if(cmd !== 'EX') {\n        for(const [key, value] of Object.entries(menu_cacheable)) {\n            if(key.length <= p.length && key === p.substring(0, key.length)) {\n                menu_state[key] = p;\n            }\n        }\n    }\n    else {\n        const config_no = p.substring(2, 5);\n        \n        config_state[config_no] = p;\n    }\n\n    return null;\n}\n\nnode.warn('Received empty payload?');\n\nreturn [null, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\n\nflow.set('menu_cacheable', {\n    \"AC\": true,\n    \"AG0\": true,\n    \"AI\": true,\n    \"BC0\": true,\n    \"BI\": true,\n    \"BP00\": true,\n    \"BP01\": true,\n    \"BY\": true,\n    \"CN00\": true,\n    \"CN01\": true,\n    \"CO00\": true,\n    \"CO01\": true,\n    \"CO02\": true,\n    \"CO03\": true,\n    \"CS\": true,\n    \"CT0\": true,\n    \"FA\": true,\n    \"FB\": true,\n    \"FS\": true,\n    \"FT\": true,\n    \"GT0\": true,\n    \"ID\": true,\n    \"IF\": true,\n    \"IS0\": true,\n    \"KP\": true,\n    \"KR\": true,\n    \"KS\": true,\n    \"LK\": true,\n    \"MC\": true,\n    \"MD0\": true,\n    \"MG\": true,\n    \"ML0\": true,\n    \"ML1\": true,\n    \"MS\": true,\n    \"MX\": true,\n    \"NA0\": true,\n    \"NB0\": true,\n    \"NL0\": true,\n    \"NR0\": true,\n    \"OI\": true,\n    \"OS0\": true,\n    \"PA0\": true,\n    \"PC\": true,\n    \"PL\": true,\n    \"PR0\": true,\n    \"PR1\": true,\n    \"RA0\": true,\n    \"RG0\": true,\n    \"RI0\": true,\n    \"RI3\": true,\n    \"RI4\": true,\n    \"RI5\": true,\n    \"RI6\": true,\n    \"RI7\": true,\n    \"RIA\": true,\n    \"RL0\": true,\n    \"RS\": true,\n    \"RT\": true,\n    \"SD\": true,\n    \"SH0\": true,\n    \"SQ0\": true,\n    \"TS\": true,\n    \"TX\": true,\n    \"UL\": true,\n    \"VD\": true,\n    \"VG\": true,\n    \"VX\": true,\n    \"XT\": true,\n});\n\nflow.set('config_items', {\n\t\"001\": \"AGC FAST DELAY\",\n\t\"002\": \"AGC MID DELAY\",\n\t\"003\": \"AGC SLOW DELAY\",\n\t\"004\": \"HOME FUNCTION\",\n\t\"005\": \"MY CALL INDICATION\",\n\t\"006\": \"DISPLAY COLOR\",\n\t\"007\": \"DIMMER LED\",\n\t\"008\": \"DIMMER TFT\",\n\t\"009\": \"BAR MTR PEAK HOLD\",\n\t\"010\": \"DVS RX OUT LEVEL\",\n\t\"011\": \"DVS TX OUT LEVEL\",\n\t\"012\": \"KEYER TYPE\",\n\t\"013\": \"KEYER DOT/DASH\",\n\t\"014\": \"CW WEIGHT\",\n\t\"015\": \"BEACON INTERVAL\",\n\t\"016\": \"NUMBER STYLE\",\n\t\"017\": \"CONTEST NUMBER\",\n\t\"018\": \"CW MEMORY 1\",\n\t\"019\": \"CW MEMORY 2\",\n\t\"020\": \"CW MEMORY 3\",\n\t\"021\": \"CW MEMORY 4\",\n\t\"022\": \"CW MEMORY 5\",\n\t\"023\": \"NB WIDTH\",\n\t\"024\": \"NB REJECTION\",\n\t\"025\": \"NB LEVEL\",\n\t\"026\": \"BEEP LEVEL\",\n\t\"027\": \"TIME ZONE\",\n\t\"028\": \"GPS/232C SELECT\",\n\t\"029\": \"232C RATE\",\n\t\"030\": \"232C TOT\",\n\t\"031\": \"CAT RATE\",\n\t\"032\": \"CAT TOT\",\n\t\"033\": \"CAT RTS\",\n\t\"034\": \"MEM GROUP\",\n\t\"035\": \"QUICK SPLIT FREQ\",\n\t\"036\": \"TX TOT\",\n\t\"037\": \"MIC SCAN\",\n\t\"038\": \"MIC SCAN RESUME\",\n\t\"039\": \"REF FREQ ADJ\",\n\t\"040\": \"CLAR MODE SELECT\",\n\t\"041\": \"AM LCUT FREQ\",\n\t\"042\": \"AM LCUT SLOPE\",\n\t\"043\": \"AM HCUT FREQ\",\n\t\"044\": \"AM HCUT SLOPE\",\n\t\"045\": \"AM MIC SELECT\",\n\t\"046\": \"AM OUT LEVEL\",\n\t\"047\": \"AM PTT SELECT\",\n\t\"048\": \"AM PORT SELECT\",\n\t\"049\": \"AM DATA GAIN\",\n\t\"050\": \"CW LCUT FREQ\",\n\t\"051\": \"CW LCUT SLOPE\",\n\t\"052\": \"CW HCUT FREQ\",\n\t\"053\": \"CW HCUT SLOPE\",\n\t\"054\": \"CW OUT LEVEL\",\n\t\"055\": \"CW AUTO MODE\",\n\t\"056\": \"CW BK-IN TYPE\",\n\t\"057\": \"CW BK-IN DELAY\",\n\t\"058\": \"CW WAVE SHAPE\",\n\t\"059\": \"CW FREQ DISPLAY\",\n\t\"060\": \"PC KEYING\",\n\t\"061\": \"QSK DELAY TIME\",\n\t\"062\": \"DATA MODE\",\n\t\"063\": \"PSK TONE\",\n\t\"064\": \"OTHER DISP (SSB)\",\n\t\"065\": \"OTHER SHIFT (SSB)\",\n\t\"066\": \"DATA LCUT FREQ\",\n\t\"067\": \"DATA LCUT SLOPE\",\n\t\"068\": \"DATA HCUT FREQ\",\n\t\"069\": \"DATA HCUT SLOPE\",\n\t\"070\": \"DATA IN SELECT\",\n\t\"071\": \"DATA PTT SELECT\",\n\t\"072\": \"DATA PORT SELECT\",\n\t\"073\": \"DATA OUT LEVEL\",\n\t\"074\": \"FM MIC SELECT\",\n\t\"075\": \"FM OUT LEVEL\",\n\t\"076\": \"FM PKT PTT SELECT\",\n\t\"077\": \"FM PKT PORT SELECT\",\n\t\"078\": \"FM PKT TX GAIN\",\n\t\"079\": \"FM PKT MODE\",\n\t\"080\": \"RPT SHIFT 28MHz\",\n\t\"081\": \"RPT SHIFT 50MHz\",\n\t\"082\": \"RPT SHIFT 144MHz\",\n\t\"083\": \"RPT SHIFT 430MHz\",\n\t\"084\": \"ARS 144MHz\",\n\t\"085\": \"ARS 430MHz\",\n\t\"086\": \"DCS POLARITY\",\n\t\"087\": \"RADIO ID\",\n\t\"088\": \"GM DISPLY\",\n\t\"089\": \"DISTANCE\",\n\t\"090\": \"AMS TX MODE\",\n\t\"091\": \"STANDBY BEEP\",\n\t\"092\": \"RTTY LCUT FREQ\",\n\t\"093\": \"RTTY LCUT SLOPE\",\n\t\"094\": \"RTTY HCUT FREQ\",\n\t\"095\": \"RTTY HCUT SLOPE\",\n\t\"096\": \"RTTY SHIFT PORT\",\n\t\"097\": \"RTTY POLARITY-RX\",\n\t\"098\": \"RTTY POLARITY-TX\",\n\t\"099\": \"RTTY OUT LEVEL\",\n\t\"100\": \"RTTY SHIFT FREQ\",\n\t\"101\": \"RTTY MARK FREQ\",\n\t\"102\": \"SSB LCUT FREQ\",\n\t\"103\": \"SSB LCUT SLOPE\",\n\t\"104\": \"SSB HCUT FREQ\",\n\t\"105\": \"SSB HCUT SLOPE\",\n\t\"106\": \"SSB MIC SELECT\",\n\t\"107\": \"SSB OUT LEVEL\",\n\t\"108\": \"SSB PTT SELECT\",\n\t\"109\": \"SSB PORT SELECT\",\n\t\"110\": \"SSB TX BPF\",\n\t\"111\": \"APF WIDTH\",\n\t\"112\": \"CONTOUR LEVEL\",\n\t\"113\": \"CONTOUR WIDTH\",\n\t\"114\": \"IF NOTCH WIDTH\",\n\t\"115\": \"SCP DISPLAY MODE\",\n\t\"116\": \"SCP SPAN FREQ\",\n\t\"117\": \"SPECTRUM COLOR\",\n\t\"118\": \"WATER FALL COLOR\",\n\t\"119\": \"PRMTRC EQ1 FREQ\",\n\t\"120\": \"PRMTRC EQ1 LEVEL\",\n\t\"121\": \"PRMTRC EQ1 BWTH\",\n\t\"122\": \"PRMTRC EQ2 FREQ\",\n\t\"123\": \"PRMTRC EQ2 LEVEL\",\n\t\"124\": \"PRMTRC EQ2 BWTH\",\n\t\"125\": \"PRMTRC EQ3 FREQ\",\n\t\"126\": \"PRMTRC EQ3 LEVEL\",\n\t\"127\": \"PRMTRC EQ3 BWTH\",\n\t\"128\": \"P-PRMTRC EQ1 FREQ\",\n\t\"129\": \"P-PRMTRC EQ1 LEVEL\",\n\t\"130\": \"P-PRMTRC EQ1 BWTH\",\n\t\"131\": \"P-PRMTRC EQ2 FREQ\",\n\t\"132\": \"P-PRMTRC EQ2 LEVEL\",\n\t\"133\": \"P-PRMTRC EQ2 BWTH\",\n\t\"134\": \"P-PRMTRC EQ3 FREQ\",\n\t\"135\": \"P-PRMTRC EQ3 LEVEL\",\n\t\"136\": \"P-PRMTRC EQ3 BWTH\",\n\t\"137\": \"HF TX MAX POWER\",\n\t\"138\": \"50M TX MAX POWER\",\n\t\"139\": \"144M TX MAX POWER\",\n\t\"140\": \"430M TX MAX POWER\",\n\t\"141\": \"TUNER SELECT\",\n\t\"142\": \"VOX SELECT\",\n\t\"143\": \"VOX GAIN\",\n\t\"144\": \"VOX DELAY\",\n\t\"145\": \"ANTI VOX GAIN\",\n\t\"146\": \"DATA VOX GAIN\",\n\t\"147\": \"DATA VOX DELAY\",\n\t\"148\": \"ANTI DVOX GAIN\",\n\t\"149\": \"EMERGENCY FREQ TX\",\n\t\"150\": \"PRT/WIRES FREQ\",\n\t\"151\": \"PRESET FREQUENCY\",\n\t\"152\": \"SEARCH SETUP\",\n\t\"153\": \"WIRES DG-ID\"\n});\n\nflow.set('auto_inform', false);\n\nflow.set('needs_update', []);\n\nglobal.set('debounce', {'FA': 'FA', 'FB': 'FB', 'IF': 'IF', 'OB': 'OB'});\n\nglobal.set('menu_state', {});\nglobal.set('config_state', {});",
-        "finalize": "",
-        "x": 320,
-        "y": 380,
-        "wires": [
-            [
-                "88c2513f.bcbec"
-            ],
-            [
-                "208400b8.01f3c"
-            ]
-        ]
-    },
-    {
-        "id": "e1d4204e.0e378",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "Check cache",
-        "func": "let menu_cacheable = flow.get('menu_cacheable'),\n    menu_state = global.get('menu_state'),\n    needs_update = flow.get('needs_update'),\n    p = msg.payload.toUpperCase();\n\nif(p) {\n    if(p.substring(0,2) === 'AI') {\n        if(p === 'AI0;') {\n            node.warn('### Got AI0;');\n        }\n        if(p === 'Ai1;') {\n            node.warn('### Got AI1;');\n        }\n        return [{payload: '?;'}, null];\n    }\n\n    let t = p.substring(0, p.length - 1);\n\n    if(menu_state.hasOwnProperty(t)) {\n        return [{payload: menu_state[t]}, null];\n    }\n\n    if(menu_cacheable.hasOwnProperty(t)) {\n        needs_update.push(t);\n        \n        flow.set('needs_update', needs_update);\n    }\n\n    // Non-cacheable commands always go out, as well\n    // as cache misses\n    \n    return [null, {payload: p}];\n}\n\nnode.warn('Received empty payload?');\n\nreturn [null, null];",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 460,
-        "wires": [
-            [
-                "208400b8.01f3c"
-            ],
-            [
-                "2ed9f9d1.e157a6"
-            ]
-        ]
-    },
-    {
-        "id": "88c2513f.bcbec",
-        "type": "flowcontrolIn",
-        "z": "652a5441.cb9314",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 540,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "208400b8.01f3c",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "pty output",
-        "func": "node.log(msg.payload);\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 530,
-        "y": 420,
-        "wires": [
-            [
-                "3865250f.ebd2fa"
-            ]
-        ]
-    },
-    {
-        "id": "4b2e856c.e60dec",
-        "type": "flowcontrolOut",
-        "z": "652a5441.cb9314",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 206,
-        "wires": [
-            [
-                "eed6ae93.ef2d6",
-                "9c910d99.8851a"
-            ]
-        ]
-    },
-    {
-        "id": "2ed9f9d1.e157a6",
-        "type": "flowcontrolIn",
-        "z": "652a5441.cb9314",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 530,
-        "y": 480,
-        "wires": []
-    },
-    {
         "id": "a7a1894c.5cffc8",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
@@ -261,11 +62,10 @@
         "blObj": "",
         "name": "TO_UI",
         "x": 150,
-        "y": 480,
+        "y": 600,
         "wires": [
             [
-                "32d66e09.a27d62",
-                "6507dd2a.b388d4"
+                "32d66e09.a27d62"
             ]
         ]
     },
@@ -283,21 +83,22 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 670,
-        "y": 420,
+        "y": 540,
         "wires": []
     },
     {
         "id": "fe0474ed.9a78e8",
         "type": "function",
         "z": "36d8cfa8.00955",
+        "d": true,
         "name": "Parse IF",
         "func": "let p = msg.payload,\n    ft_modes = flow.get('ft_modes'),\n    ft_offset = flow.get('ft_offset');\n\nif(p && p.length === 28) {\n    let parsed_if = {\n        raw: p,\n        mem_chan: parseInt(p.substring(2,5)),\n        freq: p.substring(5,14),\n        clarifier: p.substring(14,19),\n        rx_clar: p.substring(19, 20) != '0',\n        tx_clar: p.substring(20, 21) != '0',\n        mode: ft_modes[p.substring(21, 22)] || p.substring(21, 22),\n        p7: p.substring(22, 23),\n        tone: p.substring(23, 24),\n        offset: ft_offset[p.substring(26, 27)] || p.substring(26, 27)\n    };\n    \n    node.send([parsed_if, null]);\n    node.send([null, {topic: 'FA', payload: 'FA' + p.substring(5,14)}]);\n    node.send([null, {topic: 'MD', payload: 'MD0' + p.substring(21, 22)}]);\n    \n    node.done();\n}\nelse {\n    return [msg, null];\n}",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 300,
-        "y": 1120,
+        "x": 320,
+        "y": 1240,
         "wires": [
             [
                 "d56ea408.310f78"
@@ -325,7 +126,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 470,
-        "y": 1100,
+        "y": 1220,
         "wires": []
     },
     {
@@ -335,21 +136,21 @@
         "name": "IF",
         "info": "",
         "x": 70,
-        "y": 1060,
+        "y": 1180,
         "wires": []
     },
     {
         "id": "7679043f.b3c27c",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "IF",
+        "topic": "INFORMATION",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 150,
-        "y": 1120,
+        "x": 140,
+        "y": 1240,
         "wires": [
             [
                 "fe0474ed.9a78e8"
@@ -367,7 +168,7 @@
         "blObj": "",
         "name": "",
         "x": 500,
-        "y": 1140,
+        "y": 1260,
         "wires": []
     },
     {
@@ -375,13 +176,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "FA -> frequency",
-        "func": "let p = msg.payload,\n    frequency = 'MMMKKKHHH';\n    \nif(p) {\n    frequency = p.substring(2, 12);\n}\n\nreturn {payload: {frequency: frequency}};",
+        "func": "const fa = msg.payload;\nlet value = fa.value.toString();\n\nwhile(value.length < 9) {\n    value = ' ' + value;\n}\n\nreturn {payload: {frequency: value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 320,
-        "y": 980,
+        "x": 380,
+        "y": 1100,
         "wires": [
             [
                 "f4957c97.d011b"
@@ -392,17 +193,18 @@
         "id": "878e3d25.f3563",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "FA",
+        "topic": "FREQUENCY_VFO-A",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 149,
-        "y": 980,
+        "x": 159,
+        "y": 1100,
         "wires": [
             [
-                "73ba80c7.20d9"
+                "73ba80c7.20d9",
+                "719b629e.c627dc"
             ]
         ]
     },
@@ -413,7 +215,7 @@
         "name": "Frequency",
         "info": "",
         "x": 90,
-        "y": 920,
+        "y": 1040,
         "wires": []
     },
     {
@@ -426,8 +228,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 490,
-        "y": 980,
+        "x": 550,
+        "y": 1100,
         "wires": []
     },
     {
@@ -446,7 +248,7 @@
         "sessionLength": 432000,
         "tokenAutoExtend": false,
         "x": 500,
-        "y": 480,
+        "y": 600,
         "wires": [
             [
                 "2f69877c.f1a878",
@@ -468,7 +270,7 @@
         "initialize": "",
         "finalize": "",
         "x": 319,
-        "y": 480,
+        "y": 600,
         "wires": [
             [
                 "c229a01c.c9c49",
@@ -481,13 +283,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Refresh UI",
-        "func": "\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const [key, value] of Object.entries(global.get('menu_state'))) {\n    node.send({topic: key, payload: value});\n}\n\nfor(const [key, value] of Object.entries(global.get('config_state'))) {\n    node.send({topic: 'EX', payload: value});\n}\n\nnode.done();",
+        "func": "const RigState = global.get('RigState');\n\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const rs of RigState.getAll()) {\n    node.send({topic: rs.topic, payload: rs});\n}\n\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 690,
-        "y": 500,
+        "y": 620,
         "wires": [
             [
                 "5254abbf.2aaab4"
@@ -505,7 +307,7 @@
         "blObj": "",
         "name": "",
         "x": 880,
-        "y": 500,
+        "y": 620,
         "wires": []
     },
     {
@@ -513,13 +315,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "AC -> tuner",
-        "func": "let p = msg.payload;\n\nif(p) {\n    switch(p.substring(4,5)) {\n    case '0':   return {payload: {tuner: false}};\n    case '1':   return {payload: {tuner: true}};\n    case '2':   return {payload: {}};\n    }\n}\n\nreturn null;",
+        "func": "const ac = msg.payload;\n\nreturn {payload: {tuner: ac.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 310,
-        "y": 780,
+        "x": 410,
+        "y": 900,
         "wires": [
             [
                 "3217ca4b.1be0c6"
@@ -530,14 +332,14 @@
         "id": "98c509ae.1f24e8",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "AC",
+        "topic": "ANTENNA_TUNER_CONTROL",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 150,
-        "y": 780,
+        "x": 190,
+        "y": 900,
         "wires": [
             [
                 "1c4a71e4.2855ce"
@@ -551,7 +353,7 @@
         "name": "Tuner status",
         "info": "",
         "x": 95,
-        "y": 740,
+        "y": 860,
         "wires": []
     },
     {
@@ -564,8 +366,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 470,
-        "y": 780,
+        "x": 570,
+        "y": 900,
         "wires": []
     },
     {
@@ -579,7 +381,7 @@
         "blObj": "",
         "name": "",
         "x": 700,
-        "y": 460,
+        "y": 580,
         "wires": []
     },
     {
@@ -592,8 +394,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 180,
-        "y": 838,
+        "x": 140,
+        "y": 958,
         "wires": [
             [
                 "299f4698.81a6aa"
@@ -605,13 +407,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Handle tuner event",
-        "func": "const tuner_off = 'AC000;',\n      tuner_on = 'AC001;',\n      tune = 'AC002;';\n\nif(msg.payload === 'click') {\n    const menu_state = global.get('menu_state');\n\n    switch(menu_state['AC']) {\n    case tuner_off: return {payload: tuner_on};\n    case tuner_on:  return {payload: tuner_off};\n    default:        return {payload: tuner_on};\n    }\n}\n\nif(msg.payload === 'dblclick') {\n    return {payload: tune};\n}\n\nreturn null;",
+        "func": "const RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState'),\n      ac = RigState.getRigSetting('ANTENNA_TUNER_CONTROL');\n\nif(msg.payload === 'click') {\n    return {payload: RigSetting.of('ANTENNA_TUNER_CONTROL', ac.value === 'on' ? 'off' : 'on').asSet};\n}\n\nif(msg.payload === 'dblclick') {\n    return {payload: RigSetting.of('ANTENNA_TUNER_CONTROL', 'tune').asSet};\n}\n\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 390,
-        "y": 838,
+        "x": 350,
+        "y": 958,
         "wires": [
             [
                 "96fc3f21.ca5c3"
@@ -628,8 +430,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 590,
-        "y": 838,
+        "x": 550,
+        "y": 958,
         "wires": []
     },
     {
@@ -637,13 +439,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "LK -> lock",
-        "func": "let p = msg.payload;\n\nif(p) {\n    return {payload: {lock: p.substring(2,3) === '1'}};\n}\n\nreturn null;",
+        "func": "let p = msg.payload;\n\nreturn {payload: {lock: p.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 310,
-        "y": 1260,
+        "x": 270,
+        "y": 1380,
         "wires": [
             [
                 "5c966a43.6ca814"
@@ -654,14 +456,14 @@
         "id": "1ba35fd8.f2d5b",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "LK",
+        "topic": "LOCK",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 150,
-        "y": 1260,
+        "x": 110,
+        "y": 1380,
         "wires": [
             [
                 "615827bd.14ab08"
@@ -675,7 +477,7 @@
         "name": "Dial lock status",
         "info": "",
         "x": 105,
-        "y": 1200,
+        "y": 1320,
         "wires": []
     },
     {
@@ -688,8 +490,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 469,
-        "y": 1260,
+        "x": 429,
+        "y": 1380,
         "wires": []
     },
     {
@@ -702,8 +504,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 170,
-        "y": 1318,
+        "x": 130,
+        "y": 1438,
         "wires": [
             [
                 "29c9ad6f.f10de2"
@@ -715,13 +517,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Handle tuner event",
-        "func": "const lock_off = 'LK0;',\n      lock_on = 'LK1;';\n\nif(msg.payload === 'click') {\n    const menu_state = global.get('menu_state');\n\n    switch(menu_state['LK']) {\n    case lock_off:  return {payload: lock_on};\n    case lock_on:   return {payload: lock_off};\n    default:        return {payload: lock_on};\n    }\n}\n\nreturn null;",
+        "func": "const RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState'),\n      lk = RigState.getRigSetting('LOCK');\n\nif(msg.payload === 'click') {\n        return {payload: RigSetting.of('LOCK', !lk.value).asSet};\n}\n\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 375,
-        "y": 1318,
+        "x": 335,
+        "y": 1438,
         "wires": [
             [
                 "324563b3.8a6bec"
@@ -738,70 +540,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 590,
-        "y": 1318,
-        "wires": []
-    },
-    {
-        "id": "f37c19d1.ee3968",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Refresh GUI",
-        "func": "\nlet menu_state = global.get('menu_state'),\n    debounce = global.get('debounce'),\n    gui_state = flow.get('gui_state');\n    \nfor (const [key, value] of Object.entries(menu_state)) {\n  if(gui_state.hasOwnProperty(key)) {\n      if(gui_state[key] !== value) {\n          gui_state[key] = value;\n          \n          node.send({topic: key, payload: value});\n      }\n  }\n  else {\n      gui_state[key] = value;\n      \n      node.send({topic: key, payload: value});\n  }\n}\n\nflow.set('gui_state', gui_state);\n\nnode.done();\n\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 270,
-        "y": 340,
-        "wires": [
-            [
-                "98e20c03.d9025"
-            ]
-        ]
-    },
-    {
-        "id": "6a26ab56.d53c74",
-        "type": "inject",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "1",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 135,
-        "y": 340,
-        "wires": [
-            [
-                "f37c19d1.ee3968"
-            ]
-        ],
-        "l": false
-    },
-    {
-        "id": "98e20c03.d9025",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 460,
-        "y": 340,
+        "x": 550,
+        "y": 1438,
         "wires": []
     },
     {
@@ -811,7 +551,7 @@
         "name": "Update UI",
         "info": "",
         "x": 80,
-        "y": 280,
+        "y": 400,
         "wires": []
     },
     {
@@ -821,7 +561,7 @@
         "name": "UI interface",
         "info": "",
         "x": 90,
-        "y": 420,
+        "y": 540,
         "wires": []
     },
     {
@@ -829,13 +569,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "MD -> mode",
-        "func": "let p = msg.payload,\n    ft_modes = flow.get('ft_modes');\n\nif(p) {\n    let mode_no = p.substring(3,4),\n        mode = ft_modes[mode_no];\n        \n    return {payload: {mode: mode}};\n}\n\nreturn null;",
+        "func": "let mode = msg.payload;\n\nreturn {payload: {mode: mode.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 300,
-        "y": 1440,
+        "x": 280,
+        "y": 1560,
         "wires": [
             [
                 "7b45ceb6.f23ed"
@@ -846,17 +586,18 @@
         "id": "dd11d45.b7b1428",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "MD",
+        "topic": "MODE",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 150,
-        "y": 1440,
+        "x": 110,
+        "y": 1560,
         "wires": [
             [
-                "44f940cc.6e0d8"
+                "44f940cc.6e0d8",
+                "d5fb7c28.17546"
             ]
         ]
     },
@@ -867,7 +608,7 @@
         "name": "RF mode status",
         "info": "",
         "x": 100,
-        "y": 1400,
+        "y": 1520,
         "wires": []
     },
     {
@@ -881,7 +622,7 @@
         "blObj": "",
         "name": "",
         "x": 450,
-        "y": 1440,
+        "y": 1560,
         "wires": []
     },
     {
@@ -891,7 +632,7 @@
         "name": "Pre amp status",
         "info": "",
         "x": 101,
-        "y": 1520,
+        "y": 1640,
         "wires": []
     },
     {
@@ -899,13 +640,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "PA -> pre_amp",
-        "func": "let p = msg.payload,\n    ft_preamp = flow.get('ft_preamp');\n\nif(p) {\n    let ipo_no = p.substring(3,4),\n        pre_amp = ft_preamp[ipo_no];\n        \n    return {payload: {pre_amp: pre_amp}};\n}\n\nreturn null;",
+        "func": "let pre_amp = msg.payload;\n\nreturn {payload: {pre_amp: pre_amp.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 320,
-        "y": 1580,
+        "x": 340,
+        "y": 1700,
         "wires": [
             [
                 "ff3678f2.db8be8"
@@ -916,14 +657,14 @@
         "id": "f3d95bd.78392a8",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "PA0",
+        "topic": "PRE-AMP_(IPO)",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 151,
-        "y": 1580,
+        "x": 141,
+        "y": 1700,
         "wires": [
             [
                 "8966cf54.edcbc"
@@ -940,25 +681,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 490,
-        "y": 1580,
-        "wires": []
-    },
-    {
-        "id": "6507dd2a.b388d4",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 310,
-        "y": 420,
+        "x": 510,
+        "y": 1700,
         "wires": []
     },
     {
@@ -971,8 +695,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 190,
-        "y": 1640,
+        "x": 150,
+        "y": 1760,
         "wires": [
             [
                 "a46ebafd.b79ee8"
@@ -984,13 +708,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Handle pre amp event",
-        "func": "const ipo = 'PA00;',\n      amp1 = 'PA01;',\n      amp2 = 'PA02;'\n\nif(msg.payload === 'click') {\n    const menu_state = global.get('menu_state');\n\n    switch(menu_state['PA0']) {\n    case ipo:   return {payload: amp1};\n    case amp1:  return {payload: amp2};\n    case amp2:  return {payload: ipo};\n    default:    return {payload: ipo};\n    }\n}\n\nreturn null;",
+        "func": "const RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState'),\n      pre_amp = RigState.getRigSetting('PRE-AMP_(IPO)');\n\nif(msg.payload === 'click') {\n    switch(pre_amp.value) {\n    case 'IPO': return {payload: RigSetting.of('PRE-AMP_(IPO)', 'AMP1').asSet};\n    case 'AMP1': return {payload: RigSetting.of('PRE-AMP_(IPO)', 'AMP2').asSet};\n    case 'AMP2': return {payload: RigSetting.of('PRE-AMP_(IPO)', 'IPO').asSet};\n    }\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 420,
-        "y": 1640,
+        "x": 380,
+        "y": 1760,
         "wires": [
             [
                 "5ff01c89.535f64"
@@ -1007,8 +731,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 630,
-        "y": 1640,
+        "x": 590,
+        "y": 1760,
         "wires": []
     },
     {
@@ -1016,13 +740,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "RM -> alc_status",
-        "func": "let p = msg.payload;\n\nif(p && p.length > 2) {\n    const meter = p.substring(2, 3),\n          value = parseInt(p.substring(3, 6), 10);\n\n    if(meter === '4') {\n        return {payload: {alc_status: (value >= 5), value: value}};\n    }\n\n    if(meter === '6') {\n        return {payload: {swr_status: (value >= 5), value: value}};\n    }\n}\n\nreturn null;",
+        "func": "let alc = msg.payload;\n\nreturn {payload: {alc_status: (value >= 5), value: alc.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 330,
-        "y": 1780,
+        "x": 390,
+        "y": 1900,
         "wires": [
             [
                 "3ec17c54.34b114"
@@ -1036,21 +760,21 @@
         "name": "Data ALC status",
         "info": "",
         "x": 100,
-        "y": 1720,
+        "y": 1840,
         "wires": []
     },
     {
         "id": "37037542.441caa",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "RM",
+        "topic": "READ_METER_-_ALC",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 150,
-        "y": 1780,
+        "x": 160,
+        "y": 1900,
         "wires": [
             [
                 "407bcb2b.b76c44"
@@ -1064,7 +788,7 @@
         "name": "Power Level",
         "info": "",
         "x": 90,
-        "y": 1860,
+        "y": 1980,
         "wires": []
     },
     {
@@ -1074,7 +798,7 @@
         "name": "S Meter",
         "info": "",
         "x": 70,
-        "y": 2060,
+        "y": 2180,
         "wires": []
     },
     {
@@ -1082,13 +806,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Send initial commands",
-        "func": "const ConfigItem = flow.get('ConfigItem');\nconst menu_init = [\n          'AI1;',\n          'IF;',\n          'AC;',\n          'GT0;',\n          'LK;',\n          'MS;',\n          'PA0;',\n          'PC;',\n          'PA0;',\n          'PC;',\n          'RIA;'\n      ];\n\nmenu_init.forEach( cmd => node.send({ payload: cmd }) );\n\n// This starts the rig's config being loaded\n\nnode.send({payload: ConfigItem.toCat(1)});\nflow.set('next_config', 2);\n\nnode.done();\n",
+        "func": "// const ConfigItem = flow.get('ConfigItem');\n\n// node.send({payload: ConfigItem.toCat(1)});\n// flow.set('next_config', 2);\n\nnode.done();",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict';\n\n// UI Iterface functions\n\nfunction uiMessage(no, value) {\n\treturn {config: {no: no, value: value}};\n}\n\nfunction defaultToUi (no, value) {\n\treturn uiMessage(no, value);\n}\n\nfunction toUiDataMode(no, value) {\n\treturn uiMessage(no, value === '0' ? 'PSK' : 'OTHER');\n}\n\nfunction toUiDataPortSelect(no, value) {\n\treturn uiMessage(no, value === '1' ? 'DATA' : 'USB');\n}\n\nfunction toUiFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\n\nfunction toUiMicSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'MIC' : 'REAR');\n}\n\nfunction toUiPttSelect(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'DAKY');\n    case '1': return uiMessage(no, 'RTS');\n    case '2': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiSimpleValue(no, value) {\n\treturn uiMessage(no, parseInt(value, 10).toString());\n}\n\nfunction toUiPcKeying(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'OFF');\n    case '1': return uiMessage(no, 'DAKY');\n    case '2': return uiMessage(no, 'RTS');\n    case '3': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiVoicePortSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'DATA' : 'USB');\n}\n\nfunction cutFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\nfunction toUiLCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 1));\n}\nfunction toUiSlope(no, value) {\n\treturn uiMessage(no, value === '0' ? '6 dB' : '18 dB');\n}\nfunction toUiHCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 13));\n}\n\nfunction defaultFromUi (arg) {\n    return null;\n}\n\nfunction toCat(no, value) {\n    let prefix;\n\n    if(no < 10) {\n        prefix = 'EX00' + no;\n    }\n    else if(no < 100) {\n        prefix = 'EX0' + no;\n    }\n    else {\n        prefix = 'EX' + no;\n    }\n\n    if(value) {\n        return prefix + value + ';';\n    }\n    return prefix + ';';\n}\n\nconst config_items = {\n\t1: {desc: 'AGC FAST DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t2: {desc: 'AGC MID DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t3: {desc: 'AGC SLOW DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t4: {desc: 'HOME FUNCTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t5: {desc: 'MY CALL INDICATION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t6: {desc: 'DISPLAY COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t7: {desc: 'DIMMER LED', toUi: defaultToUi, fromUi: defaultFromUi},\n\t8: {desc: 'DIMMER TFT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t9: {desc: 'BAR MTR PEAK HOLD', toUi: defaultToUi, fromUi: defaultFromUi},\n\t10: {desc: 'DVS RX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t11: {desc: 'DVS TX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t12: {desc: 'KEYER TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t13: {desc: 'KEYER DOT/DASH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t14: {desc: 'CW WEIGHT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t15: {desc: 'BEACON INTERVAL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t16: {desc: 'NUMBER STYLE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t17: {desc: 'CONTEST NUMBER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t18: {desc: 'CW MEMORY 1', toUi: defaultToUi, fromUi: defaultFromUi},\n\t19: {desc: 'CW MEMORY 2', toUi: defaultToUi, fromUi: defaultFromUi},\n\t20: {desc: 'CW MEMORY 3', toUi: defaultToUi, fromUi: defaultFromUi},\n\t21: {desc: 'CW MEMORY 4', toUi: defaultToUi, fromUi: defaultFromUi},\n\t22: {desc: 'CW MEMORY 5', toUi: defaultToUi, fromUi: defaultFromUi},\n\t23: {desc: 'NB WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t24: {desc: 'NB REJECTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t25: {desc: 'NB LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t26: {desc: 'BEEP LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t27: {desc: 'TIME ZONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t28: {desc: 'GPS/232C SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t29: {desc: '232C RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t30: {desc: '232C TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t31: {desc: 'CAT RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t32: {desc: 'CAT TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t33: {desc: 'CAT RTS', toUi: defaultToUi, fromUi: defaultFromUi},\n\t34: {desc: 'MEM GROUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t35: {desc: 'QUICK SPLIT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t36: {desc: 'TX TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t37: {desc: 'MIC SCAN', toUi: defaultToUi, fromUi: defaultFromUi},\n\t38: {desc: 'MIC SCAN RESUME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t39: {desc: 'REF FREQ ADJ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t40: {desc: 'CLAR MODE SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t41: {desc: 'AM LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t42: {desc: 'AM LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t43: {desc: 'AM HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t44: {desc: 'AM HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t45: {desc: 'AM MIC SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t46: {desc: 'AM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t47: {desc: 'AM PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t48: {desc: 'AM PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t49: {desc: 'AM DATA GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t50: {desc: 'CW LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t51: {desc: 'CW LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t52: {desc: 'CW HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t53: {desc: 'CW HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t54: {desc: 'CW OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t55: {desc: 'CW AUTO MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t56: {desc: 'CW BK-IN TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t57: {desc: 'CW BK-IN DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t58: {desc: 'CW WAVE SHAPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t59: {desc: 'CW FREQ DISPLAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t60: {desc: 'PC KEYING', toUi: toUiPcKeying, fromUi: defaultFromUi},\n\t61: {desc: 'QSK DELAY TIME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t62: {desc: 'DATA MODE', toUi: toUiDataMode, fromUi: defaultFromUi},\n\t63: {desc: 'PSK TONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t64: {desc: 'OTHER DISP (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t65: {desc: 'OTHER SHIFT (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t66: {desc: 'DATA LCUT FREQ', toUi: toUiLCutFreq, fromUi: defaultFromUi},\n\t67: {desc: 'DATA LCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t68: {desc: 'DATA HCUT FREQ', toUi: toUiHCutFreq, fromUi: defaultFromUi},\n\t69: {desc: 'DATA HCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t70: {desc: 'DATA IN SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t71: {desc: 'DATA PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t72: {desc: 'DATA PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t73: {desc: 'DATA OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t74: {desc: 'FM MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t75: {desc: 'FM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t76: {desc: 'FM PKT PTT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t77: {desc: 'FM PKT PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t78: {desc: 'FM PKT TX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t79: {desc: 'FM PKT MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t80: {desc: 'RPT SHIFT 28MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t81: {desc: 'RPT SHIFT 50MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t82: {desc: 'RPT SHIFT 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t83: {desc: 'RPT SHIFT 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t84: {desc: 'ARS 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t85: {desc: 'ARS 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t86: {desc: 'DCS POLARITY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t87: {desc: 'RADIO ID', toUi: defaultToUi, fromUi: defaultFromUi},\n\t88: {desc: 'GM DISPLY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t89: {desc: 'DISTANCE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t90: {desc: 'AMS TX MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t91: {desc: 'STANDBY BEEP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t92: {desc: 'RTTY LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t93: {desc: 'RTTY LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t94: {desc: 'RTTY HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t95: {desc: 'RTTY HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t96: {desc: 'RTTY SHIFT PORT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t97: {desc: 'RTTY POLARITY-RX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t98: {desc: 'RTTY POLARITY-TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t99: {desc: 'RTTY OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t100: {desc: 'RTTY SHIFT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t101: {desc: 'RTTY MARK FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t102: {desc: 'SSB LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t103: {desc: 'SSB LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t104: {desc: 'SSB HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t105: {desc: 'SSB HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t106: {desc: 'SSB MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t107: {desc: 'SSB OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t108: {desc: 'SSB PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t109: {desc: 'SSB PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t110: {desc: 'SSB TX BPF', toUi: defaultToUi, fromUi: defaultFromUi},\n\t111: {desc: 'APF WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t112: {desc: 'CONTOUR LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t113: {desc: 'CONTOUR WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t114: {desc: 'IF NOTCH WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t115: {desc: 'SCP DISPLAY MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t116: {desc: 'SCP SPAN FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t117: {desc: 'SPECTRUM COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t118: {desc: 'WATER FALL COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t119: {desc: 'PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t120: {desc: 'PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t121: {desc: 'PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t122: {desc: 'PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t123: {desc: 'PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t124: {desc: 'PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t125: {desc: 'PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t126: {desc: 'PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t127: {desc: 'PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t128: {desc: 'P-PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t129: {desc: 'P-PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t130: {desc: 'P-PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t131: {desc: 'P-PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t132: {desc: 'P-PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t133: {desc: 'P-PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t134: {desc: 'P-PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t135: {desc: 'P-PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t136: {desc: 'P-PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t137: {desc: 'HF TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t138: {desc: '50M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t139: {desc: '144M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t140: {desc: '430M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t141: {desc: 'TUNER SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t142: {desc: 'VOX SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t143: {desc: 'VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t144: {desc: 'VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t145: {desc: 'ANTI VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t146: {desc: 'DATA VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t147: {desc: 'DATA VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t148: {desc: 'ANTI DVOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t149: {desc: 'EMERGENCY FREQ TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t150: {desc: 'PRT/WIRES FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t151: {desc: 'PRESET FREQUENCY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t152: {desc: 'SEARCH SETUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t153: {desc: 'WIRES DG-ID', toUi: defaultToUi, fromUi: defaultFromUi}\n};\n\nflow.set('config_items', config_items);\n\nconst ConfigItem = class {\n    constructor(no, value) {\n        this._no = no;\n        this._value = value;\n    }\n    \n    get no() { return this._no; }\n    get value() { return this._value; }\n\n    get desc() {\n        const ci = config_items[this._no];\n\n        return ci.desc;\n    }\n\n    get toCat() {\n        return toCat(this._no, this._value);\n    }\n\n    get toUi() {\n        const ci = config_items[this._no];\n\n        return ci.toUi(this._no, this._value);\n    }\n\n    static toCat(no) {\n        return toCat(no);\n    }\n    \n    static fromCat(arg) {\n        const no = parseInt(arg.substring(2, 5), 10),\n\t\t\t  value = arg.substring(arg.length - 1) === ';' ?  arg.substring(5, arg.length - 1) : arg.substring(5);\n\n\t\treturn new ConfigItem(no, value);\n    }\n    \n    static fromUi(arg) {\n        throw new Error('Not implemented yet');\n    }\n}\n\nflow.set('ConfigItem', ConfigItem);\n\nflow.set('ft_modes', {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n});\n\nflow.set('modes_ft', {\n    'LSB': '1',\n    'USB': '2',\n    'CW': '3',\n    'FM': '4',\n    'AM': '5',\n    'RTTY-LSB': '6',\n    'CW-R': '7',\n    'DATA-LSB': '8',\n    'RTTY-USB': '9',\n    'DATA-FM': 'A',\n    'FM-N': 'B',\n    'DATA-USB': 'C',\n    'AM-N': 'D',\n    'C4FM': 'E'\n});\n\nflow.set('ft_offset', {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n});\n\nflow.set('offset_ft', {\n    'Simplex': '0',\n    '+': '1',\n    '-': '2'\n});\n\nflow.set('ft_preamp', {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n});\nflow.set('preamp_ft', {\n    IPO: '0',\n    AMP1: '1',\n    AMP2: '2'\n});\n\nflow.set('config_save', [\n    062,    // DATA MODE\n    066,    // DATA LCUT FREQ\n    067,    // DATA LCUT SLOPE\n    068,    // DATA HCUT FREQ\n    069,    // DATA HCUT SLOPE\n    070,    // DATA IN SELECT\n    071,    // DATA PTT SELECT\n    072,    // DATA PORT SELECT\n    073,    // DATA OUT LEVEL\n    146,    // DATA VOX GAIN\n    147     // DATA VOX DELAY\n]);\n\nflow.set('menu_save', [\n    'AI1;',\n    'IF;',\n    'AC;',\n    'GT0;',\n    'LK;',\n    'MS;',\n    'PA0;',\n    'PC;',\n    'PA0;',\n    'PC;',\n    'RIA;',\n    'MS1',\n    'RM2'\n]);\n\nflow.set('gui_state', {});",
+        "initialize": "'use strict';\n\nflow.set('config_save', [\n    062,    // DATA MODE\n    066,    // DATA LCUT FREQ\n    067,    // DATA LCUT SLOPE\n    068,    // DATA HCUT FREQ\n    069,    // DATA HCUT SLOPE\n    070,    // DATA IN SELECT\n    071,    // DATA PTT SELECT\n    072,    // DATA PORT SELECT\n    073,    // DATA OUT LEVEL\n    146,    // DATA VOX GAIN\n    147     // DATA VOX DELAY\n]);\n\nflow.set('menu_save', [\n    'AI1;',\n    'IF;',\n    'AC;',\n    'GT0;',\n    'LK;',\n    'MS;',\n    'PA0;',\n    'PC;',\n    'PA0;',\n    'PC;',\n    'RIA;',\n    'MS1',\n    'RM2'\n]);",
         "finalize": "",
         "x": 300,
-        "y": 100,
+        "y": 180,
         "wires": [
             [
                 "ddb3e679.c08de8"
@@ -1116,28 +840,14 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 135,
+        "x": 115,
         "y": 100,
         "wires": [
             [
-                "a7f8e61b.7258f8"
+                "4d9e382a.4c4c88"
             ]
         ],
         "l": false
-    },
-    {
-        "id": "ddb3e679.c08de8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 510,
-        "y": 100,
-        "wires": []
     },
     {
         "id": "44cffdc0.ab3c94",
@@ -1145,7 +855,7 @@
         "z": "36d8cfa8.00955",
         "name": "Init",
         "info": "",
-        "x": 72,
+        "x": 70,
         "y": 40,
         "wires": []
     },
@@ -1153,14 +863,14 @@
         "id": "e4e4c199.7dd2",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "TX",
+        "topic": "TX_SET",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 150,
-        "y": 660,
+        "x": 110,
+        "y": 780,
         "wires": [
             [
                 "b49c81d6.a9d11",
@@ -1179,8 +889,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 730,
-        "y": 640,
+        "x": 710,
+        "y": 760,
         "wires": []
     },
     {
@@ -1200,8 +910,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 520,
-        "y": 620,
+        "x": 500,
+        "y": 740,
         "wires": [
             [
                 "84528388.0ba3e"
@@ -1213,13 +923,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Read ALC",
-        "func": "const p = msg.payload;\n\nif(p.length > 2) {\n    if(p.substring(2, 3) === '1') {\n        return {payload: 'RM4;'};\n    }\n    else {\n        return {reset: true};\n    }\n}",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_ALC').asRead};\n}\nelse {\n    return {reset: true};\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 310,
-        "y": 620,
+        "x": 290,
+        "y": 740,
         "wires": [
             [
                 "dbe11b76.d2f108"
@@ -1243,8 +953,8 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 520,
-        "y": 660,
+        "x": 500,
+        "y": 780,
         "wires": [
             [
                 "84528388.0ba3e"
@@ -1256,13 +966,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Read SWR",
-        "func": "const p = msg.payload;\n\nif(p.length > 2) {\n    if(p.substring(2, 3) === '1') {\n        return {payload: 'RM6;'};\n    }\n    else {\n        return {reset: true};\n    }\n}",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_SWRSWR').asRead};\n}\nelse {\n    return {reset: true};\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 310,
-        "y": 660,
+        "x": 290,
+        "y": 780,
         "wires": [
             [
                 "66a16e14.52e4d"
@@ -1276,21 +986,21 @@
         "name": "Monitor ALC and SWR during transmit",
         "info": "",
         "x": 173,
-        "y": 560,
+        "y": 680,
         "wires": []
     },
     {
         "id": "32d87102.369c8e",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "RM",
+        "topic": "READ_METER_-_FRONT_PANEL",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
-        "name": "RM",
-        "x": 130,
-        "y": 2120,
+        "name": "",
+        "x": 210,
+        "y": 2240,
         "wires": [
             [
                 "521af92f.676338"
@@ -1302,13 +1012,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "S Meter",
-        "func": "let p = msg.payload;\n\nif(p && p.length > 2 && p.substring(2, 3) === '0') {\n    return {payload: {s_meter: p.substring(3, 6)}};\n}\n\nreturn null;",
+        "func": "let sm = msg.payload;\n\nreturn {payload: {s_meter: sm.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 280,
-        "y": 2120,
+        "x": 440,
+        "y": 2240,
         "wires": [
             [
                 "e83b48b0.1e1f38"
@@ -1325,22 +1035,22 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 430,
-        "y": 2120,
+        "x": 590,
+        "y": 2240,
         "wires": []
     },
     {
         "id": "3577dee8.bb4d82",
         "type": "function",
         "z": "36d8cfa8.00955",
-        "name": "Read SWR",
-        "func": "const p = msg.payload;\n\nif(p.length > 2) {\n    return {payload: {transmit: p.substring(2, 3) === '1'}};\n}\n\nreturn null;",
+        "name": "TX -> transmit",
+        "func": "const tx = msg.payload;\n\nreturn {payload: {transmit: tx.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 310,
-        "y": 700,
+        "x": 300,
+        "y": 820,
         "wires": [
             [
                 "90f12983.192f58"
@@ -1357,8 +1067,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 470,
-        "y": 700,
+        "x": 450,
+        "y": 820,
         "wires": []
     },
     {
@@ -1371,8 +1081,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 510,
-        "y": 1780,
+        "x": 570,
+        "y": 1900,
         "wires": []
     },
     {
@@ -1380,13 +1090,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "PC -> power_level",
-        "func": "let p = msg.payload;\n\nif(p && p.length > 2) {\n    return {payload: {power_level: parseInt(p.substring(2, 5))}};\n}\n\nreturn null;",
+        "func": "let power_level = msg.payload;\n\nreturn {payload: {power_level: power_level.value}};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 330,
-        "y": 1920,
+        "x": 370,
+        "y": 2040,
         "wires": [
             [
                 "e2b33926.96bdb8"
@@ -1397,14 +1107,14 @@
         "id": "256584b6.9e7afc",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "PC",
+        "topic": "POWER_CONTROL",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
         "name": "",
         "x": 150,
-        "y": 1920,
+        "y": 2040,
         "wires": [
             [
                 "b70b668c.9fc0f8"
@@ -1421,8 +1131,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 510,
-        "y": 1920,
+        "x": 550,
+        "y": 2040,
         "wires": []
     },
     {
@@ -1435,8 +1145,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 210,
-        "y": 1980,
+        "x": 173,
+        "y": 2100,
         "wires": [
             [
                 "5de6016b.1dd4a"
@@ -1448,13 +1158,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Update rig",
-        "func": "let p = msg.payload;\n\nif(p) {\n    let power = p >= 5 ? p.toString() : '005';\n\n    if(power.length === 1) {\n        power = '00' + power;\n    }\n    else if(power.length === 2) {\n        power = '0' + power;\n    }\n    \n    return {payload: 'PC' + power + ';'};\n}\n\nreturn null;",
+        "func": "const RigSetting = global.get('RigSetting');\n\nlet value = parseInt(msg.payload, 10);\n\nif(value < 5) {\n    value = 5;\n}\nelse if(value > 100) {\n    value = 100;\n}\n\nreturn {payload: RigSetting.of('POWER_CONTROL', value).asSet};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 430,
-        "y": 1980,
+        "x": 390,
+        "y": 2100,
         "wires": [
             [
                 "ea279eb4.5dddd"
@@ -1474,8 +1184,8 @@
         "blTopic": "",
         "blObj": "",
         "name": "",
-        "x": 610,
-        "y": 1980,
+        "x": 570,
+        "y": 2100,
         "wires": []
     },
     {
@@ -1485,21 +1195,21 @@
         "name": "Config items",
         "info": "",
         "x": 92,
-        "y": 2200,
+        "y": 2320,
         "wires": []
     },
     {
         "id": "a5059d4f.8ff6c",
         "type": "flowcontrolOut",
         "z": "36d8cfa8.00955",
-        "topic": "EX",
+        "topic": "MENU",
         "context": "",
         "retained": false,
         "blTopic": "",
         "blObj": "",
-        "name": "RM",
+        "name": "EX",
         "x": 130,
-        "y": 2260,
+        "y": 2380,
         "wires": [
             [
                 "9197749a.bfee18"
@@ -1511,21 +1221,16 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "EX -> config",
-        "func": "'use strict;'\n\nfunction cut_freq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n    \n    return ((value + offset) * 50).toString();\n}\n\nconst p = msg.payload;\n\nif(p) {\n    const ConfigItem = flow.get('ConfigItem'),\n          ci = ConfigItem.fromCat(p),\n          next_config = flow.get('next_config');\n    \n    let next_EX = null;\n    \n    if(next_config <= 153) {\n        next_EX = {payload: ConfigItem.toCat(next_config)};\n    \n        flow.set('next_config', next_config + 1);\n    }\n    \n    return [{payload: ci.toUi}, next_EX];\n}\n\nreturn null;",
-        "outputs": 2,
+        "func": "'use strict;'\n\nconst ConfigItem = flow.get('ConfigItem'),\n      ci = ConfigItem.of(msg.payload.value);\n    \nreturn {payload: ci.toUi}",
+        "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 290,
-        "y": 2260,
+        "y": 2380,
         "wires": [
             [
-                "d11c8fcb.4bdc5",
-                "9ed4d668.ecbef8"
-            ],
-            [
-                "be6ad21.4a8d53",
-                "7247fb78.df0b24"
+                "d11c8fcb.4bdc5"
             ]
         ]
     },
@@ -1540,53 +1245,7 @@
         "blObj": "",
         "name": "",
         "x": 450,
-        "y": 2240,
-        "wires": []
-    },
-    {
-        "id": "9ed4d668.ecbef8",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 470,
-        "y": 2200,
-        "wires": []
-    },
-    {
-        "id": "be6ad21.4a8d53",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 470,
-        "y": 2280,
-        "wires": []
-    },
-    {
-        "id": "7247fb78.df0b24",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 470,
-        "y": 2320,
+        "y": 2380,
         "wires": []
     },
     {
@@ -1611,7 +1270,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 135,
-        "y": 200,
+        "y": 320,
         "wires": [
             [
                 "bd47f514.3c2478"
@@ -1624,15 +1283,17 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "",
-        "func": "\nconst ConfigItem = flow.get('ConfigItem');\n\n['EX0018;', 'EX099012;', 'EX123456;'].forEach(e => {\n    let ci = ConfigItem.fromCat(e);\n\n    node.send({payload: ci.toCat});\n    node.send({payload: ci.toUi});\n\n    if(ci.toCat !== e) {\n        throw new Error('ConfigItem.toCat() failed for ' + e);\n    }\n});\n\nif(ConfigItem.toCat(2) !== 'EX002;') {\n    throw new Error('ConfigItem.toCat(2) failed');\n}\nif(ConfigItem.toCat(42) !== 'EX042;') {\n    throw new Error('ConfigItem.toCat(42) failed');\n}\nif(ConfigItem.toCat(142) !== 'EX142;') {\n    throw new Error('ConfigItem.toCat(142) failed');\n}\n\nnode.done();\n\nreturn null;",
+        "func": "\nconst ConfigItem = flow.get('ConfigItem'),\n      RigSetting = global.get('RigSetting');\n\n['EX0018;', 'EX099012;', 'EX123456;'].forEach(e => {\n    const rs = RigSetting.fromAnswer(e);\n          ci = ConfigItem.of(rs.value),\n          cirs = ci.asRigSetting;\n\n    node.send({payload: cirs.asSet});\n    node.send({payload: ci.toUi});\n\n    if(cirs.asSet !== e) {\n        throw new Error('ConfigItem.asRigSetting.asRead failed for ' + e);\n    }\n});\n\n// if(ConfigItem.toCat(2) !== 'EX002;') {\n//     throw new Error('ConfigItem.toCat(2) failed');\n// }\n// if(ConfigItem.toCat(42) !== 'EX042;') {\n//     throw new Error('ConfigItem.toCat(42) failed');\n// }\n// if(ConfigItem.toCat(142) !== 'EX142;') {\n//     throw new Error('ConfigItem.toCat(142) failed');\n// }\n\nnode.done();\n\nreturn null;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "x": 260,
-        "y": 200,
+        "y": 320,
         "wires": [
-            []
+            [
+                "149124b5.fac2cb"
+            ]
         ]
     },
     {
@@ -1641,8 +1302,8 @@
         "z": "36d8cfa8.00955",
         "name": "NOTE: The flow context values are defined in the Setup tab of this function",
         "info": "",
-        "x": 460,
-        "y": 60,
+        "x": 400,
+        "y": 40,
         "wires": []
     },
     {
@@ -1651,66 +1312,9 @@
         "z": "36d8cfa8.00955",
         "name": "This function runs a simple unit test for ConfigItem",
         "info": "",
-        "x": 390,
-        "y": 160,
+        "x": 290,
+        "y": 260,
         "wires": []
-    },
-    {
-        "id": "b5f5e09d.3aa2e",
-        "type": "comment",
-        "z": "652a5441.cb9314",
-        "name": "NOTE: The global and this flow's context values are defined in the Setup tab of this function",
-        "info": "",
-        "x": 440,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "e6cfc6a.d3a4338",
-        "type": "function",
-        "z": "652a5441.cb9314",
-        "name": "Init",
-        "func": "",
-        "outputs": 2,
-        "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\n\nflow.set('menu_cacheable', {\n    \"AC\": true,\n    \"AG0\": true,\n    \"AI\": true,\n    \"BC0\": true,\n    \"BI\": true,\n    \"BP00\": true,\n    \"BP01\": true,\n    \"BY\": true,\n    \"CN00\": true,\n    \"CN01\": true,\n    \"CO00\": true,\n    \"CO01\": true,\n    \"CO02\": true,\n    \"CO03\": true,\n    \"CS\": true,\n    \"CT0\": true,\n    \"FA\": true,\n    \"FB\": true,\n    \"FS\": true,\n    \"FT\": true,\n    \"GT0\": true,\n    \"ID\": true,\n    \"IF\": true,\n    \"IS0\": true,\n    \"KP\": true,\n    \"KR\": true,\n    \"KS\": true,\n    \"LK\": true,\n    \"MC\": true,\n    \"MD0\": true,\n    \"MG\": true,\n    \"ML0\": true,\n    \"ML1\": true,\n    \"MS\": true,\n    \"MX\": true,\n    \"NA0\": true,\n    \"NB0\": true,\n    \"NL0\": true,\n    \"NR0\": true,\n    \"OI\": true,\n    \"OS0\": true,\n    \"PA0\": true,\n    \"PC\": true,\n    \"PL\": true,\n    \"PR0\": true,\n    \"PR1\": true,\n    \"RA0\": true,\n    \"RG0\": true,\n    \"RI0\": true,\n    \"RI3\": true,\n    \"RI4\": true,\n    \"RI5\": true,\n    \"RI6\": true,\n    \"RI7\": true,\n    \"RIA\": true,\n    \"RL0\": true,\n    \"RS\": true,\n    \"RT\": true,\n    \"SD\": true,\n    \"SH0\": true,\n    \"SQ0\": true,\n    \"TS\": true,\n    \"TX\": true,\n    \"UL\": true,\n    \"VD\": true,\n    \"VG\": true,\n    \"VX\": true,\n    \"XT\": true,\n});\n\nflow.set('auto_inform', false);\n\nflow.set('needs_update', []);\n\nglobal.set('debounce', {'FA': 'FA', 'FB': 'FB', 'IF': 'IF', 'OB': 'OB'});\n\nglobal.set('menu_state', {});\nglobal.set('config_state', {});",
-        "finalize": "",
-        "x": 190,
-        "y": 100,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "8be39518.c2f008",
-        "type": "inject",
-        "z": "652a5441.cb9314",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": true,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 75,
-        "y": 100,
-        "wires": [
-            [
-                "e6cfc6a.d3a4338"
-            ]
-        ],
-        "l": false
     },
     {
         "id": "10905f25.f71401",
@@ -1726,7 +1330,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 490,
-        "y": 420,
+        "y": 540,
         "wires": []
     },
     {
@@ -1751,7 +1355,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 135,
-        "y": 520,
+        "y": 640,
         "wires": [
             [
                 "7e4d75.28f6128c"
@@ -1770,11 +1374,605 @@
         "initialize": "",
         "finalize": "",
         "x": 300,
-        "y": 520,
+        "y": 640,
         "wires": [
             [
                 "c229a01c.c9c49"
             ]
         ]
+    },
+    {
+        "id": "a6360e4a.825c5",
+        "type": "serial in",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "serial": "269a3122.a0068e",
+        "x": 100,
+        "y": 573,
+        "wires": [
+            [
+                "6ce32ef0.5799f",
+                "57802d90.f569d4"
+            ]
+        ]
+    },
+    {
+        "id": "dfdc6e96.c6994",
+        "type": "serial out",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "serial": "269a3122.a0068e",
+        "x": 700,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "a11b25b2.41d828",
+        "type": "serial in",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "serial": "3ef5815c.6122be",
+        "x": 116,
+        "y": 429.00000953674316,
+        "wires": [
+            [
+                "25b95575.0f35da",
+                "96f5efe6.f320b"
+            ]
+        ]
+    },
+    {
+        "id": "3eb84881.bfc188",
+        "type": "serial out",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "serial": "3ef5815c.6122be",
+        "x": 320,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "25b95575.0f35da",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "USB  input",
+        "func": "node.log(msg.payload);",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6ce32ef0.5799f",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "pty  input",
+        "func": "node.log(msg.payload);",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "953f881.09fb578",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "USB output",
+        "func": "node.log(msg.payload);",
+        "outputs": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "96f5efe6.f320b",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "Handle rig Input",
+        "func": "'use strict;'\n\nconst RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState'),\n      needs_update = flow.get('needs_update'),\n      debounce = flow.get('debounce'),\n      p = msg.payload;\n\n\nif(p === '?;') {\n    node.send([{payload: '?; found in input'}, null, null]);\n}\nelse if(p) {\n    const rs = RigSetting.fromAnswer(p);\n\n    if(rs.debounce) {\n\n        // Debounce the frequency changes\n\n        debounce[rs.name] = rs;\n        \n        flow.set('debounce', debounce);\n    }\n    else {\n\n        // Send other updates in real time.\n\n        node.send([null, {topic: rs.topic, payload: rs}, null]);\n    }\n\n    // Send any replies to queries back to tye aux tty\n\n    if(needs_update.length) {\n        const still_needs_updating = [];\n\n        needs_update.forEach(name => {\n            if(name === rs.name) {\n                node.send([null, null, {payload: rs.rawAnswer}]);\n            }\n            else {\n                still_needs_updating.push(name);\n            }\n        });\n        flow.set('needs_update', still_needs_updating);\n    }\n\n    // Cache non transient query commands\n\n    if(rs.isCacheable) {\n        RigState.setRigSetting(rs);\n    }\n}\nelse {\n    node.send(['Received empty payload?', null, null]);\n}\n\nnode.done();\n\nreturn [null, null, null];\n",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\n\nflow.set('rig_commands', {\n    \"AC\": true,\n    \"AG0\": true,\n    \"AI\": true,\n    \"BC0\": true,\n    \"BI\": true,\n    \"BP00\": true,\n    \"BP01\": true,\n    \"BY\": true,\n    \"CN00\": true,\n    \"CN01\": true,\n    \"CO00\": true,\n    \"CO01\": true,\n    \"CO02\": true,\n    \"CO03\": true,\n    \"CS\": true,\n    \"CT0\": true,\n    \"FA\": true,\n    \"FB\": true,\n    \"FS\": true,\n    \"FT\": true,\n    \"GT0\": true,\n    \"ID\": true,\n    \"IF\": true,\n    \"IS0\": true,\n    \"KP\": true,\n    \"KR\": true,\n    \"KS\": true,\n    \"LK\": true,\n    \"MC\": true,\n    \"MD0\": true,\n    \"MG\": true,\n    \"ML0\": true,\n    \"ML1\": true,\n    \"MS\": true,\n    \"MX\": true,\n    \"NA0\": true,\n    \"NB0\": true,\n    \"NL0\": true,\n    \"NR0\": true,\n    \"OI\": true,\n    \"OS0\": true,\n    \"PA0\": true,\n    \"PC\": true,\n    \"PL\": true,\n    \"PR0\": true,\n    \"PR1\": true,\n    \"RA0\": true,\n    \"RG0\": true,\n    \"RI0\": true,\n    \"RI3\": true,\n    \"RI4\": true,\n    \"RI5\": true,\n    \"RI6\": true,\n    \"RI7\": true,\n    \"RIA\": true,\n    \"RL0\": true,\n    \"RS\": true,\n    \"RT\": true,\n    \"SD\": true,\n    \"SH0\": true,\n    \"SQ0\": true,\n    \"TS\": true,\n    \"TX\": true,\n    \"UL\": true,\n    \"VD\": true,\n    \"VG\": true,\n    \"VX\": true,\n    \"XT\": true,\n});\n\nflow.set('config_items', {\n\t\"001\": \"AGC FAST DELAY\",\n\t\"002\": \"AGC MID DELAY\",\n\t\"003\": \"AGC SLOW DELAY\",\n\t\"004\": \"HOME FUNCTION\",\n\t\"005\": \"MY CALL INDICATION\",\n\t\"006\": \"DISPLAY COLOR\",\n\t\"007\": \"DIMMER LED\",\n\t\"008\": \"DIMMER TFT\",\n\t\"009\": \"BAR MTR PEAK HOLD\",\n\t\"010\": \"DVS RX OUT LEVEL\",\n\t\"011\": \"DVS TX OUT LEVEL\",\n\t\"012\": \"KEYER TYPE\",\n\t\"013\": \"KEYER DOT/DASH\",\n\t\"014\": \"CW WEIGHT\",\n\t\"015\": \"BEACON INTERVAL\",\n\t\"016\": \"NUMBER STYLE\",\n\t\"017\": \"CONTEST NUMBER\",\n\t\"018\": \"CW MEMORY 1\",\n\t\"019\": \"CW MEMORY 2\",\n\t\"020\": \"CW MEMORY 3\",\n\t\"021\": \"CW MEMORY 4\",\n\t\"022\": \"CW MEMORY 5\",\n\t\"023\": \"NB WIDTH\",\n\t\"024\": \"NB REJECTION\",\n\t\"025\": \"NB LEVEL\",\n\t\"026\": \"BEEP LEVEL\",\n\t\"027\": \"TIME ZONE\",\n\t\"028\": \"GPS/232C SELECT\",\n\t\"029\": \"232C RATE\",\n\t\"030\": \"232C TOT\",\n\t\"031\": \"CAT RATE\",\n\t\"032\": \"CAT TOT\",\n\t\"033\": \"CAT RTS\",\n\t\"034\": \"MEM GROUP\",\n\t\"035\": \"QUICK SPLIT FREQ\",\n\t\"036\": \"TX TOT\",\n\t\"037\": \"MIC SCAN\",\n\t\"038\": \"MIC SCAN RESUME\",\n\t\"039\": \"REF FREQ ADJ\",\n\t\"040\": \"CLAR MODE SELECT\",\n\t\"041\": \"AM LCUT FREQ\",\n\t\"042\": \"AM LCUT SLOPE\",\n\t\"043\": \"AM HCUT FREQ\",\n\t\"044\": \"AM HCUT SLOPE\",\n\t\"045\": \"AM MIC SELECT\",\n\t\"046\": \"AM OUT LEVEL\",\n\t\"047\": \"AM PTT SELECT\",\n\t\"048\": \"AM PORT SELECT\",\n\t\"049\": \"AM DATA GAIN\",\n\t\"050\": \"CW LCUT FREQ\",\n\t\"051\": \"CW LCUT SLOPE\",\n\t\"052\": \"CW HCUT FREQ\",\n\t\"053\": \"CW HCUT SLOPE\",\n\t\"054\": \"CW OUT LEVEL\",\n\t\"055\": \"CW AUTO MODE\",\n\t\"056\": \"CW BK-IN TYPE\",\n\t\"057\": \"CW BK-IN DELAY\",\n\t\"058\": \"CW WAVE SHAPE\",\n\t\"059\": \"CW FREQ DISPLAY\",\n\t\"060\": \"PC KEYING\",\n\t\"061\": \"QSK DELAY TIME\",\n\t\"062\": \"DATA MODE\",\n\t\"063\": \"PSK TONE\",\n\t\"064\": \"OTHER DISP (SSB)\",\n\t\"065\": \"OTHER SHIFT (SSB)\",\n\t\"066\": \"DATA LCUT FREQ\",\n\t\"067\": \"DATA LCUT SLOPE\",\n\t\"068\": \"DATA HCUT FREQ\",\n\t\"069\": \"DATA HCUT SLOPE\",\n\t\"070\": \"DATA IN SELECT\",\n\t\"071\": \"DATA PTT SELECT\",\n\t\"072\": \"DATA PORT SELECT\",\n\t\"073\": \"DATA OUT LEVEL\",\n\t\"074\": \"FM MIC SELECT\",\n\t\"075\": \"FM OUT LEVEL\",\n\t\"076\": \"FM PKT PTT SELECT\",\n\t\"077\": \"FM PKT PORT SELECT\",\n\t\"078\": \"FM PKT TX GAIN\",\n\t\"079\": \"FM PKT MODE\",\n\t\"080\": \"RPT SHIFT 28MHz\",\n\t\"081\": \"RPT SHIFT 50MHz\",\n\t\"082\": \"RPT SHIFT 144MHz\",\n\t\"083\": \"RPT SHIFT 430MHz\",\n\t\"084\": \"ARS 144MHz\",\n\t\"085\": \"ARS 430MHz\",\n\t\"086\": \"DCS POLARITY\",\n\t\"087\": \"RADIO ID\",\n\t\"088\": \"GM DISPLY\",\n\t\"089\": \"DISTANCE\",\n\t\"090\": \"AMS TX MODE\",\n\t\"091\": \"STANDBY BEEP\",\n\t\"092\": \"RTTY LCUT FREQ\",\n\t\"093\": \"RTTY LCUT SLOPE\",\n\t\"094\": \"RTTY HCUT FREQ\",\n\t\"095\": \"RTTY HCUT SLOPE\",\n\t\"096\": \"RTTY SHIFT PORT\",\n\t\"097\": \"RTTY POLARITY-RX\",\n\t\"098\": \"RTTY POLARITY-TX\",\n\t\"099\": \"RTTY OUT LEVEL\",\n\t\"100\": \"RTTY SHIFT FREQ\",\n\t\"101\": \"RTTY MARK FREQ\",\n\t\"102\": \"SSB LCUT FREQ\",\n\t\"103\": \"SSB LCUT SLOPE\",\n\t\"104\": \"SSB HCUT FREQ\",\n\t\"105\": \"SSB HCUT SLOPE\",\n\t\"106\": \"SSB MIC SELECT\",\n\t\"107\": \"SSB OUT LEVEL\",\n\t\"108\": \"SSB PTT SELECT\",\n\t\"109\": \"SSB PORT SELECT\",\n\t\"110\": \"SSB TX BPF\",\n\t\"111\": \"APF WIDTH\",\n\t\"112\": \"CONTOUR LEVEL\",\n\t\"113\": \"CONTOUR WIDTH\",\n\t\"114\": \"IF NOTCH WIDTH\",\n\t\"115\": \"SCP DISPLAY MODE\",\n\t\"116\": \"SCP SPAN FREQ\",\n\t\"117\": \"SPECTRUM COLOR\",\n\t\"118\": \"WATER FALL COLOR\",\n\t\"119\": \"PRMTRC EQ1 FREQ\",\n\t\"120\": \"PRMTRC EQ1 LEVEL\",\n\t\"121\": \"PRMTRC EQ1 BWTH\",\n\t\"122\": \"PRMTRC EQ2 FREQ\",\n\t\"123\": \"PRMTRC EQ2 LEVEL\",\n\t\"124\": \"PRMTRC EQ2 BWTH\",\n\t\"125\": \"PRMTRC EQ3 FREQ\",\n\t\"126\": \"PRMTRC EQ3 LEVEL\",\n\t\"127\": \"PRMTRC EQ3 BWTH\",\n\t\"128\": \"P-PRMTRC EQ1 FREQ\",\n\t\"129\": \"P-PRMTRC EQ1 LEVEL\",\n\t\"130\": \"P-PRMTRC EQ1 BWTH\",\n\t\"131\": \"P-PRMTRC EQ2 FREQ\",\n\t\"132\": \"P-PRMTRC EQ2 LEVEL\",\n\t\"133\": \"P-PRMTRC EQ2 BWTH\",\n\t\"134\": \"P-PRMTRC EQ3 FREQ\",\n\t\"135\": \"P-PRMTRC EQ3 LEVEL\",\n\t\"136\": \"P-PRMTRC EQ3 BWTH\",\n\t\"137\": \"HF TX MAX POWER\",\n\t\"138\": \"50M TX MAX POWER\",\n\t\"139\": \"144M TX MAX POWER\",\n\t\"140\": \"430M TX MAX POWER\",\n\t\"141\": \"TUNER SELECT\",\n\t\"142\": \"VOX SELECT\",\n\t\"143\": \"VOX GAIN\",\n\t\"144\": \"VOX DELAY\",\n\t\"145\": \"ANTI VOX GAIN\",\n\t\"146\": \"DATA VOX GAIN\",\n\t\"147\": \"DATA VOX DELAY\",\n\t\"148\": \"ANTI DVOX GAIN\",\n\t\"149\": \"EMERGENCY FREQ TX\",\n\t\"150\": \"PRT/WIRES FREQ\",\n\t\"151\": \"PRESET FREQUENCY\",\n\t\"152\": \"SEARCH SETUP\",\n\t\"153\": \"WIRES DG-ID\"\n});\n\nflow.set('auto_inform', false);\n\nflow.set('needs_update', []);\n\nglobal.set('debounce', {'FA': 'FA', 'FB': 'FB', 'IF': 'IF', 'OB': 'OB'});\n\nglobal.set('rig_state', {});\nglobal.set('config_state', {});",
+        "finalize": "",
+        "x": 320,
+        "y": 460,
+        "wires": [
+            [
+                "bff50622.754658"
+            ],
+            [
+                "63e66f45.c3b4c",
+                "85ef0169.c887a"
+            ],
+            [
+                "26f39226.04a21e"
+            ]
+        ]
+    },
+    {
+        "id": "57802d90.f569d4",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "Check cache",
+        "func": "'use strict;'\n\nconst RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState'),\n      needs_update = flow.get('needs_update'),\n      p = msg.payload.toUpperCase();\n\nif(p) {\n    const rs = RigSetting.fromAnswer(p);\n\n    if(rs.cmd === 'AI') {\n        if(rs.value) {\n            node.warn('### Got AI1;');\n        }\n        else {\n            node.warn('### Got AI0;');\n        }\n        return [{payload: '?;'}, null];\n    }\n\n    // If a set command, forward it out to the rig\n\n    if(rs.canSet) {\n        return [null, {payload: rs.asSet}];\n    }\n\n    // See if answer is already in cache\n\n    const crs = RigState.findRigSetting(rs.name);\n\n    if(crs) {\n        \n        // In cache, return answer\n\n        return [{payload: rs.rawAnswer}, null];\n    }\n\n    // Not in cache, let rig input handler know the answer needs\n    // to passed along.\nnode.log('needs update ' + JSON.stringify(rs));\n    needs_update.push(rs.name);\n    flow.set('needs_update', needs_update);\n\n    // Non-cacheable commands always go out, as well\n    // as cache misses\n    \n    return [null, {payload: p}];\n}\n\nnode.warn('Received empty payload?');\n\nreturn [null, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "26f39226.04a21e"
+            ],
+            [
+                "dc6c1348.90f2b"
+            ]
+        ]
+    },
+    {
+        "id": "63e66f45.c3b4c",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "26f39226.04a21e",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "pty output",
+        "func": "node.log(msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 500,
+        "wires": [
+            [
+                "dfdc6e96.c6994"
+            ]
+        ]
+    },
+    {
+        "id": "5ea91238.1af28c",
+        "type": "flowcontrolOut",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "953f881.09fb578",
+                "3eb84881.bfc188"
+            ]
+        ]
+    },
+    {
+        "id": "dc6c1348.90f2b",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 530,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ac982a5d.0e3cb8",
+        "type": "comment",
+        "z": "32b9106a.4589e",
+        "name": "NOTE: The global and this flow's context values are defined in the Setup tab of this function",
+        "info": "",
+        "x": 325,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "428c5065.ae15f",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "RigSetting & RigState",
+        "func": "\n// RigSetting is under the Setup tab\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "'use strict;'\n\nfunction pad(len) {\n    return function(value) {\n        let n = typeof(value) === 'string' ? value : value.toString();\nvalue.substring\n        while(n.length < len) {\n            n = '0' + n;\n        }\n\n        return n;\n    };\n}\nconst pad2 = pad(2);\nconst pad3 = pad(3);\nconst pad4 = pad(4);\nconst pad9 = pad(9);\n\nfunction map_reverse(obj) {\n    const result = {};\n\n    for(const [key, value] of Object.entries(obj)) {\n        result[value] = key;\n    }\n\n    return result;\n}\n\nconst cat_to_ctcss = {\n    '000': '67.0', '001': '69.3', '002': '71.9', '003': '74.4',\n    '004': '77.0', '005': '79.7', '006': '82.5', '007': '85.4',\n    '008': '88.5', '009': '91.5', '010': '94.8', '011': '97.4',\n    '012': '100.0', '013': '103.5', '014': '107.2', '015': '110.9',\n    '016': '114.8', '017': '118.8', '018': '123.0', '019': '127.3',\n    '020': '131.8', '021': '136.5', '022': '141.3', '023': '146.2',\n    '024': '151.4', '025': '156.7', '026': '159.8', '027': '162.2',\n    '028': '165.5', '029': '167.9', '030': '171.3', '031': '173.8',\n    '032': '177.3', '033': '179.9', '034': '183.5', '035': '186.2',\n    '036': '189.9', '037': '192.8', '038': '196.6', '039': '199.5',\n    '040': '203.5', '041': '206.5', '042': '210.7', '043': '218.1',\n    '044': '225.7', '045': '229.1', '046': '233.6', '047': '241.8',\n    '048': '250.3', '049': '254.1'\n};\nconst ctcss_to_cat = map_reverse(cat_to_ctcss);\n\nconst cat_to_CT = {\n    '0': 'CTCSS OFF',\n    '1': 'CTCSS ENC/DEC',\n    '2': 'CTCSS ENC',\n    '3': 'DCS ENC/DEC',\n    '4': 'DCS ENC'\n};\nconst CT_to_cat = map_reverse(cat_to_CT);\n\nconst cat_to_dcs = [\n     23,  25,  26,  31,  32,  36,  43,  47,  51,  53,  54,  65,  71,  72,\n     73,  74, 114, 115, 116, 122, 125, 131, 132, 134, 143, 145, 152, 155,\n    156, 162, 165, 172, 174, 205, 212, 223, 225, 226, 243, 244, 245, 246,\n    251, 252, 255, 261, 263, 265, 266, 271, 274, 306, 311, 315, 325, 331,\n    332, 343, 346, 351, 356, 364, 365, 371, 411, 412, 413, 423, 431, 432,\n    445, 446, 452, 454, 455, 462, 464, 465, 466, 503, 506, 516, 523, 526,\n    532, 546, 565, 606, 612, 624, 627, 631, 632, 654, 662, 664, 703, 712,\n    723, 731, 732, 734, 743, 754\n];\n\nconst band_to_cat = {\n    '1.8 MHz': '00',\n    '3.5 MHz': '01',\n    '5 MHz': '02',\n    '7 MHz': '03',\n    '10 MHz': '04',\n    '14 MHz': '05',\n    '18 MHz': '06',\n    '21 MHz': '07',\n    '24.5 MHz': '08',\n    '28 MHz': '09',\n    '50 MHz': '10',\n    'GEN': '11',\n    'MW': '12',\n    'AIR': '14',\n    '144 MHz': '15',\n    '430 MHz': '16'\n}\n\nconst cat_to_agc = {\n    '0': 'OFF',\n    '1': 'FAST',\n    '2': 'MID',\n    '3': 'SLOW',\n    '4': 'AUTO-FAST',\n    '5': 'AUTO-MID',\n    '6': 'AUTO-SLOW'\n};\nconst agc_to_cat = {\n    'OFF': '0',\n    'FAST': '1',\n    'MID': '2',\n    'SLOW': '3',\n    'AUTO': '4',\n    'AUTO-FAST': '4',\n    'AUTO-MID': '4',\n    'AUTO-SLOW': '4'\n};\n\nconst cat_meter = {\n    '0': 'COMP',\n    '1': 'ALC',\n    '2': 'PO',\n    '3': 'SWR',\n    '4': 'ID',\n    '5': 'VDD'\n};\nconst meter_cat = map_reverse(cat_meter);\n\nconst cat_modes = {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n};\nconst modes_cat = map_reverse(cat_modes);\n\nconst cat_offset = {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n};\nconst offset_cat = map_reverse(cat_offset);\n\nconst cat_preamp = {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n};\nconst preamp_cat = map_reverse(cat_preamp);\n\nfunction sendCmd(cmd) {\n    return cmd + ';';\n}\nfunction sendCmd0(cmd) {\n    return cmd + '0' + ';';\n}\n\nfunction fromBoolean(value) {\n    return value.substring(0, 1) === '1';\n}\nfunction toCatBoolean(cmd, value) {\n    return cmd + (value ? '1' : '0') + ';';\n}\n\nfunction fromInteger(value) {\n    return parseInt(value, 10);\n}\nfunction asInteger(cmd, value) {\n    return cmd + pad3(value) + ';';\n}\n\nfunction band_info(value) {\n    return {\n        raw: value,\n        mem_chan: parseInt(value.substring(0,3)),\n        freq: parseInt(value.substring(3,12)),\n        clarifier: value.substring(12,17),\n        rx_clar: value.substring(17, 18) != '0',\n        tx_clar: value.substring(18, 19) != '0',\n        mode: cat_modes[value.substring(19, 20)] || value.substring(21, 22),\n        p7: value.substring(20, 21),\n        tone: value.substring(21, 22),\n        offset: cat_offset[value.substring(26, 27)]\n    };\n}\n\nconst rig_commands = {\n    'AB': {                       // TODO: Needs testing\n        cmd: 'AB',\n        desc: 'VFO-A_TO_VFO-B',\n        asSet: sendCmd,\n    },\n    'AC': {\n        cmd: 'AC',\n        desc: 'ANTENNA_TUNER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            switch(value) {\n            case 'off': return cmd + '000' + ';';\n            case 'on':  return cmd + '001' + ';';\n            case 'tune':return cmd + '002' + ';';\n            }\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            switch(value.substring(2, 3)) {\n            case '0':   return 'off';\n            case '1':   return 'on';\n            case '2':   return 'tune';\n            }\n        },\n    },\n    'AG': {\n        cmd: 'AG',\n        desc: 'AF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + pad3(value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1), 10);\n        }\n    },\n    'AI': {\n        cmd: 'AI',\n        desc: 'AUTO_INFORMATION',\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'AM': {                       // TODO: Needs testing\n        cmd: 'AM',\n        desc: 'VFO-A_TO_MEMORY_CHANNEL',\n        asSet: sendCmd,\n    },\n    'BA': {                       // TODO: Needs testing\n        cmd: 'BA',\n        desc: 'VFO-B_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'BC': {\n        cmd: 'BC',\n        desc: 'AUTO_NOTCH',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + value.toString() + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1), 10);\n        }\n    },\n    'BD': {                       // TODO: Needs testing\n        cmd: 'BD',\n        desc: 'BAND_DOWN',\n        asSet: sendCmd,\n    },\n    'BI': {\n        cmd: 'BI',\n        desc: 'BREAK-IN',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + (value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '1';\n        }\n    },\n    'BP00': {                       // TODO: Needs testing\n        cmd: 'BP00',\n        desc: 'MANUAL_NOTCH_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '00' + (value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value.substring(2,3) === '1';\n        },\n    },\n    'BP01': {                       // TODO: Needs testing\n        cmd: 'BP01',\n        desc: 'MANUAL_NOTCH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad3(value / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10) * 10;\n        },\n    },\n    'BS': {                       // TODO: Needs testing\n        cmd: 'BS',\n        desc: 'BAND_SELECT',\n        asSet(cmd, value) {\n            if(band_to_cat.hasOwnProperty(value)) {\n                return cmd + band_to_cat[value] + ';';\n            }\n\n            throw new Error('Unknown band type: ' + value);\n        },\n    },\n    'BU0': {                       // TODO: Needs testing\n        cmd: 'BU0',\n        desc: 'BAND_UP',\n        asSet: sendCmd,\n    },\n    'BY': {                       // TODO: Needs testing\n        cmd: 'BY',\n        desc: 'BUSY',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value.substring(1,2) === '1';\n        },\n    },\n    'CH0': {                       // TODO: Needs testing\n        cmd: 'CH0',\n        desc: 'CHANNEL_UP',\n        asSet: sendCmd,\n    },\n    'CH1': {                       // TODO: Needs testing\n        cmd: 'CH1',\n        desc: 'CHANNEL_DOWN',\n        asSet: sendCmd,\n    },\n    'CN00': {\n        cmd: 'CN00',\n        desc: 'CTCSS_TONE_FREQUENCY',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + ctcss_to_cat[value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_to_ctcss[value];\n        },\n    },\n    'CN01': {\n        cmd: 'CN01',\n        desc: 'DCS_TONE_FREQUENCY',\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad3(cat_to_dcs.indexOf(parseInt(value, 10))) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const dcs = cat_to_dcs[parseInt(value, 10)];\n\n            return (dcs < 100 ? '0' : '') + dcs.toString();\n        },\n    },\n    'CO00': {                       // TODO: Needs testing\n        cmd: 'CO00',\n        desc: 'CONTOUR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '000' + (value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO01': {                       // TODO: Needs testing\n        cmd: 'CO01',\n        desc: 'CONTOUR_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad4(value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'CO02': {                       // TODO: Needs testing\n        cmd: 'CO02',\n        desc: 'APF_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '000' + (value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO03': {                       // TODO: Needs testing\n        cmd: 'CO03',\n        desc: 'APF_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad4((value + 250) / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return (parseInt(value, 10) * 10) - 250;\n        },\n    },\n    'CS': {\n        cmd: 'CS',\n        desc: 'CW_SPOT',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'CT': {\n        cmd: 'CT',\n        desc: 'CTCSS',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + CT_to_cat[value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_CT[value.substring(1)];\n        },\n    },\n    'DA': {\n        cmd: 'DA',\n        desc: 'DIMMER',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '00' + pad2(value.led) + pad2(value.tft) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return {\n                led: parseInt(value.substring(2, 4)),\n                tft: parseInt(value.substring(4))\n            };\n        },\n    },\n    'DN': {                       // TODO: Needs testing\n        cmd: 'DN',\n        desc: 'MIC_DOWN',\n        asSet: sendCmd,\n    },\n    'DT0': {\n        cmd: 'DT0',\n        desc: 'DATE',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT1': {\n        cmd: 'DT1',\n        desc: 'TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT2': {\n        cmd: 'DT2',\n        desc: 'TIME_DIFFERENTIAL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'ED': {                       // TODO:\n        cmd: 'ED',\n        desc: 'ENCORDER_DOWN',\n    },\n    'EK': {                       // TODO: Needs testing\n        cmd: 'EK',\n        desc: 'ENT_KEY',\n        asSet: sendCmd,\n    },\n    'EU': {                       // TODO:\n        cmd: 'EU',\n        desc: 'ENCORDER_UP',\n    },\n    'EX': {\n        cmd: 'EX',\n        desc: 'MENU',\n        isCacheable: true,\n        isMenu: true,\n        asSet(cmd, value) {\n            return cmd + pad3(value.no) + value.value + ';';\n        },\n        asRead(cmd, value) {\n            return cmd + pad3(value.no) + ';';\n        },\n        fromAnswer(value) {\n            const result = {\n                no: parseInt(value.substring(0, 3), 10),\n                value: value.substring(3)\n            };\n\n            return result;\n        },\n    },\n    'FA': {\n        cmd: 'FA',\n        desc: 'FREQUENCY_VFO-A',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad9(value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'FB': {\n        cmd: 'FB',\n        desc: 'FREQUENCY_VFO-B',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad9(value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'FS': {\n        cmd: 'FS',\n        desc: 'FAST_STEP',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'FT': {                       // TODO:\n        cmd: 'FT',\n        desc: 'FUNCTION_TX',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            if(value === 'VFO-A Band Transmitter: TX') {\n                return cmd + '2' + ';';\n            }\n            if(value === 'VFO-B Band Transmitter: TX') {\n                return cmd + '3' + ';';\n            }\n            throw new Error(cmd + ' value ' + value + ' unknown');\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'VFO-A Band Transmitter: TX' : 'VFO-B Band Transmitter: TX';\n        }\n    },\n    'GT': {                       // TODO: Needs testing\n        cmd: 'GT',\n        desc: 'AGC_FUNCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + agc_to_cat[value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_agc[value.substring(1)];\n        },\n    },\n    'ID': {\n        cmd: 'ID',\n        desc: 'IDENTIFICATION',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'IF': {                       // TODO: Needs testing\n        cmd: 'IF',\n        desc: 'INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'IS': {\n        cmd: 'IS',\n        desc: 'IF-SHIFT',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + value + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1);\n        },\n    },\n    'KM': {                       // TODO: Needs testing\n        cmd: 'KM',\n        desc: 'KEYER_MEMORY',\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + value.no.toString() + value.message + ';';\n        },\n        asRead(cmd, value) {\n            return cmd + value.toString() + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: value.substring(0,1),\n                message: value.substring(1),\n            };\n        },\n    },\n    'KP': {                       // TODO: Needs testing\n        cmd: 'KP',\n        desc: 'KEY_PITCH',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad2(value / 10 - 30) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return (parseInt(value, 10) + 30) * 10;\n        },\n    },\n    'KR': {\n        cmd: 'KR',\n        desc: 'KEYER',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'KS': {\n        cmd: 'KS',\n        desc: 'KEY_SPEED',\n        autoInit: true,\n        isCacheable: true,\n        asSet: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'KY': {\n        cmd: 'KY',\n        desc: 'CW_KEYING',\n        asSet(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n    },\n    'LK': {\n        cmd: 'LK',\n        desc: 'LOCK',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'LM': {\n        cmd: 'LM',\n        desc: 'LOAD_MESSEGE',\n        isCacheable: true,\n        asSet(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n    },\n    'MA': {\n        cmd: 'MA',\n        desc: 'MEMORY_CHANNEL_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'MC': {\n        cmd: 'MC',\n        desc: 'MEMORY_CHANNEL',\n        isCacheable: true,\n    },\n    'MD': {\n        cmd: 'MD',\n        desc: 'MODE',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + modes_cat[value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_modes[value.substring(1)];\n        },\n    },\n    'MG': {\n        cmd: 'MG',\n        desc: 'MIC_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSet: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'ML0': {\n        cmd: 'ML0',\n        desc: 'MONITOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '00' + (value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value.substring(2,3) === '1';\n        },\n    },\n    'ML1': {\n        cmd: 'ML1',\n        desc: 'MONITOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad3(value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'MR': {\n        cmd: 'MR',\n        desc: 'MEMORY_CHANNEL_READ',\n        asSet(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n    },\n    'MS': {\n        cmd: 'MS',\n        desc: 'METER_SW',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + meter_cat[value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_meter[value.substring(0,1)];\n        },\n    },\n    'MT': {\n        cmd: 'MT',\n        desc: 'MEMORY_CHANNEL_WRITE/TAG',\n        asSet(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n    },\n    'MW': {\n        cmd: 'MW',\n        desc: 'MEMORY_CHANNEL_WRITE',\n        asSet(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n    },\n    'MX': {\n        cmd: 'MX',\n        desc: 'MOX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'NA': {\n        cmd: 'NA',\n        desc: 'NARROW',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + (value.substring(1) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1) === '1';\n        },\n    },\n    'NB': {\n        cmd: 'NB',\n        desc: 'NOISE_BLANKER_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + (value.substring(1) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1) === '1';\n        },\n    },\n    'NL': {\n        cmd: 'NL',\n        desc: 'NOISE_BLANKER_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + pad3(value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1), 10);\n        },\n    },\n    'NR': {\n        cmd: 'NR',\n        desc: 'NOISE_REDUCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + (value.substring(1) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1) === '1';\n        },\n    },\n    'OI': {\n        cmd: 'OI',\n        desc: 'OPPOSITE_BAND_INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'OS': {\n        cmd: 'OS',\n        desc: 'OFFSET_(REPEATER_SHIFT)',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + offset_cat[value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_offset[value.substring(1)];\n        },\n    },\n    'PA': {\n        cmd: 'PA',\n        desc: 'PRE-AMP_(IPO)',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + preamp_cat[value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_preamp[value.substring(1)];\n        },\n    },\n    'PB': {\n        cmd: 'PB',\n        desc: 'PLAY_BACK',\n        asSet(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        asRead(cmd, value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(cmd + ' Not implemented yet');\n        },\n    },\n    'PC': {\n        cmd: 'PC',\n        desc: 'POWER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSet: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PL': {\n        cmd: 'PL',\n        desc: 'SPEECH_PROCESSOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSet: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PR0': {\n        cmd: 'PR0',\n        desc: 'SPEECH_PROCESSOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PR1': {\n        cmd: 'PR1',\n        desc: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PS': {\n        cmd: 'PS',\n        desc: 'POWER_SWITCH',\n        autoInit: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'QI': {\n        cmd: 'QI',\n        desc: 'QMB_STORE',\n        asSet: sendCmd,\n    },\n    'QR': {\n        cmd: 'QR',\n        desc: 'QMB_RECALL',\n        asSet: sendCmd,\n    },\n    'QS': {\n        cmd: 'QS',\n        desc: 'QUICK_SPLIT',\n        asSet: sendCmd,\n    },\n    'RA': {\n        cmd: 'RA',\n        desc: 'RF_ATTENUATOR',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + (value.substring(1) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1) === '1';\n        },\n    },\n    'RC': {\n        cmd: 'RC',\n        desc: 'CLAR_CLEAR',\n        asSet: sendCmd,\n    },\n    'RD': {\n        cmd: 'RD',\n        desc: 'CLAR_DOWN',\n        asSet(cmd, value) {\n            return cmd + pad4(value) + ';';\n        },\n    },\n    'RG': {\n        cmd: 'RG',\n        desc: 'RF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + pad3(value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1), 10);\n        },\n    },\n    'RI0': {\n        cmd: 'RI0',\n        desc: 'RADIO_INFORMATION_-_HI-SWR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI3': {\n        cmd: 'RI3',\n        desc: 'RADIO_INFORMATION_-_REC',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI4': {\n        cmd: 'RI4',\n        desc: 'RADIO_INFORMATION_-_PLAY',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI5': {\n        cmd: 'RI5',\n        desc: 'RADIO_INFORMATION_-_VFO-A_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI6': {\n        cmd: 'RI6',\n        desc: 'RADIO_INFORMATION_-_VFO-B_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI7': {\n        cmd: 'RI7',\n        desc: 'RADIO_INFORMATION_-_VFO-A_RX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RIA': {\n        cmd: 'RIA',\n        desc: 'RADIO_INFORMATION_-_TX_LED',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RL': {\n        cmd: 'RL',\n        desc: 'NOISE_REDUCTION_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + pad2(value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1));\n        },\n    },\n    'RM0': {\n        cmd: 'RM0',\n        desc: 'READ_METER_-_FRONT_PANEL',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM1': {\n        cmd: 'RM1',\n        desc: 'READ_METER_-_S_METER',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM2': {\n        cmd: 'RM2',\n        desc: 'READ_METER_-_OTHER_METER',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM3': {\n        cmd: 'RM3',\n        desc: 'READ_METER_-_COMP',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM4': {\n        cmd: 'RM4',\n        desc: 'READ_METER_-_ALC',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM5': {\n        cmd: 'RM5',\n        desc: 'READ_METER_-_PO',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM6': {\n        cmd: 'RM6',\n        desc: 'READ_METER_-_SWR',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM7': {\n        cmd: 'RM7',\n        desc: 'READ_METER_-_ID',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RM8': {\n        cmd: 'RM8',\n        desc: 'READ_METER_-_VDD',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'RS': {\n        cmd: 'RS',\n        desc: 'RADIO_STATUS',\n        autoInit: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'NORMAL MODE' : 'MENU MODE';\n        },\n    },\n    'RT': {\n        cmd: 'RT',\n        desc: 'CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RU': {\n        cmd: 'RU',\n        desc: 'RX_CLARIFIER_PLUS_OFFSET',\n        asSet(cmd, value) {\n            return cmd + pad4(value) + ';';\n        },\n    },\n    'SC': {\n        cmd: 'SC',\n        desc: 'SCAN',\n        asSet(cmd, value) {\n            switch(value) {\n            case 'off': return cmd + '0' + ';';\n            case 'up':  return cmd + '1' + ';';\n            case 'down':return cmd + '2' + ';';\n            }\n        },\n    },\n    'SD': {\n        cmd: 'SD',\n        desc: 'CW_BREAK-IN_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad4(value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'SH': {\n        cmd: 'SH',\n        desc: 'WIDTH',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + pad2(value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1));\n        },\n    },\n    'SM': {\n        cmd: 'SM',\n        desc: 'S-METER_READING',\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1));\n        },\n    },\n    'SQ': {\n        cmd: 'SQ',\n        desc: 'SQUELCLH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + '0' + pad3(value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return parseInt(value.substring(1));\n        },\n    },\n    'SV': {\n        cmd: 'SV',\n        desc: 'SWAP_VFO',\n        asSet: sendCmd,\n    },\n    'TS': {\n        cmd: 'TS',\n        desc: 'TXW',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'TX': {\n        cmd: 'TX',\n        desc: 'TX_SET',\n        autoInit: true,\n        asSet(cmd, value) {\n            return cmd + (value ? '2' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '1';\n        },\n    },\n    'UL': {\n        cmd: 'UL',\n        desc: 'PLL_UNLOCK_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'Lock' : 'Unlock';\n        },\n    },\n    'UP': {\n        cmd: 'UP',\n        desc: 'UP',\n        asSet: sendCmd,\n    },\n    'VD': {\n        cmd: 'VD',\n        desc: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSet(cmd, value) {\n            return cmd + pad4(value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return parseInt(value, 10);\n        },\n    },\n    'VG': {\n        cmd: 'VG',\n        desc: 'VOX_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSet: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n//     'VM': {              // FIXME: 'VM' has same desc as 'AM'\n//         cmd: 'VM',\n//         desc: 'VFO-A_TO_MEMORY_CHANNEL',\n//         asSet: sendCmd,\n//     },\n    'VX': {\n        cmd: 'VX',\n        desc: 'VOX_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'XT': {\n        cmd: 'XT',\n        desc: 'TX_CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asSet: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'ZI': {\n        cmd: 'ZI',\n        desc: 'ZERO_IN',\n        asSet: sendCmd,\n    }\n};\n// flow.set('rig_commands', rig_commands);\n\nconst rig_desc = {};\nfor(const [key, value] of Object.entries(rig_commands)) {\n    if(!value.hasOwnProperty('desc')) {\n        throw new Error(key + ' does not have desc property');\n    }\n    if(rig_desc.hasOwnProperty(value.desc)) {\n        throw new Error(key + ' has duplicate desc property');\n    }\n\n    rig_desc[value.desc] = value;\n}\nflow.set('rig_desc', rig_desc);\n\nconst max_menu_length = Object.keys(rig_commands).map( k => k.length ).reduce( (a, v) => a > v ? a : v );\n\nfunction findRigCommand(arg) {\n    if(rig_commands.hasOwnProperty(arg)) {\n        return rig_commands[arg];\n    }\n\n    if(arg.length <= 2) {\n        throw new Error('Input not found in rig_commands: ' + arg);\n    }\n    return findRigCommand(arg.substring(0, arg.length - 1));\n}\n\nconst RigSetting = class {\n    constructor(rc, value, raw_answer) {\n        this._rc = rc;\n        this._value = value;\n        this._raw_answer = raw_answer;\n    }\n\n    get name() {\n        if(this._rc.isMenu) {\n            return this._rc.cmd + pad3(this._value.no);\n        }\n        return this._rc.cmd;\n    }\n    get topic() {\n        return this._rc.desc;\n    }\n\n    get desc() { return this._rc.desc; }\n    get value() { return this._value; }\n    get autoInit() { return this._rc.autoInit; }\n    get canSet() { return !(this._value === undefined || this._value === null); }\n    get debounce() { return this._rc.debounce; }\n    get isMenu() { return this._rc.isMenu; }\n    get isCacheable() { return this._rc.isCacheable; }\n\n    get asSet() {\n        if(!this._rc.hasOwnProperty('asSet')) {\n            throw new Error(this._rc.desc + ' does not have an asSet() function');\n        }\n\n        return this._rc.asSet(this._rc.cmd, this._value);\n    }\n    get asRead() {\n        if(!this._rc.hasOwnProperty('asRead')) {\n            throw new Error(this._rc.cmd + ' does not have an asRead() function');\n        }\n\n        return this._rc.asRead(this._rc.cmd, this._value);\n    }\n    get rawAnswer() {\n        if(this._raw_answer === undefined || this._raw_answer === null) {\n            throw new Error(this._rc.cmd + ' does not have original answer');\n        }\n\n        return this._raw_answer;\n    }\n\n    static of(desc, value) {\n        const rc = rig_desc[desc];\n\n        if(!rc) {\n            throw new Error('\"' + desc + '\" not found');\n        }\n\n        return new RigSetting(rc, value);\n    }\n\n    static fromAnswer(arg) {\n        const rc = findRigCommand(arg.substring(0, max_menu_length)),\n              value = arg.substring(arg.length - 1) === ';' ?  arg.substring(rc.cmd.length, arg.length - 1) : arg.substring(rc.cmd.length);\n\n        if(!rc.fromAnswer) {\n            throw new Error(rc.cmd + '.fromAnswer() not implemented');\n        }\n\n        return new RigSetting(rc, rc.fromAnswer(value), arg);\n    }\n\n    static getAll() {\n        return Object.values(rig_commands).map(rc => new RigSetting(rc, '', ''));\n    }\n};\nglobal.set('RigSetting', RigSetting);\n\nconst rig_state = {};\n\nconst RigState = {\n    findRigSetting(arg) {\n        if(rig_state.hasOwnProperty(arg)) {\n            return rig_state[arg];\n        }\n\n        if(rig_desc.hasOwnProperty(arg)) {\n            return rig_state[rig_desc[arg].cmd];\n        }\n\n        return null;\n    },\n    getRigSetting(arg) {\n        const rs = RigState.findRigSetting(arg);\n\n        if(rs) {\n            return rs;\n        }\n\n        throw new Error('Rig state \"' + arg + '\" not found');\n    },\n\n    setRigSetting(rs) {\n        rig_state[rs.name] = rs;\n    },\n\n    getAll() {\n        return Object.values(rig_state);\n    }\n}\nglobal.set('RigState', RigState);",
+        "finalize": "",
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "a719940e.f96008"
+            ]
+        ]
+    },
+    {
+        "id": "8f58f4c3.0a9ac8",
+        "type": "inject",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 75,
+        "y": 120,
+        "wires": [
+            [
+                "428c5065.ae15f"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "ddb3e679.c08de8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 510,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1e1c550b.2edc2b",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "bff50622.754658",
+        "type": "debug",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "85ef0169.c887a",
+        "type": "debug",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "a719940e.f96008",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "Init",
+        "func": "const RigSetting = global.get('RigSetting'),\n      ex001 = RigSetting.of('MENU', {no: 1, value: ''});\n\nfor(const rs of RigSetting.getAll()) {\n    // node.log(JSON.stringify(rc));\n    if(rs.autoInit) {\n        node.send({ payload: rs.asRead });\n    }\n}\n\nnode.send({ payload: ex001.asRead });\nflow.set('next_config', 2);\n\nnode.done();",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "'use strict;'\n\nflow.set('needs_update', []);\n\nflow.set('debounce', {});",
+        "finalize": "",
+        "x": 430,
+        "y": 120,
+        "wires": [
+            [
+                "1e1c550b.2edc2b"
+            ]
+        ]
+    },
+    {
+        "id": "3a8813f3.17702c",
+        "type": "comment",
+        "z": "32b9106a.4589e",
+        "name": "Serial I/O handler",
+        "info": "",
+        "x": 100,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "4d9e382a.4c4c88",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "ConfigItem",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "'use strict';\n\nconst RigSetting = global.get('RigSetting');\n        \n// UI Iterface functions\n\nfunction uiMessage(no, value) {\n\treturn {config: {no: no, value: value}};\n}\n\nfunction defaultToUi (no, value) {\n\treturn uiMessage(no, value);\n}\n\nfunction toUiDataMode(no, value) {\n\treturn uiMessage(no, value === '0' ? 'PSK' : 'OTHER');\n}\n\nfunction toUiDataPortSelect(no, value) {\n\treturn uiMessage(no, value === '1' ? 'DATA' : 'USB');\n}\n\nfunction toUiFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\n\nfunction toUiMicSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'MIC' : 'REAR');\n}\n\nfunction toUiPttSelect(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'DAKY');\n    case '1': return uiMessage(no, 'RTS');\n    case '2': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiSimpleValue(no, value) {\n\treturn uiMessage(no, parseInt(value, 10).toString());\n}\n\nfunction toUiPcKeying(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'OFF');\n    case '1': return uiMessage(no, 'DAKY');\n    case '2': return uiMessage(no, 'RTS');\n    case '3': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiVoicePortSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'DATA' : 'USB');\n}\n\nfunction cutFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\nfunction toUiLCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 1));\n}\nfunction toUiSlope(no, value) {\n\treturn uiMessage(no, value === '0' ? '6 dB' : '18 dB');\n}\nfunction toUiHCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 13));\n}\n\nfunction defaultFromUi (arg) {\n    return null;\n}\n\nfunction toCat(no, value) {\n    let prefix;\n\n    if(no < 10) {\n        prefix = 'EX00' + no;\n    }\n    else if(no < 100) {\n        prefix = 'EX0' + no;\n    }\n    else {\n        prefix = 'EX' + no;\n    }\n\n    if(value) {\n        return prefix + value + ';';\n    }\n    return prefix + ';';\n}\n\nconst config_items = {\n\t1: {desc: 'AGC FAST DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t2: {desc: 'AGC MID DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t3: {desc: 'AGC SLOW DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t4: {desc: 'HOME FUNCTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t5: {desc: 'MY CALL INDICATION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t6: {desc: 'DISPLAY COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t7: {desc: 'DIMMER LED', toUi: defaultToUi, fromUi: defaultFromUi},\n\t8: {desc: 'DIMMER TFT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t9: {desc: 'BAR MTR PEAK HOLD', toUi: defaultToUi, fromUi: defaultFromUi},\n\t10: {desc: 'DVS RX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t11: {desc: 'DVS TX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t12: {desc: 'KEYER TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t13: {desc: 'KEYER DOT/DASH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t14: {desc: 'CW WEIGHT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t15: {desc: 'BEACON INTERVAL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t16: {desc: 'NUMBER STYLE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t17: {desc: 'CONTEST NUMBER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t18: {desc: 'CW MEMORY 1', toUi: defaultToUi, fromUi: defaultFromUi},\n\t19: {desc: 'CW MEMORY 2', toUi: defaultToUi, fromUi: defaultFromUi},\n\t20: {desc: 'CW MEMORY 3', toUi: defaultToUi, fromUi: defaultFromUi},\n\t21: {desc: 'CW MEMORY 4', toUi: defaultToUi, fromUi: defaultFromUi},\n\t22: {desc: 'CW MEMORY 5', toUi: defaultToUi, fromUi: defaultFromUi},\n\t23: {desc: 'NB WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t24: {desc: 'NB REJECTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t25: {desc: 'NB LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t26: {desc: 'BEEP LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t27: {desc: 'TIME ZONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t28: {desc: 'GPS/232C SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t29: {desc: '232C RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t30: {desc: '232C TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t31: {desc: 'CAT RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t32: {desc: 'CAT TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t33: {desc: 'CAT RTS', toUi: defaultToUi, fromUi: defaultFromUi},\n\t34: {desc: 'MEM GROUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t35: {desc: 'QUICK SPLIT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t36: {desc: 'TX TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t37: {desc: 'MIC SCAN', toUi: defaultToUi, fromUi: defaultFromUi},\n\t38: {desc: 'MIC SCAN RESUME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t39: {desc: 'REF FREQ ADJ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t40: {desc: 'CLAR MODE SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t41: {desc: 'AM LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t42: {desc: 'AM LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t43: {desc: 'AM HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t44: {desc: 'AM HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t45: {desc: 'AM MIC SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t46: {desc: 'AM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t47: {desc: 'AM PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t48: {desc: 'AM PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t49: {desc: 'AM DATA GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t50: {desc: 'CW LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t51: {desc: 'CW LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t52: {desc: 'CW HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t53: {desc: 'CW HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t54: {desc: 'CW OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t55: {desc: 'CW AUTO MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t56: {desc: 'CW BK-IN TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t57: {desc: 'CW BK-IN DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t58: {desc: 'CW WAVE SHAPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t59: {desc: 'CW FREQ DISPLAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t60: {desc: 'PC KEYING', toUi: toUiPcKeying, fromUi: defaultFromUi},\n\t61: {desc: 'QSK DELAY TIME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t62: {desc: 'DATA MODE', toUi: toUiDataMode, fromUi: defaultFromUi},\n\t63: {desc: 'PSK TONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t64: {desc: 'OTHER DISP (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t65: {desc: 'OTHER SHIFT (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t66: {desc: 'DATA LCUT FREQ', toUi: toUiLCutFreq, fromUi: defaultFromUi},\n\t67: {desc: 'DATA LCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t68: {desc: 'DATA HCUT FREQ', toUi: toUiHCutFreq, fromUi: defaultFromUi},\n\t69: {desc: 'DATA HCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t70: {desc: 'DATA IN SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t71: {desc: 'DATA PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t72: {desc: 'DATA PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t73: {desc: 'DATA OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t74: {desc: 'FM MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t75: {desc: 'FM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t76: {desc: 'FM PKT PTT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t77: {desc: 'FM PKT PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t78: {desc: 'FM PKT TX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t79: {desc: 'FM PKT MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t80: {desc: 'RPT SHIFT 28MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t81: {desc: 'RPT SHIFT 50MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t82: {desc: 'RPT SHIFT 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t83: {desc: 'RPT SHIFT 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t84: {desc: 'ARS 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t85: {desc: 'ARS 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t86: {desc: 'DCS POLARITY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t87: {desc: 'RADIO ID', toUi: defaultToUi, fromUi: defaultFromUi},\n\t88: {desc: 'GM DISPLY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t89: {desc: 'DISTANCE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t90: {desc: 'AMS TX MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t91: {desc: 'STANDBY BEEP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t92: {desc: 'RTTY LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t93: {desc: 'RTTY LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t94: {desc: 'RTTY HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t95: {desc: 'RTTY HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t96: {desc: 'RTTY SHIFT PORT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t97: {desc: 'RTTY POLARITY-RX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t98: {desc: 'RTTY POLARITY-TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t99: {desc: 'RTTY OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t100: {desc: 'RTTY SHIFT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t101: {desc: 'RTTY MARK FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t102: {desc: 'SSB LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t103: {desc: 'SSB LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t104: {desc: 'SSB HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t105: {desc: 'SSB HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t106: {desc: 'SSB MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t107: {desc: 'SSB OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t108: {desc: 'SSB PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t109: {desc: 'SSB PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t110: {desc: 'SSB TX BPF', toUi: defaultToUi, fromUi: defaultFromUi},\n\t111: {desc: 'APF WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t112: {desc: 'CONTOUR LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t113: {desc: 'CONTOUR WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t114: {desc: 'IF NOTCH WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t115: {desc: 'SCP DISPLAY MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t116: {desc: 'SCP SPAN FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t117: {desc: 'SPECTRUM COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t118: {desc: 'WATER FALL COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t119: {desc: 'PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t120: {desc: 'PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t121: {desc: 'PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t122: {desc: 'PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t123: {desc: 'PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t124: {desc: 'PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t125: {desc: 'PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t126: {desc: 'PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t127: {desc: 'PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t128: {desc: 'P-PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t129: {desc: 'P-PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t130: {desc: 'P-PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t131: {desc: 'P-PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t132: {desc: 'P-PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t133: {desc: 'P-PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t134: {desc: 'P-PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t135: {desc: 'P-PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t136: {desc: 'P-PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t137: {desc: 'HF TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t138: {desc: '50M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t139: {desc: '144M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t140: {desc: '430M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t141: {desc: 'TUNER SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t142: {desc: 'VOX SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t143: {desc: 'VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t144: {desc: 'VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t145: {desc: 'ANTI VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t146: {desc: 'DATA VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t147: {desc: 'DATA VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t148: {desc: 'ANTI DVOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t149: {desc: 'EMERGENCY FREQ TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t150: {desc: 'PRT/WIRES FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t151: {desc: 'PRESET FREQUENCY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t152: {desc: 'SEARCH SETUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t153: {desc: 'WIRES DG-ID', toUi: defaultToUi, fromUi: defaultFromUi}\n};\n\nflow.set('config_items', config_items);\n\nconst ConfigItem = class {\n    constructor(no, value) {\n        this._no = no;\n        this._value = value;\n    }\n    \n    get no() { return this._no; }\n    get value() { return this._value; }\n\n    get desc() {\n        const ci = config_items[this._no];\n\n        return ci.desc;\n    }\n\n    get asRigSetting() {\n        return RigSetting.of('MENU', {no: this._no, value: this._value});\n    }\n\n    get toUi() {\n        const ci = config_items[this._no];\n\n        return ci.toUi(this._no, this._value);\n    }\n    \n    static fromUi(arg) {\n        throw new Error('Not implemented yet');\n    }\n\n    static of(arg) {\n        return new ConfigItem(arg.no, arg.value);\n    }\n}\n\nflow.set('ConfigItem', ConfigItem);",
+        "finalize": "",
+        "x": 270,
+        "y": 100,
+        "wires": [
+            [
+                "a7f8e61b.7258f8"
+            ]
+        ]
+    },
+    {
+        "id": "46dc275e.ba5528",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "d": true,
+        "name": "Refresh GUI",
+        "func": "\nlet menu_state = global.get('menu_state'),\n    debounce = flow.get('debounce'),\n    gui_state = flow.get('gui_state');\n    \nfor (const [key, value] of Object.entries(menu_state)) {\n  if(gui_state.hasOwnProperty(key)) {\n      if(gui_state[key] !== value) {\n          gui_state[key] = value;\n          \n          node.send({topic: key, payload: value});\n      }\n  }\n  else {\n      gui_state[key] = value;\n      \n      node.send({topic: key, payload: value});\n  }\n}\n\nflow.set('gui_state', gui_state);\n\nnode.done();\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\n\nflow.set('gui_state', {});",
+        "finalize": "",
+        "x": 190,
+        "y": 720,
+        "wires": [
+            [
+                "9f015bb5.eb1dc8"
+            ]
+        ]
+    },
+    {
+        "id": "f681ee06.39d49",
+        "type": "inject",
+        "z": "32b9106a.4589e",
+        "d": true,
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 55,
+        "y": 720,
+        "wires": [
+            [
+                "46dc275e.ba5528"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "9f015bb5.eb1dc8",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 400,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "9bc357f4.ba8a68",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "Handle debounce",
+        "func": "'use strict;'\n\nlet debounce = flow.get('debounce'),\n    last_state = flow.get('last_state');\n    \nfor (const [key, value] of Object.entries(debounce)) {\n\n  if(last_state.hasOwnProperty(key)) {\n\n      if(last_state[key] !== value.rawAnswer) {\n          last_state[key] = value.rawAnswer;\n          \n          node.send({topic: key, payload: value});\n      }\n  }\n  else {\n      last_state[key] = value.rawAnswer;\n      \n      node.send({topic: key, payload: value});\n  }\n}\n\nflow.set('last_state', last_state);\n\nnode.done();\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\n\nflow.set('last_state', {});",
+        "finalize": "",
+        "x": 230,
+        "y": 780,
+        "wires": [
+            [
+                "abc36c8b.49bd7"
+            ]
+        ]
+    },
+    {
+        "id": "757a8c4c.6316a4",
+        "type": "inject",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 75,
+        "y": 780,
+        "wires": [
+            [
+                "9bc357f4.ba8a68"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "abc36c8b.49bd7",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 420,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "541ba4ba.17818c",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "Load all config ",
+        "func": "const next_config = flow.get('next_config'),\n      RigSetting = global.get('RigSetting');\n\nlet next_ex = null;\n\nif(next_config <= 153) {\n    const ex = RigSetting.of('MENU', {no: next_config, value: ''});\n\n    next_ex = { payload: ex.asRead };\n\n    flow.set('next_config', next_config + 1);\n}\n\nreturn next_ex;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 270,
+        "y": 840,
+        "wires": [
+            [
+                "222e1298.d5333e"
+            ]
+        ]
+    },
+    {
+        "id": "cad33cb1.45fc5",
+        "type": "flowcontrolOut",
+        "z": "32b9106a.4589e",
+        "topic": "MENU",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 90,
+        "y": 840,
+        "wires": [
+            [
+                "541ba4ba.17818c"
+            ]
+        ]
+    },
+    {
+        "id": "222e1298.d5333e",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 450,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "149124b5.fac2cb",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "719b629e.c627dc",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 350,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "d5fb7c28.17546",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 270,
+        "y": 1520,
+        "wires": []
     }
 ]
