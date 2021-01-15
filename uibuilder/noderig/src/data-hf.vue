@@ -13,6 +13,9 @@
         <mode-status></mode-status>
     </b-row>
     <s-meter class="mt-2"></s-meter>
+    <swr-meter class="mt-2"></swr-meter>
+    <!-- <tx-timer class="mt-2"></tx-timer> -->
+    <tx-count-down secs="30" warn="25"></tx-count-down>
     <power-level class="mt-2 mb-2"></power-level>
     <config :items="['62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></config>
 </div>
@@ -32,7 +35,10 @@ module.exports = {
 //      's-meter':          httpVueLoader('s-meter-bootstrap-progressbar.vue'),
 //      's-meter':          httpVueLoader('s-meter-html5-progress.vue'),
         's-meter':          httpVueLoader('s-meter-vue-bootstrap-progressbar.vue'),
+        'swr-meter':        httpVueLoader('swr-meter.vue'),
         'tuner-status':     httpVueLoader('tuner-status.vue'),
+         'tx-timer':        httpVueLoader('tx-timer.vue'),
+         'tx-count-down':   httpVueLoader('tx-count-down.vue'),
         }
 }
 </script>
