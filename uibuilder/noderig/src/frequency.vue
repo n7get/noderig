@@ -34,8 +34,8 @@ module.exports = {
 
 <style scoped>
     .frequency-digits {
-    font-family: "Monaco", "Lucida Console", "Andalé Mono";
-    font-size: 32px;
+        font-family: "Monaco", "Lucida Console", "Andalé Mono";
+        font-size: 32px;
         color: green;
     }
     .frequency-digits.tx {
