@@ -1,6 +1,6 @@
 <template>
-    <div class="mt-2" :class="{'frequency-digits': true, tx: on}">
-        {{ mhz }}&nbsp;{{ khz }}&nbsp;{{ hz }}
+    <div class="mt-2 frequency-digits" :class="{tx: on}">
+        <span v-html="mhz"></span>&nbsp;<span v-html="khz"></span>&nbsp;<span v-html="hz"></span>
     </div>
 </template>
 
@@ -19,7 +19,7 @@ module.exports = {
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('frequency')) {
-                self.mhz = msg.frequency.substring(0, 3);
+                self.mhz = msg.frequency.substring(0, 3).replace(/ /g,'&nbsp;');;
                 self.khz = msg.frequency.substring(3, 6);
                 self.hz  = msg.frequency.substring(6, 9);
             }
@@ -37,6 +37,7 @@ module.exports = {
         font-family: "Monaco", "Lucida Console", "Andalé Mono";
         font-size: 32px;
         color: green;
+        padding-right: 0;
     }
     .frequency-digits.tx {
         color: red;
