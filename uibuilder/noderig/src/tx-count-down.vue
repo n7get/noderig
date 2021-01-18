@@ -60,7 +60,7 @@ module.exports = {
     },
     mounted: function() {
         var self = this,
-            intervalID;
+            intervalID = null;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('transmit')) {
@@ -68,13 +68,16 @@ module.exports = {
                 self.tx_on = msg.transmit;
 
                if(msg.transmit) {
-                   self.counter = self.secs;
-                   self.is_warn = false;
+                  if(intervalID == null) {
+                       self.counter = self.secs;
+                       self.is_warn = false;
 
-                  intervalID = window.setInterval(increment, 1000, self);
+                      intervalID = window.setInterval(increment, 1000, self);
+                  }
                }
                else {
                   window.clearInterval(intervalID);
+                  intervalID = null;
                }
             }
         });

@@ -41,7 +41,7 @@ module.exports = {
     },
     mounted: function() {
         var self = this,
-            intervalID;
+            intervalID = null;
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('transmit')) {
@@ -49,12 +49,15 @@ module.exports = {
                 self.tx_on = msg.transmit;
 
                if(msg.transmit) {
-                   self.counter = 0;
+                  if(intervalID == null) {
+                      self.counter = 0;
 
-                  intervalID = window.setInterval(increment, 1000, self);
+                      intervalID = window.setInterval(increment, 1000, self);
+                  }
                }
                else {
                   window.clearInterval(intervalID);
+                  intervalID = null;
                }
             }
         });

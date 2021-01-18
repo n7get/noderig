@@ -12,10 +12,17 @@
         <alc-status class="mr-2">></alc-status>
         <mode-status></mode-status>
     </b-row>
-    <s-meter class="mt-2"></s-meter>
-    <swr-meter class="mt-2"></swr-meter>
-    <!-- <tx-timer class="mt-2"></tx-timer> -->
-    <tx-count-down secs="30" warn="25"></tx-count-down>
+    <s-meter v-show="!tx_on" class="mt-2"></s-meter>
+    <swr-meter v-show="tx_on" class="mt-2"></swr-meter>
+    <div v-show="tx_on" class="mt-2">
+        <alc-meter v-show="meter_switch === 'ALC'"></alc-meter>
+        <comp-meter v-show="meter_switch === 'COMP'"></comp-meter>
+        <id-meter v-show="meter_switch === 'ID'"></id-meter>
+        <po-meter v-show="meter_switch === 'PO'"></po-meter>
+        <vdd-meter v-show="meter_switch === 'VDD'"></vdd-meter>
+    </div>
+    <tx-timer class="mt-2"></tx-timer>
+    <!-- <tx-count-down secs="90" warn="30"></tx-count-down> -->
     <power-level class="mt-2 mb-2"></power-level>
     <config :items="['62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></config>
 </div>
@@ -35,11 +42,34 @@ module.exports = {
 //      's-meter':          httpVueLoader('s-meter-bootstrap-progressbar.vue'),
 //      's-meter':          httpVueLoader('s-meter-html5-progress.vue'),
         's-meter':          httpVueLoader('s-meter-vue-bootstrap-progressbar.vue'),
+        'alc-meter':        httpVueLoader('alc-meter.vue'),
+        'comp-meter':        httpVueLoader('comp-meter.vue'),
+        'id-meter':        httpVueLoader('id-meter.vue'),
+        'po-meter':        httpVueLoader('po-meter.vue'),
         'swr-meter':        httpVueLoader('swr-meter.vue'),
+        'vdd-meter':        httpVueLoader('vdd-meter.vue'),
         'tuner-status':     httpVueLoader('tuner-status.vue'),
-         'tx-timer':        httpVueLoader('tx-timer.vue'),
-         'tx-count-down':   httpVueLoader('tx-count-down.vue'),
+        'tx-timer':         httpVueLoader('tx-timer.vue'),
+        'tx-count-down':    httpVueLoader('tx-count-down.vue'),
+    },
+    data: function() {
+        return {
+            meter_switch: '',
+            tx_on: false,
         }
+    },
+    mounted: function() {
+        var self = this;
+
+        uibuilder.onChange('msg', msg => {
+            if(msg.hasOwnProperty('transmit')) {
+                self.tx_on = msg.transmit;
+            }
+            else if(msg.hasOwnProperty('meter_switch')) {
+                self.meter_switch = msg.meter_switch;
+            }
+        });
+    },
 }
 </script>
 

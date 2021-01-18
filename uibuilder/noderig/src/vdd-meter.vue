@@ -1,9 +1,9 @@
 <template>
 <b-row>
     <div class="col-4">
-        SWR:
+        VDD:
     </div>
-    <div class="swr-meter col mt-1">
+    <div class="vdd-meter col mt-1">
         <b-progress :value="value" max="255"></b-progress>
     </div>
 </b-row>
@@ -20,8 +20,8 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('swr_meter')) {
-                self.value = parseInt(msg.swr_meter, 10);
+            if(msg.hasOwnProperty('vdd_meter')) {
+                self.value = parseInt(msg.vdd_meter, 10);
             }
         });
     }
@@ -29,7 +29,7 @@ module.exports = {
 </script>
 
 <style scoped>
-.swr-meter {
+.vdd-meter {
     padding-left:0;
 }
 </style>

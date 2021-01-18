@@ -1,5 +1,5 @@
 <template>
-<b-row v-show="!tx_on">
+<b-row>
     <div class="col-4">
         S-Meter:
     </div>
@@ -14,7 +14,6 @@ module.exports = {
     data: function() {
         return {
             value: 0,
-            tx_on: false,
         }
     },
     mounted: function() {
@@ -23,10 +22,6 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('s_meter')) {
                 self.value = parseInt(msg.s_meter, 10);
-            }
-            
-            if(msg.hasOwnProperty('transmit')) {
-                self.tx_on = msg.transmit;
             }
         });
     }
