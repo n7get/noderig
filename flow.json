@@ -14,9 +14,16 @@
         "info": ""
     },
     {
+        "id": "f0e53ee8.4481e",
+        "type": "tab",
+        "label": "Tools",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "3ef5815c.6122be",
         "type": "serial-port",
-        "serialport": "/dev/ttyUSB0",
+        "serialport": "COM4",
         "serialbaud": "38400",
         "databits": "8",
         "parity": "none",
@@ -35,7 +42,7 @@
     {
         "id": "269a3122.a0068e",
         "type": "serial-port",
-        "serialport": "/dev/tty98",
+        "serialport": "COM8",
         "serialbaud": "38400",
         "databits": "8",
         "parity": "none",
@@ -50,24 +57,6 @@
         "out": "char",
         "addchar": "",
         "responsetimeout": "10000"
-    },
-    {
-        "id": "a7a1894c.5cffc8",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "TO_UI",
-        "x": 110,
-        "y": 360,
-        "wires": [
-            [
-                "32d66e09.a27d62"
-            ]
-        ]
     },
     {
         "id": "2f69877c.f1a878",
@@ -105,24 +94,6 @@
         ]
     },
     {
-        "id": "878e3d25.f3563",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "FREQUENCY_VFO-A",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 159,
-        "y": 960,
-        "wires": [
-            [
-                "73ba80c7.20d9"
-            ]
-        ]
-    },
-    {
         "id": "38f94d9a.621b32",
         "type": "comment",
         "z": "36d8cfa8.00955",
@@ -131,47 +102,6 @@
         "x": 80,
         "y": 900,
         "wires": []
-    },
-    {
-        "id": "f4957c97.d011b",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 510,
-        "y": 960,
-        "wires": []
-    },
-    {
-        "id": "c229a01c.c9c49",
-        "type": "uibuilder",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "topic": "",
-        "url": "noderig",
-        "fwdInMessages": false,
-        "allowScripts": false,
-        "allowStyles": false,
-        "copyIndex": true,
-        "showfolder": false,
-        "useSecurity": false,
-        "sessionLength": 432000,
-        "tokenAutoExtend": false,
-        "x": 460,
-        "y": 360,
-        "wires": [
-            [
-                "2f69877c.f1a878",
-                "4d9903e1.a7ad7c"
-            ],
-            [
-                "bfbcfc9e.c6d8f"
-            ]
-        ]
     },
     {
         "id": "32d66e09.a27d62",
@@ -211,20 +141,6 @@
         ]
     },
     {
-        "id": "5254abbf.2aaab4",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 840,
-        "y": 380,
-        "wires": []
-    },
-    {
         "id": "1c4a71e4.2855ce",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -243,24 +159,6 @@
         ]
     },
     {
-        "id": "98c509ae.1f24e8",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "ANTENNA_TUNER_CONTROL",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 190,
-        "y": 760,
-        "wires": [
-            [
-                "1c4a71e4.2855ce"
-            ]
-        ]
-    },
-    {
         "id": "8ff43417.662838",
         "type": "comment",
         "z": "36d8cfa8.00955",
@@ -269,52 +167,6 @@
         "x": 90,
         "y": 700,
         "wires": []
-    },
-    {
-        "id": "3217ca4b.1be0c6",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 590,
-        "y": 760,
-        "wires": []
-    },
-    {
-        "id": "4d9903e1.a7ad7c",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 660,
-        "y": 340,
-        "wires": []
-    },
-    {
-        "id": "2fd3d6a1.8a6dda",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "TUNER_EVENT",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 140,
-        "y": 818,
-        "wires": [
-            [
-                "299f4698.81a6aa"
-            ]
-        ]
     },
     {
         "id": "299f4698.81a6aa",
@@ -335,20 +187,6 @@
         ]
     },
     {
-        "id": "96fc3f21.ca5c3",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 550,
-        "y": 818,
-        "wires": []
-    },
-    {
         "id": "615827bd.14ab08",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -367,24 +205,6 @@
         ]
     },
     {
-        "id": "1ba35fd8.f2d5b",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "LOCK",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 1100,
-        "wires": [
-            [
-                "615827bd.14ab08"
-            ]
-        ]
-    },
-    {
         "id": "66519439.ef50ac",
         "type": "comment",
         "z": "36d8cfa8.00955",
@@ -393,38 +213,6 @@
         "x": 100,
         "y": 1040,
         "wires": []
-    },
-    {
-        "id": "5c966a43.6ca814",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 390,
-        "y": 1100,
-        "wires": []
-    },
-    {
-        "id": "c2d2e3f0.672f1",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "LOCK_EVENT",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 130,
-        "y": 1160,
-        "wires": [
-            [
-                "29c9ad6f.f10de2"
-            ]
-        ]
     },
     {
         "id": "29c9ad6f.f10de2",
@@ -443,20 +231,6 @@
                 "324563b3.8a6bec"
             ]
         ]
-    },
-    {
-        "id": "324563b3.8a6bec",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 530,
-        "y": 1160,
-        "wires": []
     },
     {
         "id": "eb4acb73.9aa218",
@@ -487,24 +261,6 @@
         ]
     },
     {
-        "id": "dd11d45.b7b1428",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "MODE",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 1300,
-        "wires": [
-            [
-                "44f940cc.6e0d8"
-            ]
-        ]
-    },
-    {
         "id": "a8e86238.c5e45",
         "type": "comment",
         "z": "36d8cfa8.00955",
@@ -512,20 +268,6 @@
         "info": "",
         "x": 100,
         "y": 1240,
-        "wires": []
-    },
-    {
-        "id": "7b45ceb6.f23ed",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 410,
-        "y": 1300,
         "wires": []
     },
     {
@@ -557,56 +299,6 @@
         ]
     },
     {
-        "id": "f3d95bd.78392a8",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "PRE-AMP_(IPO)",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 141,
-        "y": 1440,
-        "wires": [
-            [
-                "8966cf54.edcbc"
-            ]
-        ]
-    },
-    {
-        "id": "ff3678f2.db8be8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 470,
-        "y": 1440,
-        "wires": []
-    },
-    {
-        "id": "bfc70c4c.2e021",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "PRE_AMP_EVENT",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 150,
-        "y": 1500,
-        "wires": [
-            [
-                "a46ebafd.b79ee8"
-            ]
-        ]
-    },
-    {
         "id": "a46ebafd.b79ee8",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -623,20 +315,6 @@
                 "5ff01c89.535f64"
             ]
         ]
-    },
-    {
-        "id": "5ff01c89.535f64",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 590,
-        "y": 1500,
-        "wires": []
     },
     {
         "id": "407bcb2b.b76c44",
@@ -665,24 +343,6 @@
         "x": 100,
         "y": 1580,
         "wires": []
-    },
-    {
-        "id": "37037542.441caa",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_ALC",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 160,
-        "y": 1640,
-        "wires": [
-            [
-                "407bcb2b.b76c44"
-            ]
-        ]
     },
     {
         "id": "967ffaba.c72ea8",
@@ -760,40 +420,6 @@
         "info": "",
         "x": 70,
         "y": 40,
-        "wires": []
-    },
-    {
-        "id": "e4e4c199.7dd2",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "TX_SET",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 580,
-        "wires": [
-            [
-                "3577dee8.bb4d82",
-                "b49c81d6.a9d11",
-                "f7a86e4b.3428a"
-            ]
-        ]
-    },
-    {
-        "id": "84528388.0ba3e",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 710,
-        "y": 560,
         "wires": []
     },
     {
@@ -893,24 +519,6 @@
         "wires": []
     },
     {
-        "id": "32d87102.369c8e",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_FRONT_PANEL",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 190,
-        "y": 1980,
-        "wires": [
-            [
-                "521af92f.676338"
-            ]
-        ]
-    },
-    {
         "id": "521af92f.676338",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -927,20 +535,6 @@
                 "e83b48b0.1e1f38"
             ]
         ]
-    },
-    {
-        "id": "e83b48b0.1e1f38",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 570,
-        "y": 1980,
-        "wires": []
     },
     {
         "id": "3577dee8.bb4d82",
@@ -961,34 +555,6 @@
         ]
     },
     {
-        "id": "90f12983.192f58",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 450,
-        "y": 620,
-        "wires": []
-    },
-    {
-        "id": "3ec17c54.34b114",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 510,
-        "y": 1640,
-        "wires": []
-    },
-    {
         "id": "b70b668c.9fc0f8",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -1003,56 +569,6 @@
         "wires": [
             [
                 "e2b33926.96bdb8"
-            ]
-        ]
-    },
-    {
-        "id": "256584b6.9e7afc",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "POWER_CONTROL",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 150,
-        "y": 1780,
-        "wires": [
-            [
-                "b70b668c.9fc0f8"
-            ]
-        ]
-    },
-    {
-        "id": "e2b33926.96bdb8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 510,
-        "y": 1780,
-        "wires": []
-    },
-    {
-        "id": "dcafe425.c02c68",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "POWER_CHANGE_EVENT",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 173,
-        "y": 1840,
-        "wires": [
-            [
-                "5de6016b.1dd4a"
             ]
         ]
     },
@@ -1078,20 +594,6 @@
         ]
     },
     {
-        "id": "ea279eb4.5dddd",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 570,
-        "y": 1840,
-        "wires": []
-    },
-    {
         "id": "6b6a1689.3afd08",
         "type": "comment",
         "z": "36d8cfa8.00955",
@@ -1100,24 +602,6 @@
         "x": 90,
         "y": 2060,
         "wires": []
-    },
-    {
-        "id": "a5059d4f.8ff6c",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "MENU",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 2120,
-        "wires": [
-            [
-                "9197749a.bfee18"
-            ]
-        ]
     },
     {
         "id": "9197749a.bfee18",
@@ -1136,20 +620,6 @@
                 "d11c8fcb.4bdc5"
             ]
         ]
-    },
-    {
-        "id": "d11c8fcb.4bdc5",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 390,
-        "y": 2120,
-        "wires": []
     },
     {
         "id": "407677ad.560a58",
@@ -1224,7 +694,7 @@
         "type": "debug",
         "z": "36d8cfa8.00955",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1242,8 +712,8 @@
         "z": "32b9106a.4589e",
         "name": "",
         "serial": "269a3122.a0068e",
-        "x": 100,
-        "y": 573,
+        "x": 90,
+        "y": 633,
         "wires": [
             [
                 "6ce32ef0.5799f",
@@ -1257,7 +727,7 @@
         "z": "32b9106a.4589e",
         "name": "",
         "serial": "269a3122.a0068e",
-        "x": 700,
+        "x": 690,
         "y": 500,
         "wires": []
     },
@@ -1267,12 +737,13 @@
         "z": "32b9106a.4589e",
         "name": "",
         "serial": "3ef5815c.6122be",
-        "x": 116,
+        "x": 96,
         "y": 429.00000953674316,
         "wires": [
             [
                 "25b95575.0f35da",
-                "96f5efe6.f320b"
+                "96f5efe6.f320b",
+                "1fa925f6.030a7a"
             ]
         ]
     },
@@ -1282,7 +753,7 @@
         "z": "32b9106a.4589e",
         "name": "",
         "serial": "3ef5815c.6122be",
-        "x": 320,
+        "x": 300,
         "y": 320,
         "wires": []
     },
@@ -1311,7 +782,7 @@
         "initialize": "",
         "finalize": "",
         "x": 300,
-        "y": 600,
+        "y": 660,
         "wires": []
     },
     {
@@ -1369,7 +840,7 @@
         "initialize": "",
         "finalize": "",
         "x": 310,
-        "y": 540,
+        "y": 600,
         "wires": [
             [
                 "26f39226.04a21e"
@@ -1382,20 +853,6 @@
             "pty output",
             "SERIAL_OUT"
         ]
-    },
-    {
-        "id": "63e66f45.c3b4c",
-        "type": "flowcontrolIn",
-        "z": "32b9106a.4589e",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 540,
-        "y": 440,
-        "wires": []
     },
     {
         "id": "26f39226.04a21e",
@@ -1416,39 +873,6 @@
         ]
     },
     {
-        "id": "5ea91238.1af28c",
-        "type": "flowcontrolOut",
-        "z": "32b9106a.4589e",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 300,
-        "wires": [
-            [
-                "953f881.09fb578",
-                "3eb84881.bfc188"
-            ]
-        ]
-    },
-    {
-        "id": "dc6c1348.90f2b",
-        "type": "flowcontrolIn",
-        "z": "32b9106a.4589e",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 530,
-        "y": 560,
-        "wires": []
-    },
-    {
         "id": "ac982a5d.0e3cb8",
         "type": "comment",
         "z": "32b9106a.4589e",
@@ -1466,7 +890,7 @@
         "func": "\n// RigSetting is under the Setup tab\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict;'\n\nfunction isEmptyValue(value) {\n    if(typeof(value) === 'string' && value.length === 0) {\n        return true;\n    }\n\n    if(value === null || value === undefined) {\n        return true\n    }\n    \n    return false;\n}\n\nfunction intValue(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return parseInt(value, 10);\n}\n\nfunction pad(len) {\n    return function(value) {\n        let n = typeof(value) === 'string' ? value : value.toString();\nvalue.substring\n        while(n.length < len) {\n            n = '0' + n;\n        }\n\n        return n;\n    };\n}\nconst pad2 = pad(2);\nconst pad3 = pad(3);\nconst pad4 = pad(4);\nconst pad9 = pad(9);\n\nfunction map_reverse(obj) {\n    const result = {};\n\n    for(const [key, value] of Object.entries(obj)) {\n        result[value] = key;\n    }\n\n    return result;\n}\n\nconst cat_to_ctcss = {\n    '000': '67.0', '001': '69.3', '002': '71.9', '003': '74.4',\n    '004': '77.0', '005': '79.7', '006': '82.5', '007': '85.4',\n    '008': '88.5', '009': '91.5', '010': '94.8', '011': '97.4',\n    '012': '100.0', '013': '103.5', '014': '107.2', '015': '110.9',\n    '016': '114.8', '017': '118.8', '018': '123.0', '019': '127.3',\n    '020': '131.8', '021': '136.5', '022': '141.3', '023': '146.2',\n    '024': '151.4', '025': '156.7', '026': '159.8', '027': '162.2',\n    '028': '165.5', '029': '167.9', '030': '171.3', '031': '173.8',\n    '032': '177.3', '033': '179.9', '034': '183.5', '035': '186.2',\n    '036': '189.9', '037': '192.8', '038': '196.6', '039': '199.5',\n    '040': '203.5', '041': '206.5', '042': '210.7', '043': '218.1',\n    '044': '225.7', '045': '229.1', '046': '233.6', '047': '241.8',\n    '048': '250.3', '049': '254.1'\n};\nconst ctcss_to_cat = map_reverse(cat_to_ctcss);\n\nconst cat_to_CT = {\n    '0': 'CTCSS OFF',\n    '1': 'CTCSS ENC/DEC',\n    '2': 'CTCSS ENC',\n    '3': 'DCS ENC/DEC',\n    '4': 'DCS ENC'\n};\nconst CT_to_cat = map_reverse(cat_to_CT);\n\nconst cat_to_dcs = [\n     23,  25,  26,  31,  32,  36,  43,  47,  51,  53,  54,  65,  71,  72,\n     73,  74, 114, 115, 116, 122, 125, 131, 132, 134, 143, 145, 152, 155,\n    156, 162, 165, 172, 174, 205, 212, 223, 225, 226, 243, 244, 245, 246,\n    251, 252, 255, 261, 263, 265, 266, 271, 274, 306, 311, 315, 325, 331,\n    332, 343, 346, 351, 356, 364, 365, 371, 411, 412, 413, 423, 431, 432,\n    445, 446, 452, 454, 455, 462, 464, 465, 466, 503, 506, 516, 523, 526,\n    532, 546, 565, 606, 612, 624, 627, 631, 632, 654, 662, 664, 703, 712,\n    723, 731, 732, 734, 743, 754\n];\n\nconst band_to_cat = {\n    '1.8 MHz': '00',\n    '3.5 MHz': '01',\n    '5 MHz': '02',\n    '7 MHz': '03',\n    '10 MHz': '04',\n    '14 MHz': '05',\n    '18 MHz': '06',\n    '21 MHz': '07',\n    '24.5 MHz': '08',\n    '28 MHz': '09',\n    '50 MHz': '10',\n    'GEN': '11',\n    'MW': '12',\n    'AIR': '14',\n    '144 MHz': '15',\n    '430 MHz': '16'\n}\n\nconst cat_to_agc = {\n    '0': 'OFF',\n    '1': 'FAST',\n    '2': 'MID',\n    '3': 'SLOW',\n    '4': 'AUTO-FAST',\n    '5': 'AUTO-MID',\n    '6': 'AUTO-SLOW'\n};\nconst agc_to_cat = {\n    'OFF': '0',\n    'FAST': '1',\n    'MID': '2',\n    'SLOW': '3',\n    'AUTO': '4',\n    'AUTO-FAST': '4',\n    'AUTO-MID': '4',\n    'AUTO-SLOW': '4'\n};\n\nconst cat_meter = {\n    '0': 'COMP',\n    '1': 'ALC',\n    '2': 'PO',\n    '3': 'SWR',\n    '4': 'ID',\n    '5': 'VDD'\n};\nconst meter_cat = map_reverse(cat_meter);\n\nconst cat_modes = {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n};\nconst modes_cat = map_reverse(cat_modes);\n\nconst cat_offset = {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n};\nconst offset_cat = map_reverse(cat_offset);\n\nconst cat_preamp = {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n};\nconst preamp_cat = map_reverse(cat_preamp);\n\nfunction sendCmd(cmd) {\n    return this._rc.cmd + ';';\n}\nfunction sendCmd0(cmd) {\n    return this._rc.cmd + '0' + ';';\n}\n\nfunction fromBoolean(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return value.substring(0, 1) === '1';\n}\nfunction toCatBoolean() {\n    return this._rc.cmd + (this.value ? '1' : '0') + ';';\n}\n\nfunction fromInteger(value) {\n    return intValue(value);\n}\nfunction asInteger() {\n    return this._rc.cmd + pad3(this.value) + ';';\n}\n\nfunction band_info(value) {\n    return {\n        raw: value,\n        mem_chan: intValue(value.substring(0,3)),\n        freq: intValue(value.substring(3,12)),\n        clarifier: value.substring(12,17),\n        rx_clar: value.substring(17, 18) != '0',\n        tx_clar: value.substring(18, 19) != '0',\n        mode: cat_modes[value.substring(19, 20)] || value.substring(21, 22),\n        p7: value.substring(20, 21),\n        tone: value.substring(21, 22),\n        offset: cat_offset[value.substring(26, 27)]\n    };\n}\n\nconst rig_commands = {\n    'AB': {                       // TODO: Needs testing\n        cmd: 'AB',\n        desc: 'VFO-A_TO_VFO-B',\n        asSet: sendCmd,\n    },\n    'AC': {\n        cmd: 'AC',\n        desc: 'ANTENNA_TUNER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '000' + ';';\n            case 'on':  return this._rc.cmd + '001' + ';';\n            case 'tune':return this._rc.cmd + '002' + ';';\n            }\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            switch(value.substring(2, 3)) {\n            case '0':   return 'off';\n            case '1':   return 'on';\n            case '2':   return 'tune';\n            }\n        },\n    },\n    'AG': {\n        cmd: 'AG',\n        desc: 'AF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        }\n    },\n    'AI': {\n        cmd: 'AI',\n        desc: 'AUTO_INFORMATION',\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'AM': {                       // TODO: Needs testing\n        cmd: 'AM',\n        desc: 'VFO-A_TO_MEMORY_CHANNEL',\n        asSet: sendCmd,\n    },\n    'BA': {                       // TODO: Needs testing\n        cmd: 'BA',\n        desc: 'VFO-B_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'BC': {\n        cmd: 'BC',\n        desc: 'AUTO_NOTCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        }\n    },\n    'BD': {                       // TODO: Needs testing\n        cmd: 'BD',\n        desc: 'BAND_DOWN',\n        asSet: sendCmd,\n    },\n    'BI': {\n        cmd: 'BI',\n        desc: 'BREAK-IN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'BP00': {                       // TODO: Needs testing\n        cmd: 'BP00',\n        desc: 'MANUAL_NOTCH_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'BP01': {                       // TODO: Needs testing\n        cmd: 'BP01',\n        desc: 'MANUAL_NOTCH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n            \n            if(r === null) {\n                return null;\n            }\n            \n            return r * 10;\n        },\n    },\n    'BS': {                       // TODO: Needs testing\n        cmd: 'BS',\n        desc: 'BAND_SELECT',\n        asSetValue() {\n            if(band_to_cat.hasOwnProperty(this.value)) {\n                return this._rc.cmd + band_to_cat[this.value] + ';';\n            }\n\n            throw new Error('Unknown band type: ' + this.value);\n        },\n    },\n    'BU0': {                       // TODO: Needs testing\n        cmd: 'BU0',\n        desc: 'BAND_UP',\n        asSet: sendCmd,\n    },\n    'BY': {                       // TODO: Needs testing\n        cmd: 'BY',\n        desc: 'BUSY',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1,2));\n        },\n    },\n    'CH0': {                       // TODO: Needs testing\n        cmd: 'CH0',\n        desc: 'CHANNEL_UP',\n        asSet: sendCmd,\n    },\n    'CH1': {                       // TODO: Needs testing\n        cmd: 'CH1',\n        desc: 'CHANNEL_DOWN',\n        asSet: sendCmd,\n    },\n    'CN00': {\n        cmd: 'CN00',\n        desc: 'CTCSS_TONE_FREQUENCY',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + ctcss_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_to_ctcss[value];\n        },\n    },\n    'CN01': {\n        cmd: 'CN01',\n        desc: 'DCS_TONE_FREQUENCY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(cat_to_dcs.indexOf(intValue(this.value))) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const dcs = cat_to_dcs[intValue(value)];\n\n            return (dcs < 100 ? '0' : '') + dcs.toString();\n        },\n    },\n    'CO00': {                       // TODO: Needs testing\n        cmd: 'CO00',\n        desc: 'CONTOUR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO01': {                       // TODO: Needs testing\n        cmd: 'CO01',\n        desc: 'CONTOUR_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'CO02': {                       // TODO: Needs testing\n        cmd: 'CO02',\n        desc: 'APF_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO03': {                       // TODO: Needs testing\n        cmd: 'CO03',\n        desc: 'APF_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4((this.value + 250) / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n            \n            if(r === null) {\n                return null;\n            }\n            \n            return (r * 10) - 250;\n        },\n    },\n    'CS': {\n        cmd: 'CS',\n        desc: 'CW_SPOT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'CT': {\n        cmd: 'CT',\n        desc: 'CTCSS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + CT_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_CT[value.substring(1, 2)];\n        },\n    },\n    'DA': {\n        cmd: 'DA',\n        desc: 'DIMMER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + pad2(this.value.led) + pad2(this.value.tft) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return {\n                led: intValue(value.substring(2, 4)),\n                tft: intValue(value.substring(4))\n            };\n        },\n    },\n    'DN': {                       // TODO: Needs testing\n        cmd: 'DN',\n        desc: 'MIC_DOWN',\n        asSet: sendCmd,\n    },\n    'DT0': {\n        cmd: 'DT0',\n        desc: 'DATE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT1': {\n        cmd: 'DT1',\n        desc: 'TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT2': {\n        cmd: 'DT2',\n        desc: 'TIME_DIFFERENTIAL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'ED': {                       // TODO:\n        cmd: 'ED',\n        desc: 'ENCORDER_DOWN',\n    },\n    'EK': {                       // TODO: Needs testing\n        cmd: 'EK',\n        desc: 'ENT_KEY',\n        asSet: sendCmd,\n    },\n    'EU': {                       // TODO:\n        cmd: 'EU',\n        desc: 'ENCORDER_UP',\n    },\n    'EX': {\n        cmd: 'EX',\n        desc: 'MENU',\n        isCacheable: true,\n        isMenu: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value.no) + this.value.value + ';';\n        },\n        asReadValue() {\n            return this._rc.cmd + pad3(this.value.no) + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: intValue(value.substring(0, 3)),\n                value: value.substring(3)\n            };\n        },\n    },\n    'FA': {\n        cmd: 'FA',\n        desc: 'FREQUENCY_VFO-A',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FB': {\n        cmd: 'FB',\n        desc: 'FREQUENCY_VFO-B',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FS': {\n        cmd: 'FS',\n        desc: 'FAST_STEP',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'FT': {                       // TODO:\n        cmd: 'FT',\n        desc: 'FUNCTION_TX',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            if(this.value === 'VFO-A Band Transmitter: TX') {\n                return this._rc.cmd + '2' + ';';\n            }\n            if(this.value === 'VFO-B Band Transmitter: TX') {\n                return this._rc.cmd + '3' + ';';\n            }\n            throw new Error(this._rc.cmd + ' value ' + this.value + ' unknown');\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'VFO-A Band Transmitter: TX' : 'VFO-B Band Transmitter: TX';\n        }\n    },\n    'GT': {                       // TODO: Needs testing\n        cmd: 'GT',\n        desc: 'AGC_FUNCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + agc_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_agc[value.substring(1, 2)];\n        },\n    },\n    'ID': {\n        cmd: 'ID',\n        desc: 'IDENTIFICATION',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'IF': {                       // TODO: Needs testing\n        cmd: 'IF',\n        desc: 'INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'IS': {\n        cmd: 'IS',\n        desc: 'IF-SHIFT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + this.value + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1);\n        },\n    },\n    'KM': {                       // TODO: Needs testing\n        cmd: 'KM',\n        desc: 'KEYER_MEMORY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value.no.toString() + this.value.message + ';';\n        },\n        asRead() {\n            return this._rc.cmd + this.value.toString() + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: value.substring(0,1),\n                message: value.substring(1),\n            };\n        },\n    },\n    'KP': {                       // TODO: Needs testing\n        cmd: 'KP',\n        desc: 'KEY_PITCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad2(this.value / 10 - 30) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return (intValue(value) + 30) * 10;\n        },\n    },\n    'KR': {\n        cmd: 'KR',\n        desc: 'KEYER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'KS': {\n        cmd: 'KS',\n        desc: 'KEY_SPEED',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'KY': {\n        cmd: 'KY',\n        desc: 'CW_KEYING',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'LK': {\n        cmd: 'LK',\n        desc: 'LOCK',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'LM': {\n        cmd: 'LM',\n        desc: 'LOAD_MESSEGE',\n        isCacheable: true,\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(_rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MA': {\n        cmd: 'MA',\n        desc: 'MEMORY_CHANNEL_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'MC': {\n        cmd: 'MC',\n        desc: 'MEMORY_CHANNEL',\n        isCacheable: true,\n    },\n    'MD': {\n        cmd: 'MD',\n        desc: 'MODE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + modes_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_modes[value.substring(1, 2)];\n        },\n    },\n    'MG': {\n        cmd: 'MG',\n        desc: 'MIC_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'ML0': {\n        cmd: 'ML0',\n        desc: 'MONITOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'ML1': {\n        cmd: 'ML1',\n        desc: 'MONITOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'MR': {\n        cmd: 'MR',\n        desc: 'MEMORY_CHANNEL_READ',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MS': {\n        cmd: 'MS',\n        desc: 'METER_SW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + meter_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_meter[value.substring(0,1)];\n        },\n    },\n    'MT': {\n        cmd: 'MT',\n        desc: 'MEMORY_CHANNEL_WRITE/TAG',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MW': {\n        cmd: 'MW',\n        desc: 'MEMORY_CHANNEL_WRITE',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MX': {\n        cmd: 'MX',\n        desc: 'MOX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'NA': {\n        cmd: 'NA',\n        desc: 'NARROW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NB': {\n        cmd: 'NB',\n        desc: 'NOISE_BLANKER_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value.substring(1, 2) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NL': {\n        cmd: 'NL',\n        desc: 'NOISE_BLANKER_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1));\n        },\n    },\n    'NR': {\n        cmd: 'NR',\n        desc: 'NOISE_REDUCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'OI': {\n        cmd: 'OI',\n        desc: 'OPPOSITE_BAND_INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'OS': {\n        cmd: 'OS',\n        desc: 'OFFSET_(REPEATER_SHIFT)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + offset_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_offset[value.substring(1, 2)];\n        },\n    },\n    'PA': {\n        cmd: 'PA',\n        desc: 'PRE-AMP_(IPO)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + preamp_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_preamp[value.substring(1, 2)];\n        },\n    },\n    'PB': {\n        cmd: 'PB',\n        desc: 'PLAY_BACK',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asReadValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'PC': {\n        cmd: 'PC',\n        desc: 'POWER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PL': {\n        cmd: 'PL',\n        desc: 'SPEECH_PROCESSOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PR0': {\n        cmd: 'PR0',\n        desc: 'SPEECH_PROCESSOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PR1': {\n        cmd: 'PR1',\n        desc: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PS': {\n        cmd: 'PS',\n        desc: 'POWER_SWITCH',\n        autoInit: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'QI': {\n        cmd: 'QI',\n        desc: 'QMB_STORE',\n        asSet: sendCmd,\n    },\n    'QR': {\n        cmd: 'QR',\n        desc: 'QMB_RECALL',\n        asSet: sendCmd,\n    },\n    'QS': {\n        cmd: 'QS',\n        desc: 'QUICK_SPLIT',\n        asSet: sendCmd,\n    },\n    'RA': {\n        cmd: 'RA',\n        desc: 'RF_ATTENUATOR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'RC': {\n        cmd: 'RC',\n        desc: 'CLAR_CLEAR',\n        asSet: sendCmd,\n    },\n    'RD': {\n        cmd: 'RD',\n        desc: 'CLAR_DOWN',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'RG': {\n        cmd: 'RG',\n        desc: 'RF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'RI0': {\n        cmd: 'RI0',\n        desc: 'RADIO_INFORMATION_-_HI-SWR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI3': {\n        cmd: 'RI3',\n        desc: 'RADIO_INFORMATION_-_REC',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI4': {\n        cmd: 'RI4',\n        desc: 'RADIO_INFORMATION_-_PLAY',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI5': {\n        cmd: 'RI5',\n        desc: 'RADIO_INFORMATION_-_VFO-A_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI6': {\n        cmd: 'RI6',\n        desc: 'RADIO_INFORMATION_-_VFO-B_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI7': {\n        cmd: 'RI7',\n        desc: 'RADIO_INFORMATION_-_VFO-A_RX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RIA': {\n        cmd: 'RIA',\n        desc: 'RADIO_INFORMATION_-_TX_LED',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RL': {\n        cmd: 'RL',\n        desc: 'NOISE_REDUCTION_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'RM0': {\n        cmd: 'RM0',\n        desc: 'READ_METER_-_FRONT_PANEL',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM1': {\n        cmd: 'RM1',\n        desc: 'READ_METER_-_S_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM2': {\n        cmd: 'RM2',\n        desc: 'READ_METER_-_OTHER_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM3': {\n        cmd: 'RM3',\n        desc: 'READ_METER_-_COMP',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM4': {\n        cmd: 'RM4',\n        desc: 'READ_METER_-_ALC',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM5': {\n        cmd: 'RM5',\n        desc: 'READ_METER_-_PO',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM6': {\n        cmd: 'RM6',\n        desc: 'READ_METER_-_SWR',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM7': {\n        cmd: 'RM7',\n        desc: 'READ_METER_-_ID',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM8': {\n        cmd: 'RM8',\n        desc: 'READ_METER_-_VDD',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RS': {\n        cmd: 'RS',\n        desc: 'RADIO_STATUS',\n        autoInit: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'NORMAL MODE' : 'MENU MODE';\n        },\n    },\n    'RT': {\n        cmd: 'RT',\n        desc: 'CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RU': {\n        cmd: 'RU',\n        desc: 'RX_CLARIFIER_PLUS_OFFSET',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'SC': {\n        cmd: 'SC',\n        desc: 'SCAN',\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '0' + ';';\n            case 'up':  return this._rc.cmd + '1' + ';';\n            case 'down':return this._rc.cmd + '2' + ';';\n            }\n        },\n    },\n    'SD': {\n        cmd: 'SD',\n        desc: 'CW_BREAK-IN_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'SH': {\n        cmd: 'SH',\n        desc: 'WIDTH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'SM': {\n        cmd: 'SM',\n        desc: 'S-METER_READING',\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SQ': {\n        cmd: 'SQ',\n        desc: 'SQUELCLH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SV': {\n        cmd: 'SV',\n        desc: 'SWAP_VFO',\n        asSet: sendCmd,\n    },\n    'TS': {\n        cmd: 'TS',\n        desc: 'TXW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'TX': {\n        cmd: 'TX',\n        desc: 'TX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return !(value === '0');\n        },\n    },\n    'UL': {\n        cmd: 'UL',\n        desc: 'PLL_UNLOCK_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'Lock' : 'Unlock';\n        },\n    },\n    'UP': {\n        cmd: 'UP',\n        desc: 'UP',\n        asSet: sendCmd,\n    },\n    'VD': {\n        cmd: 'VD',\n        desc: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'VG': {\n        cmd: 'VG',\n        desc: 'VOX_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n//     'VM': {              // FIXME: 'VM' has same desc as 'AM'\n//         cmd: 'VM',\n//         desc: 'VFO-A_TO_MEMORY_CHANNEL',\n//         asSet: sendCmd,\n//     },\n    'VX': {\n        cmd: 'VX',\n        desc: 'VOX_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'XT': {\n        cmd: 'XT',\n        desc: 'TX_CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'ZI': {\n        cmd: 'ZI',\n        desc: 'ZERO_IN',\n        asSet: sendCmd,\n    }\n};\n// flow.set('rig_commands', rig_commands);\n\nconst rig_desc = {};\nfor(const [key, value] of Object.entries(rig_commands)) {\n    if(!value.hasOwnProperty('desc')) {\n        throw new Error(key + ' does not have desc property');\n    }\n    if(rig_desc.hasOwnProperty(value.desc)) {\n        throw new Error(key + ' has duplicate desc property');\n    }\n\n    rig_desc[value.desc] = value;\n}\nflow.set('rig_desc', rig_desc);\n\nconst max_menu_length = Object.keys(rig_commands).map( k => k.length ).reduce( (a, v) => a > v ? a : v );\n\nfunction findRigCommand(arg) {\n    if(rig_commands.hasOwnProperty(arg)) {\n        return rig_commands[arg];\n    }\n\n    if(arg.length <= 2) {\n        throw new Error('Input not found in rig_commands: ' + arg);\n    }\n\n    return findRigCommand(arg.substring(0, arg.length - 1));\n}\n\nconst RigSetting = class {\n    constructor(rc, value, raw_answer) {\n        this._rc = rc;\n        this._value = value;\n        this._raw_answer = raw_answer;\n    }\n\n    get desc() { return this._rc.desc; }\n    get value() { return this._value; }\n    get autoInit() { return this._rc.autoInit; }\n    get debounce() { return this._rc.debounce; }\n    get isMenu() { return this._rc.isMenu; }\n    get isCacheable() { return this._rc.isCacheable; }\n    get topic() { return this._rc.desc; }\n\n    get asSet() {\n        if(this._rc.hasOwnProperty('asSet')) {\n\t\t\treturn this._rc.asSet.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asSetValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asSet() requires a value');\n            }\n\n\t\t\treturn this._rc.asSetValue.call(this);\n        }\n\n        throw new Error(this._rc.desc + ' does not have an asSet() function');\n    }\n\n    get asRead() {\n        if(this._rc.hasOwnProperty('asRead')) {\n\t\t\treturn this._rc.asRead.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asReadValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asRead() requires a value');\n            }\n\n\t\t\treturn this._rc.asReadValue.call(this);\n        }\n\n        throw new Error(this._rc.cmd + ' does not have an asRead() function');\n    }\n\n    get sendToRig() {\n        const hasValue = !isEmptyValue(this._value),\n              hasSet = this._rc.hasOwnProperty('asSet'),\n              hasSetValue = this._rc.hasOwnProperty('asSetValue'),\n              hasRead = this._rc.hasOwnProperty('asRead'),\n              hasReadValue = this._rc.hasOwnProperty('asReadValue');\n\n        if(hasValue && hasSetValue && hasRead) {\n            return hasValue;\n        }\n\n        if((hasSet || hasSetValue) && !(hasRead || hasReadValue)) {\n            return true;\n        }\n\n        return false;\n    }\n\n    get name() {\n        if(this._rc.isMenu) {\n            return this._rc.cmd + pad3(this._value.no);\n        }\n        return this._rc.cmd;\n    }\n\n    get rawAnswer() {\n        if(isEmptyValue(this._raw_answer)) {\n            throw new Error(this._rc.cmd + ' does not have original answer');\n        }\n\n        return this._raw_answer;\n    }\n\n    static of(desc, value) {\n        const rc = rig_desc[desc];\n\n        if(!rc) {\n            throw new Error('\"' + desc + '\" not found');\n        }\n\n        if(isEmptyValue(value)) {\n            new RigSetting(rc, null, null);\n        }\n\n        return new RigSetting(rc, value);\n    }\n\n    static fromAnswer(arg) {\n        const rc = findRigCommand(arg.substring(0, max_menu_length)),\n              value = arg.substring(arg.length - 1) === ';' ?  arg.substring(rc.cmd.length, arg.length - 1) : arg.substring(rc.cmd.length);\n\n        if(!rc.hasOwnProperty('fromAnswer')) {\n            throw new Error(rc.cmd + '.fromAnswer() not implemented');\n        }\n\n        if(isEmptyValue(value)) {\n            return new RigSetting(rc, null, arg);\n        }\n\n        return new RigSetting(rc, rc.fromAnswer(value), arg);\n    }\n\n    static getAll() {\n        return Object.values(rig_commands).map(rc => new RigSetting(rc, '', ''));\n    }\n};\nglobal.set('RigSetting', RigSetting);\n\nconst rig_state = {};\nflow.set('rig_state', rig_state);\n\nconst RigState = {\n    findRigSetting(arg) {\n        if(rig_state.hasOwnProperty(arg)) {\n            return rig_state[arg];\n        }\n\n        if(rig_desc.hasOwnProperty(arg)) {\n            return rig_state[rig_desc[arg].cmd];\n        }\n\n        return null;\n    },\n    getRigSetting(arg) {\n        const rs = RigState.findRigSetting(arg);\n\n        if(rs) {\n            return rs;\n        }\n\n        throw new Error('Rig state \"' + arg + '\" not found');\n    },\n\n    setRigSetting(rs) {\n        rig_state[rs.name] = rs;\n    },\n    \n    hasChanged(rs) {\n        if(!rig_state.hasOwnProperty(rs.name)) {\n            return true;\n        }\n\n        const crs = rig_state[rs.name];\n        \n        return this.rawAnswer !== crs.rawAnswer; \n    },\n\n    getAll() {\n        return Object.values(rig_state);\n    },\n}\nglobal.set('RigState', RigState);",
+        "initialize": "'use strict;'\n\nfunction isEmptyValue(value) {\n    if(typeof(value) === 'string' && value.length === 0) {\n        return true;\n    }\n\n    if(value === null || value === undefined) {\n        return true\n    }\n    \n    return false;\n}\n\nfunction intValue(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return parseInt(value, 10);\n}\n\nfunction pad(len) {\n    return function(value) {\n        let n = typeof(value) === 'string' ? value : value.toString();\nvalue.substring\n        while(n.length < len) {\n            n = '0' + n;\n        }\n\n        return n;\n    };\n}\nconst pad2 = pad(2);\nconst pad3 = pad(3);\nconst pad4 = pad(4);\nconst pad9 = pad(9);\n\nfunction map_reverse(obj) {\n    const result = {};\n\n    for(const [key, value] of Object.entries(obj)) {\n        result[value] = key;\n    }\n\n    return result;\n}\n\nconst cat_to_ctcss = {\n    '000': '67.0', '001': '69.3', '002': '71.9', '003': '74.4',\n    '004': '77.0', '005': '79.7', '006': '82.5', '007': '85.4',\n    '008': '88.5', '009': '91.5', '010': '94.8', '011': '97.4',\n    '012': '100.0', '013': '103.5', '014': '107.2', '015': '110.9',\n    '016': '114.8', '017': '118.8', '018': '123.0', '019': '127.3',\n    '020': '131.8', '021': '136.5', '022': '141.3', '023': '146.2',\n    '024': '151.4', '025': '156.7', '026': '159.8', '027': '162.2',\n    '028': '165.5', '029': '167.9', '030': '171.3', '031': '173.8',\n    '032': '177.3', '033': '179.9', '034': '183.5', '035': '186.2',\n    '036': '189.9', '037': '192.8', '038': '196.6', '039': '199.5',\n    '040': '203.5', '041': '206.5', '042': '210.7', '043': '218.1',\n    '044': '225.7', '045': '229.1', '046': '233.6', '047': '241.8',\n    '048': '250.3', '049': '254.1'\n};\nconst ctcss_to_cat = map_reverse(cat_to_ctcss);\n\nconst cat_to_CT = {\n    '0': 'CTCSS OFF',\n    '1': 'CTCSS ENC/DEC',\n    '2': 'CTCSS ENC',\n    '3': 'DCS ENC/DEC',\n    '4': 'DCS ENC'\n};\nconst CT_to_cat = map_reverse(cat_to_CT);\n\nconst cat_to_dcs = [\n     23,  25,  26,  31,  32,  36,  43,  47,  51,  53,  54,  65,  71,  72,\n     73,  74, 114, 115, 116, 122, 125, 131, 132, 134, 143, 145, 152, 155,\n    156, 162, 165, 172, 174, 205, 212, 223, 225, 226, 243, 244, 245, 246,\n    251, 252, 255, 261, 263, 265, 266, 271, 274, 306, 311, 315, 325, 331,\n    332, 343, 346, 351, 356, 364, 365, 371, 411, 412, 413, 423, 431, 432,\n    445, 446, 452, 454, 455, 462, 464, 465, 466, 503, 506, 516, 523, 526,\n    532, 546, 565, 606, 612, 624, 627, 631, 632, 654, 662, 664, 703, 712,\n    723, 731, 732, 734, 743, 754\n];\n\nconst band_to_cat = {\n    '1.8 MHz': '00',\n    '3.5 MHz': '01',\n    '5 MHz': '02',\n    '7 MHz': '03',\n    '10 MHz': '04',\n    '14 MHz': '05',\n    '18 MHz': '06',\n    '21 MHz': '07',\n    '24.5 MHz': '08',\n    '28 MHz': '09',\n    '50 MHz': '10',\n    'GEN': '11',\n    'MW': '12',\n    'AIR': '14',\n    '144 MHz': '15',\n    '430 MHz': '16'\n}\n\nconst cat_to_agc = {\n    '0': 'OFF',\n    '1': 'FAST',\n    '2': 'MID',\n    '3': 'SLOW',\n    '4': 'AUTO-FAST',\n    '5': 'AUTO-MID',\n    '6': 'AUTO-SLOW'\n};\nconst agc_to_cat = {\n    'OFF': '0',\n    'FAST': '1',\n    'MID': '2',\n    'SLOW': '3',\n    'AUTO': '4',\n    'AUTO-FAST': '4',\n    'AUTO-MID': '4',\n    'AUTO-SLOW': '4'\n};\n\nconst cat_meter = {\n    '0': 'COMP',\n    '1': 'ALC',\n    '2': 'PO',\n    '3': 'SWR',\n    '4': 'ID',\n    '5': 'VDD'\n};\nconst meter_cat = map_reverse(cat_meter);\n\nconst cat_modes = {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n};\nconst modes_cat = map_reverse(cat_modes);\n\nconst cat_offset = {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n};\nconst offset_cat = map_reverse(cat_offset);\n\nconst cat_preamp = {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n};\nconst preamp_cat = map_reverse(cat_preamp);\n\nfunction sendCmd(cmd) {\n    return this._rc.cmd + ';';\n}\nfunction sendCmd0(cmd) {\n    return this._rc.cmd + '0' + ';';\n}\n\nfunction fromBoolean(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return value.substring(0, 1) === '1';\n}\nfunction toCatBoolean() {\n    return this._rc.cmd + (this.value ? '1' : '0') + ';';\n}\n\nfunction fromInteger(value) {\n    return intValue(value);\n}\nfunction asInteger() {\n    return this._rc.cmd + pad3(this.value) + ';';\n}\n\nfunction band_info(value) {\n    return {\n        raw: value,\n        mem_chan: intValue(value.substring(0,3)),\n        freq: intValue(value.substring(3,12)),\n        clarifier: value.substring(12,17),\n        rx_clar: value.substring(17, 18) != '0',\n        tx_clar: value.substring(18, 19) != '0',\n        mode: cat_modes[value.substring(19, 20)] || value.substring(21, 22),\n        p7: value.substring(20, 21),\n        tone: value.substring(21, 22),\n        offset: cat_offset[value.substring(26, 27)]\n    };\n}\n\nconst rig_commands = {\n    'AB': {                       // TODO: Needs testing\n        cmd: 'AB',\n        desc: 'VFO-A_TO_VFO-B',\n        asSet: sendCmd,\n    },\n    'AC': {\n        cmd: 'AC',\n        desc: 'ANTENNA_TUNER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '000' + ';';\n            case 'on':  return this._rc.cmd + '001' + ';';\n            case 'tune':return this._rc.cmd + '002' + ';';\n            }\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            switch(value.substring(2, 3)) {\n            case '0':   return 'off';\n            case '1':   return 'on';\n            case '2':   return 'tune';\n            }\n        },\n    },\n    'AG': {\n        cmd: 'AG',\n        desc: 'AF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        }\n    },\n    'AI': {\n        cmd: 'AI',\n        desc: 'AUTO_INFORMATION',\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'AM': {                       // TODO: Needs testing\n        cmd: 'AM',\n        desc: 'VFO-A_TO_MEMORY_CHANNEL',\n        asSet: sendCmd,\n    },\n    'BA': {                       // TODO: Needs testing\n        cmd: 'BA',\n        desc: 'VFO-B_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'BC': {\n        cmd: 'BC',\n        desc: 'AUTO_NOTCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        }\n    },\n    'BD': {                       // TODO: Needs testing\n        cmd: 'BD',\n        desc: 'BAND_DOWN',\n        asSet: sendCmd,\n    },\n    'BI': {\n        cmd: 'BI',\n        desc: 'BREAK-IN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'BP00': {                       // TODO: Needs testing\n        cmd: 'BP00',\n        desc: 'MANUAL_NOTCH_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'BP01': {                       // TODO: Needs testing\n        cmd: 'BP01',\n        desc: 'MANUAL_NOTCH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n            \n            if(r === null) {\n                return null;\n            }\n            \n            return r * 10;\n        },\n    },\n    'BS': {                       // TODO: Needs testing\n        cmd: 'BS',\n        desc: 'BAND_SELECT',\n        asSetValue() {\n            if(band_to_cat.hasOwnProperty(this.value)) {\n                return this._rc.cmd + band_to_cat[this.value] + ';';\n            }\n\n            throw new Error('Unknown band type: ' + this.value);\n        },\n    },\n    'BU0': {                       // TODO: Needs testing\n        cmd: 'BU0',\n        desc: 'BAND_UP',\n        asSet: sendCmd,\n    },\n    'BY': {                       // TODO: Needs testing\n        cmd: 'BY',\n        desc: 'BUSY',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1,2));\n        },\n    },\n    'CH0': {                       // TODO: Needs testing\n        cmd: 'CH0',\n        desc: 'CHANNEL_UP',\n        asSet: sendCmd,\n    },\n    'CH1': {                       // TODO: Needs testing\n        cmd: 'CH1',\n        desc: 'CHANNEL_DOWN',\n        asSet: sendCmd,\n    },\n    'CN00': {\n        cmd: 'CN00',\n        desc: 'CTCSS_TONE_FREQUENCY',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + ctcss_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_to_ctcss[value];\n        },\n    },\n    'CN01': {\n        cmd: 'CN01',\n        desc: 'DCS_TONE_FREQUENCY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(cat_to_dcs.indexOf(intValue(this.value))) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const dcs = cat_to_dcs[intValue(value)];\n\n            return (dcs < 100 ? '0' : '') + dcs.toString();\n        },\n    },\n    'CO00': {                       // TODO: Needs testing\n        cmd: 'CO00',\n        desc: 'CONTOUR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO01': {                       // TODO: Needs testing\n        cmd: 'CO01',\n        desc: 'CONTOUR_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'CO02': {                       // TODO: Needs testing\n        cmd: 'CO02',\n        desc: 'APF_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO03': {                       // TODO: Needs testing\n        cmd: 'CO03',\n        desc: 'APF_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4((this.value + 250) / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n            \n            if(r === null) {\n                return null;\n            }\n            \n            return (r * 10) - 250;\n        },\n    },\n    'CS': {\n        cmd: 'CS',\n        desc: 'CW_SPOT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'CT': {\n        cmd: 'CT',\n        desc: 'CTCSS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + CT_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_CT[value.substring(1, 2)];\n        },\n    },\n    'DA': {\n        cmd: 'DA',\n        desc: 'DIMMER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + pad2(this.value.led) + pad2(this.value.tft) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return {\n                led: intValue(value.substring(2, 4)),\n                tft: intValue(value.substring(4))\n            };\n        },\n    },\n    'DN': {                       // TODO: Needs testing\n        cmd: 'DN',\n        desc: 'MIC_DOWN',\n        asSet: sendCmd,\n    },\n    'DT0': {\n        cmd: 'DT0',\n        desc: 'DATE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT1': {\n        cmd: 'DT1',\n        desc: 'TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT2': {\n        cmd: 'DT2',\n        desc: 'TIME_DIFFERENTIAL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'ED': {                       // TODO:\n        cmd: 'ED',\n        desc: 'ENCORDER_DOWN',\n    },\n    'EK': {                       // TODO: Needs testing\n        cmd: 'EK',\n        desc: 'ENT_KEY',\n        asSet: sendCmd,\n    },\n    'EU': {                       // TODO:\n        cmd: 'EU',\n        desc: 'ENCORDER_UP',\n    },\n    'EX': {\n        cmd: 'EX',\n        desc: 'MENU',\n        isCacheable: true,\n        isMenu: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value.no) + this.value.value + ';';\n        },\n        asReadValue() {\n            return this._rc.cmd + pad3(this.value.no) + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: intValue(value.substring(0, 3)),\n                value: value.substring(3)\n            };\n        },\n    },\n    'FA': {\n        cmd: 'FA',\n        desc: 'FREQUENCY_VFO-A',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FB': {\n        cmd: 'FB',\n        desc: 'FREQUENCY_VFO-B',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FS': {\n        cmd: 'FS',\n        desc: 'FAST_STEP',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'FT': {                       // TODO:\n        cmd: 'FT',\n        desc: 'FUNCTION_TX',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            if(this.value === 'VFO-A Band Transmitter: TX') {\n                return this._rc.cmd + '2' + ';';\n            }\n            if(this.value === 'VFO-B Band Transmitter: TX') {\n                return this._rc.cmd + '3' + ';';\n            }\n            throw new Error(this._rc.cmd + ' value ' + this.value + ' unknown');\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'VFO-A Band Transmitter: TX' : 'VFO-B Band Transmitter: TX';\n        }\n    },\n    'GT': {                       // TODO: Needs testing\n        cmd: 'GT',\n        desc: 'AGC_FUNCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + agc_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_agc[value.substring(1, 2)];\n        },\n    },\n    'ID': {\n        cmd: 'ID',\n        desc: 'IDENTIFICATION',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'IF': {                       // TODO: Needs testing\n        cmd: 'IF',\n        desc: 'INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'IS': {\n        cmd: 'IS',\n        desc: 'IF-SHIFT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + this.value + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1);\n        },\n    },\n    'KM': {                       // TODO: Needs testing\n        cmd: 'KM',\n        desc: 'KEYER_MEMORY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value.no.toString() + this.value.message + ';';\n        },\n        asRead() {\n            return this._rc.cmd + this.value.toString() + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: value.substring(0,1),\n                message: value.substring(1),\n            };\n        },\n    },\n    'KP': {                       // TODO: Needs testing\n        cmd: 'KP',\n        desc: 'KEY_PITCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad2(this.value / 10 - 30) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return (intValue(value) + 30) * 10;\n        },\n    },\n    'KR': {\n        cmd: 'KR',\n        desc: 'KEYER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'KS': {\n        cmd: 'KS',\n        desc: 'KEY_SPEED',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'KY': {\n        cmd: 'KY',\n        desc: 'CW_KEYING',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'LK': {\n        cmd: 'LK',\n        desc: 'LOCK',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'LM': {\n        cmd: 'LM',\n        desc: 'LOAD_MESSEGE',\n        isCacheable: true,\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(_rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MA': {\n        cmd: 'MA',\n        desc: 'MEMORY_CHANNEL_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'MC': {\n        cmd: 'MC',\n        desc: 'MEMORY_CHANNEL',\n        isCacheable: true,\n    },\n    'MD': {\n        cmd: 'MD',\n        desc: 'MODE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + modes_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_modes[value.substring(1, 2)];\n        },\n    },\n    'MG': {\n        cmd: 'MG',\n        desc: 'MIC_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'ML0': {\n        cmd: 'ML0',\n        desc: 'MONITOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'ML1': {\n        cmd: 'ML1',\n        desc: 'MONITOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'MR': {\n        cmd: 'MR',\n        desc: 'MEMORY_CHANNEL_READ',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MS': {\n        cmd: 'MS',\n        desc: 'METER_SW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + meter_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_meter[value.substring(0,1)];\n        },\n    },\n    'MT': {\n        cmd: 'MT',\n        desc: 'MEMORY_CHANNEL_WRITE/TAG',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MW': {\n        cmd: 'MW',\n        desc: 'MEMORY_CHANNEL_WRITE',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MX': {\n        cmd: 'MX',\n        desc: 'MOX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'NA': {\n        cmd: 'NA',\n        desc: 'NARROW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NB': {\n        cmd: 'NB',\n        desc: 'NOISE_BLANKER_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value.substring(1, 2) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NL': {\n        cmd: 'NL',\n        desc: 'NOISE_BLANKER_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1));\n        },\n    },\n    'NR': {\n        cmd: 'NR',\n        desc: 'NOISE_REDUCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'OI': {\n        cmd: 'OI',\n        desc: 'OPPOSITE_BAND_INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'OS': {\n        cmd: 'OS',\n        desc: 'OFFSET_(REPEATER_SHIFT)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + offset_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_offset[value.substring(1, 2)];\n        },\n    },\n    'PA': {\n        cmd: 'PA',\n        desc: 'PRE-AMP_(IPO)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + preamp_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_preamp[value.substring(1, 2)];\n        },\n    },\n    'PB': {\n        cmd: 'PB',\n        desc: 'PLAY_BACK',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asReadValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'PC': {\n        cmd: 'PC',\n        desc: 'POWER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PL': {\n        cmd: 'PL',\n        desc: 'SPEECH_PROCESSOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PR0': {\n        cmd: 'PR0',\n        desc: 'SPEECH_PROCESSOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PR1': {\n        cmd: 'PR1',\n        desc: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PS': {\n        cmd: 'PS',\n        desc: 'POWER_SWITCH',\n        autoInit: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'QI': {\n        cmd: 'QI',\n        desc: 'QMB_STORE',\n        asSet: sendCmd,\n    },\n    'QR': {\n        cmd: 'QR',\n        desc: 'QMB_RECALL',\n        asSet: sendCmd,\n    },\n    'QS': {\n        cmd: 'QS',\n        desc: 'QUICK_SPLIT',\n        asSet: sendCmd,\n    },\n    'RA': {\n        cmd: 'RA',\n        desc: 'RF_ATTENUATOR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'RC': {\n        cmd: 'RC',\n        desc: 'CLAR_CLEAR',\n        asSet: sendCmd,\n    },\n    'RD': {\n        cmd: 'RD',\n        desc: 'CLAR_DOWN',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'RG': {\n        cmd: 'RG',\n        desc: 'RF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'RI0': {\n        cmd: 'RI0',\n        desc: 'RADIO_INFORMATION_-_HI-SWR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI3': {\n        cmd: 'RI3',\n        desc: 'RADIO_INFORMATION_-_REC',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI4': {\n        cmd: 'RI4',\n        desc: 'RADIO_INFORMATION_-_PLAY',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI5': {\n        cmd: 'RI5',\n        desc: 'RADIO_INFORMATION_-_VFO-A_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI6': {\n        cmd: 'RI6',\n        desc: 'RADIO_INFORMATION_-_VFO-B_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI7': {\n        cmd: 'RI7',\n        desc: 'RADIO_INFORMATION_-_VFO-A_RX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RIA': {\n        cmd: 'RIA',\n        desc: 'RADIO_INFORMATION_-_TX_LED',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RL': {\n        cmd: 'RL',\n        desc: 'NOISE_REDUCTION_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'RM0': {\n        cmd: 'RM0',\n        desc: 'READ_METER_-_FRONT_PANEL',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM1': {\n        cmd: 'RM1',\n        desc: 'READ_METER_-_S_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM2': {\n        cmd: 'RM2',\n        desc: 'READ_METER_-_OTHER_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM3': {\n        cmd: 'RM3',\n        desc: 'READ_METER_-_COMP',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM4': {\n        cmd: 'RM4',\n        desc: 'READ_METER_-_ALC',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM5': {\n        cmd: 'RM5',\n        desc: 'READ_METER_-_PO',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM6': {\n        cmd: 'RM6',\n        desc: 'READ_METER_-_SWR',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM7': {\n        cmd: 'RM7',\n        desc: 'READ_METER_-_ID',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM8': {\n        cmd: 'RM8',\n        desc: 'READ_METER_-_VDD',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RS': {\n        cmd: 'RS',\n        desc: 'RADIO_STATUS',\n        autoInit: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'NORMAL MODE' : 'MENU MODE';\n        },\n    },\n    'RT': {\n        cmd: 'RT',\n        desc: 'CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RU': {\n        cmd: 'RU',\n        desc: 'RX_CLARIFIER_PLUS_OFFSET',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'SC': {\n        cmd: 'SC',\n        desc: 'SCAN',\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '0' + ';';\n            case 'up':  return this._rc.cmd + '1' + ';';\n            case 'down':return this._rc.cmd + '2' + ';';\n            }\n        },\n    },\n    'SD': {\n        cmd: 'SD',\n        desc: 'CW_BREAK-IN_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'SH': {\n        cmd: 'SH',\n        desc: 'WIDTH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'SM': {\n        cmd: 'SM',\n        desc: 'S-METER_READING',\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SQ': {\n        cmd: 'SQ',\n        desc: 'SQUELCLH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SV': {\n        cmd: 'SV',\n        desc: 'SWAP_VFO',\n        asSet: sendCmd,\n    },\n    'TS': {\n        cmd: 'TS',\n        desc: 'TXW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'TX': {\n        cmd: 'TX',\n        desc: 'TX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return !(value === '0');\n        },\n    },\n    'UL': {\n        cmd: 'UL',\n        desc: 'PLL_UNLOCK_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'Lock' : 'Unlock';\n        },\n    },\n    'UP': {\n        cmd: 'UP',\n        desc: 'UP',\n        asSet: sendCmd,\n    },\n    'VD': {\n        cmd: 'VD',\n        desc: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'VG': {\n        cmd: 'VG',\n        desc: 'VOX_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n//     'VM': {              // FIXME: 'VM' has same desc as 'AM'\n//         cmd: 'VM',\n//         desc: 'VFO-A_TO_MEMORY_CHANNEL',\n//         asSet: sendCmd,\n//     },\n    'VX': {\n        cmd: 'VX',\n        desc: 'VOX_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'XT': {\n        cmd: 'XT',\n        desc: 'TX_CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'ZI': {\n        cmd: 'ZI',\n        desc: 'ZERO_IN',\n        asSet: sendCmd,\n    }\n};\n// flow.set('rig_commands', rig_commands);\n\nconst rig_desc = {};\nfor(const [key, value] of Object.entries(rig_commands)) {\n    if(!value.hasOwnProperty('desc')) {\n        throw new Error(key + ' does not have desc property');\n    }\n    if(rig_desc.hasOwnProperty(value.desc)) {\n        throw new Error(key + ' has duplicate desc property');\n    }\n\n    rig_desc[value.desc] = value;\n}\nflow.set('rig_desc', rig_desc);\n\nconst max_menu_length = Object.keys(rig_commands).map( k => k.length ).reduce( (a, v) => a > v ? a : v );\n\nfunction logNonPrintable(arg) {\n    node.log('arg length: ' + arg.length);\n    for (var i = 0; i < arg.length; i++) {\n        node.log('arg[' + i + ']: ' + arg.charCodeAt(i));\n    }\n}\n\nfunction findRigCommand(arg) {\n    if(rig_commands.hasOwnProperty(arg)) {\n        return rig_commands[arg];\n    }\n\n    if(arg.length <= 2) {\n        return null;\n    }\n\n    return findRigCommand(arg.substring(0, arg.length - 1));\n}\n\nconst RigSetting = class {\n    constructor(rc, value, raw_answer) {\n        this._rc = rc;\n        this._value = value;\n        this._raw_answer = raw_answer;\n    }\n\n    get desc() { return this._rc.desc; }\n    get value() { return this._value; }\n    get autoInit() { return this._rc.autoInit; }\n    get debounce() { return this._rc.debounce; }\n    get isMenu() { return this._rc.isMenu; }\n    get isCacheable() { return this._rc.isCacheable; }\n    get topic() { return this._rc.desc; }\n\n    get asSet() {\n        if(this._rc.hasOwnProperty('asSet')) {\n\t\t\treturn this._rc.asSet.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asSetValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asSet() requires a value');\n            }\n\n\t\t\treturn this._rc.asSetValue.call(this);\n        }\n\n        throw new Error(this._rc.desc + ' does not have an asSet() function');\n    }\n\n    get asRead() {\n        if(this._rc.hasOwnProperty('asRead')) {\n\t\t\treturn this._rc.asRead.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asReadValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asRead() requires a value');\n            }\n\n\t\t\treturn this._rc.asReadValue.call(this);\n        }\n\n        throw new Error(this._rc.cmd + ' does not have an asRead() function');\n    }\n\n    get sendToRig() {\n        const hasValue = !isEmptyValue(this._value),\n              hasSet = this._rc.hasOwnProperty('asSet'),\n              hasSetValue = this._rc.hasOwnProperty('asSetValue'),\n              hasRead = this._rc.hasOwnProperty('asRead'),\n              hasReadValue = this._rc.hasOwnProperty('asReadValue');\n\n        if(hasValue && hasSetValue && hasRead) {\n            return hasValue;\n        }\n\n        if((hasSet || hasSetValue) && !(hasRead || hasReadValue)) {\n            return true;\n        }\n\n        return false;\n    }\n\n    get name() {\n        if(this._rc.isMenu) {\n            return this._rc.cmd + pad3(this._value.no);\n        }\n        return this._rc.cmd;\n    }\n\n    get rawAnswer() {\n        if(isEmptyValue(this._raw_answer)) {\n            throw new Error(this._rc.cmd + ' does not have original answer');\n        }\n\n        return this._raw_answer;\n    }\n\n    static of(desc, value) {\n        const rc = rig_desc[desc];\n\n        if(!rc) {\n            throw new Error('\"' + desc + '\" not found');\n        }\n\n        if(isEmptyValue(value)) {\n            new RigSetting(rc, null, null);\n        }\n\n        return new RigSetting(rc, value);\n    }\n\n    static fromAnswer(arg) {\n        let rc = findRigCommand(arg.substring(0, max_menu_length));\n\n        if(rc === null) {\n            \n            // It looks like Winlink Express has a bug:\n            // At one point it sends a MD0C; with four leadnig\n            // ASCII nul (0x0) characters\n\n            node.warn('Failed to find rig command on first try, stripping any non-printable characters and retrying.')\n            logNonPrintable(arg);\n\n            arg = arg.replace(/[^\\x20-\\x7E]+/g, \"\");\n            rc = findRigCommand(arg.substring(0, max_menu_length));\n        }\n        \n        if(rc === null) {\n            throw new Error('Input not found in rig_commands: \"' + arg + '\"');\n        }\n\n        const value = arg.substring(arg.length - 1) === ';' ?  arg.substring(rc.cmd.length, arg.length - 1) : arg.substring(rc.cmd.length);\n\n        if(!rc.hasOwnProperty('fromAnswer')) {\n            throw new Error(rc.cmd + '.fromAnswer() not implemented');\n        }\n\n        if(isEmptyValue(value)) {\n            return new RigSetting(rc, null, arg);\n        }\n\n        return new RigSetting(rc, rc.fromAnswer(value), arg);\n    }\n\n    static getAll() {\n        return Object.values(rig_commands).map(rc => new RigSetting(rc, '', ''));\n    }\n};\nglobal.set('RigSetting', RigSetting);\n\nconst rig_state = {};\nflow.set('rig_state', rig_state);\n\nconst RigState = {\n    findRigSetting(arg) {\n        if(rig_state.hasOwnProperty(arg)) {\n            return rig_state[arg];\n        }\n\n        if(rig_desc.hasOwnProperty(arg)) {\n            return rig_state[rig_desc[arg].cmd];\n        }\n\n        return null;\n    },\n    getRigSetting(arg) {\n        const rs = RigState.findRigSetting(arg);\n\n        if(rs) {\n            return rs;\n        }\n\n        throw new Error('Rig state \"' + arg + '\" not found');\n    },\n\n    setRigSetting(rs) {\n        rig_state[rs.name] = rs;\n    },\n    \n    hasChanged(rs) {\n        if(!rig_state.hasOwnProperty(rs.name)) {\n            return true;\n        }\n\n        const crs = rig_state[rs.name];\n        \n        return this.rawAnswer !== crs.rawAnswer; \n    },\n\n    getAll() {\n        return Object.values(rig_state);\n    },\n}\nglobal.set('RigState', RigState);",
         "finalize": "",
         "x": 240,
         "y": 120,
@@ -1507,34 +931,6 @@
         "l": false
     },
     {
-        "id": "ddb3e679.c08de8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 655,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "1e1c550b.2edc2b",
-        "type": "flowcontrolIn",
-        "z": "32b9106a.4589e",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 590,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "bff50622.754658",
         "type": "debug",
         "z": "32b9106a.4589e",
@@ -1572,7 +968,7 @@
         "type": "function",
         "z": "32b9106a.4589e",
         "name": "Init",
-        "func": "const RigSetting = global.get('RigSetting'),\n      ex001 = RigSetting.of('MENU', {no: 1, value: ''});\n\nnode.send({ payload: RigSetting.of('AUTO_INFORMATION', true).asSet });\n\nfor(const rs of RigSetting.getAll()) {\n    if(rs.autoInit) {\n        node.send({ payload: rs.asRead });\n    }\n}\n\nnode.send({ payload: ex001.asRead });\n\nflow.set('next_config', 2);\n\nnode.done();",
+        "func": "const RigSetting = global.get('RigSetting'),\n      ex001 = RigSetting.of('MENU', {no: 1, value: ''});\n\nnode.send({ payload: RigSetting.of('AUTO_INFORMATION', true).asSet });\n\nconst next_setting = RigSetting.getAll().filter( rs => rs.autoInit ).map( rs => rs.asRead );\nnext_setting.push(ex001.asRead);\n\nnode.log('no init commands: ' + next_setting.length);\nnode.log('first command: ' + next_setting[0]);\n\nnode.send({ payload: next_setting.shift() });\n\nflow.set('next_setting', next_setting);\nflow.set('next_config', 2);\n\n\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "'use strict;'\n\nflow.set('needs_update', []);\n\nflow.set('debounce', {});",
@@ -1664,20 +1060,6 @@
         "l": false
     },
     {
-        "id": "9f015bb5.eb1dc8",
-        "type": "flowcontrolIn",
-        "z": "32b9106a.4589e",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 400,
-        "y": 720,
-        "wires": []
-    },
-    {
         "id": "9bc357f4.ba8a68",
         "type": "function",
         "z": "32b9106a.4589e",
@@ -1726,20 +1108,6 @@
         "l": false
     },
     {
-        "id": "abc36c8b.49bd7",
-        "type": "flowcontrolIn",
-        "z": "32b9106a.4589e",
-        "topic": "",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 420,
-        "y": 780,
-        "wires": []
-    },
-    {
         "id": "541ba4ba.17818c",
         "type": "function",
         "z": "32b9106a.4589e",
@@ -1756,38 +1124,6 @@
                 "222e1298.d5333e"
             ]
         ]
-    },
-    {
-        "id": "cad33cb1.45fc5",
-        "type": "flowcontrolOut",
-        "z": "32b9106a.4589e",
-        "topic": "MENU",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 90,
-        "y": 840,
-        "wires": [
-            [
-                "541ba4ba.17818c"
-            ]
-        ]
-    },
-    {
-        "id": "222e1298.d5333e",
-        "type": "flowcontrolIn",
-        "z": "32b9106a.4589e",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 450,
-        "y": 840,
-        "wires": []
     },
     {
         "id": "149124b5.fac2cb",
@@ -1816,24 +1152,6 @@
         "wires": []
     },
     {
-        "id": "c24a74f4.3fd018",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_PO",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 150,
-        "y": 2360,
-        "wires": [
-            [
-                "de894144.0f31c"
-            ]
-        ]
-    },
-    {
         "id": "de894144.0f31c",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -1852,326 +1170,6 @@
         ]
     },
     {
-        "id": "a56c3b73.b894e8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 540,
-        "y": 2360,
-        "wires": []
-    },
-    {
-        "id": "e46c6b5e.5f0a48",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 710,
-        "y": 2760,
-        "wires": []
-    },
-    {
-        "id": "95fa9117.e0327",
-        "type": "trigger",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 500,
-        "y": 2863,
-        "wires": [
-            [
-                "e46c6b5e.5f0a48"
-            ]
-        ]
-    },
-    {
-        "id": "775f483c.658b08",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Read ID",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_ID').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 280,
-        "y": 2823,
-        "wires": [
-            [
-                "945dc1dd.5b6ce"
-            ]
-        ]
-    },
-    {
-        "id": "f031fa25.387288",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Read VDD",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_VDD').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 290,
-        "y": 2863,
-        "wires": [
-            [
-                "95fa9117.e0327"
-            ]
-        ]
-    },
-    {
-        "id": "e9fbccdd.407ec",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "d": true,
-        "topic": "TX_SET",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 110,
-        "y": 2760,
-        "wires": [
-            [
-                "775f483c.658b08",
-                "f031fa25.387288",
-                "d9897c56.d2fe8",
-                "7eaecedf.b1a7",
-                "3250102f.9ad91",
-                "6b012641.8b6d38"
-            ]
-        ]
-    },
-    {
-        "id": "d9897c56.d2fe8",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Read COMP",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_COMP').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 290,
-        "y": 2740,
-        "wires": [
-            [
-                "4aa181e4.37987"
-            ]
-        ]
-    },
-    {
-        "id": "7eaecedf.b1a7",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Read PO",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_PO').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 280,
-        "y": 2780,
-        "wires": [
-            [
-                "2f3d0180.99824e"
-            ]
-        ]
-    },
-    {
-        "id": "945dc1dd.5b6ce",
-        "type": "trigger",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 500,
-        "y": 2820,
-        "wires": [
-            [
-                "e46c6b5e.5f0a48"
-            ]
-        ]
-    },
-    {
-        "id": "2f3d0180.99824e",
-        "type": "trigger",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 500,
-        "y": 2780,
-        "wires": [
-            [
-                "e46c6b5e.5f0a48"
-            ]
-        ]
-    },
-    {
-        "id": "4aa181e4.37987",
-        "type": "trigger",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 500,
-        "y": 2740,
-        "wires": [
-            [
-                "e46c6b5e.5f0a48"
-            ]
-        ]
-    },
-    {
-        "id": "3250102f.9ad91",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Read ALC",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_ALC').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 290,
-        "y": 2660,
-        "wires": [
-            [
-                "67c90402.cc7a1c"
-            ]
-        ]
-    },
-    {
-        "id": "67c90402.cc7a1c",
-        "type": "trigger",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 496.79998779296875,
-        "y": 2656.800048828125,
-        "wires": [
-            [
-                "e46c6b5e.5f0a48"
-            ]
-        ]
-    },
-    {
-        "id": "7ea1f49c.593dcc",
-        "type": "trigger",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 500,
-        "y": 2700,
-        "wires": [
-            [
-                "e46c6b5e.5f0a48"
-            ]
-        ]
-    },
-    {
-        "id": "6b012641.8b6d38",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Read SWR",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_SWR').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 290,
-        "y": 2700,
-        "wires": [
-            [
-                "7ea1f49c.593dcc"
-            ]
-        ]
-    },
-    {
-        "id": "1c553500.74ed6b",
-        "type": "comment",
-        "z": "36d8cfa8.00955",
-        "name": "This is a handy tool to look at all of the meters while in transmit",
-        "info": "",
-        "x": 250,
-        "y": 2600,
-        "wires": []
-    },
-    {
         "id": "490b6323.dfc4ac",
         "type": "comment",
         "z": "36d8cfa8.00955",
@@ -2180,24 +1178,6 @@
         "x": 90,
         "y": 2500,
         "wires": []
-    },
-    {
-        "id": "4fd3500f.4ca51",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "METER_SW",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 130,
-        "y": 2540,
-        "wires": [
-            [
-                "5d2082a6.611d0c"
-            ]
-        ]
     },
     {
         "id": "5d2082a6.611d0c",
@@ -2214,38 +1194,6 @@
         "wires": [
             [
                 "1463980e.0c23f8"
-            ]
-        ]
-    },
-    {
-        "id": "1463980e.0c23f8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 470,
-        "y": 2540,
-        "wires": []
-    },
-    {
-        "id": "507410cf.62be6",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_ALC",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 160,
-        "y": 2240,
-        "wires": [
-            [
-                "958c0840.bef7b8"
             ]
         ]
     },
@@ -2268,38 +1216,6 @@
         ]
     },
     {
-        "id": "f08a366a.f40e38",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 540,
-        "y": 2240,
-        "wires": []
-    },
-    {
-        "id": "d45e9406.72bb08",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_COMP",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 170,
-        "y": 2280,
-        "wires": [
-            [
-                "9bb3211c.03e87"
-            ]
-        ]
-    },
-    {
         "id": "9bb3211c.03e87",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -2314,38 +1230,6 @@
         "wires": [
             [
                 "ac2448b.54ea3b8"
-            ]
-        ]
-    },
-    {
-        "id": "ac2448b.54ea3b8",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 543,
-        "y": 2280,
-        "wires": []
-    },
-    {
-        "id": "79aa365b.115b88",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_SWR",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 161.1999969482422,
-        "y": 2399.800048828125,
-        "wires": [
-            [
-                "9aa882be.428f3"
             ]
         ]
     },
@@ -2368,38 +1252,6 @@
         ]
     },
     {
-        "id": "e4035c0e.1f2f3",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 541.1999969482422,
-        "y": 2399.800048828125,
-        "wires": []
-    },
-    {
-        "id": "56bd1dd2.2f3a34",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_ID",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 150,
-        "y": 2320,
-        "wires": [
-            [
-                "370864ad.77afec"
-            ]
-        ]
-    },
-    {
         "id": "370864ad.77afec",
         "type": "function",
         "z": "36d8cfa8.00955",
@@ -2414,38 +1266,6 @@
         "wires": [
             [
                 "765fc830.5ea338"
-            ]
-        ]
-    },
-    {
-        "id": "765fc830.5ea338",
-        "type": "flowcontrolIn",
-        "z": "36d8cfa8.00955",
-        "topic": "TO_UI",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 540,
-        "y": 2320,
-        "wires": []
-    },
-    {
-        "id": "1107f59d.d7e7ea",
-        "type": "flowcontrolOut",
-        "z": "36d8cfa8.00955",
-        "topic": "READ_METER_-_VDD",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 160,
-        "y": 2440,
-        "wires": [
-            [
-                "76ea3b9e.0c8544"
             ]
         ]
     },
@@ -2468,6 +1288,426 @@
         ]
     },
     {
+        "id": "f4957c97.d011b",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 510,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "5254abbf.2aaab4",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 840,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "3217ca4b.1be0c6",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 590,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "4d9903e1.a7ad7c",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 660,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "96fc3f21.ca5c3",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 550,
+        "y": 818,
+        "wires": []
+    },
+    {
+        "id": "5c966a43.6ca814",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 390,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "324563b3.8a6bec",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 530,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "7b45ceb6.f23ed",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 410,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "ff3678f2.db8be8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 470,
+        "y": 1440,
+        "wires": []
+    },
+    {
+        "id": "5ff01c89.535f64",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 590,
+        "y": 1500,
+        "wires": []
+    },
+    {
+        "id": "84528388.0ba3e",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 710,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "e83b48b0.1e1f38",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 570,
+        "y": 1980,
+        "wires": []
+    },
+    {
+        "id": "90f12983.192f58",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 450,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "3ec17c54.34b114",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 510,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "e2b33926.96bdb8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 510,
+        "y": 1780,
+        "wires": []
+    },
+    {
+        "id": "ea279eb4.5dddd",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 570,
+        "y": 1840,
+        "wires": []
+    },
+    {
+        "id": "d11c8fcb.4bdc5",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 390,
+        "y": 2120,
+        "wires": []
+    },
+    {
+        "id": "63e66f45.c3b4c",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "dc6c1348.90f2b",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "ddb3e679.c08de8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 655,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "1e1c550b.2edc2b",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9f015bb5.eb1dc8",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 400,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "abc36c8b.49bd7",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 420,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "222e1298.d5333e",
+        "type": "flowcontrolIn",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 450,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "a56c3b73.b894e8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 2360,
+        "wires": []
+    },
+    {
+        "id": "1463980e.0c23f8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 470,
+        "y": 2540,
+        "wires": []
+    },
+    {
+        "id": "f08a366a.f40e38",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 2240,
+        "wires": []
+    },
+    {
+        "id": "ac2448b.54ea3b8",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 543,
+        "y": 2280,
+        "wires": []
+    },
+    {
+        "id": "e4035c0e.1f2f3",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 541.1999969482422,
+        "y": 2399.800048828125,
+        "wires": []
+    },
+    {
+        "id": "765fc830.5ea338",
+        "type": "flowcontrolIn",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 540,
+        "y": 2320,
+        "wires": []
+    },
+    {
         "id": "76f08022.c40b1",
         "type": "flowcontrolIn",
         "z": "36d8cfa8.00955",
@@ -2480,5 +1720,791 @@
         "x": 540,
         "y": 2440,
         "wires": []
+    },
+    {
+        "id": "a7a1894c.5cffc8",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "TO_UI",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "TO_UI",
+        "x": 110,
+        "y": 360,
+        "wires": [
+            [
+                "32d66e09.a27d62"
+            ]
+        ]
+    },
+    {
+        "id": "878e3d25.f3563",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "FREQUENCY_VFO-A",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 159,
+        "y": 960,
+        "wires": [
+            [
+                "73ba80c7.20d9"
+            ]
+        ]
+    },
+    {
+        "id": "98c509ae.1f24e8",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "ANTENNA_TUNER_CONTROL",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 190,
+        "y": 760,
+        "wires": [
+            [
+                "1c4a71e4.2855ce"
+            ]
+        ]
+    },
+    {
+        "id": "2fd3d6a1.8a6dda",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "TUNER_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 140,
+        "y": 818,
+        "wires": [
+            [
+                "299f4698.81a6aa"
+            ]
+        ]
+    },
+    {
+        "id": "1ba35fd8.f2d5b",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "LOCK",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 1100,
+        "wires": [
+            [
+                "615827bd.14ab08"
+            ]
+        ]
+    },
+    {
+        "id": "c2d2e3f0.672f1",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "LOCK_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 130,
+        "y": 1160,
+        "wires": [
+            [
+                "29c9ad6f.f10de2"
+            ]
+        ]
+    },
+    {
+        "id": "dd11d45.b7b1428",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "MODE",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 1300,
+        "wires": [
+            [
+                "44f940cc.6e0d8"
+            ]
+        ]
+    },
+    {
+        "id": "f3d95bd.78392a8",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "PRE-AMP_(IPO)",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 141,
+        "y": 1440,
+        "wires": [
+            [
+                "8966cf54.edcbc"
+            ]
+        ]
+    },
+    {
+        "id": "bfc70c4c.2e021",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "PRE_AMP_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 1500,
+        "wires": [
+            [
+                "a46ebafd.b79ee8"
+            ]
+        ]
+    },
+    {
+        "id": "37037542.441caa",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_ALC",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 160,
+        "y": 1640,
+        "wires": [
+            [
+                "407bcb2b.b76c44"
+            ]
+        ]
+    },
+    {
+        "id": "e4e4c199.7dd2",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "TX_SET",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 580,
+        "wires": [
+            [
+                "3577dee8.bb4d82",
+                "b49c81d6.a9d11",
+                "f7a86e4b.3428a"
+            ]
+        ]
+    },
+    {
+        "id": "32d87102.369c8e",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_FRONT_PANEL",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 190,
+        "y": 1980,
+        "wires": [
+            [
+                "521af92f.676338"
+            ]
+        ]
+    },
+    {
+        "id": "256584b6.9e7afc",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "POWER_CONTROL",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 1780,
+        "wires": [
+            [
+                "b70b668c.9fc0f8"
+            ]
+        ]
+    },
+    {
+        "id": "dcafe425.c02c68",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "POWER_CHANGE_EVENT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 173,
+        "y": 1840,
+        "wires": [
+            [
+                "5de6016b.1dd4a"
+            ]
+        ]
+    },
+    {
+        "id": "a5059d4f.8ff6c",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "MENU",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 2120,
+        "wires": [
+            [
+                "9197749a.bfee18"
+            ]
+        ]
+    },
+    {
+        "id": "5ea91238.1af28c",
+        "type": "flowcontrolOut",
+        "z": "32b9106a.4589e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 110,
+        "y": 300,
+        "wires": [
+            [
+                "953f881.09fb578",
+                "3eb84881.bfc188"
+            ]
+        ]
+    },
+    {
+        "id": "cad33cb1.45fc5",
+        "type": "flowcontrolOut",
+        "z": "32b9106a.4589e",
+        "topic": "MENU",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 90,
+        "y": 840,
+        "wires": [
+            [
+                "541ba4ba.17818c"
+            ]
+        ]
+    },
+    {
+        "id": "c24a74f4.3fd018",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_PO",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 2360,
+        "wires": [
+            [
+                "de894144.0f31c"
+            ]
+        ]
+    },
+    {
+        "id": "4fd3500f.4ca51",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "METER_SW",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 130,
+        "y": 2540,
+        "wires": [
+            [
+                "5d2082a6.611d0c"
+            ]
+        ]
+    },
+    {
+        "id": "507410cf.62be6",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_ALC",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 160,
+        "y": 2240,
+        "wires": [
+            [
+                "958c0840.bef7b8"
+            ]
+        ]
+    },
+    {
+        "id": "d45e9406.72bb08",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_COMP",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 170,
+        "y": 2280,
+        "wires": [
+            [
+                "9bb3211c.03e87"
+            ]
+        ]
+    },
+    {
+        "id": "79aa365b.115b88",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_SWR",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 161.1999969482422,
+        "y": 2399.800048828125,
+        "wires": [
+            [
+                "9aa882be.428f3"
+            ]
+        ]
+    },
+    {
+        "id": "56bd1dd2.2f3a34",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_ID",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 150,
+        "y": 2320,
+        "wires": [
+            [
+                "370864ad.77afec"
+            ]
+        ]
+    },
+    {
+        "id": "1107f59d.d7e7ea",
+        "type": "flowcontrolOut",
+        "z": "36d8cfa8.00955",
+        "topic": "READ_METER_-_VDD",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 160,
+        "y": 2440,
+        "wires": [
+            [
+                "76ea3b9e.0c8544"
+            ]
+        ]
+    },
+    {
+        "id": "c229a01c.c9c49",
+        "type": "uibuilder",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "topic": "",
+        "url": "noderig",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "useSecurity": false,
+        "sessionLength": 432000,
+        "tokenAutoExtend": false,
+        "x": 460,
+        "y": 360,
+        "wires": [
+            [
+                "2f69877c.f1a878",
+                "4d9903e1.a7ad7c"
+            ],
+            [
+                "bfbcfc9e.c6d8f"
+            ]
+        ]
+    },
+    {
+        "id": "f230edfc.498f2",
+        "type": "trigger",
+        "z": "f0e53ee8.4481e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 420,
+        "wires": [
+            [
+                "bf4b9f0e.86832"
+            ]
+        ]
+    },
+    {
+        "id": "951535b4.0dab88",
+        "type": "function",
+        "z": "f0e53ee8.4481e",
+        "name": "Read ID",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_ID').asRead};\n}\nelse {\n    return {reset: true};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 380,
+        "wires": [
+            [
+                "4959bf97.b22bb"
+            ]
+        ]
+    },
+    {
+        "id": "f056f32e.f5dab",
+        "type": "function",
+        "z": "f0e53ee8.4481e",
+        "name": "Read VDD",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_VDD').asRead};\n}\nelse {\n    return {reset: true};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 420,
+        "wires": [
+            [
+                "f230edfc.498f2"
+            ]
+        ]
+    },
+    {
+        "id": "1b4892fc.fb855d",
+        "type": "function",
+        "z": "f0e53ee8.4481e",
+        "name": "Read COMP",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_COMP').asRead};\n}\nelse {\n    return {reset: true};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 297,
+        "wires": [
+            [
+                "229e9148.44edee"
+            ]
+        ]
+    },
+    {
+        "id": "996caee5.4c08c",
+        "type": "function",
+        "z": "f0e53ee8.4481e",
+        "name": "Read PO",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_PO').asRead};\n}\nelse {\n    return {reset: true};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 337,
+        "wires": [
+            [
+                "c874a830.bb2de8"
+            ]
+        ]
+    },
+    {
+        "id": "4959bf97.b22bb",
+        "type": "trigger",
+        "z": "f0e53ee8.4481e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 377,
+        "wires": [
+            [
+                "bf4b9f0e.86832"
+            ]
+        ]
+    },
+    {
+        "id": "c874a830.bb2de8",
+        "type": "trigger",
+        "z": "f0e53ee8.4481e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 337,
+        "wires": [
+            [
+                "bf4b9f0e.86832"
+            ]
+        ]
+    },
+    {
+        "id": "229e9148.44edee",
+        "type": "trigger",
+        "z": "f0e53ee8.4481e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 297,
+        "wires": [
+            [
+                "bf4b9f0e.86832"
+            ]
+        ]
+    },
+    {
+        "id": "30f04bb5.031f24",
+        "type": "function",
+        "z": "f0e53ee8.4481e",
+        "name": "Read ALC",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_ALC').asRead};\n}\nelse {\n    return {reset: true};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 217,
+        "wires": [
+            [
+                "b01c6945.3558a8"
+            ]
+        ]
+    },
+    {
+        "id": "b01c6945.3558a8",
+        "type": "trigger",
+        "z": "f0e53ee8.4481e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 516.7999877929688,
+        "y": 213.800048828125,
+        "wires": [
+            [
+                "bf4b9f0e.86832"
+            ]
+        ]
+    },
+    {
+        "id": "846e7809.7fc6c8",
+        "type": "trigger",
+        "z": "f0e53ee8.4481e",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "pay",
+        "op2type": "payl",
+        "duration": "-500",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 520,
+        "y": 257,
+        "wires": [
+            [
+                "bf4b9f0e.86832"
+            ]
+        ]
+    },
+    {
+        "id": "b6737104.4c813",
+        "type": "function",
+        "z": "f0e53ee8.4481e",
+        "name": "Read SWR",
+        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER_-_SWR').asRead};\n}\nelse {\n    return {reset: true};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 310,
+        "y": 257,
+        "wires": [
+            [
+                "846e7809.7fc6c8"
+            ]
+        ]
+    },
+    {
+        "id": "8e1a1578.7ff088",
+        "type": "comment",
+        "z": "f0e53ee8.4481e",
+        "name": "This is a handy tool to look at all of the meters while in transmit",
+        "info": "",
+        "x": 270,
+        "y": 157,
+        "wires": []
+    },
+    {
+        "id": "bf4b9f0e.86832",
+        "type": "flowcontrolIn",
+        "z": "f0e53ee8.4481e",
+        "topic": "SERIAL_OUT",
+        "context": "",
+        "version": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 730,
+        "y": 317,
+        "wires": []
+    },
+    {
+        "id": "fc38ce7c.53889",
+        "type": "flowcontrolOut",
+        "z": "f0e53ee8.4481e",
+        "d": true,
+        "topic": "TX_SET",
+        "context": "",
+        "retained": false,
+        "blTopic": "",
+        "blObj": "",
+        "name": "",
+        "x": 130,
+        "y": 317,
+        "wires": [
+            [
+                "951535b4.0dab88",
+                "f056f32e.f5dab",
+                "1b4892fc.fb855d",
+                "996caee5.4c08c",
+                "30f04bb5.031f24",
+                "b6737104.4c813"
+            ]
+        ]
+    },
+    {
+        "id": "1fa925f6.030a7a",
+        "type": "function",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "func": "\nconst next_setting = flow.get('next_setting');\n\nif(next_setting.length) {\n    node.send({ payload: next_setting.shift() });\n    flow.set('next_setting', next_setting);\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 300,
+        "y": 520,
+        "wires": [
+            [
+                "dc6c1348.90f2b"
+            ]
+        ]
     }
 ]
