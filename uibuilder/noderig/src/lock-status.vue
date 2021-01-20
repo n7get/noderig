@@ -22,7 +22,6 @@ module.exports = {
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('lock')) {
-                console.log('lock:', msg.lock);
                 self.on = msg.lock;
             }
         });

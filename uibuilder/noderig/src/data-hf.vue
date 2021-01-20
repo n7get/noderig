@@ -62,6 +62,9 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
+            // if(!msg.hasOwnProperty('menu_item')) {
+            //     console.log('msg: ', msg);
+            // }
             if(msg.hasOwnProperty('transmit')) {
                 self.tx_on = msg.transmit;
             }
