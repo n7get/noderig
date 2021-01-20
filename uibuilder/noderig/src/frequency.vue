@@ -18,10 +18,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('frequency')) {
-                self.mhz = msg.frequency.substring(0, 3).replace(/ /g,'&nbsp;');;
-                self.khz = msg.frequency.substring(3, 6);
-                self.hz  = msg.frequency.substring(6, 9);
+            if(msg.hasOwnProperty('vfo_a')) {
+                self.mhz = msg.vfo_a.substring(0, 3).replace(/ /g,'&nbsp;');;
+                self.khz = msg.vfo_a.substring(3, 6);
+                self.hz  = msg.vfo_a.substring(6, 9);
             }
 
             if(msg.hasOwnProperty('transmit')) {

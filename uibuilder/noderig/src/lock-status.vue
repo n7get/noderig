@@ -14,7 +14,7 @@ module.exports = {
     },
     methods: {
         sendClick: e => {
-            uibuilder.send({topic: 'LOCK_EVENT', payload: 'click'});
+            uibuilder.send({topic: 'lock', payload: 'click'});
         },
     },
     mounted: function() {
@@ -22,6 +22,7 @@ module.exports = {
 
         uibuilder.onChange('msg', msg => {
             if(msg.hasOwnProperty('lock')) {
+                console.log('lock:', msg.lock);
                 self.on = msg.lock;
             }
         });

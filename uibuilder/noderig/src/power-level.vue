@@ -21,7 +21,7 @@ module.exports = {
     },
     methods: {
         sendChange: new_value => {
-            uibuilder.send({topic: 'POWER_CHANGE_EVENT', payload: new_value});
+            uibuilder.send({topic: 'power_level', payload: new_value});
         },
     },
     mounted: function() {

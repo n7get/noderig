@@ -14,10 +14,10 @@ module.exports = {
     },
     methods: {
         sendClick: e => {
-            uibuilder.send({topic: 'TUNER_EVENT', payload: 'click'});
+            uibuilder.send({topic: 'tuner', payload: 'click'});
         },
         sendDblclick: e => {
-            uibuilder.send({topic: 'TUNER_EVENT', payload: 'dblclick'});
+            uibuilder.send({topic: 'tuner', payload: 'dblclick'});
         }
     },
     mounted: function() {

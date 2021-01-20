@@ -14,7 +14,7 @@ module.exports = {
     },
     methods: {
         sendClick: e => {
-            uibuilder.send({topic: 'PRE_AMP_EVENT', payload: 'click'});
+            uibuilder.send({topic: 'pre_amp', payload: 'click'});
         },
     },
     mounted: function() {
