@@ -14,9 +14,6 @@
 
 <script>
 module.exports = {
-    components: {
-	'menu-item': httpVueLoader('menu-item.vue'),
-    },
     props: [
         'items',
     ],
@@ -42,8 +39,8 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('menu')) {
-                self.menu_items[msg.menu.no].value = msg.menu.value;
+            if(msg.hasOwnProperty('menu_item')) {
+                self.menu_items[msg.menu_item.no].value = msg.menu_item.value;
             }
         });
     }

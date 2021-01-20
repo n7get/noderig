@@ -24,7 +24,7 @@
     <tx-timer class="mt-2"></tx-timer>
     <!-- <tx-count-down secs="90" warn="30"></tx-count-down> -->
     <power-level class="mt-2 mb-2"></power-level>
-    <menu :items="['62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></menu>
+    <menu-item :items="['62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></menu-item>
 </div>
 </template>
 
@@ -32,7 +32,7 @@
 module.exports = {
     mixins: [window.noderig.op_mode_mixin],
     components: {
-        'menu':             httpVueLoader('menu.vue'),
+        'menu-item':        httpVueLoader('menu-item.vue'),
         'alc-status':       httpVueLoader('alc-status.vue'),
         'frequency':        httpVueLoader('frequency.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
