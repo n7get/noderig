@@ -52,7 +52,7 @@ window.noderig = {
 
 Vue.prototype.$noderig = {
     menu_items: {
-	1:   {desc: 'AGC FAST DELAY', value: undefined},
+    	1:   {desc: 'AGC FAST DELAY', value: undefined},
         2:   {desc: 'AGC MID DELAY', value: undefined},
         3:   {desc: 'AGC SLOW DELAY', value: undefined},
         4:   {desc: 'HOME FUNCTION', value: undefined},
@@ -115,28 +115,28 @@ Vue.prototype.$noderig = {
         61:  {desc: 'QSK DELAY TIME', value: undefined},
         62:  {desc: 'DATA MODE', value: undefined},
         63:  {
-                 desc: 'PSK TONE',
-                 editor: 'list',
-                 list: ['PSK', 'OTHER'],
-		 value: undefined
-             },
-	64:  {desc: 'OTHER DISP (SSB)', value: undefined},
+                desc: 'PSK TONE',
+                editor: 'list',
+                list: ['PSK', 'OTHER'],
+		        value: undefined
+            },
+	    64:  {desc: 'OTHER DISP (SSB)', value: undefined},
         65:  {desc: 'OTHER SHIFT (SSB)', value: undefined},
         66:  {desc: 'DATA LCUT FREQ', value: undefined},
         67:  {desc: 'DATA LCUT SLOPE', value: undefined},
         68:  {desc: 'DATA HCUT FREQ', value: undefined},
         69:  {desc: 'DATA HCUT SLOPE', value: undefined},
         70:  {
-                 desc: 'DATA IN SELECT',
-                 editor: 'list',
-                 list: ['MIC', 'REAR'],
-		 value: undefined
-             },
+                desc: 'DATA IN SELECT',
+                editor: 'list',
+                list: ['MIC', 'REAR'],
+		        value: undefined
+            },
         71:  {
-                 desc: 'DATA PTT SELECT',
-                 editor: 'list',
-                 list: ['OFF', 'DAKY', 'RTS', 'DTR'],
-		 value: undefined
+                desc: 'DATA PTT SELECT',
+                editor: 'list',
+                list: ['OFF', 'DAKY', 'RTS', 'DTR'],
+		        value: undefined
              },
         72:  {
                  desc: 'DATA PORT SELECT',
@@ -144,7 +144,7 @@ Vue.prototype.$noderig = {
                  list: ['DATA', 'USB'],
 		 value: undefined
              },
-	73:  {desc: 'DATA OUT LEVEL', value: undefined},
+	    73:  {desc: 'DATA OUT LEVEL', value: undefined},
         74:  {desc: 'FM MIC SELECT', value: undefined},
         75:  {desc: 'FM OUT LEVEL', value: undefined},
         76:  {desc: 'FM PKT PTT SELECT', value: undefined},

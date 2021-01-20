@@ -32,7 +32,7 @@
 module.exports = {
     mixins: [window.noderig.op_mode_mixin],
     components: {
-        'menu':           httpVueLoader('menu.vue'),
+        'menu':             httpVueLoader('menu.vue'),
         'alc-status':       httpVueLoader('alc-status.vue'),
         'frequency':        httpVueLoader('frequency.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
