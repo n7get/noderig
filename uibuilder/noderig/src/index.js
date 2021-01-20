@@ -51,7 +51,7 @@ window.noderig = {
 };
 
 Vue.prototype.$noderig = {
-    config_items: {
+    menu_items: {
 	1:   {desc: 'AGC FAST DELAY', value: undefined},
         2:   {desc: 'AGC MID DELAY', value: undefined},
         3:   {desc: 'AGC SLOW DELAY', value: undefined},
