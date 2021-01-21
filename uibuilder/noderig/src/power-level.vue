@@ -28,8 +28,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('power_level')) {
-                self.value = msg.power_level;
+            var p = msg.payload;
+
+            if(p.event === 'power_level') {
+                self.value = p.value;
             }
         });
     }

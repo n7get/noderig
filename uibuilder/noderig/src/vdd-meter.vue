@@ -20,8 +20,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('vdd_meter')) {
-                self.value = parseInt(msg.vdd_meter, 10);
+            var p = msg.payload;
+
+            if(p.event === 'vdd_meter') {
+                self.value = p.value;
             }
         });
     }

@@ -20,8 +20,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('alc_meter')) {
-                self.value = msg.alc_meter;
+            var p = msg.payload;
+
+            if(p.event === 'alc_meter') {
+                self.value = p.value;
             }
         });
     }

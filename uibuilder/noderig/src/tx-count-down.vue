@@ -63,11 +63,13 @@ module.exports = {
             intervalID = null;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('transmit')) {
+            var p = msg.payload;
 
-                self.tx_on = msg.transmit;
+            if(p.event === 'transmit') {
 
-               if(msg.transmit) {
+                self.tx_on = p.value;
+
+               if(p.value) {
                   if(intervalID == null) {
                        self.counter = self.secs;
                        self.is_warn = false;

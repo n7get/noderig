@@ -24,8 +24,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg =>{
-            if(msg.hasOwnProperty('tuner')) {
-                self.on = msg.tuner === 'on';
+            var p = msg.payload;
+
+            if(p.event === 'tuner') {
+                self.on = p.value === 'on';
             }
         });
     }

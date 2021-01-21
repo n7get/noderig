@@ -16,8 +16,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('mode')) {
-                self.mode = msg.mode;
+            var p = msg.payload;
+
+            if(p.event === 'mode') {
+                self.mode = p.value;
             }
         });
     }

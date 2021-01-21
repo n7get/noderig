@@ -62,14 +62,16 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            // if(!msg.hasOwnProperty('menu_item')) {
-            //     console.log('msg: ', msg);
+            var p = msg.payload;
+
+            // if(p.event !== 'menu_item') {
+            //     console.log('p: ', p);
             // }
-            if(msg.hasOwnProperty('transmit')) {
-                self.tx_on = msg.transmit;
+            if(p.event === 'transmit') {
+                self.tx_on = p.value;
             }
-            else if(msg.hasOwnProperty('meter_switch')) {
-                self.meter_switch = msg.meter_switch;
+            else if(p.event === 'meter_switch') {
+                self.meter_switch = p.value;
             }
         });
     },

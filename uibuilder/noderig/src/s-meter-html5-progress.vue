@@ -19,12 +19,14 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('s_meter')) {
-                self.value = parseInt(msg.s_meter, 10);
+            var p = msg.payload;
+
+            if(p.event === 's_meter') {
+                self.value = p.value;
             }
             
-            if(msg.hasOwnProperty('transmit')) {
-                self.tx_on = msg.transmit;
+            if(p.event === 'transmit') {
+                self.tx_on = p.value;
             }
         });
     }

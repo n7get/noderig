@@ -20,8 +20,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('comp_meter')) {
-                self.value = msg.comp_meter;
+            var p = msg.payload;
+
+            if(p.event === 'comp_meter') {
+                self.value = p.value;
             }
         });
     }

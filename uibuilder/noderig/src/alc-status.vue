@@ -15,8 +15,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg =>{
-            if(msg.hasOwnProperty('alc_status')) {
-                self.on = msg.alc_status;
+            var p = msg.payload;
+
+            if(p.event === 'alc_status') {
+                self.on = p.value;
             }
         });
     }
