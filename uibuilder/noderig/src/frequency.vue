@@ -6,6 +6,15 @@
 
 <script>
 module.exports = {
+    props: {
+        vfo: {
+            type: String,
+            default: 'vfo_a',
+            validator: function (value) {
+                return ['vfo_a', 'vfo_b'].indexOf(value) !== -1
+            },
+        }
+    },
     data: function() {
         return {
             mhz: 'mmm',
@@ -18,10 +27,10 @@ module.exports = {
         var self = this;
 
         uibuilder.onChange('msg', msg => {
-            if(msg.hasOwnProperty('vfo_a')) {
-                self.mhz = msg.vfo_a.substring(0, 3).replace(/ /g,'&nbsp;');;
-                self.khz = msg.vfo_a.substring(3, 6);
-                self.hz  = msg.vfo_a.substring(6, 9);
+            if(msg.hasOwnProperty(self.vfo)) {
+                self.mhz = msg[self.vfo].substring(0, 3).replace(/ /g,'&nbsp;');;
+                self.khz = msg[self.vfo].substring(3, 6);
+                self.hz  = msg[self.vfo].substring(6, 9);
             }
 
             if(msg.hasOwnProperty('transmit')) {
