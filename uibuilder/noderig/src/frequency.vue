@@ -29,14 +29,18 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === self.vfo) {
-                self.mhz = p.value.substring(0, 3).replace(/ /g,'&nbsp;');;
-                self.khz = p.value.substring(3, 6);
-                self.hz  = p.value.substring(6, 9);
+            if(p.name === self.vfo) {
+                if(p.hasOwnProperty('value')) {
+                    self.mhz = p.value.substring(0, 3).replace(/ /g,'&nbsp;');;
+                    self.khz = p.value.substring(3, 6);
+                    self.hz  = p.value.substring(6, 9);
+                }
             }
 
-            if(p.event === 'transmit') {
-                self.on = p.value;
+            if(p.name === 'transmit') {
+                if(p.hasOwnProperty('value')) {
+                    self.on = p.value;
+                }
             }
         });
     }

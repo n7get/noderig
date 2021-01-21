@@ -30,8 +30,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === 'power_level') {
-                self.value = p.value;
+            if(p.name === 'power_level') {
+                if(p.hasOwnProperty('value')) {
+                    self.value = p.value;
+                }
             }
         });
     }

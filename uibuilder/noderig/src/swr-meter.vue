@@ -22,8 +22,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === 'swr_meter') {
-                self.value = p.value;
+            if(p.name === 'swr_meter') {
+                if(p.hasOwnProperty('value')) {
+                    self.value = p.value;
+                }
             }
         });
     }

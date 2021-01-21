@@ -46,21 +46,22 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === 'transmit') {
+            if(p.name === 'transmit') {
+                if(p.hasOwnProperty('value')) {
+                    self.tx_on = p.value;
 
-                self.tx_on = p.value;
+                    if(self.tx_on) {
+                       if(intervalID == null) {
+                           self.counter = 0;
 
-               if(p.value) {
-                  if(intervalID == null) {
-                      self.counter = 0;
-
-                      intervalID = window.setInterval(increment, 1000, self);
-                  }
-               }
-               else {
-                  window.clearInterval(intervalID);
-                  intervalID = null;
-               }
+                           intervalID = window.setInterval(increment, 1000, self);
+                       }
+                    }
+                    else {
+                       window.clearInterval(intervalID);
+                       intervalID = null;
+                    }
+                }
             }
         });
     }

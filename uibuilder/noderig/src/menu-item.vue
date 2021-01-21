@@ -41,8 +41,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === 'menu_item') {
-                self.menu_items[p.no].value = p.value;
+            if(p.name === 'menu_item') {
+                if(p.hasOwnProperty('value')) {
+                    self.menu_items[p.no].value = p.value;
+                }
             }
         });
     }

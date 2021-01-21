@@ -23,8 +23,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === 'pre_amp') {
-                self.pre_amp = p.value;
+            if(p.name === 'pre_amp') {
+                if(p.hasOwnProperty('value')) {
+                    self.pre_amp = p.value;
+                }
             }
         });
     }

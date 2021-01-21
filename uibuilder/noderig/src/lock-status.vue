@@ -23,8 +23,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.event === 'lock') {
-                self.on = p.value;
+            if(p.name === 'lock') {
+                if(p.hasOwnProperty('value')) {
+                    self.on = p.value;
+                }
             }
         });
     }
