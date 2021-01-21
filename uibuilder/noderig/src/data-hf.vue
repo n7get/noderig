@@ -24,7 +24,6 @@
     <tx-timer class="mt-2"></tx-timer>
     <!-- <tx-count-down secs="90" warn="30"></tx-count-down> -->
     <power-level class="mt-2 mb-2"></power-level>
-    <menu-item :items="['62', '64', '65', '66', '67', '68', '69', '70', '71', '72', '73', '146', '147']"></menu-item>
 </div>
 </template>
 
@@ -39,7 +38,6 @@ module.exports = {
         'frequency':        httpVueLoader('frequency.vue'),
         'id-meter':         httpVueLoader('id-meter.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
-        'menu-item':        httpVueLoader('menu-item.vue'),
         'mode-status':      httpVueLoader('mode-status.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
         'power-level':      httpVueLoader('power-level.vue'),

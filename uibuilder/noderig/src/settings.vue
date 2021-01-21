@@ -1,13 +1,17 @@
 <template>
     <div>
-            <b-row
-                v-for="(s, name) in settings"
-                :key="name"
-		        v-show="showConfigSetting(name)">
+        <b-row @click="toggleDisplayMode">
+            <div class="col-9">Description</div>
+            <div class="col-3">Value</div>
+        </b-row>
+        <b-row
+            v-for="(s, name) in settings"
+            :key="name"
+            v-show="showConfigSetting(s)">
 
-                <div class="col-7">{{ s.desc }}</div>
-                <div class="col">{{ s.value }}</div>
-            </b-row>
+            <div class="col-7">{{ s.desc }}</div>
+            <div class="col">{{ s.value }}</div>
+        </b-row>
     </div>
 </template>
 
@@ -15,12 +19,34 @@
 module.exports = {
     data: function() {
         return {
+            display_mode: 'fav',
+            show_changed_only: false,
             settings: this.$noderig.settings,
         };
     },
     methods: {
-        showConfigSetting: function(name) {
-            return true;
+        toggleDisplayMode: function() {
+            if(this.display_mode === 'all') {
+                this.display_mode = 'saved';
+            }
+            else if(this.display_mode === 'saved') {
+                this.display_mode = 'fav';
+            }
+            else {
+                this.display_mode = 'all';
+            }
+        },
+        showConfigSetting: function(s) {
+            if(this.display_mode === 'all') {
+                return (this.show_changed_only && s.changed) || !this.show_changed_only;
+            }
+            if(this.display_mode === 'fav') {
+                return s.fav && ((this.show_changed_only && s.changed) || !this.show_changed_only);
+            }
+            if(this.display_mode === 'saved') {
+                return s.saved && ((this.show_changed_only && s.changed) || !this.show_changed_only);
+            }
+            return false;
         },
     },
     mounted: function() {
@@ -30,7 +56,6 @@ module.exports = {
             var p = msg.payload;
 
             if(self.settings.hasOwnProperty(p.name)) {
-                console.log('p: ', p);
                 if(p.hasOwnProperty('changed')) {
                     self.settings[p.name].changed = p.changed;
                 }

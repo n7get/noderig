@@ -193,10 +193,10 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Load op mode menu",
-        "func": "\n\nreturn msg;",
+        "func": "",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict';\n\nconst get_op_mode = function(name) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst load_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst save_op_mode = function(op_mode) {\n    global.set('op_modes', op_modes, 'persist');\n};\n\nconst set_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst OpModes = {\n    getOpMode: get_op_mode,\n    loadOpMode: load_op_mode,\n    saveOpMode: save_op_mode,\n    setOpMode: set_op_mode,\n}\n\nflow.set('OpModes', OpModes);\n\nflow.set('menu_save', [\n    062,    // DATA MODE\n    066,    // DATA LCUT FREQ\n    067,    // DATA LCUT SLOPE\n    068,    // DATA HCUT FREQ\n    069,    // DATA HCUT SLOPE\n    070,    // DATA IN SELECT\n    071,    // DATA PTT SELECT\n    072,    // DATA PORT SELECT\n    073,    // DATA OUT LEVEL\n    146,    // DATA VOX GAIN\n    147     // DATA VOX DELAY\n]);\n\nflow.set('menu_save', [\n    'AI1;',\n    'IF;',\n    'AC;',\n    'GT0;',\n    'LK;',\n    'MS;',\n    'PA0;',\n    'PC;',\n    'PA0;',\n    'PC;',\n    'RIA;',\n    'MS1',\n    'RM2'\n]);",
+        "initialize": "'use strict';\n\nconst get_op_mode = function(name) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst load_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst save_op_mode = function(op_mode) {\n    global.set('op_modes', op_modes, 'persist');\n};\n\nconst set_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst OpModes = {\n    getOpMode: get_op_mode,\n    loadOpMode: load_op_mode,\n    saveOpMode: save_op_mode,\n    setOpMode: set_op_mode,\n}\n\nflow.set('OpModes', OpModes);\n\nflow.set('menu_save', [\n    'GT0;',\n]);\n\nconst op_mode = {\n    name: 'Data HF',\n    triggers: [],\n    settings: {\n        tuner: {\n    \t},\n        lock: {\n    \t},\n        meter_sw: {\n    \t\tfav: true,\n    \t},\n    \tmic_gain: {\n    \t    fav: true,\n    \t},\n        pre_amp: {\n    \t},\n        power_level: {\n    \t},\n    },\n    menus: {\n        62: {\n        },\n        64: {\n            fav: true,\n        },\n        65: {\n            fav: true,\n        },\n        66: {\n        },\n        67: {\n        },\n        68: {\n        },\n        69: {\n        },\n        70: {\n            fav: true,\n        },\n        71: {\n            fav: true,\n        },\n        72: {\n            fav: true,\n        },\n        73: {\n            fav: true,\n        },\n        146: {\n        },\n        147: {\n        },\n    },\n};\n\nglobal.set('op_mode', op_mode);",
         "finalize": "",
         "x": 445,
         "y": 100,
@@ -1149,7 +1149,7 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Handle rig event",
-        "func": "'use strict';\n\nconst settings_to_ui = flow.get('settings_to_ui'),\n      rs = msg.payload;\n\n// if(!settings_to_ui.hasOwnProperty(rs.topic)) {\n//     throw new Error('Rig event topic not found in settings_to_ui: ' + rs.topic);\n// }\n\nif(settings_to_ui.hasOwnProperty(rs.topic)) {\n    const re = settings_to_ui[rs.topic],\n          msg = {payload: re.emit(re.ui, rs)};\n\n    if(re.hasOwnProperty('local') && re.local) {\n        return [msg, msg];\n    }\n    \n    return [msg, null];\n}\n\nreturn null;",
+        "func": "'use strict';\n\nconst settings_to_ui = flow.get('settings_to_ui'),\n      rs = msg.payload;\n\n// if(!settings_to_ui.hasOwnProperty(rs.topic)) {\n//     throw new Error('Rig event topic not found in settings_to_ui: ' + rs.topic);\n// }\n\nif(settings_to_ui.hasOwnProperty(rs.topic)) {\n    const re = settings_to_ui[rs.topic],\n          op_mode = global.get('op_mode'),\n          msg = {payload: re.emit(re.ui, rs)};\n\n    if(re.ui === 'menu_item') {\n        if(op_mode.menus.hasOwnProperty(rs.value.no)) {\n            msg.payload.saved = true;\n            msg.payload.fav = op_mode.menus[rs.value.no].fav || false;\n        }\n        else {\n            msg.payload.saved = false;\n            msg.payload.fav = false;\n        }\n    }\n    else if(op_mode.settings.hasOwnProperty(re.ui)) {\nnode.log('rs: ' + JSON.stringify(rs));\nnode.log('op_mode: ' + JSON.stringify(op_mode.settings[re.ui]));\n        msg.payload.saved = true;\n        msg.payload.fav = op_mode.settings[re.ui].fav || false;\n    }\n    else {\n        msg.payload.saved = false;\n        msg.payload.fav = false;\n    }\n\n    if(re.hasOwnProperty('local') && re.local) {\n        return [msg, msg];\n    }\n    \n    return [msg, null];\n}\n\nreturn null;",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1224,7 +1224,8 @@
         "name": "UI",
         "links": [
             "eb4cdb5c.e742a8",
-            "f4962b9f.b6a398"
+            "f4962b9f.b6a398",
+            "ea8768d0.a50838"
         ],
         "x": 115,
         "y": 400,
