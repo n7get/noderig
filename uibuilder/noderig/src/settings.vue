@@ -1,18 +1,26 @@
 <template>
-    <div>
-        <b-row @click="toggleDisplayMode">
-            <div class="col-9">Description</div>
-            <div class="col-3">Value</div>
-        </b-row>
-        <b-row
+    <b-card no-body border-variant="secondary">
+        <b-card-header class="px-2 d-flex justify-content-between align-items-left">
+            <div @click="toggleDisplayMode">{{ display_mode }}</div>
+            <div text-variant="white" bg-variant="secondary">
+                 Settings
+            </div>
+            <div>All</div>
+        </b-card-header>
+        <div flush>
+        <div class="px-2 d-flex justify-content-between align-items-left bg-secondary text-light">
+            <div>Description</div>
+            <div>Value</div>
+        </div>
+        <div class="px-2 d-flex justify-content-between align-items-left"
             v-for="(s, name) in settings"
             :key="name"
-            v-show="showConfigSetting(s)">
+            v-if="showConfigSetting(s)">
 
-            <div class="col-7">{{ s.desc }}</div>
-            <div class="col">{{ s.value }}</div>
-        </b-row>
-    </div>
+            <div>{{ s.desc }}<span v-if="s.changed">*</span></div>
+            <div>{{ s.value }}</div>
+        </div>
+    </b-card>
 </template>
 
 <script>

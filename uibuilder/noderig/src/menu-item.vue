@@ -1,20 +1,27 @@
 <template>
-    <div>
-        <b-row @click="toggleDisplayMode">
-            <div class="col-1">no</div>
-            <div class="col-7">Description</div>
-            <div class="col-3">Value</div>
-        </b-row>
-        <b-row
-            v-for="(ci, no) in menu_items"
-            :key="no"
-            v-show="showMenuItem(ci)">
+    <b-card no-body border-variant="secondary">
+        <b-card-header class="px-2 d-flex justify-content-between align-items-left">
+            <div @click="toggleDisplayMode">{{ display_mode }}</div>
+            <div text-variant="white" bg-variant="secondary">
+                Menu Items
+            </div>
+            <div>All</div>
+        </b-card-header>
+        <div>
+            <div class="px-2 d-flex justify-content-between align-items-left bg-secondary text-light">
+                <div>no Description</div>
+                <div>Value</div>
+            </div>
+            <div class="px-2 d-flex justify-content-between align-items-left"
+                v-for="(ci, no) in menu_items"
+                :key="no"
+                v-if="showMenuItem(ci)">
 
-            <div class="col-1">{{ no }}</div>
-            <div class="col-7">{{ ci.desc }}</div>
-            <div class="col-3">{{ ci.value }}</div>
-        </b-row>
-    </div>
+                <div><span :class="{pad: no < 10}">{{ no }}</span>&nbsp;{{ ci.desc }}<span v-if="ci.changed">*</span></div>
+                <div>{{ ci.value }}</div>
+            </div>
+        </div>
+    </b-card>
 </template>
 
 <script>
@@ -79,4 +86,8 @@ module.exports = {
     }
 }
 </script>
-
+<style scoped>
+    .pad {
+        padding-left: .5em;
+    }
+</style>
