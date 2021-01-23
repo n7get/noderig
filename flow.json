@@ -21,6 +21,13 @@
         "info": ""
     },
     {
+        "id": "46966e45.65961",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "3ef5815c.6122be",
         "type": "serial-port",
         "serialport": "COM4",
@@ -1205,7 +1212,7 @@
         "type": "debug",
         "z": "36d8cfa8.00955",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1563,5 +1570,97 @@
                 "25b95575.0f35da"
             ]
         ]
+    },
+    {
+        "id": "b28ef98a.0f3558",
+        "type": "inject",
+        "z": "46966e45.65961",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 240,
+        "y": 200,
+        "wires": [
+            [
+                "8f76ec31.a99df"
+            ]
+        ]
+    },
+    {
+        "id": "8e2c504b.3ad72",
+        "type": "inject",
+        "z": "46966e45.65961",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "10",
+        "payloadType": "num",
+        "x": 240,
+        "y": 280,
+        "wires": [
+            [
+                "8f76ec31.a99df"
+            ]
+        ]
+    },
+    {
+        "id": "8f76ec31.a99df",
+        "type": "function",
+        "z": "46966e45.65961",
+        "name": "",
+        "func": "let acc = flow.get('acc');\nacc += msg.payload;\nflow.set('acc', acc);\n\nreturn {payload: acc};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\nflow.set('acc', 0);",
+        "finalize": "",
+        "x": 440,
+        "y": 240,
+        "wires": [
+            [
+                "6feb3e21.0689"
+            ]
+        ]
+    },
+    {
+        "id": "6feb3e21.0689",
+        "type": "debug",
+        "z": "46966e45.65961",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 260,
+        "wires": []
     }
 ]

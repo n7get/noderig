@@ -1,24 +1,46 @@
 <template>
     <b-card no-body border-variant="secondary">
         <b-card-header class="px-2 d-flex justify-content-between align-items-left">
-            <div @click="toggleDisplayMode">{{ display_mode }}</div>
+            <div @click="toggleDisplayMode">{{ showDisplayMode() }}</div>
             <div text-variant="white" bg-variant="secondary">
                 Menu Items
             </div>
-            <div>All</div>
+            <div v-show="!edit_mode" @click="edit">Edit</div>
+            <div v-show="edit_mode" @click="done">Done</div>
         </b-card-header>
         <div>
             <div class="px-2 d-flex justify-content-between align-items-left bg-secondary text-light">
                 <div>no Description</div>
-                <div>Value</div>
+                <div v-show="!edit_mode">Value</div>
+                <div v-show="edit_mode">
+                    <span>Fav</span>&nbsp;<span>Saved</span>
+                </div>
             </div>
             <div class="px-2 d-flex justify-content-between align-items-left"
-                v-for="(ci, no) in menu_items"
+                v-for="(mi, no) in menu_items"
                 :key="no"
-                v-if="showMenuItem(ci)">
+                v-if="showMenuItem(mi)">
 
-                <div><span :class="{pad: no < 10}">{{ no }}</span>&nbsp;{{ ci.desc }}<span v-if="ci.changed">*</span></div>
-                <div>{{ ci.value }}</div>
+                <div><span :class="{pad: no < 10}">{{ no }}</span>&nbsp;{{ mi.desc }}<span v-if="mi.changed">*</span></div>
+                <div v-show="!edit_mode">{{ mi.value }}</div>
+                <div v-show="edit_mode">
+                    <span @click="toggleFav(no)">
+                        <span v-show="mi.fav">
+                            <b-icon-check-square></b-icon-square>
+                        </span>
+                        <span v-show="!mi.fav">
+                            <b-icon-square></b-icon-square>
+                        </span>
+                    </span>
+                    <span class="pl-3 pr-2" @click="togglesaved(no)">
+                        <span v-show="mi.saved">
+                            <b-icon-check-square></b-icon-square>
+                        </span>
+                        <span v-show="!mi.saved">
+                            <b-icon-square></b-icon-square>
+                        </span>
+                    </span>
+                </div>
             </div>
         </div>
     </b-card>
@@ -29,33 +51,49 @@ module.exports = {
     data: function() {
         return {
             display_mode: 'fav',
+            edit_mode: false,
             show_changed_only: false,
             menu_items: this.$noderig.menu_items,
         };
     },
     methods: {
         toggleDisplayMode: function() {
-            if(this.display_mode === 'all') {
-                this.display_mode = 'saved';
-            }
-            else if(this.display_mode === 'saved') {
-                this.display_mode = 'fav';
-            }
-            else {
-                this.display_mode = 'all';
+            switch(this.display_mode) {
+            case 'all':     this.display_mode = 'saved'; break;
+            case 'changed': this.display_mode = 'fav'; break;
+            case 'fav':     this.display_mode = 'all'; break;
+            case 'saved':   this.display_mode = 'changed'; break;
             }
         },
-        showMenuItem: function(ci) {
-            if(this.display_mode === 'all') {
-                return (this.show_changed_only && ci.changed) || !this.show_changed_only;
+        showDisplayMode: function() {
+            switch(this.display_mode) {
+            case 'all':     return 'All';
+            case 'changed': return 'Changed';
+            case 'fav':     return 'Fav';
+            case 'saved':   return 'Saved';
             }
-            if(this.display_mode === 'fav') {
-                return ci.fav && ((this.show_changed_only && ci.changed) || !this.show_changed_only);
-            }
-            if(this.display_mode === 'saved') {
-                return ci.saved && ((this.show_changed_only && ci.changed) || !this.show_changed_only);
+            return 'Unknown';
+        },
+        showMenuItem: function(mi) {
+            switch(this.display_mode) {
+            case 'all':     return true;
+            case 'changed': return mi.changed;
+            case 'fav':     return mi.fav;
+            case 'saved':   return mi.saved;
             }
             return false;
+        },
+        edit: function() {
+            this.edit_mode = true;
+        },
+        done: function() {
+            this.edit_mode = false;
+        },
+        toggleFav: function(no) {
+            uibuilder.send({topic: 'menu-item', event: 'toggle_fav', no: no});
+        },
+        togglesaved: function(no) {
+            uibuilder.send({topic: 'menu-item', event: 'toggle_saved', no: no});
         },
     },
     mounted: function() {
