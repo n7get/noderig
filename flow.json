@@ -14,20 +14,6 @@
         "info": ""
     },
     {
-        "id": "f0e53ee8.4481e",
-        "type": "tab",
-        "label": "Tools",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "46966e45.65961",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "3ef5815c.6122be",
         "type": "serial-port",
         "serialport": "COM4",
@@ -108,7 +94,7 @@
         "type": "debug",
         "z": "36d8cfa8.00955",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -116,44 +102,26 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 628.9999885559082,
-        "y": 336.9999523162842,
+        "x": 548.9999885559082,
+        "y": 416.9999523162842,
         "wires": []
-    },
-    {
-        "id": "32d66e09.a27d62",
-        "type": "function",
-        "z": "36d8cfa8.00955",
-        "name": "Send UI Update",
-        "func": "\nreturn {payload: msg.payload};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 260,
-        "y": 400,
-        "wires": [
-            [
-                "c229a01c.c9c49",
-                "10905f25.f71401"
-            ]
-        ]
     },
     {
         "id": "bfbcfc9e.c6d8f",
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Refresh UI",
-        "func": "const RigState = global.get('RigState');\n\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const rs of RigState.getAll()) {\n    node.send({topic: rs.topic, payload: rs});\n}\n\nnode.done();",
+        "func": "const ui_cache = flow.get('ui_cache');\n\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const msg of Object.values(ui_cache)) {\n    node.send(msg);\n}\n\nnode.done();",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 650,
-        "y": 420,
+        "x": 570,
+        "y": 500,
         "wires": [
             [
-                "80bd8c8a.4d949"
+                "d488fc0.05b1808",
+                "30d1fee2.20f532"
             ]
         ]
     },
@@ -164,7 +132,7 @@
         "name": "UI interface",
         "info": "",
         "x": 90,
-        "y": 340,
+        "y": 380,
         "wires": []
     },
     {
@@ -172,12 +140,12 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "alc_status",
-        "func": "let alc_meter = msg.payload;\n\nreturn {payload: {alc_status: (alc_meter.value > 5)}};",
+        "func": "let alc_meter = msg.payload;\n\nreturn {alc_status: (alc_meter.value > 5)};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 240,
+        "x": 180,
         "y": 780,
         "wires": [
             [
@@ -203,9 +171,9 @@
         "func": "",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict';\n\nconst get_op_mode = function(name) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst load_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst save_op_mode = function(op_mode) {\n    global.set('op_modes', op_modes, 'persist');\n};\n\nconst set_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst OpModes = {\n    getOpMode: get_op_mode,\n    loadOpMode: load_op_mode,\n    saveOpMode: save_op_mode,\n    setOpMode: set_op_mode,\n}\n\nflow.set('OpModes', OpModes);\n\nflow.set('menu_save', [\n    'GT0;',\n]);\n\nconst op_mode = {\n    name: 'Data HF',\n    triggers: [],\n    settings: {\n        tuner: {\n    \t},\n        lock: {\n    \t},\n        meter_sw: {\n    \t\tfav: true,\n    \t},\n    \tmic_gain: {\n    \t    fav: true,\n    \t},\n        pre_amp: {\n    \t},\n        power_level: {\n    \t},\n    },\n    menus: {\n        62: {\n            save: true,\n        },\n        64: {\n            fav: true,\n        },\n        65: {\n            fav: true,\n        },\n        66: {\n        },\n        67: {\n        },\n        68: {\n        },\n        69: {\n        },\n        70: {\n            fav: true,\n        },\n        71: {\n            fav: true,\n        },\n        72: {\n            fav: true,\n        },\n        73: {\n            fav: true,\n        },\n        146: {\n        },\n        147: {\n        },\n    },\n};\n\nglobal.set('op_mode', op_mode);",
+        "initialize": "'use strict';\n\nconst get_op_mode = function(name) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst load_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst save_op_mode = function(op_mode) {\n    global.set('op_modes', op_modes, 'persist');\n};\n\nconst set_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst OpModes = {\n    getOpMode: get_op_mode,\n    loadOpMode: load_op_mode,\n    saveOpMode: save_op_mode,\n    setOpMode: set_op_mode,\n}\n\nflow.set('OpModes', OpModes);\n\nflow.set('menu_save', [\n    'GT0;',\n]);\n\nconst op_mode = {\n    name: 'Data HF',\n    triggers: [],\n    settings: {\n        tuner: {\n    \t},\n        lock: {\n    \t},\n        meter_sw: {\n    \t\tfav: true,\n    \t},\n    \tmic_gain: {\n    \t    fav: true,\n    \t},\n        pre_amp: {\n    \t},\n        power_level: {\n    \t},\n    },\n    menus: {\n        62: {\n            save: true,\n        },\n        64: {\n            fav: true,\n        },\n        65: {\n            fav: true,\n        },\n        66: {\n        },\n        67: {\n        },\n        68: {\n        },\n        69: {\n        },\n        70: {\n            fav: true,\n        },\n        71: {\n            fav: true,\n        },\n        72: {\n            fav: true,\n        },\n        73: {\n            fav: true,\n        },\n        146: {\n        },\n        147: {\n        },\n    },\n};\n\nflow.set('op_mode', op_mode);",
         "finalize": "",
-        "x": 445,
+        "x": 425,
         "y": 100,
         "wires": [
             []
@@ -232,7 +200,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 100,
+        "x": 80,
         "y": 100,
         "wires": [
             [
@@ -269,7 +237,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 460,
+        "x": 400,
         "y": 600,
         "wires": [
             [
@@ -287,7 +255,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 250,
+        "x": 190,
         "y": 600,
         "wires": [
             [
@@ -312,7 +280,7 @@
         "bytopic": "all",
         "topic": "topic",
         "outputs": 1,
-        "x": 460,
+        "x": 400,
         "y": 640,
         "wires": [
             [
@@ -330,7 +298,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 250,
+        "x": 190,
         "y": 640,
         "wires": [
             [
@@ -356,23 +324,6 @@
         "info": "",
         "x": 400,
         "y": 40,
-        "wires": []
-    },
-    {
-        "id": "10905f25.f71401",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 448.9999885559082,
-        "y": 336.9999523162842,
         "wires": []
     },
     {
@@ -485,7 +436,8 @@
                 "bff50622.754658"
             ],
             [
-                "45ec207.8d001e"
+                "45ec207.8d001e",
+                "e98be0b2.ad9a6"
             ],
             [
                 "26f39226.04a21e"
@@ -558,7 +510,7 @@
         "func": "\n// RigSetting is under the Setup tab\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict;'\n\nfunction isEmptyValue(value) {\n    if(typeof(value) === 'string' && value.length === 0) {\n        return true;\n    }\n\n    if(value === null || value === undefined) {\n        return true\n    }\n\n    return false;\n}\n\nfunction intValue(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return parseInt(value, 10);\n}\n\nfunction pad(len) {\n    return function(value) {\n        let n = typeof(value) === 'string' ? value : value.toString();\nvalue.substring\n        while(n.length < len) {\n            n = '0' + n;\n        }\n\n        return n;\n    };\n}\nconst pad2 = pad(2);\nconst pad3 = pad(3);\nconst pad4 = pad(4);\nconst pad9 = pad(9);\n\nfunction map_reverse(obj) {\n    const result = {};\n\n    for(const [key, value] of Object.entries(obj)) {\n        result[value] = key;\n    }\n\n    return result;\n}\n\nconst cat_to_ctcss = {\n    '000': '67.0', '001': '69.3', '002': '71.9', '003': '74.4',\n    '004': '77.0', '005': '79.7', '006': '82.5', '007': '85.4',\n    '008': '88.5', '009': '91.5', '010': '94.8', '011': '97.4',\n    '012': '100.0', '013': '103.5', '014': '107.2', '015': '110.9',\n    '016': '114.8', '017': '118.8', '018': '123.0', '019': '127.3',\n    '020': '131.8', '021': '136.5', '022': '141.3', '023': '146.2',\n    '024': '151.4', '025': '156.7', '026': '159.8', '027': '162.2',\n    '028': '165.5', '029': '167.9', '030': '171.3', '031': '173.8',\n    '032': '177.3', '033': '179.9', '034': '183.5', '035': '186.2',\n    '036': '189.9', '037': '192.8', '038': '196.6', '039': '199.5',\n    '040': '203.5', '041': '206.5', '042': '210.7', '043': '218.1',\n    '044': '225.7', '045': '229.1', '046': '233.6', '047': '241.8',\n    '048': '250.3', '049': '254.1'\n};\nconst ctcss_to_cat = map_reverse(cat_to_ctcss);\n\nconst cat_to_CT = {\n    '0': 'CTCSS OFF',\n    '1': 'CTCSS ENC/DEC',\n    '2': 'CTCSS ENC',\n    '3': 'DCS ENC/DEC',\n    '4': 'DCS ENC'\n};\nconst CT_to_cat = map_reverse(cat_to_CT);\n\nconst cat_to_dcs = [\n     23,  25,  26,  31,  32,  36,  43,  47,  51,  53,  54,  65,  71,  72,\n     73,  74, 114, 115, 116, 122, 125, 131, 132, 134, 143, 145, 152, 155,\n    156, 162, 165, 172, 174, 205, 212, 223, 225, 226, 243, 244, 245, 246,\n    251, 252, 255, 261, 263, 265, 266, 271, 274, 306, 311, 315, 325, 331,\n    332, 343, 346, 351, 356, 364, 365, 371, 411, 412, 413, 423, 431, 432,\n    445, 446, 452, 454, 455, 462, 464, 465, 466, 503, 506, 516, 523, 526,\n    532, 546, 565, 606, 612, 624, 627, 631, 632, 654, 662, 664, 703, 712,\n    723, 731, 732, 734, 743, 754\n];\n\nconst band_to_cat = {\n    '1.8 MHz': '00',\n    '3.5 MHz': '01',\n    '5 MHz': '02',\n    '7 MHz': '03',\n    '10 MHz': '04',\n    '14 MHz': '05',\n    '18 MHz': '06',\n    '21 MHz': '07',\n    '24.5 MHz': '08',\n    '28 MHz': '09',\n    '50 MHz': '10',\n    'GEN': '11',\n    'MW': '12',\n    'AIR': '14',\n    '144 MHz': '15',\n    '430 MHz': '16'\n}\n\nconst cat_to_agc = {\n    '0': 'OFF',\n    '1': 'FAST',\n    '2': 'MID',\n    '3': 'SLOW',\n    '4': 'AUTO-FAST',\n    '5': 'AUTO-MID',\n    '6': 'AUTO-SLOW'\n};\nconst agc_to_cat = {\n    'OFF': '0',\n    'FAST': '1',\n    'MID': '2',\n    'SLOW': '3',\n    'AUTO': '4',\n    'AUTO-FAST': '4',\n    'AUTO-MID': '4',\n    'AUTO-SLOW': '4'\n};\n\nconst cat_meter = {\n    '0': 'COMP',\n    '1': 'ALC',\n    '2': 'PO',\n    '3': 'SWR',\n    '4': 'ID',\n    '5': 'VDD'\n};\nconst meter_cat = map_reverse(cat_meter);\n\nconst cat_modes = {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n};\nconst modes_cat = map_reverse(cat_modes);\n\nconst cat_offset = {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n};\nconst offset_cat = map_reverse(cat_offset);\n\nconst cat_preamp = {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n};\nconst preamp_cat = map_reverse(cat_preamp);\n\nfunction sendCmd(cmd) {\n    return this._rc.cmd + ';';\n}\nfunction sendCmd0(cmd) {\n    return this._rc.cmd + '0' + ';';\n}\n\nfunction fromBoolean(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return value.substring(0, 1) === '1';\n}\nfunction toCatBoolean() {\n    return this._rc.cmd + (this.value ? '1' : '0') + ';';\n}\n\nfunction fromInteger(value) {\n    return intValue(value);\n}\nfunction asInteger() {\n    return this._rc.cmd + pad3(this.value) + ';';\n}\n\nfunction band_info(value) {\n    return {\n        raw: value,\n        mem_chan: intValue(value.substring(0,3)),\n        freq: intValue(value.substring(3,12)),\n        clarifier: value.substring(12,17),\n        rx_clar: value.substring(17, 18) != '0',\n        tx_clar: value.substring(18, 19) != '0',\n        mode: cat_modes[value.substring(19, 20)] || value.substring(21, 22),\n        p7: value.substring(20, 21),\n        tone: value.substring(21, 22),\n        offset: cat_offset[value.substring(26, 27)]\n    };\n}\n\nconst rig_commands = {\n    'AB': {                       // TODO: Needs testing\n        cmd: 'AB',\n        desc: 'VFO-A_TO_VFO-B',\n        asSet: sendCmd,\n    },\n    'AC': {\n        cmd: 'AC',\n        desc: 'ANTENNA_TUNER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '000' + ';';\n            case 'on':  return this._rc.cmd + '001' + ';';\n            case 'tune':return this._rc.cmd + '002' + ';';\n            }\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            switch(value.substring(2, 3)) {\n            case '0':   return 'off';\n            case '1':   return 'on';\n            case '2':   return 'tune';\n            }\n        },\n    },\n    'AG': {\n        cmd: 'AG',\n        desc: 'AF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        }\n    },\n    'AI': {\n        cmd: 'AI',\n        desc: 'AUTO_INFORMATION',\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'AM': {                       // TODO: Needs testing\n        cmd: 'AM',\n        desc: 'VFO-A_TO_MEMORY_CHANNEL',\n        asSet: sendCmd,\n    },\n    'BA': {                       // TODO: Needs testing\n        cmd: 'BA',\n        desc: 'VFO-B_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'BC': {\n        cmd: 'BC',\n        desc: 'AUTO_NOTCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        }\n    },\n    'BD0': {                       // TODO: Needs testing\n        cmd: 'BD0',\n        desc: 'BAND_DOWN',\n        asSet: sendCmd,\n    },\n    'BI': {\n        cmd: 'BI',\n        desc: 'BREAK-IN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'BP00': {                       // TODO: Needs testing\n        cmd: 'BP00',\n        desc: 'MANUAL_NOTCH_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'BP01': {                       // TODO: Needs testing\n        cmd: 'BP01',\n        desc: 'MANUAL_NOTCH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n\n            if(r === null) {\n                return null;\n            }\n\n            return r * 10;\n        },\n    },\n    'BS': {                       // TODO: Needs testing\n        cmd: 'BS',\n        desc: 'BAND_SELECT',\n        asSetValue() {\n            if(band_to_cat.hasOwnProperty(this.value)) {\n                return this._rc.cmd + band_to_cat[this.value] + ';';\n            }\n\n            throw new Error('Unknown band type: ' + this.value);\n        },\n    },\n    'BU0': {                       // TODO: Needs testing\n        cmd: 'BU0',\n        desc: 'BAND_UP',\n        asSet: sendCmd,\n    },\n    'BY': {                       // TODO: Needs testing\n        cmd: 'BY',\n        desc: 'BUSY',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1,2));\n        },\n    },\n    'CH0': {                       // TODO: Needs testing\n        cmd: 'CH0',\n        desc: 'CHANNEL_UP',\n        asSet: sendCmd,\n    },\n    'CH1': {                       // TODO: Needs testing\n        cmd: 'CH1',\n        desc: 'CHANNEL_DOWN',\n        asSet: sendCmd,\n    },\n    'CN00': {\n        cmd: 'CN00',\n        desc: 'CTCSS_TONE_FREQUENCY',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + ctcss_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_to_ctcss[value];\n        },\n    },\n    'CN01': {\n        cmd: 'CN01',\n        desc: 'DCS_TONE_FREQUENCY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(cat_to_dcs.indexOf(intValue(this.value))) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const dcs = cat_to_dcs[intValue(value)];\n\n            return (dcs < 100 ? '0' : '') + dcs.toString();\n        },\n    },\n    'CO00': {                       // TODO: Needs testing\n        cmd: 'CO00',\n        desc: 'CONTOUR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO01': {                       // TODO: Needs testing\n        cmd: 'CO01',\n        desc: 'CONTOUR_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'CO02': {                       // TODO: Needs testing\n        cmd: 'CO02',\n        desc: 'APF_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO03': {                       // TODO: Needs testing\n        cmd: 'CO03',\n        desc: 'APF_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4((this.value + 250) / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n\n            if(r === null) {\n                return null;\n            }\n\n            return (r * 10) - 250;\n        },\n    },\n    'CS': {\n        cmd: 'CS',\n        desc: 'CW_SPOT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'CT': {\n        cmd: 'CT',\n        desc: 'CTCSS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + CT_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_CT[value.substring(1, 2)];\n        },\n    },\n    'DA': {\n        cmd: 'DA',\n        desc: 'DIMMER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + pad2(this.value.led) + pad2(this.value.tft) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return {\n                led: intValue(value.substring(2, 4)),\n                tft: intValue(value.substring(4))\n            };\n        },\n    },\n    'DN': {                       // TODO: Needs testing\n        cmd: 'DN',\n        desc: 'MIC_DOWN',\n        asSet: sendCmd,\n    },\n    'DT0': {\n        cmd: 'DT0',\n        desc: 'DATE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT1': {\n        cmd: 'DT1',\n        desc: 'TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT2': {\n        cmd: 'DT2',\n        desc: 'TIME_DIFFERENTIAL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'ED': {                       // TODO:\n        cmd: 'ED',\n        desc: 'ENCORDER_DOWN',\n    },\n    'EK': {                       // TODO: Needs testing\n        cmd: 'EK',\n        desc: 'ENT_KEY',\n        asSet: sendCmd,\n    },\n    'EU': {                       // TODO:\n        cmd: 'EU',\n        desc: 'ENCORDER_UP',\n    },\n    'EX': {\n        cmd: 'EX',\n        desc: 'MENU',\n        isCacheable: true,\n        isMenu: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value.no) + this.value.value + ';';\n        },\n        asReadValue() {\n            return this._rc.cmd + pad3(this.value.no) + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: intValue(value.substring(0, 3)),\n                value: value.substring(3)\n            };\n        },\n    },\n    'FA': {\n        cmd: 'FA',\n        desc: 'FREQUENCY_VFO-A',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FB': {\n        cmd: 'FB',\n        desc: 'FREQUENCY_VFO-B',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FS': {\n        cmd: 'FS',\n        desc: 'FAST_STEP',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'FT': {                       // TODO:\n        cmd: 'FT',\n        desc: 'FUNCTION_TX',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            if(this.value === 'VFO-A Band Transmitter: TX') {\n                return this._rc.cmd + '2' + ';';\n            }\n            if(this.value === 'VFO-B Band Transmitter: TX') {\n                return this._rc.cmd + '3' + ';';\n            }\n            throw new Error(this._rc.cmd + ' value ' + this.value + ' unknown');\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'VFO-A Band Transmitter: TX' : 'VFO-B Band Transmitter: TX';\n        }\n    },\n    'GT': {                       // TODO: Needs testing\n        cmd: 'GT',\n        desc: 'AGC_FUNCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + agc_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_agc[value.substring(1, 2)];\n        },\n    },\n    'ID': {\n        cmd: 'ID',\n        desc: 'IDENTIFICATION',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'IF': {                       // TODO: Needs testing\n        cmd: 'IF',\n        desc: 'INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'IS': {\n        cmd: 'IS',\n        desc: 'IF-SHIFT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + this.value + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1);\n        },\n    },\n    'KM': {                       // TODO: Needs testing\n        cmd: 'KM',\n        desc: 'KEYER_MEMORY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value.no.toString() + this.value.message + ';';\n        },\n        asRead() {\n            return this._rc.cmd + this.value.toString() + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: value.substring(0,1),\n                message: value.substring(1),\n            };\n        },\n    },\n    'KP': {                       // TODO: Needs testing\n        cmd: 'KP',\n        desc: 'KEY_PITCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad2(this.value / 10 - 30) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return (intValue(value) + 30) * 10;\n        },\n    },\n    'KR': {\n        cmd: 'KR',\n        desc: 'KEYER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'KS': {\n        cmd: 'KS',\n        desc: 'KEY_SPEED',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'KY': {\n        cmd: 'KY',\n        desc: 'CW_KEYING',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'LK': {\n        cmd: 'LK',\n        desc: 'LOCK',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'LM': {\n        cmd: 'LM',\n        desc: 'LOAD_MESSEGE',\n        isCacheable: true,\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(_rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MA': {\n        cmd: 'MA',\n        desc: 'MEMORY_CHANNEL_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'MC': {\n        cmd: 'MC',\n        desc: 'MEMORY_CHANNEL',\n        isCacheable: true,\n    },\n    'MD': {\n        cmd: 'MD',\n        desc: 'MODE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + modes_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_modes[value.substring(1, 2)];\n        },\n    },\n    'MG': {\n        cmd: 'MG',\n        desc: 'MIC_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'ML0': {\n        cmd: 'ML0',\n        desc: 'MONITOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'ML1': {\n        cmd: 'ML1',\n        desc: 'MONITOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'MR': {\n        cmd: 'MR',\n        desc: 'MEMORY_CHANNEL_READ',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MS': {\n        cmd: 'MS',\n        desc: 'METER_SW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + meter_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_meter[value.substring(0,1)];\n        },\n    },\n    'MT': {\n        cmd: 'MT',\n        desc: 'MEMORY_CHANNEL_WRITE/TAG',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MW': {\n        cmd: 'MW',\n        desc: 'MEMORY_CHANNEL_WRITE',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MX': {\n        cmd: 'MX',\n        desc: 'MOX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'NA': {\n        cmd: 'NA',\n        desc: 'NARROW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NB': {\n        cmd: 'NB',\n        desc: 'NOISE_BLANKER_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value.substring(1, 2) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NL': {\n        cmd: 'NL',\n        desc: 'NOISE_BLANKER_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1));\n        },\n    },\n    'NR': {\n        cmd: 'NR',\n        desc: 'NOISE_REDUCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'OI': {\n        cmd: 'OI',\n        desc: 'OPPOSITE_BAND_INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'OS': {\n        cmd: 'OS',\n        desc: 'OFFSET_(REPEATER_SHIFT)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + offset_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_offset[value.substring(1, 2)];\n        },\n    },\n    'PA': {\n        cmd: 'PA',\n        desc: 'PRE-AMP_(IPO)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + preamp_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_preamp[value.substring(1, 2)];\n        },\n    },\n    'PB': {\n        cmd: 'PB',\n        desc: 'PLAY_BACK',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asReadValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'PC': {\n        cmd: 'PC',\n        desc: 'POWER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PL': {\n        cmd: 'PL',\n        desc: 'SPEECH_PROCESSOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PR0': {\n        cmd: 'PR0',\n        desc: 'SPEECH_PROCESSOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PR1': {\n        cmd: 'PR1',\n        desc: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PS': {\n        cmd: 'PS',\n        desc: 'POWER_SWITCH',\n        autoInit: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'QI': {\n        cmd: 'QI',\n        desc: 'QMB_STORE',\n        asSet: sendCmd,\n    },\n    'QR': {\n        cmd: 'QR',\n        desc: 'QMB_RECALL',\n        asSet: sendCmd,\n    },\n    'QS': {\n        cmd: 'QS',\n        desc: 'QUICK_SPLIT',\n        asSet: sendCmd,\n    },\n    'RA': {\n        cmd: 'RA',\n        desc: 'RF_ATTENUATOR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'RC': {\n        cmd: 'RC',\n        desc: 'CLAR_CLEAR',\n        asSet: sendCmd,\n    },\n    'RD': {\n        cmd: 'RD',\n        desc: 'CLAR_DOWN',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'RG': {\n        cmd: 'RG',\n        desc: 'RF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'RI0': {\n        cmd: 'RI0',\n        desc: 'RADIO_INFORMATION-HI-SWR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI3': {\n        cmd: 'RI3',\n        desc: 'RADIO_INFORMATION-REC',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI4': {\n        cmd: 'RI4',\n        desc: 'RADIO_INFORMATION-PLAY',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI5': {\n        cmd: 'RI5',\n        desc: 'RADIO_INFORMATION-VFO-A_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI6': {\n        cmd: 'RI6',\n        desc: 'RADIO_INFORMATION-VFO-B_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI7': {\n        cmd: 'RI7',\n        desc: 'RADIO_INFORMATION-VFO-A_RX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RIA': {\n        cmd: 'RIA',\n        desc: 'RADIO_INFORMATION-TX_LED',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RL': {\n        cmd: 'RL',\n        desc: 'NOISE_REDUCTION_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'RM0': {\n        cmd: 'RM0',\n        desc: 'READ_METER-FRONT_PANEL',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM1': {\n        cmd: 'RM1',\n        desc: 'READ_METER-S_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM2': {\n        cmd: 'RM2',\n        desc: 'READ_METER-OTHER_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM3': {\n        cmd: 'RM3',\n        desc: 'READ_METER-COMP',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM4': {\n        cmd: 'RM4',\n        desc: 'READ_METER-ALC',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM5': {\n        cmd: 'RM5',\n        desc: 'READ_METER-PO',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM6': {\n        cmd: 'RM6',\n        desc: 'READ_METER-SWR',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM7': {\n        cmd: 'RM7',\n        desc: 'READ_METER-ID',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM8': {\n        cmd: 'RM8',\n        desc: 'READ_METER-VDD',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RS': {\n        cmd: 'RS',\n        desc: 'RADIO_STATUS',\n        autoInit: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'NORMAL MODE' : 'MENU MODE';\n        },\n    },\n    'RT': {\n        cmd: 'RT',\n        desc: 'CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RU': {\n        cmd: 'RU',\n        desc: 'RX_CLARIFIER_PLUS_OFFSET',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'SC': {\n        cmd: 'SC',\n        desc: 'SCAN',\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '0' + ';';\n            case 'up':  return this._rc.cmd + '1' + ';';\n            case 'down':return this._rc.cmd + '2' + ';';\n            }\n        },\n    },\n    'SD': {\n        cmd: 'SD',\n        desc: 'CW_BREAK-IN_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'SH': {\n        cmd: 'SH',\n        desc: 'WIDTH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'SM': {\n        cmd: 'SM',\n        desc: 'S-METER_READING',\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SQ': {\n        cmd: 'SQ',\n        desc: 'SQUELCLH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SV': {\n        cmd: 'SV',\n        desc: 'SWAP_VFO',\n        asSet: sendCmd,\n    },\n    'TS': {\n        cmd: 'TS',\n        desc: 'TXW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'TX': {\n        cmd: 'TX',\n        desc: 'TX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return !(value === '0');\n        },\n    },\n    'UL': {\n        cmd: 'UL',\n        desc: 'PLL_UNLOCK_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'Lock' : 'Unlock';\n        },\n    },\n    'UP': {\n        cmd: 'UP',\n        desc: 'UP',\n        asSet: sendCmd,\n    },\n    'VD': {\n        cmd: 'VD',\n        desc: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'VG': {\n        cmd: 'VG',\n        desc: 'VOX_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'VM': {\n        cmd: 'VM',\n        desc: 'V/M_KEY_FUNCTION',\n        asSet: sendCmd,\n    },\n    'VX': {\n        cmd: 'VX',\n        desc: 'VOX_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'XT': {\n        cmd: 'XT',\n        desc: 'TX_CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'ZI': {\n        cmd: 'ZI',\n        desc: 'ZERO_IN',\n        asSet: sendCmd,\n    }\n};\n// flow.set('rig_commands', rig_commands);\n\nconst rig_desc = {};\nfor(const [key, value] of Object.entries(rig_commands)) {\n    if(!value.hasOwnProperty('desc')) {\n        throw new Error(key + ' does not have desc property');\n    }\n    if(rig_desc.hasOwnProperty(value.desc)) {\n        throw new Error(key + ' has duplicate desc property');\n    }\n\n    rig_desc[value.desc] = value;\n}\nflow.set('rig_desc', rig_desc);\n\nconst max_menu_length = Object.keys(rig_commands).map( k => k.length ).reduce( (a, v) => a > v ? a : v );\n\nfunction logNonPrintable(arg) {\n    node.log('arg length: ' + arg.length);\n    for (var i = 0; i < arg.length; i++) {\n        node.log('arg[' + i + ']: ' + arg.charCodeAt(i));\n    }\n}\n\nfunction findRigCommand(arg) {\n    if(rig_commands.hasOwnProperty(arg)) {\n        return rig_commands[arg];\n    }\n\n    if(arg.length <= 2) {\n        return null;\n    }\n\n    return findRigCommand(arg.substring(0, arg.length - 1));\n}\n\nconst RigSetting = class {\n    constructor(rc, value, raw_answer) {\n        this._rc = rc;\n        this._value = value;\n        this._raw_answer = raw_answer;\n    }\n\n    get desc() { return this._rc.desc; }\n    get value() { return this._value; }\n    get autoInit() { return this._rc.autoInit; }\n    get debounce() { return this._rc.debounce; }\n    get isMenu() { return this._rc.isMenu; }\n    get isCacheable() { return this._rc.isCacheable; }\n    get topic() { return this._rc.desc; }\n\n    get asSet() {\n        if(this._rc.hasOwnProperty('asSet')) {\n\t\t\treturn this._rc.asSet.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asSetValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asSet() requires a value');\n            }\n\n\t\t\treturn this._rc.asSetValue.call(this);\n        }\n\n        throw new Error(this._rc.desc + ' does not have an asSet() function');\n    }\n\n    get asRead() {\n        if(this._rc.hasOwnProperty('asRead')) {\n\t\t\treturn this._rc.asRead.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asReadValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asRead() requires a value');\n            }\n\n\t\t\treturn this._rc.asReadValue.call(this);\n        }\n\n        throw new Error(this._rc.cmd + ' does not have an asRead() function');\n    }\n\n    get sendToRig() {\n        const hasValue = !isEmptyValue(this._value),\n              hasSet = this._rc.hasOwnProperty('asSet'),\n              hasSetValue = this._rc.hasOwnProperty('asSetValue'),\n              hasRead = this._rc.hasOwnProperty('asRead'),\n              hasReadValue = this._rc.hasOwnProperty('asReadValue');\n\n        if(hasValue && hasSetValue && hasRead) {\n            return hasValue;\n        }\n\n        if((hasSet || hasSetValue) && !(hasRead || hasReadValue)) {\n            return true;\n        }\n\n        return false;\n    }\n\n    get name() {\n        if(this._rc.isMenu) {\n            return this._rc.cmd + pad3(this._value.no);\n        }\n        return this._rc.cmd;\n    }\n\n    get rawAnswer() {\n        if(isEmptyValue(this._raw_answer)) {\n            throw new Error(this._rc.cmd + ' does not have original answer');\n        }\n\n        return this._raw_answer;\n    }\n\n    static of(desc, value) {\n        const rc = rig_desc[desc];\n\n        if(!rc) {\n            throw new Error('\"' + desc + '\" not found');\n        }\n\n        if(isEmptyValue(value)) {\n            new RigSetting(rc, null, null);\n        }\n\n        return new RigSetting(rc, value);\n    }\n\n    static fromAnswer(arg) {\n        let rc = findRigCommand(arg.substring(0, max_menu_length));\n\n        if(rc === null) {\n\n            // It looks like Winlink Express has a bug:\n            // At one point it sends a MD0C; with four leadnig\n            // ASCII nul (0x0) characters\n\n            node.warn('Failed to find rig command on first try, stripping any non-printable characters and retrying.')\n            logNonPrintable(arg);\n\n            arg = arg.replace(/[^\\x20-\\x7E]+/g, \"\");\n            rc = findRigCommand(arg.substring(0, max_menu_length));\n        }\n\n        if(rc === null) {\n            throw new Error('Input not found in rig_commands: \"' + arg + '\"');\n        }\n\n        const value = arg.substring(arg.length - 1) === ';' ?  arg.substring(rc.cmd.length, arg.length - 1) : arg.substring(rc.cmd.length);\n\n        if(!rc.hasOwnProperty('fromAnswer')) {\n            throw new Error(rc.cmd + '.fromAnswer() not implemented');\n        }\n\n        if(isEmptyValue(value)) {\n            return new RigSetting(rc, null, arg);\n        }\n\n        return new RigSetting(rc, rc.fromAnswer(value), arg);\n    }\n\n    static getAll() {\n        return Object.values(rig_commands).map(rc => new RigSetting(rc, '', ''));\n    }\n};\nglobal.set('RigSetting', RigSetting);\n\nconst rig_state = {};\nflow.set('rig_state', rig_state);\n\nconst RigState = {\n    findRigSetting(arg) {\n        if(rig_state.hasOwnProperty(arg)) {\n            return rig_state[arg];\n        }\n\n        if(rig_desc.hasOwnProperty(arg)) {\n            return rig_state[rig_desc[arg].cmd];\n        }\n\n        return null;\n    },\n    getRigSetting(arg) {\n        const rs = RigState.findRigSetting(arg);\n\n        if(rs) {\n            return rs;\n        }\n\n        throw new Error('Rig state \"' + arg + '\" not found');\n    },\n\n    setRigSetting(rs) {\n        rig_state[rs.name] = rs;\n    },\n\n    hasChanged(rs) {\n        if(!rig_state.hasOwnProperty(rs.name)) {\n            return true;\n        }\n\n        const crs = rig_state[rs.name];\n\n        return this.rawAnswer !== crs.rawAnswer;\n    },\n\n    getAll() {\n        return Object.values(rig_state);\n    },\n}\nglobal.set('RigState', RigState);",
+        "initialize": "'use strict;'\n\nfunction isEmptyValue(value) {\n    if(typeof(value) === 'string' && value.length === 0) {\n        return true;\n    }\n\n    if(value === null || value === undefined) {\n        return true\n    }\n\n    return false;\n}\n\nfunction intValue(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return parseInt(value, 10);\n}\n\nfunction pad(len) {\n    return function(value) {\n        let n = typeof(value) === 'string' ? value : value.toString();\nvalue.substring\n        while(n.length < len) {\n            n = '0' + n;\n        }\n\n        return n;\n    };\n}\nconst pad2 = pad(2);\nconst pad3 = pad(3);\nconst pad4 = pad(4);\nconst pad9 = pad(9);\n\nfunction map_reverse(obj) {\n    const result = {};\n\n    for(const [key, value] of Object.entries(obj)) {\n        result[value] = key;\n    }\n\n    return result;\n}\n\nconst cat_to_ctcss = {\n    '000': '67.0', '001': '69.3', '002': '71.9', '003': '74.4',\n    '004': '77.0', '005': '79.7', '006': '82.5', '007': '85.4',\n    '008': '88.5', '009': '91.5', '010': '94.8', '011': '97.4',\n    '012': '100.0', '013': '103.5', '014': '107.2', '015': '110.9',\n    '016': '114.8', '017': '118.8', '018': '123.0', '019': '127.3',\n    '020': '131.8', '021': '136.5', '022': '141.3', '023': '146.2',\n    '024': '151.4', '025': '156.7', '026': '159.8', '027': '162.2',\n    '028': '165.5', '029': '167.9', '030': '171.3', '031': '173.8',\n    '032': '177.3', '033': '179.9', '034': '183.5', '035': '186.2',\n    '036': '189.9', '037': '192.8', '038': '196.6', '039': '199.5',\n    '040': '203.5', '041': '206.5', '042': '210.7', '043': '218.1',\n    '044': '225.7', '045': '229.1', '046': '233.6', '047': '241.8',\n    '048': '250.3', '049': '254.1'\n};\nconst ctcss_to_cat = map_reverse(cat_to_ctcss);\n\nconst cat_to_CT = {\n    '0': 'CTCSS OFF',\n    '1': 'CTCSS ENC/DEC',\n    '2': 'CTCSS ENC',\n    '3': 'DCS ENC/DEC',\n    '4': 'DCS ENC'\n};\nconst CT_to_cat = map_reverse(cat_to_CT);\n\nconst cat_to_dcs = [\n     23,  25,  26,  31,  32,  36,  43,  47,  51,  53,  54,  65,  71,  72,\n     73,  74, 114, 115, 116, 122, 125, 131, 132, 134, 143, 145, 152, 155,\n    156, 162, 165, 172, 174, 205, 212, 223, 225, 226, 243, 244, 245, 246,\n    251, 252, 255, 261, 263, 265, 266, 271, 274, 306, 311, 315, 325, 331,\n    332, 343, 346, 351, 356, 364, 365, 371, 411, 412, 413, 423, 431, 432,\n    445, 446, 452, 454, 455, 462, 464, 465, 466, 503, 506, 516, 523, 526,\n    532, 546, 565, 606, 612, 624, 627, 631, 632, 654, 662, 664, 703, 712,\n    723, 731, 732, 734, 743, 754\n];\n\nconst band_to_cat = {\n    '1.8 MHz': '00',\n    '3.5 MHz': '01',\n    '5 MHz': '02',\n    '7 MHz': '03',\n    '10 MHz': '04',\n    '14 MHz': '05',\n    '18 MHz': '06',\n    '21 MHz': '07',\n    '24.5 MHz': '08',\n    '28 MHz': '09',\n    '50 MHz': '10',\n    'GEN': '11',\n    'MW': '12',\n    'AIR': '14',\n    '144 MHz': '15',\n    '430 MHz': '16'\n}\n\nconst cat_to_agc = {\n    '0': 'OFF',\n    '1': 'FAST',\n    '2': 'MID',\n    '3': 'SLOW',\n    '4': 'AUTO-FAST',\n    '5': 'AUTO-MID',\n    '6': 'AUTO-SLOW'\n};\nconst agc_to_cat = {\n    'OFF': '0',\n    'FAST': '1',\n    'MID': '2',\n    'SLOW': '3',\n    'AUTO': '4',\n    'AUTO-FAST': '4',\n    'AUTO-MID': '4',\n    'AUTO-SLOW': '4'\n};\n\nconst cat_meter = {\n    '0': 'COMP',\n    '1': 'ALC',\n    '2': 'PO',\n    '3': 'SWR',\n    '4': 'ID',\n    '5': 'VDD'\n};\nconst meter_cat = map_reverse(cat_meter);\n\nconst cat_modes = {\n    1: 'LSB',\n    2: 'USB',\n    3: 'CW',\n    4: 'FM',\n    5: 'AM',\n    6: 'RTTY-LSB',\n    7: 'CW-R',\n    8: 'DATA-LSB',\n    9: 'RTTY-USB',\n    A: 'DATA-FM',\n    B: 'FM-N',\n    C: 'DATA-USB',\n    D: 'AM-N',\n    E: 'C4FM'\n};\nconst modes_cat = map_reverse(cat_modes);\n\nconst cat_offset = {\n    0: 'Simplex',\n    1: '+',\n    2: '-'\n};\nconst offset_cat = map_reverse(cat_offset);\n\nconst cat_preamp = {\n    '0': 'IPO',\n    '1': 'AMP1',\n    '2': 'AMP2'\n};\nconst preamp_cat = map_reverse(cat_preamp);\n\nfunction sendCmd(cmd) {\n    return this._rc.cmd + ';';\n}\nfunction sendCmd0(cmd) {\n    return this._rc.cmd + '0' + ';';\n}\n\nfunction fromBoolean(value) {\n    if(isEmptyValue(value)) {\n        return null;\n    }\n    return value.substring(0, 1) === '1';\n}\nfunction toCatBoolean() {\n    return this._rc.cmd + (this.value ? '1' : '0') + ';';\n}\n\nfunction fromInteger(value) {\n    return intValue(value);\n}\nfunction asInteger() {\n    return this._rc.cmd + pad3(this.value) + ';';\n}\n\nfunction band_info(value) {\n    return {\n        raw: value,\n        mem_chan: intValue(value.substring(0,3)),\n        freq: intValue(value.substring(3,12)),\n        clarifier: value.substring(12,17),\n        rx_clar: value.substring(17, 18) != '0',\n        tx_clar: value.substring(18, 19) != '0',\n        mode: cat_modes[value.substring(19, 20)] || value.substring(21, 22),\n        p7: value.substring(20, 21),\n        tone: value.substring(21, 22),\n        offset: cat_offset[value.substring(26, 27)]\n    };\n}\n\nconst rig_commands = {\n    'AB': {                       // TODO: Needs testing\n        cmd: 'AB',\n        desc: 'VFO-A_TO_VFO-B',\n        asSet: sendCmd,\n    },\n    'AC': {\n        cmd: 'AC',\n        desc: 'ANTENNA_TUNER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '000' + ';';\n            case 'on':  return this._rc.cmd + '001' + ';';\n            case 'tune':return this._rc.cmd + '002' + ';';\n            }\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            switch(value.substring(2, 3)) {\n            case '0':   return 'off';\n            case '1':   return 'on';\n            case '2':   return 'tune';\n            }\n        },\n    },\n    'AG': {\n        cmd: 'AG',\n        desc: 'AF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        }\n    },\n    'AI': {\n        cmd: 'AI',\n        desc: 'AUTO_INFORMATION',\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'AM': {                       // TODO: Needs testing\n        cmd: 'AM',\n        desc: 'VFO-A_TO_MEMORY_CHANNEL',\n        asSet: sendCmd,\n    },\n    'BA': {                       // TODO: Needs testing\n        cmd: 'BA',\n        desc: 'VFO-B_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'BC': {\n        cmd: 'BC',\n        desc: 'AUTO_NOTCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        }\n    },\n    'BD0': {                       // TODO: Needs testing\n        cmd: 'BD0',\n        desc: 'BAND_DOWN',\n        asSet: sendCmd,\n    },\n    'BI': {\n        cmd: 'BI',\n        desc: 'BREAK-IN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'BP00': {                       // TODO: Needs testing\n        cmd: 'BP00',\n        desc: 'MANUAL_NOTCH_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'BP01': {                       // TODO: Needs testing\n        cmd: 'BP01',\n        desc: 'MANUAL_NOTCH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n\n            if(r === null) {\n                return null;\n            }\n\n            return r * 10;\n        },\n    },\n    'BS': {                       // TODO: Needs testing\n        cmd: 'BS',\n        desc: 'BAND_SELECT',\n        asSetValue() {\n            if(band_to_cat.hasOwnProperty(this.value)) {\n                return this._rc.cmd + band_to_cat[this.value] + ';';\n            }\n\n            throw new Error('Unknown band type: ' + this.value);\n        },\n    },\n    'BU0': {                       // TODO: Needs testing\n        cmd: 'BU0',\n        desc: 'BAND_UP',\n        asSet: sendCmd,\n    },\n    'BY': {                       // TODO: Needs testing\n        cmd: 'BY',\n        desc: 'BUSY',\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1,2));\n        },\n    },\n    'CH0': {                       // TODO: Needs testing\n        cmd: 'CH0',\n        desc: 'CHANNEL_UP',\n        asSet: sendCmd,\n    },\n    'CH1': {                       // TODO: Needs testing\n        cmd: 'CH1',\n        desc: 'CHANNEL_DOWN',\n        asSet: sendCmd,\n    },\n    'CN00': {\n        cmd: 'CN00',\n        desc: 'CTCSS_TONE_FREQUENCY',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + ctcss_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_to_ctcss[value];\n        },\n    },\n    'CN01': {\n        cmd: 'CN01',\n        desc: 'DCS_TONE_FREQUENCY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(cat_to_dcs.indexOf(intValue(this.value))) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const dcs = cat_to_dcs[intValue(value)];\n\n            return (dcs < 100 ? '0' : '') + dcs.toString();\n        },\n    },\n    'CO00': {                       // TODO: Needs testing\n        cmd: 'CO00',\n        desc: 'CONTOUR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO01': {                       // TODO: Needs testing\n        cmd: 'CO01',\n        desc: 'CONTOUR_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'CO02': {                       // TODO: Needs testing\n        cmd: 'CO02',\n        desc: 'APF_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '000' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(3, 4))\n        },\n    },\n    'CO03': {                       // TODO: Needs testing\n        cmd: 'CO03',\n        desc: 'APF_FREQ',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4((this.value + 250) / 10) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            const r = intValue(value);\n\n            if(r === null) {\n                return null;\n            }\n\n            return (r * 10) - 250;\n        },\n    },\n    'CS': {\n        cmd: 'CS',\n        desc: 'CW_SPOT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'CT': {\n        cmd: 'CT',\n        desc: 'CTCSS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + CT_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_CT[value.substring(1, 2)];\n        },\n    },\n    'DA': {\n        cmd: 'DA',\n        desc: 'DIMMER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + pad2(this.value.led) + pad2(this.value.tft) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return {\n                led: intValue(value.substring(2, 4)),\n                tft: intValue(value.substring(4))\n            };\n        },\n    },\n    'DN': {                       // TODO: Needs testing\n        cmd: 'DN',\n        desc: 'MIC_DOWN',\n        asSet: sendCmd,\n    },\n    'DT0': {\n        cmd: 'DT0',\n        desc: 'DATE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT1': {\n        cmd: 'DT1',\n        desc: 'TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'DT2': {\n        cmd: 'DT2',\n        desc: 'TIME_DIFFERENTIAL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'ED': {                       // TODO:\n        cmd: 'ED',\n        desc: 'ENCORDER_DOWN',\n    },\n    'EK': {                       // TODO: Needs testing\n        cmd: 'EK',\n        desc: 'ENT_KEY',\n        asSet: sendCmd,\n    },\n    'EU': {                       // TODO:\n        cmd: 'EU',\n        desc: 'ENCORDER_UP',\n    },\n    'EX': {\n        cmd: 'EX',\n        desc: 'MENU',\n        isCacheable: true,\n        isMenu: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value.no) + this.value.value + ';';\n        },\n        asReadValue() {\n            return this._rc.cmd + pad3(this.value.no) + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: intValue(value.substring(0, 3)),\n                value: value.substring(3)\n            };\n        },\n    },\n    'FA': {\n        cmd: 'FA',\n        desc: 'FREQUENCY_VFO-A',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FB': {\n        cmd: 'FB',\n        desc: 'FREQUENCY_VFO-B',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad9(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'FS': {\n        cmd: 'FS',\n        desc: 'FAST_STEP',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'FT': {                       // TODO:\n        cmd: 'FT',\n        desc: 'FUNCTION_TX',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            if(this.value === 'VFO-A Band Transmitter: TX') {\n                return this._rc.cmd + '2' + ';';\n            }\n            if(this.value === 'VFO-B Band Transmitter: TX') {\n                return this._rc.cmd + '3' + ';';\n            }\n            throw new Error(this._rc.cmd + ' value ' + this.value + ' unknown');\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'VFO-A Band Transmitter: TX' : 'VFO-B Band Transmitter: TX';\n        }\n    },\n    'GT': {                       // TODO: Needs testing\n        cmd: 'GT',\n        desc: 'AGC_FUNCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + agc_to_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_to_agc[value.substring(1, 2)];\n        },\n    },\n    'ID': {\n        cmd: 'ID',\n        desc: 'IDENTIFICATION',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value;\n        },\n    },\n    'IF': {                       // TODO: Needs testing\n        cmd: 'IF',\n        desc: 'INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'IS': {\n        cmd: 'IS',\n        desc: 'IF-SHIFT',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + this.value + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return value.substring(1);\n        },\n    },\n    'KM': {                       // TODO: Needs testing\n        cmd: 'KM',\n        desc: 'KEYER_MEMORY',\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + this.value.no.toString() + this.value.message + ';';\n        },\n        asRead() {\n            return this._rc.cmd + this.value.toString() + ';';\n        },\n        fromAnswer(value) {\n            return {\n                no: value.substring(0,1),\n                message: value.substring(1),\n            };\n        },\n    },\n    'KP': {                       // TODO: Needs testing\n        cmd: 'KP',\n        desc: 'KEY_PITCH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad2(this.value / 10 - 30) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return (intValue(value) + 30) * 10;\n        },\n    },\n    'KR': {\n        cmd: 'KR',\n        desc: 'KEYER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'KS': {\n        cmd: 'KS',\n        desc: 'KEY_SPEED',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'KY': {\n        cmd: 'KY',\n        desc: 'CW_KEYING',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'LK': {\n        cmd: 'LK',\n        desc: 'LOCK',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'LM': {\n        cmd: 'LM',\n        desc: 'LOAD_MESSEGE',\n        isCacheable: true,\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(_rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MA': {\n        cmd: 'MA',\n        desc: 'MEMORY_CHANNEL_TO_VFO-A',\n        asSet: sendCmd,\n    },\n    'MC': {\n        cmd: 'MC',\n        desc: 'MEMORY_CHANNEL',\n        isCacheable: true,\n    },\n    'MD': {\n        cmd: 'MD',\n        desc: 'MODE',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + modes_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_modes[value.substring(1, 2)];\n        },\n    },\n    'MG': {\n        cmd: 'MG',\n        desc: 'MIC_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'ML0': {\n        cmd: 'ML0',\n        desc: 'MONITOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '00' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(2,3));\n        },\n    },\n    'ML1': {\n        cmd: 'ML1',\n        desc: 'MONITOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad3(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return intValue(value);\n        },\n    },\n    'MR': {\n        cmd: 'MR',\n        desc: 'MEMORY_CHANNEL_READ',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MS': {\n        cmd: 'MS',\n        desc: 'METER_SW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + meter_cat[this.value] + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return cat_meter[value.substring(0,1)];\n        },\n    },\n    'MT': {\n        cmd: 'MT',\n        desc: 'MEMORY_CHANNEL_WRITE/TAG',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MW': {\n        cmd: 'MW',\n        desc: 'MEMORY_CHANNEL_WRITE',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asRead(cmd) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'MX': {\n        cmd: 'MX',\n        desc: 'MOX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'NA': {\n        cmd: 'NA',\n        desc: 'NARROW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NB': {\n        cmd: 'NB',\n        desc: 'NOISE_BLANKER_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value.substring(1, 2) ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'NL': {\n        cmd: 'NL',\n        desc: 'NOISE_BLANKER_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1));\n        },\n    },\n    'NR': {\n        cmd: 'NR',\n        desc: 'NOISE_REDUCTION',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'OI': {\n        cmd: 'OI',\n        desc: 'OPPOSITE_BAND_INFORMATION',\n        autoInit: true,\n        debounce: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: band_info,\n    },\n    'OS': {\n        cmd: 'OS',\n        desc: 'OFFSET_(REPEATER_SHIFT)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + offset_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_offset[value.substring(1, 2)];\n        },\n    },\n    'PA': {\n        cmd: 'PA',\n        desc: 'PRE-AMP_(IPO)',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + preamp_cat[this.value] + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return cat_preamp[value.substring(1, 2)];\n        },\n    },\n    'PB': {\n        cmd: 'PB',\n        desc: 'PLAY_BACK',\n        asSetValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        asReadValue() {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n        fromAnswer(value) {\n            throw new Error(this._rc.cmd + ' Not implemented yet');\n        },\n    },\n    'PC': {\n        cmd: 'PC',\n        desc: 'POWER_CONTROL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PL': {\n        cmd: 'PL',\n        desc: 'SPEECH_PROCESSOR_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'PR0': {\n        cmd: 'PR0',\n        desc: 'SPEECH_PROCESSOR_ON/OFF',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PR1': {\n        cmd: 'PR1',\n        desc: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'PS': {\n        cmd: 'PS',\n        desc: 'POWER_SWITCH',\n        autoInit: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'QI': {\n        cmd: 'QI',\n        desc: 'QMB_STORE',\n        asSet: sendCmd,\n    },\n    'QR': {\n        cmd: 'QR',\n        desc: 'QMB_RECALL',\n        asSet: sendCmd,\n    },\n    'QS': {\n        cmd: 'QS',\n        desc: 'QUICK_SPLIT',\n        asSet: sendCmd,\n    },\n    'RA': {\n        cmd: 'RA',\n        desc: 'RF_ATTENUATOR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return fromBoolean(value.substring(1, 2));\n        },\n    },\n    'RC': {\n        cmd: 'RC',\n        desc: 'CLAR_CLEAR',\n        asSet: sendCmd,\n    },\n    'RD': {\n        cmd: 'RD',\n        desc: 'CLAR_DOWN',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'RG': {\n        cmd: 'RG',\n        desc: 'RF_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'RI0': {\n        cmd: 'RI0',\n        desc: 'RADIO_INFORMATION-HI-SWR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI3': {\n        cmd: 'RI3',\n        desc: 'RADIO_INFORMATION-REC',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI4': {\n        cmd: 'RI4',\n        desc: 'RADIO_INFORMATION-PLAY',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI5': {\n        cmd: 'RI5',\n        desc: 'RADIO_INFORMATION-VFO-A_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI6': {\n        cmd: 'RI6',\n        desc: 'RADIO_INFORMATION-VFO-B_TX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RI7': {\n        cmd: 'RI7',\n        desc: 'RADIO_INFORMATION-VFO-A_RX',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RIA': {\n        cmd: 'RIA',\n        desc: 'RADIO_INFORMATION-TX_LED',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RL': {\n        cmd: 'RL',\n        desc: 'NOISE_REDUCTION_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'RM0': {\n        cmd: 'RM0',\n        desc: 'READ_METER-FRONT_PANEL',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM1': {\n        cmd: 'RM1',\n        desc: 'READ_METER-S_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM2': {\n        cmd: 'RM2',\n        desc: 'READ_METER-OTHER_METER',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM3': {\n        cmd: 'RM3',\n        desc: 'READ_METER-COMP',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM4': {\n        cmd: 'RM4',\n        desc: 'READ_METER-ALC',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM5': {\n        cmd: 'RM5',\n        desc: 'READ_METER-PO',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM6': {\n        cmd: 'RM6',\n        desc: 'READ_METER-SWR',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM7': {\n        cmd: 'RM7',\n        desc: 'READ_METER-ID',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RM8': {\n        cmd: 'RM8',\n        desc: 'READ_METER-VDD',\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'RS': {\n        cmd: 'RS',\n        desc: 'RADIO_STATUS',\n        autoInit: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'NORMAL MODE' : 'MENU MODE';\n        },\n    },\n    'RT': {\n        cmd: 'RT',\n        desc: 'CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'RU': {\n        cmd: 'RU',\n        desc: 'RX_CLARIFIER_PLUS_OFFSET',\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n    },\n    'SC': {\n        cmd: 'SC',\n        desc: 'SCAN',\n        asSetValue() {\n            switch(this.value) {\n            case 'off': return this._rc.cmd + '0' + ';';\n            case 'up':  return this._rc.cmd + '1' + ';';\n            case 'down':return this._rc.cmd + '2' + ';';\n            }\n        },\n    },\n    'SD': {\n        cmd: 'SD',\n        desc: 'CW_BREAK-IN_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'SH': {\n        cmd: 'SH',\n        desc: 'WIDTH',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad2(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 3));\n        },\n    },\n    'SM': {\n        cmd: 'SM',\n        desc: 'S-METER_READING',\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SQ': {\n        cmd: 'SQ',\n        desc: 'SQUELCLH_LEVEL',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + '0' + pad3(this.value) + ';';\n        },\n        asRead: sendCmd0,\n        fromAnswer(value) {\n            return intValue(value.substring(1, 4));\n        },\n    },\n    'SV': {\n        cmd: 'SV',\n        desc: 'SWAP_VFO',\n        asSet: sendCmd,\n    },\n    'TS': {\n        cmd: 'TS',\n        desc: 'TXW',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'TX': {\n        cmd: 'TX',\n        desc: 'TX_SET',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + (this.value ? '1' : '0') + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return !(value === '0');\n        },\n    },\n    'UL': {\n        cmd: 'UL',\n        desc: 'PLL_UNLOCK_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asRead: sendCmd,\n        fromAnswer(value) {\n            return value === '0' ? 'Lock' : 'Unlock';\n        },\n    },\n    'UP': {\n        cmd: 'UP',\n        desc: 'UP',\n        asSet: sendCmd,\n    },\n    'VD': {\n        cmd: 'VD',\n        desc: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue() {\n            return this._rc.cmd + pad4(this.value) + ';';\n        },\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'VG': {\n        cmd: 'VG',\n        desc: 'VOX_GAIN',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: asInteger,\n        asRead: sendCmd,\n        fromAnswer: fromInteger,\n    },\n    'VM': {\n        cmd: 'VM',\n        desc: 'V/M_KEY_FUNCTION',\n        asSet: sendCmd,\n    },\n    'VX': {\n        cmd: 'VX',\n        desc: 'VOX_STATUS',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'XT': {\n        cmd: 'XT',\n        desc: 'TX_CLAR',\n        autoInit: true,\n        isCacheable: true,\n        asSetValue: toCatBoolean,\n        asRead: sendCmd,\n        fromAnswer: fromBoolean,\n    },\n    'ZI': {\n        cmd: 'ZI',\n        desc: 'ZERO_IN',\n        asSet: sendCmd,\n    }\n};\n// flow.set('rig_commands', rig_commands);\n\nconst rig_desc = {};\nfor(const [key, value] of Object.entries(rig_commands)) {\n    if(!value.hasOwnProperty('desc')) {\n        throw new Error(key + ' does not have desc property');\n    }\n    if(rig_desc.hasOwnProperty(value.desc)) {\n        throw new Error(key + ' has duplicate desc property');\n    }\n\n    rig_desc[value.desc] = value;\n}\nflow.set('rig_desc', rig_desc);\n\nconst max_menu_length = Object.keys(rig_commands).map( k => k.length ).reduce( (a, v) => a > v ? a : v );\n\nfunction logNonPrintable(arg) {\n    node.log('arg length: ' + arg.length);\n    for (var i = 0; i < arg.length; i++) {\n        node.log('arg[' + i + ']: ' + arg.charCodeAt(i));\n    }\n}\n\nfunction findRigCommand(arg) {\n    if(rig_commands.hasOwnProperty(arg)) {\n        return rig_commands[arg];\n    }\n\n    if(arg.length <= 2) {\n        return null;\n    }\n\n    return findRigCommand(arg.substring(0, arg.length - 1));\n}\n\nconst RigSetting = class {\n    constructor(rc, value, raw_answer) {\n        this._rc = rc;\n        this._value = value;\n        this._raw_answer = raw_answer;\n    }\n\n    get desc() { return this._rc.desc; }\n    get value() { return this._value; }\n    get autoInit() { return this._rc.autoInit; }\n    get debounce() { return this._rc.debounce; }\n    get isMenu() { return this._rc.isMenu; }\n    get isCacheable() { return this._rc.isCacheable; }\n    get topic() { return this._rc.desc; }\n\n    get asSet() {\n        if(this._rc.hasOwnProperty('asSet')) {\n\t\t\treturn this._rc.asSet.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asSetValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asSet() requires a value');\n            }\n\n\t\t\treturn this._rc.asSetValue.call(this);\n        }\n\n        throw new Error(this._rc.desc + ' does not have an asSet() function');\n    }\n\n    get asRead() {\n        if(this._rc.hasOwnProperty('asRead')) {\n\t\t\treturn this._rc.asRead.call(this);\n        }\n\n        if(this._rc.hasOwnProperty('asReadValue')) {\n            if(isEmptyValue(this._value)) {\n                throw new Error(this._rc.desc + ' asRead() requires a value');\n            }\n\n\t\t\treturn this._rc.asReadValue.call(this);\n        }\n\n        throw new Error(this._rc.cmd + ' does not have an asRead() function');\n    }\n\n    get sendToRig() {\n        const hasValue = !isEmptyValue(this._value),\n              hasSet = this._rc.hasOwnProperty('asSet'),\n              hasSetValue = this._rc.hasOwnProperty('asSetValue'),\n              hasRead = this._rc.hasOwnProperty('asRead'),\n              hasReadValue = this._rc.hasOwnProperty('asReadValue');\n\n        if(hasValue && hasSetValue && hasRead) {\n            return hasValue;\n        }\n\n        if((hasSet || hasSetValue) && !(hasRead || hasReadValue)) {\n            return true;\n        }\n\n        return false;\n    }\n\n    get name() {\n        if(this._rc.isMenu) {\n            return this._rc.cmd + pad3(this._value.no);\n        }\n        return this._rc.cmd;\n    }\n\n    get rawAnswer() {\n        if(isEmptyValue(this._raw_answer)) {\n            throw new Error(this._rc.cmd + ' does not have original answer');\n        }\n\n        return this._raw_answer;\n    }\n\n    static of(desc, value) {\n        const rc = rig_desc[desc];\n\n        if(!rc) {\n            throw new Error('\"' + desc + '\" not found');\n        }\n\n        if(isEmptyValue(value)) {\n            new RigSetting(rc, null, null);\n        }\n\n        return new RigSetting(rc, value);\n    }\n\n    static fromAnswer(arg) {\n        let rc = findRigCommand(arg.substring(0, max_menu_length));\n\n        if(rc === null) {\n\n            // It looks like Winlink Express has a bug:\n            // At one point it sends a MD0C; with four leadnig\n            // ASCII nul (0x0) characters\n\n            node.warn('Failed to find rig command on first try, stripping any non-printable characters and retrying.')\n            logNonPrintable(arg);\n\n            arg = arg.replace(/[^\\x20-\\x7E]+/g, \"\");\n            rc = findRigCommand(arg.substring(0, max_menu_length));\n        }\n\n        if(rc === null) {\n            throw new Error('Input not found in rig_commands: \"' + arg + '\"');\n        }\n\n        const value = arg.substring(arg.length - 1) === ';' ?  arg.substring(rc.cmd.length, arg.length - 1) : arg.substring(rc.cmd.length);\n\n        if(!rc.hasOwnProperty('fromAnswer')) {\n            throw new Error(rc.cmd + '.fromAnswer() not implemented');\n        }\n\n        if(isEmptyValue(value)) {\n            return new RigSetting(rc, null, arg);\n        }\n\n        return new RigSetting(rc, rc.fromAnswer(value), arg);\n    }\n\n    static getAll() {\n        return Object.values(rig_commands).map(rc => new RigSetting(rc, '', ''));\n    }\n};\nglobal.set('RigSetting', RigSetting);\n\nconst rig_state = {};\nflow.set('rig_state', rig_state);\n\nconst RigState = {\n    findRigSetting(arg) {\n        if(rig_state.hasOwnProperty(arg)) {\n            return rig_state[arg];\n        }\n\n        if(rig_desc.hasOwnProperty(arg)) {\n            return rig_state[rig_desc[arg].cmd];\n        }\n\n        return null;\n    },\n    getRigSetting(arg) {\n        const rs = RigState.findRigSetting(arg);\n\n        if(rs) {\n            return rs;\n        }\n\n        throw new Error('Rig state \"' + arg + '\" not found');\n    },\n\n    setRigSetting(rs) {\n        rig_state[rs.name] = rs;\n    },\n\n    hasChanged(rs) {\n        if(!rig_state.hasOwnProperty(rs.name)) {\n            return true;\n        }\n\n        const crs = rig_state[rs.name];\n\n        return rs.rawAnswer !== crs.rawAnswer;\n    },\n\n    getAll() {\n        return Object.values(rig_state);\n    },\n}\nglobal.set('RigState', RigState);",
         "finalize": "",
         "x": 245,
         "y": 120,
@@ -652,7 +604,7 @@
         "noerr": 0,
         "initialize": "'use strict';\n\nconst RigSetting = global.get('RigSetting');\n        \n// UI Iterface functions\n\nfunction uiMessage(no, value) {\n\treturn {no: no, value: value};\n}\n\nfunction defaultToUi (no, value) {\n\treturn uiMessage(no, value);\n}\n\nfunction toUiDataMode(no, value) {\n\treturn uiMessage(no, value === '0' ? 'PSK' : 'OTHER');\n}\n\nfunction toUiDataPortSelect(no, value) {\n\treturn uiMessage(no, value === '1' ? 'DATA' : 'USB');\n}\n\nfunction toUiFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\n\nfunction toUiMicSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'MIC' : 'REAR');\n}\n\nfunction toUiPttSelect(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'DAKY');\n    case '1': return uiMessage(no, 'RTS');\n    case '2': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiSimpleValue(no, value) {\n\treturn uiMessage(no, parseInt(value, 10).toString());\n}\n\nfunction toUiPcKeying(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'OFF');\n    case '1': return uiMessage(no, 'DAKY');\n    case '2': return uiMessage(no, 'RTS');\n    case '3': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiVoicePortSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'DATA' : 'USB');\n}\n\nfunction cutFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\nfunction toUiLCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 1));\n}\nfunction toUiSlope(no, value) {\n\treturn uiMessage(no, value === '0' ? '6 dB' : '18 dB');\n}\nfunction toUiHCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 13));\n}\n\nfunction defaultFromUi (arg) {\n    return null;\n}\n\nfunction toCat(no, value) {\n    let prefix;\n\n    if(no < 10) {\n        prefix = 'EX00' + no;\n    }\n    else if(no < 100) {\n        prefix = 'EX0' + no;\n    }\n    else {\n        prefix = 'EX' + no;\n    }\n\n    if(value) {\n        return prefix + value + ';';\n    }\n    return prefix + ';';\n}\n\nconst menu_items = {\n\t1: {desc: 'AGC FAST DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t2: {desc: 'AGC MID DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t3: {desc: 'AGC SLOW DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t4: {desc: 'HOME FUNCTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t5: {desc: 'MY CALL INDICATION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t6: {desc: 'DISPLAY COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t7: {desc: 'DIMMER LED', toUi: defaultToUi, fromUi: defaultFromUi},\n\t8: {desc: 'DIMMER TFT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t9: {desc: 'BAR MTR PEAK HOLD', toUi: defaultToUi, fromUi: defaultFromUi},\n\t10: {desc: 'DVS RX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t11: {desc: 'DVS TX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t12: {desc: 'KEYER TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t13: {desc: 'KEYER DOT/DASH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t14: {desc: 'CW WEIGHT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t15: {desc: 'BEACON INTERVAL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t16: {desc: 'NUMBER STYLE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t17: {desc: 'CONTEST NUMBER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t18: {desc: 'CW MEMORY 1', toUi: defaultToUi, fromUi: defaultFromUi},\n\t19: {desc: 'CW MEMORY 2', toUi: defaultToUi, fromUi: defaultFromUi},\n\t20: {desc: 'CW MEMORY 3', toUi: defaultToUi, fromUi: defaultFromUi},\n\t21: {desc: 'CW MEMORY 4', toUi: defaultToUi, fromUi: defaultFromUi},\n\t22: {desc: 'CW MEMORY 5', toUi: defaultToUi, fromUi: defaultFromUi},\n\t23: {desc: 'NB WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t24: {desc: 'NB REJECTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t25: {desc: 'NB LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t26: {desc: 'BEEP LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t27: {desc: 'TIME ZONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t28: {desc: 'GPS/232C SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t29: {desc: '232C RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t30: {desc: '232C TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t31: {desc: 'CAT RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t32: {desc: 'CAT TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t33: {desc: 'CAT RTS', toUi: defaultToUi, fromUi: defaultFromUi},\n\t34: {desc: 'MEM GROUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t35: {desc: 'QUICK SPLIT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t36: {desc: 'TX TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t37: {desc: 'MIC SCAN', toUi: defaultToUi, fromUi: defaultFromUi},\n\t38: {desc: 'MIC SCAN RESUME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t39: {desc: 'REF FREQ ADJ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t40: {desc: 'CLAR MODE SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t41: {desc: 'AM LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t42: {desc: 'AM LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t43: {desc: 'AM HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t44: {desc: 'AM HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t45: {desc: 'AM MIC SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t46: {desc: 'AM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t47: {desc: 'AM PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t48: {desc: 'AM PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t49: {desc: 'AM DATA GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t50: {desc: 'CW LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t51: {desc: 'CW LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t52: {desc: 'CW HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t53: {desc: 'CW HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t54: {desc: 'CW OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t55: {desc: 'CW AUTO MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t56: {desc: 'CW BK-IN TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t57: {desc: 'CW BK-IN DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t58: {desc: 'CW WAVE SHAPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t59: {desc: 'CW FREQ DISPLAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t60: {desc: 'PC KEYING', toUi: toUiPcKeying, fromUi: defaultFromUi},\n\t61: {desc: 'QSK DELAY TIME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t62: {desc: 'DATA MODE', toUi: toUiDataMode, fromUi: defaultFromUi},\n\t63: {desc: 'PSK TONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t64: {desc: 'OTHER DISP (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t65: {desc: 'OTHER SHIFT (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t66: {desc: 'DATA LCUT FREQ', toUi: toUiLCutFreq, fromUi: defaultFromUi},\n\t67: {desc: 'DATA LCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t68: {desc: 'DATA HCUT FREQ', toUi: toUiHCutFreq, fromUi: defaultFromUi},\n\t69: {desc: 'DATA HCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t70: {desc: 'DATA IN SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t71: {desc: 'DATA PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t72: {desc: 'DATA PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t73: {desc: 'DATA OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t74: {desc: 'FM MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t75: {desc: 'FM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t76: {desc: 'FM PKT PTT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t77: {desc: 'FM PKT PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t78: {desc: 'FM PKT TX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t79: {desc: 'FM PKT MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t80: {desc: 'RPT SHIFT 28MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t81: {desc: 'RPT SHIFT 50MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t82: {desc: 'RPT SHIFT 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t83: {desc: 'RPT SHIFT 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t84: {desc: 'ARS 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t85: {desc: 'ARS 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t86: {desc: 'DCS POLARITY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t87: {desc: 'RADIO ID', toUi: defaultToUi, fromUi: defaultFromUi},\n\t88: {desc: 'GM DISPLY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t89: {desc: 'DISTANCE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t90: {desc: 'AMS TX MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t91: {desc: 'STANDBY BEEP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t92: {desc: 'RTTY LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t93: {desc: 'RTTY LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t94: {desc: 'RTTY HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t95: {desc: 'RTTY HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t96: {desc: 'RTTY SHIFT PORT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t97: {desc: 'RTTY POLARITY-RX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t98: {desc: 'RTTY POLARITY-TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t99: {desc: 'RTTY OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t100: {desc: 'RTTY SHIFT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t101: {desc: 'RTTY MARK FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t102: {desc: 'SSB LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t103: {desc: 'SSB LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t104: {desc: 'SSB HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t105: {desc: 'SSB HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t106: {desc: 'SSB MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t107: {desc: 'SSB OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t108: {desc: 'SSB PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t109: {desc: 'SSB PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t110: {desc: 'SSB TX BPF', toUi: defaultToUi, fromUi: defaultFromUi},\n\t111: {desc: 'APF WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t112: {desc: 'CONTOUR LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t113: {desc: 'CONTOUR WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t114: {desc: 'IF NOTCH WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t115: {desc: 'SCP DISPLAY MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t116: {desc: 'SCP SPAN FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t117: {desc: 'SPECTRUM COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t118: {desc: 'WATER FALL COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t119: {desc: 'PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t120: {desc: 'PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t121: {desc: 'PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t122: {desc: 'PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t123: {desc: 'PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t124: {desc: 'PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t125: {desc: 'PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t126: {desc: 'PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t127: {desc: 'PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t128: {desc: 'P-PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t129: {desc: 'P-PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t130: {desc: 'P-PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t131: {desc: 'P-PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t132: {desc: 'P-PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t133: {desc: 'P-PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t134: {desc: 'P-PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t135: {desc: 'P-PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t136: {desc: 'P-PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t137: {desc: 'HF TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t138: {desc: '50M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t139: {desc: '144M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t140: {desc: '430M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t141: {desc: 'TUNER SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t142: {desc: 'VOX SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t143: {desc: 'VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t144: {desc: 'VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t145: {desc: 'ANTI VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t146: {desc: 'DATA VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t147: {desc: 'DATA VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t148: {desc: 'ANTI DVOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t149: {desc: 'EMERGENCY FREQ TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t150: {desc: 'PRT/WIRES FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t151: {desc: 'PRESET FREQUENCY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t152: {desc: 'SEARCH SETUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t153: {desc: 'WIRES DG-ID', toUi: defaultToUi, fromUi: defaultFromUi}\n};\n\nflow.set('menu_items', menu_items);\n\nconst MenuItem = class {\n    constructor(no, value) {\n        this._no = no;\n        this._value = value;\n    }\n    \n    get no() { return this._no; }\n    get value() { return this._value; }\n\n    get desc() {\n        const ci = menu_items[this._no];\n\n        return ci.desc;\n    }\n\n    get asRigSetting() {\n        return RigSetting.of('MENU', {no: this._no, value: this._value});\n    }\n\n    get toUi() {\n        const ci = menu_items[this._no];\n\n        return ci.toUi(this._no, this._value);\n    }\n    \n    static fromUi(arg) {\n        throw new Error('Not implemented yet');\n    }\n\n    static of(arg) {\n        return new MenuItem(arg.no, arg.value);\n    }\n}\nflow.set('MenuItem', MenuItem);",
         "finalize": "",
-        "x": 235,
+        "x": 215,
         "y": 100,
         "wires": [
             [
@@ -741,8 +693,8 @@
         "useSecurity": false,
         "sessionLength": 432000,
         "tokenAutoExtend": false,
-        "x": 460,
-        "y": 400,
+        "x": 380,
+        "y": 480,
         "wires": [
             [
                 "2f69877c.f1a878",
@@ -750,312 +702,6 @@
             ],
             [
                 "bfbcfc9e.c6d8f"
-            ]
-        ]
-    },
-    {
-        "id": "f230edfc.498f2",
-        "type": "trigger",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 520,
-        "y": 420,
-        "wires": [
-            [
-                "bf4b9f0e.86832"
-            ]
-        ]
-    },
-    {
-        "id": "951535b4.0dab88",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "Read ID",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER-ID').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 300,
-        "y": 380,
-        "wires": [
-            [
-                "4959bf97.b22bb"
-            ]
-        ]
-    },
-    {
-        "id": "f056f32e.f5dab",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "Read VDD",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER-VDD').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 420,
-        "wires": [
-            [
-                "f230edfc.498f2"
-            ]
-        ]
-    },
-    {
-        "id": "1b4892fc.fb855d",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "Read COMP",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER-COMP').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 297,
-        "wires": [
-            [
-                "229e9148.44edee"
-            ]
-        ]
-    },
-    {
-        "id": "996caee5.4c08c",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "Read PO",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER-PO').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 300,
-        "y": 337,
-        "wires": [
-            [
-                "c874a830.bb2de8"
-            ]
-        ]
-    },
-    {
-        "id": "4959bf97.b22bb",
-        "type": "trigger",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 520,
-        "y": 377,
-        "wires": [
-            [
-                "bf4b9f0e.86832"
-            ]
-        ]
-    },
-    {
-        "id": "c874a830.bb2de8",
-        "type": "trigger",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 520,
-        "y": 337,
-        "wires": [
-            [
-                "bf4b9f0e.86832"
-            ]
-        ]
-    },
-    {
-        "id": "229e9148.44edee",
-        "type": "trigger",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 520,
-        "y": 297,
-        "wires": [
-            [
-                "bf4b9f0e.86832"
-            ]
-        ]
-    },
-    {
-        "id": "30f04bb5.031f24",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "Read ALC",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER-ALC').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 217,
-        "wires": [
-            [
-                "b01c6945.3558a8"
-            ]
-        ]
-    },
-    {
-        "id": "b01c6945.3558a8",
-        "type": "trigger",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 516.7999877929688,
-        "y": 213.800048828125,
-        "wires": [
-            [
-                "bf4b9f0e.86832"
-            ]
-        ]
-    },
-    {
-        "id": "846e7809.7fc6c8",
-        "type": "trigger",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "op1": "",
-        "op2": "",
-        "op1type": "pay",
-        "op2type": "payl",
-        "duration": "-500",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "ms",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 520,
-        "y": 257,
-        "wires": [
-            [
-                "bf4b9f0e.86832"
-            ]
-        ]
-    },
-    {
-        "id": "b6737104.4c813",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "Read SWR",
-        "func": "const tx = msg.payload,\n      RigSetting = global.get('RigSetting');\n\nif(tx.value) {\n    return {payload: RigSetting.of('READ_METER-SWR').asRead};\n}\nelse {\n    return {reset: true};\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 310,
-        "y": 257,
-        "wires": [
-            [
-                "846e7809.7fc6c8"
-            ]
-        ]
-    },
-    {
-        "id": "8e1a1578.7ff088",
-        "type": "comment",
-        "z": "f0e53ee8.4481e",
-        "name": "This is a handy tool to look at all of the meters while in transmit",
-        "info": "",
-        "x": 270,
-        "y": 157,
-        "wires": []
-    },
-    {
-        "id": "bf4b9f0e.86832",
-        "type": "flowcontrolIn",
-        "z": "f0e53ee8.4481e",
-        "topic": "SERIAL_OUT",
-        "context": "",
-        "version": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 730,
-        "y": 317,
-        "wires": []
-    },
-    {
-        "id": "fc38ce7c.53889",
-        "type": "flowcontrolOut",
-        "z": "f0e53ee8.4481e",
-        "d": true,
-        "topic": "TX_SET",
-        "context": "",
-        "retained": false,
-        "blTopic": "",
-        "blObj": "",
-        "name": "",
-        "x": 130,
-        "y": 317,
-        "wires": [
-            [
-                "951535b4.0dab88",
-                "f056f32e.f5dab",
-                "1b4892fc.fb855d",
-                "996caee5.4c08c",
-                "30f04bb5.031f24",
-                "b6737104.4c813"
             ]
         ]
     },
@@ -1078,94 +724,20 @@
         ]
     },
     {
-        "id": "cddfa2ff.091bd",
-        "type": "inject",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 35,
-        "y": 100,
-        "wires": [
-            [
-                "6cace7b8.4822d8"
-            ]
-        ],
-        "l": false
-    },
-    {
-        "id": "6cace7b8.4822d8",
-        "type": "function",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "func": "\nconst MenuItem = flow.get('MenuItem'),\n      RigSetting = global.get('RigSetting');\n\n['EX0018;', 'EX099012;', 'EX123456;'].forEach(e => {\n    const rs = RigSetting.fromAnswer(e);\n          ci = MenuItem.of(rs.value),\n          cirs = ci.asRigSetting;\n\n    node.send({payload: cirs.asSet});\n    node.send({payload: ci.toUi});\n\n    if(cirs.asSet !== e) {\n        throw new Error('MenuItem.asRigSetting.asRead failed for ' + e);\n    }\n});\n\n// if(MenuItem.toCat(2) !== 'EX002;') {\n//     throw new Error('MenuItem.toCat(2) failed');\n// }\n// if(MenuItem.toCat(42) !== 'EX042;') {\n//     throw new Error('MenuItem.toCat(42) failed');\n// }\n// if(MenuItem.toCat(142) !== 'EX142;') {\n//     throw new Error('MenuItem.toCat(142) failed');\n// }\n\nnode.done();\n\nreturn null;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 160,
-        "y": 100,
-        "wires": [
-            [
-                "ef21e7f1.8fa258"
-            ]
-        ]
-    },
-    {
-        "id": "7b3269b5.07c648",
-        "type": "comment",
-        "z": "f0e53ee8.4481e",
-        "name": "This function runs a simple unit test for MenuItem",
-        "info": "",
-        "x": 225,
-        "y": 40,
-        "wires": []
-    },
-    {
-        "id": "ef21e7f1.8fa258",
-        "type": "debug",
-        "z": "f0e53ee8.4481e",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 330,
-        "y": 100,
-        "wires": []
-    },
-    {
         "id": "f610858d.14b788",
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Handle rig event",
-        "func": "'use strict';\n\nconst settings_to_ui = flow.get('settings_to_ui'),\n      rs = msg.payload;\n\n// if(!settings_to_ui.hasOwnProperty(rs.topic)) {\n//     throw new Error('Rig event topic not found in settings_to_ui: ' + rs.topic);\n// }\n\nif(settings_to_ui.hasOwnProperty(rs.topic)) {\n    const re = settings_to_ui[rs.topic],\n          op_mode = global.get('op_mode'),\n          msg = {payload: re.emit(re.ui, rs)};\n\n    if(re.ui === 'menu_item') {\n        if(op_mode.menus.hasOwnProperty(rs.value.no)) {\n            msg.payload.saved = true;\n            msg.payload.fav = op_mode.menus[rs.value.no].fav || false;\n        }\n        else {\n            msg.payload.saved = false;\n            msg.payload.fav = false;\n        }\n    }\n    else if(op_mode.settings.hasOwnProperty(re.ui)) {\n        msg.payload.saved = true;\n        msg.payload.fav = op_mode.settings[re.ui].fav || false;\n    }\n    else {\n        msg.payload.saved = false;\n        msg.payload.fav = false;\n    }\n\n    if(re.hasOwnProperty('local') && re.local) {\n        return [msg, msg];\n    }\n    \n    return [msg, null];\n}\n\nreturn null;",
+        "func": "'use strict';\n\nconst settings_to_ui = flow.get('settings_to_ui'),\n      rs = msg.payload;\n\n// if(!settings_to_ui.hasOwnProperty(rs.topic)) {\n//     throw new Error('Rig event topic not found in settings_to_ui: ' + rs.topic);\n// }\n\nif(settings_to_ui.hasOwnProperty(rs.topic)) {\n    const re = settings_to_ui[rs.topic],\n          ui = re.emit(re.ui, rs),\n          ui_cache = flow.get('ui_cache') || {};\n          \n    if(ui.name === 'menu_item') {\n        ui_cache[ui.name + '-' + ui.no] = Object.assign({}, ui);\n    }\n    else {\n        ui_cache[ui.name] = Object.assign({}, ui);\n    }\n    flow.set('ui_cache', ui_cache);\n\n    if(re.hasOwnProperty('local') && re.local) {\n        return [ui, ui];\n    }\n\n    return [ui, null];\n}\n\nreturn null;",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 260,
-        "y": 240,
+        "x": 200,
+        "y": 260,
         "wires": [
             [
-                "eb4cdb5c.e742a8"
+                "d7b0ba27.0da0e8"
             ],
             [
                 "3e47df65.4edf7"
@@ -1180,9 +752,9 @@
         "func": "\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict';\n\nconst MenuItem = flow.get('MenuItem'),\n      RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState');\n\nfunction defaultEmit(name, rs) {\n\treturn {name: name, value: rs.value};\n}\n\nconst ui_config = [\n    {\n        setting: 'AF_GAIN',\n        ui: 'af_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'AGC_FUNCTION',\n    },\n    {\n        setting: 'ANTENNA_TUNER_CONTROL',\n        ui: 'tuner',\n        emit: defaultEmit,\n        handler(msg) {\n            const ac = RigState.getRigSetting('ANTENNA_TUNER_CONTROL');\n\n            if(msg.payload === 'click') {\n                return RigSetting.of('ANTENNA_TUNER_CONTROL', ac.value === 'on' ? 'off' : 'on').asSet;\n            }\n\n            if(msg.payload === 'dblclick') {\n                return RigSetting.of('ANTENNA_TUNER_CONTROL', 'tune').asSet;\n            }\n            \n            throw new Error('tuner: unknown event: ' + msg.payload);\n        },\n    },\n    {\n        setting: 'APF_FREQ',\n        ui: 'apf_freq',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'APF_ON/OFF',\n        ui: 'apf_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'AUTO_NOTCH',\n        ui: 'auto_notch',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'BAND_DOWN',\n    },\n    {\n        setting: 'BAND_SELECT',\n    },\n    {\n        setting: 'BAND_UP',\n    },\n    {\n        setting: 'BREAK-IN',\n        ui: 'break_in',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'BUSY',\n        ui: 'busy',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CHANNEL_DOWN',\n    },\n    {\n        setting: 'CHANNEL_UP',\n    },\n    {\n        setting: 'CLAR',\n        ui: 'clar',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CLAR_CLEAR',\n    },\n    {\n        setting: 'CLAR_DOWN',\n    },\n    {\n        setting: 'CONTOUR_FREQ',\n        ui: 'contour_freq',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CONTOUR_ON/OFF',\n        ui: 'contour_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CTCSS',\n        ui: 'ctcss',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CTCSS_TONE_FREQUENCY',\n        ui: 'ctcss_tone_frequency',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CW_BREAK-IN_DELAY_TIME',\n        ui: 'cw_break_in_delay_time',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CW_KEYING',\n    },\n    {\n        setting: 'CW_SPOT',\n        ui: 'cw_spot',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DATE',\n        ui: 'date',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DCS_TONE_FREQUENCY',\n        ui: 'dcs_tone_frequency',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DIMMER',\n    },\n    {\n        setting: 'ENCORDER_DOWN',\n    },\n    {\n        setting: 'ENCORDER_UP',\n    },\n    {\n        setting: 'ENT_KEY',\n    },\n    {\n        setting: 'FAST_STEP',\n        ui: 'fast_step',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'FREQUENCY_VFO-A',\n        ui: 'vfo_a',\n        emit(name, rs) {\n            let value = rs.value.toString();\n\n            while(value.length < 9) {\n                value = ' ' + value;\n            }\n\n            return {name: name, value: value};\n        }\n    },\n    {\n        setting: 'FREQUENCY_VFO-B',\n        ui: 'vfo_b',\n        emit(name, rs) {\n            let value = rs.value.toString();\n\n            while(value.length < 9) {\n                value = ' ' + value;\n            }\n\n            return {name: name, value: value};\n        }\n    },\n    {\n        setting: 'FUNCTION_TX',\n    },\n    {\n        setting: 'IDENTIFICATION',\n        ui: 'identification',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'IF-SHIFT',\n        ui: 'if_shift',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'INFORMATION',\n//        ui: 'information',\n//        emit: defaultEmit,\n    },\n    {\n        setting: 'KEYER',\n        ui: 'keyer',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'KEYER_MEMORY',\n    },\n    {\n        setting: 'KEY_PITCH',\n        ui: 'key_pitch',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'KEY_SPEED',\n        ui: 'key_speed',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'LOAD_MESSEGE',\n    },\n    {\n        setting: 'LOCK',\n        ui: 'lock',\n        emit: defaultEmit,\n        handler: function(msg) {\n            const lk = RigState.getRigSetting('LOCK');\n\n            if(msg.payload === 'click') {\n                return RigSetting.of('LOCK', !lk.value).asSet;\n            }\n\n            return null;\n        }\n    },\n    {\n        setting: 'MANUAL_NOTCH_LEVEL',\n        ui: 'manual_notch_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MANUAL_NOTCH_ON/OFF',\n        ui: 'manual_notch_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MEMORY_CHANNEL',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_READ',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_TO_VFO-A',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_WRITE',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_WRITE/TAG',\n    },\n    {\n        setting: 'MENU',\n        ui: 'menu_item',\n        emit(name, rs) {\n            const payload = MenuItem.of(rs.value).toUi;\n            \n            payload.name = name;\n            return payload;\n        },\n    },\n    {\n        setting: 'METER_SW',\n        ui: 'meter_sw',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MIC_DOWN',\n    },\n    {\n        setting: 'MIC_GAIN',\n        ui: 'mic_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MODE',\n        ui: 'mode',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MONITOR_LEVEL',\n        ui: 'monitor_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MONITOR_ON/OFF',\n        ui: 'monitor_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MOX_SET',\n        ui: 'mox_set',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NARROW',\n        ui: 'narrow',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_BLANKER_LEVEL',\n        ui: 'noise_blanker_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_BLANKER_STATUS',\n        ui: 'noise_blanker_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_REDUCTION',\n        ui: 'noise_reduction',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_REDUCTION_LEVEL',\n        ui: 'noise_reduction_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'OFFSET_(REPEATER_SHIFT)',\n        ui: 'offset',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'OPPOSITE_BAND_INFORMATION',\n        ui: 'opposite_band_information',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        ui: 'parametric_microphone_equalizer',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'PLAY_BACK',\n    },\n    {\n        setting: 'PLL_UNLOCK_STATUS',\n        ui: 'pll_unlock_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'POWER_CONTROL',\n        ui: 'power_level',\n        emit: defaultEmit,\n        handler(msg) {\n            let value = parseInt(msg.payload, 10);\n\n            if(value < 5) {\n                value = 5;\n            }\n            else if(value > 100) {\n                value = 100;\n            }\n\n            return RigSetting.of('POWER_CONTROL', value).asSet;\n        },\n    },\n    {\n        setting: 'POWER_SWITCH',\n    },\n    {\n        setting: 'PRE-AMP_(IPO)',\n        ui: 'pre_amp',\n        emit: defaultEmit,\n        handler(msg) {\n            const pre_amp = RigState.getRigSetting('PRE-AMP_(IPO)');\n\n            if(msg.payload === 'click') {\n                switch(pre_amp.value) {\n                case 'IPO':  return RigSetting.of('PRE-AMP_(IPO)', 'AMP1').asSet;\n                case 'AMP1': return RigSetting.of('PRE-AMP_(IPO)', 'AMP2').asSet;\n                case 'AMP2': return RigSetting.of('PRE-AMP_(IPO)', 'IPO').asSet;\n                }\n            }\n        },\n    },\n    {\n        setting: 'QMB_RECALL',\n    },\n    {\n        setting: 'QMB_STORE',\n    },\n    {\n        setting: 'QUICK_SPLIT',\n    },\n    {\n        setting: 'RADIO_INFORMATION-HI-SWR',\n        ui: 'hi_swr',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-PLAY',\n        ui: 'play',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-REC',\n        ui: 'rec',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-TX_LED',\n        ui: 'tx_led',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-A_RX',\n        ui: 'vfo_a_rx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-A_TX',\n        ui: 'vfo_a_tx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-B_TX',\n        ui: 'vfo_b_tx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_STATUS',\n        ui: 'radio_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-ALC',\n        ui: 'alc_meter',\n        emit: defaultEmit,\n        local: true,\n    },\n    {\n        setting: 'READ_METER-COMP',\n        ui: 'comp_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-FRONT_PANEL',\n    },\n    {\n        setting: 'READ_METER-ID',\n        ui: 'id_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-OTHER_METER',\n    },\n    {\n        setting: 'READ_METER-PO',\n        ui: 'po_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-SWR',\n        ui: 'swr_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-S_METER',\n        ui: 's_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-VDD',\n        ui: 'vdd_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RF_ATTENUATOR',\n        ui: 'rf_attenuator',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RF_GAIN',\n        ui: 'rf_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RX_CLARIFIER_PLUS_OFFSET',\n    },\n    {\n        setting: 'S-METER_READING',\n    },\n    {\n        setting: 'SCAN',\n    },\n    {\n        setting: 'SPEECH_PROCESSOR_LEVEL',\n        ui: 'speech_processor_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SPEECH_PROCESSOR_ON/OFF',\n        ui: 'speech_processor_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SQUELCLH_LEVEL',\n        ui: 'squelclh_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SWAP_VFO',\n    },\n    {\n        setting: 'TIME',\n        ui: 'time',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TIME_DIFFERENTIAL',\n        ui: 'time_differential',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TXW',\n        ui: 'txw',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TX_CLAR',\n        ui: 'tx_clar',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TX_SET',\n        ui: 'transmit',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'UP',\n    },\n    {\n        setting: 'V/M_KEY_FUNCTION',\n    },\n    {\n        setting: 'VFO-A_TO_MEMORY_CHANNEL',\n    },\n    {\n        setting: 'VFO-A_TO_VFO-B',\n    },\n    {\n        setting: 'VFO-B_TO_VFO-A',\n    },\n    {\n        setting: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n    },\n    {\n        setting: 'VOX_GAIN',\n        ui: 'vox_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'VOX_STATUS',\n        ui: 'vox_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'WIDTH',\n    },\n    {\n        setting: 'ZERO_IN',\n    },\n];\n\nconst settings_to_ui = {};\n\nui_config.forEach( e => {\n    if(e.hasOwnProperty('emit')) {\n        if(!e.hasOwnProperty('setting')) {\n            throw new Error('ui_config has emit, but no setting: ' + JSON.stringify(e));\n        }\n\n        if(settings_to_ui.hasOwnProperty(e.setting)) {\n            throw new Error('Duplicate setting in ui_config: ' + e.setting);\n        }\n\n        settings_to_ui[e.setting] = {ui: e.ui, emit: e.emit};\n    }\n});\n\nflow.set('settings_to_ui', settings_to_ui);\n\nconst ui_to_settings = {};\n\nui_config.forEach( e => {\n    if(e.hasOwnProperty('ui')) {\n        if(ui_to_settings.hasOwnProperty(e.ui)) {\n            throw new Error('ui_to_settings has dup ui - ' + ui_to_settings[e.ui].setting + ' and ' + key);\n        }\n\n        ui_to_settings[e.ui] = {setting: e.setting, handler: e.handler};\n        if(e.hasOwnProperty('local')) {\n            ui_to_settings[e.ui].local = e.local;\n        }\n    }\n});\n\nflow.set('ui_to_settings', ui_to_settings);",
+        "initialize": "'use strict';\n\nconst MenuItem = flow.get('MenuItem'),\n      RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState');\n\nfunction defaultEmit(name, rs) {\n\treturn {name: name, value: rs.value};\n}\n\nconst ui_config = [\n    {\n        setting: 'AF_GAIN',\n        ui: 'af_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'AGC_FUNCTION',\n    },\n    {\n        setting: 'ANTENNA_TUNER_CONTROL',\n        ui: 'tuner',\n        emit: defaultEmit,\n        handler(msg) {\n            const ac = RigState.getRigSetting('ANTENNA_TUNER_CONTROL');\n\n            if(msg.payload === 'click') {\n                return RigSetting.of('ANTENNA_TUNER_CONTROL', ac.value === 'on' ? 'off' : 'on').asSet;\n            }\n\n            if(msg.payload === 'dblclick') {\n                return RigSetting.of('ANTENNA_TUNER_CONTROL', 'tune').asSet;\n            }\n            \n            throw new Error('tuner: unknown event: ' + msg.payload);\n        },\n    },\n    {\n        setting: 'APF_FREQ',\n        ui: 'apf_freq',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'APF_ON/OFF',\n        ui: 'apf_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'AUTO_NOTCH',\n        ui: 'auto_notch',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'BAND_DOWN',\n    },\n    {\n        setting: 'BAND_SELECT',\n    },\n    {\n        setting: 'BAND_UP',\n    },\n    {\n        setting: 'BREAK-IN',\n        ui: 'break_in',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'BUSY',\n        ui: 'busy',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CHANNEL_DOWN',\n    },\n    {\n        setting: 'CHANNEL_UP',\n    },\n    {\n        setting: 'CLAR',\n        ui: 'clar',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CLAR_CLEAR',\n    },\n    {\n        setting: 'CLAR_DOWN',\n    },\n    {\n        setting: 'CONTOUR_FREQ',\n        ui: 'contour_freq',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CONTOUR_ON/OFF',\n        ui: 'contour_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CTCSS',\n        ui: 'ctcss',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CTCSS_TONE_FREQUENCY',\n        ui: 'ctcss_tone_frequency',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CW_BREAK-IN_DELAY_TIME',\n        ui: 'cw_break_in_delay_time',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CW_KEYING',\n    },\n    {\n        setting: 'CW_SPOT',\n        ui: 'cw_spot',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DATE',\n        ui: 'date',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DCS_TONE_FREQUENCY',\n        ui: 'dcs_tone_frequency',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DIMMER',\n    },\n    {\n        setting: 'ENCORDER_DOWN',\n    },\n    {\n        setting: 'ENCORDER_UP',\n    },\n    {\n        setting: 'ENT_KEY',\n    },\n    {\n        setting: 'FAST_STEP',\n        ui: 'fast_step',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'FREQUENCY_VFO-A',\n        ui: 'vfo_a',\n        emit(name, rs) {\n            let value = rs.value.toString();\n\n            while(value.length < 9) {\n                value = ' ' + value;\n            }\n\n            return {name: name, value: value};\n        }\n    },\n    {\n        setting: 'FREQUENCY_VFO-B',\n        ui: 'vfo_b',\n        emit(name, rs) {\n            let value = rs.value.toString();\n\n            while(value.length < 9) {\n                value = ' ' + value;\n            }\n\n            return {name: name, value: value};\n        }\n    },\n    {\n        setting: 'FUNCTION_TX',\n    },\n    {\n        setting: 'IDENTIFICATION',\n        ui: 'identification',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'IF-SHIFT',\n        ui: 'if_shift',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'INFORMATION',\n//        ui: 'information',\n//        emit: defaultEmit,\n    },\n    {\n        setting: 'KEYER',\n        ui: 'keyer',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'KEYER_MEMORY',\n    },\n    {\n        setting: 'KEY_PITCH',\n        ui: 'key_pitch',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'KEY_SPEED',\n        ui: 'key_speed',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'LOAD_MESSEGE',\n    },\n    {\n        setting: 'LOCK',\n        ui: 'lock',\n        emit: defaultEmit,\n        handler: function(msg) {\n            const lk = RigState.getRigSetting('LOCK');\n\n            if(msg.payload === 'click') {\n                return RigSetting.of('LOCK', !lk.value).asSet;\n            }\n\n            return null;\n        }\n    },\n    {\n        setting: 'MANUAL_NOTCH_LEVEL',\n        ui: 'manual_notch_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MANUAL_NOTCH_ON/OFF',\n        ui: 'manual_notch_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MEMORY_CHANNEL',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_READ',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_TO_VFO-A',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_WRITE',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_WRITE/TAG',\n    },\n    {\n        setting: 'MENU',\n        ui: 'menu_item',\n        emit(name, rs) {\n            const payload = MenuItem.of(rs.value).toUi;\n            \n            payload.name = name;\n            return payload;\n        },\n    },\n    {\n        setting: 'METER_SW',\n        ui: 'meter_sw',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MIC_DOWN',\n    },\n    {\n        setting: 'MIC_GAIN',\n        ui: 'mic_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MODE',\n        ui: 'mode',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MONITOR_LEVEL',\n        ui: 'monitor_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MONITOR_ON/OFF',\n        ui: 'monitor_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MOX_SET',\n        ui: 'mox_set',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NARROW',\n        ui: 'narrow',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_BLANKER_LEVEL',\n        ui: 'noise_blanker_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_BLANKER_STATUS',\n        ui: 'noise_blanker_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_REDUCTION',\n        ui: 'noise_reduction',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_REDUCTION_LEVEL',\n        ui: 'noise_reduction_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'OFFSET_(REPEATER_SHIFT)',\n        ui: 'offset',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'OPPOSITE_BAND_INFORMATION',\n        ui: 'opposite_band_information',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        ui: 'parametric_microphone_equalizer',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'PLAY_BACK',\n    },\n    {\n        setting: 'PLL_UNLOCK_STATUS',\n        ui: 'pll_unlock_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'POWER_CONTROL',\n        ui: 'power_level',\n        emit: defaultEmit,\n        handler(msg) {\n            let value = parseInt(msg.payload, 10);\n\n            if(value < 5) {\n                value = 5;\n            }\n            else if(value > 100) {\n                value = 100;\n            }\n\n            return RigSetting.of('POWER_CONTROL', value).asSet;\n        },\n    },\n    {\n        setting: 'POWER_SWITCH',\n    },\n    {\n        setting: 'PRE-AMP_(IPO)',\n        ui: 'pre_amp',\n        emit: defaultEmit,\n        handler(msg) {\n            const pre_amp = RigState.getRigSetting('PRE-AMP_(IPO)');\n\n            if(msg.payload === 'click') {\n                switch(pre_amp.value) {\n                case 'IPO':  return RigSetting.of('PRE-AMP_(IPO)', 'AMP1').asSet;\n                case 'AMP1': return RigSetting.of('PRE-AMP_(IPO)', 'AMP2').asSet;\n                case 'AMP2': return RigSetting.of('PRE-AMP_(IPO)', 'IPO').asSet;\n                }\n            }\n        },\n    },\n    {\n        setting: 'QMB_RECALL',\n    },\n    {\n        setting: 'QMB_STORE',\n    },\n    {\n        setting: 'QUICK_SPLIT',\n    },\n    {\n        setting: 'RADIO_INFORMATION-HI-SWR',\n        ui: 'hi_swr',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-PLAY',\n        ui: 'play',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-REC',\n        ui: 'rec',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-TX_LED',\n        ui: 'tx_led',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-A_RX',\n        ui: 'vfo_a_rx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-A_TX',\n        ui: 'vfo_a_tx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-B_TX',\n        ui: 'vfo_b_tx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_STATUS',\n        ui: 'radio_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-ALC',\n        ui: 'alc_meter',\n        emit: defaultEmit,\n        local: true,\n    },\n    {\n        setting: 'READ_METER-COMP',\n        ui: 'comp_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-FRONT_PANEL',\n    },\n    {\n        setting: 'READ_METER-ID',\n        ui: 'id_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-OTHER_METER',\n    },\n    {\n        setting: 'READ_METER-PO',\n        ui: 'po_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-SWR',\n        ui: 'swr_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-S_METER',\n        ui: 's_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-VDD',\n        ui: 'vdd_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RF_ATTENUATOR',\n        ui: 'rf_attenuator',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RF_GAIN',\n        ui: 'rf_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RX_CLARIFIER_PLUS_OFFSET',\n    },\n    {\n        setting: 'S-METER_READING',\n    },\n    {\n        setting: 'SCAN',\n    },\n    {\n        setting: 'SPEECH_PROCESSOR_LEVEL',\n        ui: 'speech_processor_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SPEECH_PROCESSOR_ON/OFF',\n        ui: 'speech_processor_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SQUELCLH_LEVEL',\n        ui: 'squelclh_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SWAP_VFO',\n    },\n    {\n        setting: 'TIME',\n        ui: 'time',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TIME_DIFFERENTIAL',\n        ui: 'time_differential',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TXW',\n        ui: 'txw',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TX_CLAR',\n        ui: 'tx_clar',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TX_SET',\n        ui: 'transmit',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'UP',\n    },\n    {\n        setting: 'V/M_KEY_FUNCTION',\n    },\n    {\n        setting: 'VFO-A_TO_MEMORY_CHANNEL',\n    },\n    {\n        setting: 'VFO-A_TO_VFO-B',\n    },\n    {\n        setting: 'VFO-B_TO_VFO-A',\n    },\n    {\n        setting: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n    },\n    {\n        setting: 'VOX_GAIN',\n        ui: 'vox_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'VOX_STATUS',\n        ui: 'vox_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'WIDTH',\n    },\n    {\n        setting: 'ZERO_IN',\n    },\n];\n\nconst settings_to_ui = {};\n\nui_config.forEach( e => {\n    if(e.hasOwnProperty('emit')) {\n        if(!e.hasOwnProperty('setting')) {\n            throw new Error('ui_config has emit, but no setting: ' + JSON.stringify(e));\n        }\n\n        if(settings_to_ui.hasOwnProperty(e.setting)) {\n            throw new Error('Duplicate setting in ui_config: ' + e.setting);\n        }\n\n        settings_to_ui[e.setting] = {ui: e.ui, emit: e.emit};\n\n        if(e.hasOwnProperty('local')) {\n            settings_to_ui[e.setting].local = e.local;\n        }\n    }\n});\n\nflow.set('settings_to_ui', settings_to_ui);\n\nconst ui_to_settings = {};\n\nui_config.forEach( e => {\n    if(e.hasOwnProperty('ui')) {\n        if(ui_to_settings.hasOwnProperty(e.ui)) {\n            throw new Error('ui_to_settings has dup ui - ' + ui_to_settings[e.ui].setting + ' and ' + key);\n        }\n\n        if(e.hasOwnProperty('handler')) {\n            ui_to_settings[e.ui] = {setting: e.setting, handler: e.handler};\n        }\n    }\n});\n\nflow.set('ui_to_settings', ui_to_settings);",
         "finalize": "",
-        "x": 280,
+        "x": 260,
         "y": 160,
         "wires": [
             []
@@ -1193,17 +765,21 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Handle UI Event",
-        "func": "'use strict';\n\nconst ui_to_settings = flow.get('ui_to_settings');\n\nif(ui_to_settings.hasOwnProperty(msg.topic)) {\n    const ue = ui_to_settings[msg.topic];\n\n    if(ue.hasOwnProperty('handler')) {\n        return {payload: ue.handler(msg)};\n    }\n\n    node.warn('Received UI event without handler: ' + JSON.stringify(ue));\n}\n\nreturn null;",
-        "outputs": 1,
+        "func": "'use strict';\n\nfunction toggle(msg) {\n    const op_mode = flow.get('op_mode'),\n          ui_cache = flow.get('ui_cache');\n    let om,\n        uc;\n\n    if(msg.topic === 'menu_item') {\n        if(!op_mode.menus.hasOwnProperty(msg.no)) {\n            op_mode.menus[msg.no] = {};\n        }\n        om = op_mode.menus[msg.no];\n        uc = ui_cache[msg.topic + '-' + msg.no]\n    }\n    else {\n        if(!op_mode.settings.hasOwnProperty(msg.topic)) {\n            op_mode.settings[msg.topic] = {};\n        }\n        om = op_mode.settings[msg.topic];\n        uc = ui_cache[msg.topic];\n    }\n    \n    if(msg.event === 'toggle_fav') {\n        om.fav = !om.fav;\n    }\n\n    if(msg.event === 'toggle_saved') {\n        om.saved = !om.saved;\n    }\n    \n    flow.set('op_mode', op_mode);\n\n    return uc;\n}\n\nif(msg.event === 'toggle_fav' || msg.event === 'toggle_saved') {\n    return [null, toggle(msg)];\n}\n\nconst ui_to_settings = flow.get('ui_to_settings');\n\nif(ui_to_settings.hasOwnProperty(msg.topic)) {\n    const ue = ui_to_settings[msg.topic];\n\n    if(ue.hasOwnProperty('handler')) {\n        return [{payload: ue.handler(msg)}, null];\n    }\n\n    node.warn('Received UI event without handler: ' + JSON.stringify(ue));\n}\n\nreturn null;",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 660,
-        "y": 380,
+        "x": 580,
+        "y": 460,
         "wires": [
             [
                 "99ca4b3c.afeac8",
                 "5d213f36.1289e"
+            ],
+            [
+                "d488fc0.05b1808",
+                "e19d15b7.026db8"
             ]
         ]
     },
@@ -1212,7 +788,7 @@
         "type": "debug",
         "z": "36d8cfa8.00955",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1220,8 +796,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 850,
-        "y": 340,
+        "x": 770,
+        "y": 420,
         "wires": []
     },
     {
@@ -1234,11 +810,11 @@
             "f4962b9f.b6a398",
             "ea8768d0.a50838"
         ],
-        "x": 115,
-        "y": 400,
+        "x": 55,
+        "y": 480,
         "wires": [
             [
-                "32d66e09.a27d62"
+                "9811ec0f.4afb"
             ]
         ]
     },
@@ -1250,8 +826,8 @@
         "links": [
             "b3949e3.78dc86"
         ],
-        "x": 403,
-        "y": 220,
+        "x": 615,
+        "y": 240,
         "wires": []
     },
     {
@@ -1262,7 +838,7 @@
         "links": [
             "b3949e3.78dc86"
         ],
-        "x": 355,
+        "x": 295,
         "y": 780,
         "wires": []
     },
@@ -1311,8 +887,8 @@
             "f52d625e.4d618",
             "80bd8c8a.4d949"
         ],
-        "x": 123,
-        "y": 240,
+        "x": 63,
+        "y": 260,
         "wires": [
             [
                 "9c763636.fb5f88",
@@ -1393,7 +969,7 @@
         "links": [
             "3e47df65.4edf7"
         ],
-        "x": 115,
+        "x": 55,
         "y": 620,
         "wires": [
             [
@@ -1411,8 +987,8 @@
             "1d1d213a.3e601f",
             "9efce6a4.2da0c8"
         ],
-        "x": 403,
-        "y": 260,
+        "x": 343,
+        "y": 280,
         "wires": []
     },
     {
@@ -1423,7 +999,7 @@
         "links": [
             "3e47df65.4edf7"
         ],
-        "x": 115,
+        "x": 55,
         "y": 780,
         "wires": [
             [
@@ -1439,20 +1015,8 @@
         "links": [
             "9725b52b.0bb248"
         ],
-        "x": 635,
+        "x": 575,
         "y": 620,
-        "wires": []
-    },
-    {
-        "id": "80bd8c8a.4d949",
-        "type": "link out",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "links": [
-            "c9974373.7da3a"
-        ],
-        "x": 795,
-        "y": 420,
         "wires": []
     },
     {
@@ -1468,8 +1032,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 268,
-        "y": 300,
+        "x": 208,
+        "y": 320,
         "wires": []
     },
     {
@@ -1480,8 +1044,8 @@
         "links": [
             "9725b52b.0bb248"
         ],
-        "x": 815,
-        "y": 380,
+        "x": 735,
+        "y": 460,
         "wires": []
     },
     {
@@ -1572,95 +1136,136 @@
         ]
     },
     {
-        "id": "b28ef98a.0f3558",
-        "type": "inject",
-        "z": "46966e45.65961",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "1",
-        "payloadType": "num",
-        "x": 240,
-        "y": 200,
-        "wires": [
-            [
-                "8f76ec31.a99df"
-            ]
-        ]
-    },
-    {
-        "id": "8e2c504b.3ad72",
-        "type": "inject",
-        "z": "46966e45.65961",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "10",
-        "payloadType": "num",
-        "x": 240,
-        "y": 280,
-        "wires": [
-            [
-                "8f76ec31.a99df"
-            ]
-        ]
-    },
-    {
-        "id": "8f76ec31.a99df",
+        "id": "d7b0ba27.0da0e8",
         "type": "function",
-        "z": "46966e45.65961",
-        "name": "",
-        "func": "let acc = flow.get('acc');\nacc += msg.payload;\nflow.set('acc', acc);\n\nreturn {payload: acc};",
+        "z": "36d8cfa8.00955",
+        "name": "Add fav + saved",
+        "func": "'use strict';\n\nconst op_mode = flow.get('op_mode');\n\nmsg.saved = false;\nmsg.fav = false;\n        \nif(msg.name === 'menu_item') {\n    if(op_mode.menus.hasOwnProperty(msg.no)) {\n        msg.saved = op_mode.menus[msg.no].saved || false;\n        msg.fav = op_mode.menus[msg.no].fav || false;\n    }\n}\nelse if(op_mode.settings.hasOwnProperty(msg.name)) {\n    msg.saved = op_mode.settings[msg.name].saved || false;\n    msg.fav = op_mode.settings[msg.name].fav || false;\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is deployed.\nflow.set('acc', 0);",
+        "initialize": "",
         "finalize": "",
-        "x": 440,
+        "x": 460,
         "y": 240,
         "wires": [
             [
-                "6feb3e21.0689"
+                "eb4cdb5c.e742a8"
             ]
         ]
     },
     {
-        "id": "6feb3e21.0689",
+        "id": "c9c2c1bf.91386",
+        "type": "link in",
+        "z": "36d8cfa8.00955",
+        "name": "REFRESH_UI",
+        "links": [
+            "d488fc0.05b1808"
+        ],
+        "x": 335,
+        "y": 220,
+        "wires": [
+            [
+                "d7b0ba27.0da0e8"
+            ]
+        ]
+    },
+    {
+        "id": "d488fc0.05b1808",
+        "type": "link out",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "links": [
+            "c9c2c1bf.91386"
+        ],
+        "x": 735,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "e98be0b2.ad9a6",
         "type": "debug",
-        "z": "46966e45.65961",
+        "z": "32b9106a.4589e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "30d1fee2.20f532",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "9811ec0f.4afb",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Package in paylaod",
+        "func": "\nreturn {payload: msg};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 190,
+        "y": 480,
+        "wires": [
+            [
+                "c229a01c.c9c49",
+                "13bb7693.76eea9"
+            ]
+        ]
+    },
+    {
+        "id": "e19d15b7.026db8",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
         "name": "",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 660,
-        "y": 260,
+        "x": 830,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "13bb7693.76eea9",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 420,
         "wires": []
     }
 ]
