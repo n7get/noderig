@@ -1,7 +1,7 @@
 <template>
 <div>
     <b-row>
-        <b-button class="col-3">Data HF</b-button>
+        <b-button class="col-3">{{ op_mode }}</b-button>
         <frequency class="col-9"></frequency>
     </b-row>
     <!-- <b-row v-show="isOpMode(['data-hf', 'voice-ssh'])" class="mt-2"> -->
@@ -52,6 +52,7 @@ module.exports = {
     data: function() {
         return {
             meter_switch: '',
+            op_mode: 'Op Mode',
             tx_on: false,
         }
     },
@@ -61,10 +62,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            // if(p.name !== 'menu_item') {
-            //     console.log('p: ', p);
-            // }
-            if(p.name === 'transmit') {
+            if(p.name === 'op_mode') {
+                self.op_mode = p.value;
+            }
+            else if(p.name === 'transmit') {
                 if(p.hasOwnProperty('value')) {
                     self.tx_on = p.value;
                 }

@@ -94,7 +94,7 @@
         "type": "debug",
         "z": "36d8cfa8.00955",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -102,26 +102,28 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 548.9999885559082,
-        "y": 416.9999523162842,
+        "x": 550,
+        "y": 460,
         "wires": []
     },
     {
         "id": "bfbcfc9e.c6d8f",
         "type": "function",
         "z": "36d8cfa8.00955",
-        "name": "Refresh UI",
-        "func": "const ui_cache = flow.get('ui_cache');\n\nif(msg.uibuilderCtrl !== 'ready for content') {\n    return null;\n}\n\nfor(const msg of Object.values(ui_cache)) {\n    node.send(msg);\n}\n\nnode.done();",
-        "outputs": 1,
+        "name": "Handle UI Control Events",
+        "func": "'use strict';\n\nif(msg.uibuilderCtrl === 'ready for content') {\n    const OpModes = flow.get('OpModes'),\n          op_mode = OpModes.currentOpMode(),\n          ui_cache = flow.get('ui_cache');\n      \n    node.send(null, {name: 'op_mode', value: op_mode.name});\n    \n    for(const msg of Object.values(ui_cache)) {\n        node.send([msg, null]);\n    }\n}\n\nnode.done();",
+        "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 570,
-        "y": 500,
+        "x": 610,
+        "y": 580,
         "wires": [
             [
-                "d488fc0.05b1808",
-                "30d1fee2.20f532"
+                "d488fc0.05b1808"
+            ],
+            [
+                "217430e2.5e2e4"
             ]
         ]
     },
@@ -131,8 +133,8 @@
         "z": "36d8cfa8.00955",
         "name": "UI interface",
         "info": "",
-        "x": 90,
-        "y": 380,
+        "x": 91.0000114440918,
+        "y": 423.0000476837158,
         "wires": []
     },
     {
@@ -146,7 +148,7 @@
         "initialize": "",
         "finalize": "",
         "x": 180,
-        "y": 780,
+        "y": 860,
         "wires": [
             [
                 "f4962b9f.b6a398"
@@ -160,21 +162,21 @@
         "name": "Data ALC status",
         "info": "",
         "x": 100,
-        "y": 720,
+        "y": 800,
         "wires": []
     },
     {
         "id": "a7f8e61b.7258f8",
         "type": "function",
         "z": "36d8cfa8.00955",
-        "name": "Load op mode menu",
-        "func": "",
+        "name": "OpModes",
+        "func": "const OpModes = flow.get('OpModes'),\n      op_mode = OpModes.currentOpMode();\n      \nOpModes.loadOpMode(op_mode);",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict';\n\nconst get_op_mode = function(name) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst load_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst save_op_mode = function(op_mode) {\n    global.set('op_modes', op_modes, 'persist');\n};\n\nconst set_op_mode = function(op_mode) {\n    const op_modes = global.get('op_modes', 'persist');\n};\n\nconst OpModes = {\n    getOpMode: get_op_mode,\n    loadOpMode: load_op_mode,\n    saveOpMode: save_op_mode,\n    setOpMode: set_op_mode,\n}\n\nflow.set('OpModes', OpModes);\n\nflow.set('menu_save', [\n    'GT0;',\n]);\n\nconst op_mode = {\n    name: 'Data HF',\n    triggers: [],\n    settings: {\n        tuner: {\n    \t},\n        lock: {\n    \t},\n        meter_sw: {\n    \t\tfav: true,\n    \t},\n    \tmic_gain: {\n    \t    fav: true,\n    \t},\n        pre_amp: {\n    \t},\n        power_level: {\n    \t},\n    },\n    menus: {\n        62: {\n            save: true,\n        },\n        64: {\n            fav: true,\n        },\n        65: {\n            fav: true,\n        },\n        66: {\n        },\n        67: {\n        },\n        68: {\n        },\n        69: {\n        },\n        70: {\n            fav: true,\n        },\n        71: {\n            fav: true,\n        },\n        72: {\n            fav: true,\n        },\n        73: {\n            fav: true,\n        },\n        146: {\n        },\n        147: {\n        },\n    },\n};\n\nflow.set('op_mode', op_mode);",
+        "initialize": "'use strict';\n\nconst PERSIST = 'persist',\n      LAST_OP_MODE = 'last_op_mode',\n      OP_MODES = 'op_modes';\n      \nconst new_op_mode = function() {\n    return {name: 'New Op Mode', triggers: [], settings: {}, menus: {}};\n}\n\nconst current_op_mode = function() {\n    const last_op_mode = global.get(LAST_OP_MODE, PERSIST),\n          op_modes = global.get(OP_MODES, PERSIST) || {};\n\n    if(last_op_mode) {\n        if(!op_modes.hasOwnProperty(last_op_mode)) {\n            throw new Error(LAST_OP_MODE + ' is set: \"' + last_op_mode + '\" but op mode does not exist');\n        }\n        \n        return op_modes[last_op_mode];\n    }\n\n    const names = Object.keys(op_modes);\n    \n    if(names.length === 0) {\n        return new_op_mode();\n    }\n    \n    global.set(LAST_OP_MODE, names[0]);\n    return op_modes[names[0]];\n}\n\nconst load_op_mode = function(op_mode) {\n    global.set(LAST_OP_MODE, op_mode.name, PERSIST);\n    \n    // TODO: configure rig with new settings\n}\n\nconst get_op_mode = function(name) {\n    const op_modes = global.get(OP_MODES, PERSIST) || {};\n\n    if(!op_modes.hasOwnProperty(name)) {\n        throw new Error('Op mode \"' + name + '\" not found');\n    }\n    \n    return op_modes[name];\n};\n\nconst save_op_mode = function(op_mode) {\n    const op_modes = global.get(OP_MODES, PERSIST) || {};\n    \n    op_modes[op_mode.name] = op_mode;\n};\n\nconst OpModes = {\n    currentOpMode: current_op_mode,\n    getOpMode: get_op_mode,\n    loadOpMode: load_op_mode,\n    saveOpMode: save_op_mode,\n}\nflow.set('OpModes', OpModes);\n\n// First time init\n\nif(global.get(OP_MODES, PERSIST) === undefined) {\n\n    node.log('No Op Modes defined, doing first time init.');\n\n    const init_op_modes = {},\n          op_mode = new_op_mode();\n\n    init_op_modes[op_mode.name] = op_mode;\n    global.set(OP_MODES, init_op_modes, PERSIST);\n    \n    global.set(LAST_OP_MODE, op_mode.name);\n}\n\n/////////////////////////////////////////////////////////////////\n// flow.set('menu_save', [\n//     'GT0;',\n// ]);\n\n// const op_mode = {\n//     name: 'Data HF',\n//     triggers: [],\n//     settings: {\n//         tuner: {\n//     \t},\n//         lock: {\n//     \t},\n//         meter_sw: {\n//     \t\tfav: true,\n//     \t},\n//     \tmic_gain: {\n//     \t    fav: true,\n//     \t},\n//         pre_amp: {\n//     \t},\n//         power_level: {\n//     \t},\n//     },\n//     menus: {\n//         62: {\n//             save: true,\n//         },\n//         64: {\n//             fav: true,\n//         },\n//         65: {\n//             fav: true,\n//         },\n//         66: {\n//         },\n//         67: {\n//         },\n//         68: {\n//         },\n//         69: {\n//         },\n//         70: {\n//             fav: true,\n//         },\n//         71: {\n//             fav: true,\n//         },\n//         72: {\n//             fav: true,\n//         },\n//         73: {\n//             fav: true,\n//         },\n//         146: {\n//         },\n//         147: {\n//         },\n//     },\n// };\n\n// flow.set('op_mode', op_mode);",
         "finalize": "",
-        "x": 425,
-        "y": 100,
+        "x": 200,
+        "y": 80,
         "wires": [
             []
         ]
@@ -200,12 +202,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 80,
-        "y": 100,
+        "x": 75,
+        "y": 80,
         "wires": [
             [
-                "4d9e382a.4c4c88",
-                "a9432df6.8a17d"
+                "a7f8e61b.7258f8"
             ]
         ],
         "l": false
@@ -217,7 +218,7 @@
         "name": "Init",
         "info": "",
         "x": 70,
-        "y": 40,
+        "y": 20,
         "wires": []
     },
     {
@@ -238,7 +239,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 400,
-        "y": 600,
+        "y": 680,
         "wires": [
             [
                 "715ac9d7.085848"
@@ -256,7 +257,7 @@
         "initialize": "",
         "finalize": "",
         "x": 190,
-        "y": 600,
+        "y": 680,
         "wires": [
             [
                 "dbe11b76.d2f108"
@@ -281,7 +282,7 @@
         "topic": "topic",
         "outputs": 1,
         "x": 400,
-        "y": 640,
+        "y": 720,
         "wires": [
             [
                 "715ac9d7.085848"
@@ -299,7 +300,7 @@
         "initialize": "",
         "finalize": "",
         "x": 190,
-        "y": 640,
+        "y": 720,
         "wires": [
             [
                 "66a16e14.52e4d"
@@ -313,17 +314,7 @@
         "name": "Monitor ALC and SWR during transmit",
         "info": "",
         "x": 170,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "ce1ab306.58aea",
-        "type": "comment",
-        "z": "36d8cfa8.00955",
-        "name": "NOTE: The flow context values are defined in the Setup tab of this function",
-        "info": "",
-        "x": 400,
-        "y": 40,
+        "y": 620,
         "wires": []
     },
     {
@@ -604,12 +595,10 @@
         "noerr": 0,
         "initialize": "'use strict';\n\nconst RigSetting = global.get('RigSetting');\n        \n// UI Iterface functions\n\nfunction uiMessage(no, value) {\n\treturn {no: no, value: value};\n}\n\nfunction defaultToUi (no, value) {\n\treturn uiMessage(no, value);\n}\n\nfunction toUiDataMode(no, value) {\n\treturn uiMessage(no, value === '0' ? 'PSK' : 'OTHER');\n}\n\nfunction toUiDataPortSelect(no, value) {\n\treturn uiMessage(no, value === '1' ? 'DATA' : 'USB');\n}\n\nfunction toUiFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\n\nfunction toUiMicSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'MIC' : 'REAR');\n}\n\nfunction toUiPttSelect(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'DAKY');\n    case '1': return uiMessage(no, 'RTS');\n    case '2': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiSimpleValue(no, value) {\n\treturn uiMessage(no, parseInt(value, 10).toString());\n}\n\nfunction toUiPcKeying(no, value) {\n    switch(value) {\n    case '0': return uiMessage(no, 'OFF');\n    case '1': return uiMessage(no, 'DAKY');\n    case '2': return uiMessage(no, 'RTS');\n    case '3': return uiMessage(no, 'DTR');\n    }\n}\n\nfunction toUiVoicePortSelect(no, value) {\n\treturn uiMessage(no, value === '0' ? 'DATA' : 'USB');\n}\n\nfunction cutFreq(value, offset) {\n    if(value === 0) {\n        return 'OFF';\n    }\n\n    return ((value + offset) * 50).toString();\n}\nfunction toUiLCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 1));\n}\nfunction toUiSlope(no, value) {\n\treturn uiMessage(no, value === '0' ? '6 dB' : '18 dB');\n}\nfunction toUiHCutFreq(no, value) {\n\treturn uiMessage(no, cutFreq(value, 13));\n}\n\nfunction defaultFromUi (arg) {\n    return null;\n}\n\nfunction toCat(no, value) {\n    let prefix;\n\n    if(no < 10) {\n        prefix = 'EX00' + no;\n    }\n    else if(no < 100) {\n        prefix = 'EX0' + no;\n    }\n    else {\n        prefix = 'EX' + no;\n    }\n\n    if(value) {\n        return prefix + value + ';';\n    }\n    return prefix + ';';\n}\n\nconst menu_items = {\n\t1: {desc: 'AGC FAST DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t2: {desc: 'AGC MID DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t3: {desc: 'AGC SLOW DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t4: {desc: 'HOME FUNCTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t5: {desc: 'MY CALL INDICATION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t6: {desc: 'DISPLAY COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t7: {desc: 'DIMMER LED', toUi: defaultToUi, fromUi: defaultFromUi},\n\t8: {desc: 'DIMMER TFT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t9: {desc: 'BAR MTR PEAK HOLD', toUi: defaultToUi, fromUi: defaultFromUi},\n\t10: {desc: 'DVS RX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t11: {desc: 'DVS TX OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t12: {desc: 'KEYER TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t13: {desc: 'KEYER DOT/DASH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t14: {desc: 'CW WEIGHT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t15: {desc: 'BEACON INTERVAL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t16: {desc: 'NUMBER STYLE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t17: {desc: 'CONTEST NUMBER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t18: {desc: 'CW MEMORY 1', toUi: defaultToUi, fromUi: defaultFromUi},\n\t19: {desc: 'CW MEMORY 2', toUi: defaultToUi, fromUi: defaultFromUi},\n\t20: {desc: 'CW MEMORY 3', toUi: defaultToUi, fromUi: defaultFromUi},\n\t21: {desc: 'CW MEMORY 4', toUi: defaultToUi, fromUi: defaultFromUi},\n\t22: {desc: 'CW MEMORY 5', toUi: defaultToUi, fromUi: defaultFromUi},\n\t23: {desc: 'NB WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t24: {desc: 'NB REJECTION', toUi: defaultToUi, fromUi: defaultFromUi},\n\t25: {desc: 'NB LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t26: {desc: 'BEEP LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t27: {desc: 'TIME ZONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t28: {desc: 'GPS/232C SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t29: {desc: '232C RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t30: {desc: '232C TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t31: {desc: 'CAT RATE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t32: {desc: 'CAT TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t33: {desc: 'CAT RTS', toUi: defaultToUi, fromUi: defaultFromUi},\n\t34: {desc: 'MEM GROUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t35: {desc: 'QUICK SPLIT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t36: {desc: 'TX TOT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t37: {desc: 'MIC SCAN', toUi: defaultToUi, fromUi: defaultFromUi},\n\t38: {desc: 'MIC SCAN RESUME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t39: {desc: 'REF FREQ ADJ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t40: {desc: 'CLAR MODE SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t41: {desc: 'AM LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t42: {desc: 'AM LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t43: {desc: 'AM HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t44: {desc: 'AM HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t45: {desc: 'AM MIC SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t46: {desc: 'AM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t47: {desc: 'AM PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t48: {desc: 'AM PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t49: {desc: 'AM DATA GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t50: {desc: 'CW LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t51: {desc: 'CW LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t52: {desc: 'CW HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t53: {desc: 'CW HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t54: {desc: 'CW OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t55: {desc: 'CW AUTO MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t56: {desc: 'CW BK-IN TYPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t57: {desc: 'CW BK-IN DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t58: {desc: 'CW WAVE SHAPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t59: {desc: 'CW FREQ DISPLAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t60: {desc: 'PC KEYING', toUi: toUiPcKeying, fromUi: defaultFromUi},\n\t61: {desc: 'QSK DELAY TIME', toUi: defaultToUi, fromUi: defaultFromUi},\n\t62: {desc: 'DATA MODE', toUi: toUiDataMode, fromUi: defaultFromUi},\n\t63: {desc: 'PSK TONE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t64: {desc: 'OTHER DISP (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t65: {desc: 'OTHER SHIFT (SSB)', toUi: defaultToUi, fromUi: defaultFromUi},\n\t66: {desc: 'DATA LCUT FREQ', toUi: toUiLCutFreq, fromUi: defaultFromUi},\n\t67: {desc: 'DATA LCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t68: {desc: 'DATA HCUT FREQ', toUi: toUiHCutFreq, fromUi: defaultFromUi},\n\t69: {desc: 'DATA HCUT SLOPE', toUi: toUiSlope, fromUi: defaultFromUi},\n\t70: {desc: 'DATA IN SELECT', toUi: toUiMicSelect, fromUi: defaultFromUi},\n\t71: {desc: 'DATA PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t72: {desc: 'DATA PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t73: {desc: 'DATA OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t74: {desc: 'FM MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t75: {desc: 'FM OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t76: {desc: 'FM PKT PTT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t77: {desc: 'FM PKT PORT SELECT', toUi: toUiDataPortSelect, fromUi: defaultFromUi},\n\t78: {desc: 'FM PKT TX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t79: {desc: 'FM PKT MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t80: {desc: 'RPT SHIFT 28MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t81: {desc: 'RPT SHIFT 50MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t82: {desc: 'RPT SHIFT 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t83: {desc: 'RPT SHIFT 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t84: {desc: 'ARS 144MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t85: {desc: 'ARS 430MHz', toUi: defaultToUi, fromUi: defaultFromUi},\n\t86: {desc: 'DCS POLARITY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t87: {desc: 'RADIO ID', toUi: defaultToUi, fromUi: defaultFromUi},\n\t88: {desc: 'GM DISPLY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t89: {desc: 'DISTANCE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t90: {desc: 'AMS TX MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t91: {desc: 'STANDBY BEEP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t92: {desc: 'RTTY LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t93: {desc: 'RTTY LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t94: {desc: 'RTTY HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t95: {desc: 'RTTY HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t96: {desc: 'RTTY SHIFT PORT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t97: {desc: 'RTTY POLARITY-RX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t98: {desc: 'RTTY POLARITY-TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t99: {desc: 'RTTY OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t100: {desc: 'RTTY SHIFT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t101: {desc: 'RTTY MARK FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t102: {desc: 'SSB LCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t103: {desc: 'SSB LCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t104: {desc: 'SSB HCUT FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t105: {desc: 'SSB HCUT SLOPE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t106: {desc: 'SSB MIC SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t107: {desc: 'SSB OUT LEVEL', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t108: {desc: 'SSB PTT SELECT', toUi: toUiPttSelect, fromUi: defaultFromUi},\n\t109: {desc: 'SSB PORT SELECT', toUi: toUiVoicePortSelect, fromUi: defaultFromUi},\n\t110: {desc: 'SSB TX BPF', toUi: defaultToUi, fromUi: defaultFromUi},\n\t111: {desc: 'APF WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t112: {desc: 'CONTOUR LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t113: {desc: 'CONTOUR WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t114: {desc: 'IF NOTCH WIDTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t115: {desc: 'SCP DISPLAY MODE', toUi: defaultToUi, fromUi: defaultFromUi},\n\t116: {desc: 'SCP SPAN FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t117: {desc: 'SPECTRUM COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t118: {desc: 'WATER FALL COLOR', toUi: defaultToUi, fromUi: defaultFromUi},\n\t119: {desc: 'PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t120: {desc: 'PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t121: {desc: 'PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t122: {desc: 'PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t123: {desc: 'PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t124: {desc: 'PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t125: {desc: 'PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t126: {desc: 'PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t127: {desc: 'PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t128: {desc: 'P-PRMTRC EQ1 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t129: {desc: 'P-PRMTRC EQ1 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t130: {desc: 'P-PRMTRC EQ1 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t131: {desc: 'P-PRMTRC EQ2 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t132: {desc: 'P-PRMTRC EQ2 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t133: {desc: 'P-PRMTRC EQ2 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t134: {desc: 'P-PRMTRC EQ3 FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t135: {desc: 'P-PRMTRC EQ3 LEVEL', toUi: defaultToUi, fromUi: defaultFromUi},\n\t136: {desc: 'P-PRMTRC EQ3 BWTH', toUi: defaultToUi, fromUi: defaultFromUi},\n\t137: {desc: 'HF TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t138: {desc: '50M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t139: {desc: '144M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t140: {desc: '430M TX MAX POWER', toUi: defaultToUi, fromUi: defaultFromUi},\n\t141: {desc: 'TUNER SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t142: {desc: 'VOX SELECT', toUi: defaultToUi, fromUi: defaultFromUi},\n\t143: {desc: 'VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t144: {desc: 'VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t145: {desc: 'ANTI VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t146: {desc: 'DATA VOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t147: {desc: 'DATA VOX DELAY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t148: {desc: 'ANTI DVOX GAIN', toUi: toUiSimpleValue, fromUi: defaultFromUi},\n\t149: {desc: 'EMERGENCY FREQ TX', toUi: defaultToUi, fromUi: defaultFromUi},\n\t150: {desc: 'PRT/WIRES FREQ', toUi: defaultToUi, fromUi: defaultFromUi},\n\t151: {desc: 'PRESET FREQUENCY', toUi: defaultToUi, fromUi: defaultFromUi},\n\t152: {desc: 'SEARCH SETUP', toUi: defaultToUi, fromUi: defaultFromUi},\n\t153: {desc: 'WIRES DG-ID', toUi: defaultToUi, fromUi: defaultFromUi}\n};\n\nflow.set('menu_items', menu_items);\n\nconst MenuItem = class {\n    constructor(no, value) {\n        this._no = no;\n        this._value = value;\n    }\n    \n    get no() { return this._no; }\n    get value() { return this._value; }\n\n    get desc() {\n        const ci = menu_items[this._no];\n\n        return ci.desc;\n    }\n\n    get asRigSetting() {\n        return RigSetting.of('MENU', {no: this._no, value: this._value});\n    }\n\n    get toUi() {\n        const ci = menu_items[this._no];\n\n        return ci.toUi(this._no, this._value);\n    }\n    \n    static fromUi(arg) {\n        throw new Error('Not implemented yet');\n    }\n\n    static of(arg) {\n        return new MenuItem(arg.no, arg.value);\n    }\n}\nflow.set('MenuItem', MenuItem);",
         "finalize": "",
-        "x": 215,
-        "y": 100,
+        "x": 200,
+        "y": 120,
         "wires": [
-            [
-                "a7f8e61b.7258f8"
-            ]
+            []
         ]
     },
     {
@@ -693,15 +682,16 @@
         "useSecurity": false,
         "sessionLength": 432000,
         "tokenAutoExtend": false,
-        "x": 380,
-        "y": 480,
+        "x": 381.0000114440918,
+        "y": 523.0000476837158,
         "wires": [
             [
                 "2f69877c.f1a878",
                 "6919ddd0.f347a4"
             ],
             [
-                "bfbcfc9e.c6d8f"
+                "bfbcfc9e.c6d8f",
+                "28ff68b8.a52a58"
             ]
         ]
     },
@@ -733,8 +723,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 200,
-        "y": 260,
+        "x": 201.0000114440918,
+        "y": 303.0000476837158,
         "wires": [
             [
                 "d7b0ba27.0da0e8"
@@ -754,7 +744,7 @@
         "noerr": 0,
         "initialize": "'use strict';\n\nconst MenuItem = flow.get('MenuItem'),\n      RigSetting = global.get('RigSetting'),\n      RigState = global.get('RigState');\n\nfunction defaultEmit(name, rs) {\n\treturn {name: name, value: rs.value};\n}\n\nconst ui_config = [\n    {\n        setting: 'AF_GAIN',\n        ui: 'af_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'AGC_FUNCTION',\n    },\n    {\n        setting: 'ANTENNA_TUNER_CONTROL',\n        ui: 'tuner',\n        emit: defaultEmit,\n        handler(msg) {\n            const ac = RigState.getRigSetting('ANTENNA_TUNER_CONTROL');\n\n            if(msg.payload === 'click') {\n                return RigSetting.of('ANTENNA_TUNER_CONTROL', ac.value === 'on' ? 'off' : 'on').asSet;\n            }\n\n            if(msg.payload === 'dblclick') {\n                return RigSetting.of('ANTENNA_TUNER_CONTROL', 'tune').asSet;\n            }\n            \n            throw new Error('tuner: unknown event: ' + msg.payload);\n        },\n    },\n    {\n        setting: 'APF_FREQ',\n        ui: 'apf_freq',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'APF_ON/OFF',\n        ui: 'apf_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'AUTO_NOTCH',\n        ui: 'auto_notch',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'BAND_DOWN',\n    },\n    {\n        setting: 'BAND_SELECT',\n    },\n    {\n        setting: 'BAND_UP',\n    },\n    {\n        setting: 'BREAK-IN',\n        ui: 'break_in',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'BUSY',\n        ui: 'busy',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CHANNEL_DOWN',\n    },\n    {\n        setting: 'CHANNEL_UP',\n    },\n    {\n        setting: 'CLAR',\n        ui: 'clar',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CLAR_CLEAR',\n    },\n    {\n        setting: 'CLAR_DOWN',\n    },\n    {\n        setting: 'CONTOUR_FREQ',\n        ui: 'contour_freq',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CONTOUR_ON/OFF',\n        ui: 'contour_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CTCSS',\n        ui: 'ctcss',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CTCSS_TONE_FREQUENCY',\n        ui: 'ctcss_tone_frequency',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CW_BREAK-IN_DELAY_TIME',\n        ui: 'cw_break_in_delay_time',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'CW_KEYING',\n    },\n    {\n        setting: 'CW_SPOT',\n        ui: 'cw_spot',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DATE',\n        ui: 'date',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DCS_TONE_FREQUENCY',\n        ui: 'dcs_tone_frequency',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'DIMMER',\n    },\n    {\n        setting: 'ENCORDER_DOWN',\n    },\n    {\n        setting: 'ENCORDER_UP',\n    },\n    {\n        setting: 'ENT_KEY',\n    },\n    {\n        setting: 'FAST_STEP',\n        ui: 'fast_step',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'FREQUENCY_VFO-A',\n        ui: 'vfo_a',\n        emit(name, rs) {\n            let value = rs.value.toString();\n\n            while(value.length < 9) {\n                value = ' ' + value;\n            }\n\n            return {name: name, value: value};\n        }\n    },\n    {\n        setting: 'FREQUENCY_VFO-B',\n        ui: 'vfo_b',\n        emit(name, rs) {\n            let value = rs.value.toString();\n\n            while(value.length < 9) {\n                value = ' ' + value;\n            }\n\n            return {name: name, value: value};\n        }\n    },\n    {\n        setting: 'FUNCTION_TX',\n    },\n    {\n        setting: 'IDENTIFICATION',\n        ui: 'identification',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'IF-SHIFT',\n        ui: 'if_shift',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'INFORMATION',\n//        ui: 'information',\n//        emit: defaultEmit,\n    },\n    {\n        setting: 'KEYER',\n        ui: 'keyer',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'KEYER_MEMORY',\n    },\n    {\n        setting: 'KEY_PITCH',\n        ui: 'key_pitch',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'KEY_SPEED',\n        ui: 'key_speed',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'LOAD_MESSEGE',\n    },\n    {\n        setting: 'LOCK',\n        ui: 'lock',\n        emit: defaultEmit,\n        handler: function(msg) {\n            const lk = RigState.getRigSetting('LOCK');\n\n            if(msg.payload === 'click') {\n                return RigSetting.of('LOCK', !lk.value).asSet;\n            }\n\n            return null;\n        }\n    },\n    {\n        setting: 'MANUAL_NOTCH_LEVEL',\n        ui: 'manual_notch_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MANUAL_NOTCH_ON/OFF',\n        ui: 'manual_notch_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MEMORY_CHANNEL',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_READ',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_TO_VFO-A',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_WRITE',\n    },\n    {\n        setting: 'MEMORY_CHANNEL_WRITE/TAG',\n    },\n    {\n        setting: 'MENU',\n        ui: 'menu_item',\n        emit(name, rs) {\n            const payload = MenuItem.of(rs.value).toUi;\n            \n            payload.name = name;\n            return payload;\n        },\n    },\n    {\n        setting: 'METER_SW',\n        ui: 'meter_sw',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MIC_DOWN',\n    },\n    {\n        setting: 'MIC_GAIN',\n        ui: 'mic_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MODE',\n        ui: 'mode',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MONITOR_LEVEL',\n        ui: 'monitor_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MONITOR_ON/OFF',\n        ui: 'monitor_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'MOX_SET',\n        ui: 'mox_set',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NARROW',\n        ui: 'narrow',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_BLANKER_LEVEL',\n        ui: 'noise_blanker_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_BLANKER_STATUS',\n        ui: 'noise_blanker_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_REDUCTION',\n        ui: 'noise_reduction',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'NOISE_REDUCTION_LEVEL',\n        ui: 'noise_reduction_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'OFFSET_(REPEATER_SHIFT)',\n        ui: 'offset',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'OPPOSITE_BAND_INFORMATION',\n        ui: 'opposite_band_information',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'PARAMETRIC_MICROPHONE_EQUALIZER',\n        ui: 'parametric_microphone_equalizer',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'PLAY_BACK',\n    },\n    {\n        setting: 'PLL_UNLOCK_STATUS',\n        ui: 'pll_unlock_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'POWER_CONTROL',\n        ui: 'power_level',\n        emit: defaultEmit,\n        handler(msg) {\n            let value = parseInt(msg.payload, 10);\n\n            if(value < 5) {\n                value = 5;\n            }\n            else if(value > 100) {\n                value = 100;\n            }\n\n            return RigSetting.of('POWER_CONTROL', value).asSet;\n        },\n    },\n    {\n        setting: 'POWER_SWITCH',\n    },\n    {\n        setting: 'PRE-AMP_(IPO)',\n        ui: 'pre_amp',\n        emit: defaultEmit,\n        handler(msg) {\n            const pre_amp = RigState.getRigSetting('PRE-AMP_(IPO)');\n\n            if(msg.payload === 'click') {\n                switch(pre_amp.value) {\n                case 'IPO':  return RigSetting.of('PRE-AMP_(IPO)', 'AMP1').asSet;\n                case 'AMP1': return RigSetting.of('PRE-AMP_(IPO)', 'AMP2').asSet;\n                case 'AMP2': return RigSetting.of('PRE-AMP_(IPO)', 'IPO').asSet;\n                }\n            }\n        },\n    },\n    {\n        setting: 'QMB_RECALL',\n    },\n    {\n        setting: 'QMB_STORE',\n    },\n    {\n        setting: 'QUICK_SPLIT',\n    },\n    {\n        setting: 'RADIO_INFORMATION-HI-SWR',\n        ui: 'hi_swr',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-PLAY',\n        ui: 'play',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-REC',\n        ui: 'rec',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-TX_LED',\n        ui: 'tx_led',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-A_RX',\n        ui: 'vfo_a_rx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-A_TX',\n        ui: 'vfo_a_tx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_INFORMATION-VFO-B_TX',\n        ui: 'vfo_b_tx',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RADIO_STATUS',\n        ui: 'radio_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-ALC',\n        ui: 'alc_meter',\n        emit: defaultEmit,\n        local: true,\n    },\n    {\n        setting: 'READ_METER-COMP',\n        ui: 'comp_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-FRONT_PANEL',\n    },\n    {\n        setting: 'READ_METER-ID',\n        ui: 'id_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-OTHER_METER',\n    },\n    {\n        setting: 'READ_METER-PO',\n        ui: 'po_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-SWR',\n        ui: 'swr_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-S_METER',\n        ui: 's_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'READ_METER-VDD',\n        ui: 'vdd_meter',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RF_ATTENUATOR',\n        ui: 'rf_attenuator',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RF_GAIN',\n        ui: 'rf_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'RX_CLARIFIER_PLUS_OFFSET',\n    },\n    {\n        setting: 'S-METER_READING',\n    },\n    {\n        setting: 'SCAN',\n    },\n    {\n        setting: 'SPEECH_PROCESSOR_LEVEL',\n        ui: 'speech_processor_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SPEECH_PROCESSOR_ON/OFF',\n        ui: 'speech_processor_on',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SQUELCLH_LEVEL',\n        ui: 'squelclh_level',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'SWAP_VFO',\n    },\n    {\n        setting: 'TIME',\n        ui: 'time',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TIME_DIFFERENTIAL',\n        ui: 'time_differential',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TXW',\n        ui: 'txw',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TX_CLAR',\n        ui: 'tx_clar',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'TX_SET',\n        ui: 'transmit',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'UP',\n    },\n    {\n        setting: 'V/M_KEY_FUNCTION',\n    },\n    {\n        setting: 'VFO-A_TO_MEMORY_CHANNEL',\n    },\n    {\n        setting: 'VFO-A_TO_VFO-B',\n    },\n    {\n        setting: 'VFO-B_TO_VFO-A',\n    },\n    {\n        setting: 'VOX_DELAY_TIME_/_DATA_VOX_DELAY_TIME',\n    },\n    {\n        setting: 'VOX_GAIN',\n        ui: 'vox_gain',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'VOX_STATUS',\n        ui: 'vox_status',\n        emit: defaultEmit,\n    },\n    {\n        setting: 'WIDTH',\n    },\n    {\n        setting: 'ZERO_IN',\n    },\n];\n\nconst settings_to_ui = {};\n\nui_config.forEach( e => {\n    if(e.hasOwnProperty('emit')) {\n        if(!e.hasOwnProperty('setting')) {\n            throw new Error('ui_config has emit, but no setting: ' + JSON.stringify(e));\n        }\n\n        if(settings_to_ui.hasOwnProperty(e.setting)) {\n            throw new Error('Duplicate setting in ui_config: ' + e.setting);\n        }\n\n        settings_to_ui[e.setting] = {ui: e.ui, emit: e.emit};\n\n        if(e.hasOwnProperty('local')) {\n            settings_to_ui[e.setting].local = e.local;\n        }\n    }\n});\n\nflow.set('settings_to_ui', settings_to_ui);\n\nconst ui_to_settings = {};\n\nui_config.forEach( e => {\n    if(e.hasOwnProperty('ui')) {\n        if(ui_to_settings.hasOwnProperty(e.ui)) {\n            throw new Error('ui_to_settings has dup ui - ' + ui_to_settings[e.ui].setting + ' and ' + key);\n        }\n\n        if(e.hasOwnProperty('handler')) {\n            ui_to_settings[e.ui] = {setting: e.setting, handler: e.handler};\n        }\n    }\n});\n\nflow.set('ui_to_settings', ui_to_settings);",
         "finalize": "",
-        "x": 260,
+        "x": 240,
         "y": 160,
         "wires": [
             []
@@ -764,71 +754,41 @@
         "id": "6919ddd0.f347a4",
         "type": "function",
         "z": "36d8cfa8.00955",
-        "name": "Handle UI Event",
-        "func": "'use strict';\n\nfunction toggle(msg) {\n    const op_mode = flow.get('op_mode'),\n          ui_cache = flow.get('ui_cache');\n    let om,\n        uc;\n\n    if(msg.topic === 'menu_item') {\n        if(!op_mode.menus.hasOwnProperty(msg.no)) {\n            op_mode.menus[msg.no] = {};\n        }\n        om = op_mode.menus[msg.no];\n        uc = ui_cache[msg.topic + '-' + msg.no]\n    }\n    else {\n        if(!op_mode.settings.hasOwnProperty(msg.topic)) {\n            op_mode.settings[msg.topic] = {};\n        }\n        om = op_mode.settings[msg.topic];\n        uc = ui_cache[msg.topic];\n    }\n    \n    if(msg.event === 'toggle_fav') {\n        om.fav = !om.fav;\n    }\n\n    if(msg.event === 'toggle_saved') {\n        om.saved = !om.saved;\n    }\n    \n    flow.set('op_mode', op_mode);\n\n    return uc;\n}\n\nif(msg.event === 'toggle_fav' || msg.event === 'toggle_saved') {\n    return [null, toggle(msg)];\n}\n\nconst ui_to_settings = flow.get('ui_to_settings');\n\nif(ui_to_settings.hasOwnProperty(msg.topic)) {\n    const ue = ui_to_settings[msg.topic];\n\n    if(ue.hasOwnProperty('handler')) {\n        return [{payload: ue.handler(msg)}, null];\n    }\n\n    node.warn('Received UI event without handler: ' + JSON.stringify(ue));\n}\n\nreturn null;",
+        "name": "Handle UI App Events",
+        "func": "'use strict';\n\nfunction toggle(msg) {\n    const OpModes = flow.get('OpModes'),\n          op_mode = OpModes.currentOpMode(),\n          ui_cache = flow.get('ui_cache');\n    let om,\n        uc;\n\n    if(msg.topic === 'menu_item') {\n        if(!op_mode.menus.hasOwnProperty(msg.no)) {\n            op_mode.menus[msg.no] = {};\n        }\n        om = op_mode.menus[msg.no];\n        uc = ui_cache[msg.topic + '-' + msg.no]\n    }\n    else {\n        if(!op_mode.settings.hasOwnProperty(msg.topic)) {\n            op_mode.settings[msg.topic] = {};\n        }\n        om = op_mode.settings[msg.topic];\n        uc = ui_cache[msg.topic];\n    }\n    \n    if(msg.event === 'toggle_fav') {\n        om.fav = !(om.fav || false);\n    }\n\n    if(msg.event === 'toggle_saved') {\n        om.saved = !(om.saved || false);\n        \n        if(om.saved) {\n            if(typeof(uc.value) === 'object') {\n                om.value = Object.assign({}, oc.value);\n            }\n            else {\n                om.value = uc.value;\n            }\n        }\n        else {\n            delete om['value'];\n        }\n    }\n    \n    // Save changes to this Op Mode to storage\n\n    OpModes.saveOpMode(op_mode);\n\n    return uc;\n}\n\nif(msg.event === 'toggle_fav' || msg.event === 'toggle_saved') {\n    return [null, toggle(msg)];\n}\n\nconst ui_to_settings = flow.get('ui_to_settings');\n\nif(ui_to_settings.hasOwnProperty(msg.topic)) {\n    const ue = ui_to_settings[msg.topic];\n\n    if(ue.hasOwnProperty('handler')) {\n        return [{payload: ue.handler(msg)}, null];\n    }\n\n    node.warn('Received UI event without handler: ' + JSON.stringify(ue));\n}\n\nreturn null;",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 580,
-        "y": 460,
+        "x": 601.0000114440918,
+        "y": 503.0000476837158,
         "wires": [
             [
-                "99ca4b3c.afeac8",
                 "5d213f36.1289e"
             ],
             [
-                "d488fc0.05b1808",
-                "e19d15b7.026db8"
+                "d488fc0.05b1808"
             ]
         ]
-    },
-    {
-        "id": "99ca4b3c.afeac8",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 770,
-        "y": 420,
-        "wires": []
     },
     {
         "id": "b3949e3.78dc86",
         "type": "link in",
         "z": "36d8cfa8.00955",
-        "name": "UI",
+        "name": "TO_UI",
         "links": [
+            "8b7f347c.c6c2b8",
             "eb4cdb5c.e742a8",
             "f4962b9f.b6a398",
-            "ea8768d0.a50838"
+            "217430e2.5e2e4"
         ],
-        "x": 55,
-        "y": 480,
+        "x": 56.0000114440918,
+        "y": 523.0000476837158,
         "wires": [
             [
                 "9811ec0f.4afb"
             ]
         ]
-    },
-    {
-        "id": "eb4cdb5c.e742a8",
-        "type": "link out",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "links": [
-            "b3949e3.78dc86"
-        ],
-        "x": 615,
-        "y": 240,
-        "wires": []
     },
     {
         "id": "f4962b9f.b6a398",
@@ -839,7 +799,7 @@
             "b3949e3.78dc86"
         ],
         "x": 295,
-        "y": 780,
+        "y": 860,
         "wires": []
     },
     {
@@ -887,8 +847,8 @@
             "f52d625e.4d618",
             "80bd8c8a.4d949"
         ],
-        "x": 63,
-        "y": 260,
+        "x": 64.0000114440918,
+        "y": 303.0000476837158,
         "wires": [
             [
                 "9c763636.fb5f88",
@@ -970,7 +930,7 @@
             "3e47df65.4edf7"
         ],
         "x": 55,
-        "y": 620,
+        "y": 700,
         "wires": [
             [
                 "b49c81d6.a9d11",
@@ -987,8 +947,8 @@
             "1d1d213a.3e601f",
             "9efce6a4.2da0c8"
         ],
-        "x": 343,
-        "y": 280,
+        "x": 344.0000114440918,
+        "y": 323.0000476837158,
         "wires": []
     },
     {
@@ -1000,7 +960,7 @@
             "3e47df65.4edf7"
         ],
         "x": 55,
-        "y": 780,
+        "y": 860,
         "wires": [
             [
                 "407bcb2b.b76c44"
@@ -1016,7 +976,7 @@
             "9725b52b.0bb248"
         ],
         "x": 575,
-        "y": 620,
+        "y": 700,
         "wires": []
     },
     {
@@ -1032,8 +992,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 208,
-        "y": 320,
+        "x": 209.0000114440918,
+        "y": 363.0000476837158,
         "wires": []
     },
     {
@@ -1044,8 +1004,8 @@
         "links": [
             "9725b52b.0bb248"
         ],
-        "x": 735,
-        "y": 460,
+        "x": 795,
+        "y": 480,
         "wires": []
     },
     {
@@ -1140,13 +1100,13 @@
         "type": "function",
         "z": "36d8cfa8.00955",
         "name": "Add fav + saved",
-        "func": "'use strict';\n\nconst op_mode = flow.get('op_mode');\n\nmsg.saved = false;\nmsg.fav = false;\n        \nif(msg.name === 'menu_item') {\n    if(op_mode.menus.hasOwnProperty(msg.no)) {\n        msg.saved = op_mode.menus[msg.no].saved || false;\n        msg.fav = op_mode.menus[msg.no].fav || false;\n    }\n}\nelse if(op_mode.settings.hasOwnProperty(msg.name)) {\n    msg.saved = op_mode.settings[msg.name].saved || false;\n    msg.fav = op_mode.settings[msg.name].fav || false;\n}\n\nreturn msg;",
+        "func": "'use strict';\n\nconst OpModes = flow.get('OpModes'),\n      op_mode = OpModes.currentOpMode();\n\nmsg.saved = false;\nmsg.fav = false;\n        \nif(msg.name === 'menu_item') {\n    if(op_mode.menus.hasOwnProperty(msg.no)) {\n        msg.saved = op_mode.menus[msg.no].saved || false;\n        msg.fav = op_mode.menus[msg.no].fav || false;\n    }\n}\nelse if(op_mode.settings.hasOwnProperty(msg.name)) {\n    msg.saved = op_mode.settings[msg.name].saved || false;\n    msg.fav = op_mode.settings[msg.name].fav || false;\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 460,
-        "y": 240,
+        "x": 461.0000114440918,
+        "y": 283.0000476837158,
         "wires": [
             [
                 "eb4cdb5c.e742a8"
@@ -1161,8 +1121,8 @@
         "links": [
             "d488fc0.05b1808"
         ],
-        "x": 335,
-        "y": 220,
+        "x": 336.0000114440918,
+        "y": 263.0000476837158,
         "wires": [
             [
                 "d7b0ba27.0da0e8"
@@ -1177,8 +1137,8 @@
         "links": [
             "c9c2c1bf.91386"
         ],
-        "x": 735,
-        "y": 500,
+        "x": 795,
+        "y": 540,
         "wires": []
     },
     {
@@ -1199,7 +1159,26 @@
         "wires": []
     },
     {
-        "id": "30d1fee2.20f532",
+        "id": "9811ec0f.4afb",
+        "type": "function",
+        "z": "36d8cfa8.00955",
+        "name": "Package in paylaod",
+        "func": "return {payload: msg};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 191.0000114440918,
+        "y": 523.0000476837158,
+        "wires": [
+            [
+                "c229a01c.c9c49",
+                "13bb7693.76eea9"
+            ]
+        ]
+    },
+    {
+        "id": "13bb7693.76eea9",
         "type": "debug",
         "z": "36d8cfa8.00955",
         "name": "",
@@ -1211,61 +1190,59 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 770,
+        "x": 371.0000114440918,
+        "y": 463.0000476837158,
+        "wires": []
+    },
+    {
+        "id": "eb4cdb5c.e742a8",
+        "type": "link out",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "links": [
+            "b3949e3.78dc86"
+        ],
+        "x": 616.0000114440918,
+        "y": 283.0000476837158,
+        "wires": []
+    },
+    {
+        "id": "217430e2.5e2e4",
+        "type": "link out",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "links": [
+            "b3949e3.78dc86"
+        ],
+        "x": 795,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "28ff68b8.a52a58",
+        "type": "debug",
+        "z": "36d8cfa8.00955",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
         "y": 540,
         "wires": []
     },
     {
-        "id": "9811ec0f.4afb",
-        "type": "function",
+        "id": "641c6a5f.6769a4",
+        "type": "comment",
         "z": "36d8cfa8.00955",
-        "name": "Package in paylaod",
-        "func": "\nreturn {payload: msg};",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 190,
-        "y": 480,
-        "wires": [
-            [
-                "c229a01c.c9c49",
-                "13bb7693.76eea9"
-            ]
-        ]
-    },
-    {
-        "id": "e19d15b7.026db8",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 830,
-        "y": 480,
-        "wires": []
-    },
-    {
-        "id": "13bb7693.76eea9",
-        "type": "debug",
-        "z": "36d8cfa8.00955",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 370,
-        "y": 420,
+        "name": "Handle events from rig to UI",
+        "info": "",
+        "x": 140,
+        "y": 240,
         "wires": []
     }
 ]
