@@ -13,11 +13,11 @@ module.exports = {
         }
     },
     methods: {
-        sendClick: e => {
-            uibuilder.send({topic: 'tuner', payload: 'click'});
+        sendClick: function(e) {
+            uibuilder.send({topic: 'tuner', event: 'click'});
         },
-        sendDblclick: e => {
-            uibuilder.send({topic: 'tuner', payload: 'dblclick'});
+        sendDblclick: function(e) {
+            uibuilder.send({topic: 'tuner', event: 'dblclick'});
         }
     },
     mounted: function() {

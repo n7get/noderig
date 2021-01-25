@@ -14,7 +14,7 @@ module.exports = {
     },
     methods: {
         sendClick: e => {
-            uibuilder.send({topic: 'lock', payload: 'click'});
+            uibuilder.send({topic: 'lock', event: 'click'});
         },
     },
     mounted: function() {
