@@ -1,8 +1,8 @@
 <template>
 <div>
     <b-row>
-        <b-button class="col-3">{{ op_mode }}</b-button>
-        <frequency class="col-9"></frequency>
+        <op-mode class="col-3"></op-mode>
+        <frequency class="col-9 pt-3"></frequency>
     </b-row>
     <!-- <b-row v-show="isOpMode(['data-hf', 'voice-ssh'])" class="mt-2"> -->
     <b-row class="mt-2">
@@ -39,6 +39,7 @@ module.exports = {
         'id-meter':         httpVueLoader('id-meter.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
         'mode-status':      httpVueLoader('mode-status.vue'),
+        'op-mode':          httpVueLoader('op-mode.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
         'power-level':      httpVueLoader('power-level.vue'),
         'pre-amp-status':   httpVueLoader('pre-amp-status.vue'),
@@ -52,7 +53,6 @@ module.exports = {
     data: function() {
         return {
             meter_switch: '',
-            op_mode: 'Op Mode',
             tx_on: false,
         }
     },
@@ -62,10 +62,7 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.name === 'op_mode') {
-                self.op_mode = p.value;
-            }
-            else if(p.name === 'transmit') {
+            if(p.name === 'transmit') {
                 if(p.hasOwnProperty('value')) {
                     self.tx_on = p.value;
                 }
