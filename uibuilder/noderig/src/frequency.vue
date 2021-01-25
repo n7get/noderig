@@ -24,6 +24,7 @@
                 <b-form-input
                     id="freq-input"
                     ref="freqInput"
+                    @keyup.enter="handleOk"
                     v-model="edit_freq"
                     :state="freqState"
                     required
