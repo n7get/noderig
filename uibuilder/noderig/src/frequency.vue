@@ -19,14 +19,14 @@
                 label="Freq:"
                 label-for="freq-input"
                 invalid-feedback="Invalid frequency"
-                :state="freqState"
+                :state="freq_state"
             >
                 <b-form-input
                     id="freq-input"
                     ref="freqInput"
                     @keyup.enter="handleOk"
                     v-model="edit_freq"
-                    :state="freqState"
+                    :state="freq_state"
                     required
                 ></b-form-input>
             </b-form-group>
@@ -151,7 +151,7 @@ module.exports = {
             hz:  'hhh',
             tx_on:  false,
             edit_freq: '',
-            freqState: null,
+            freq_state: null,
         }
     },
     methods: {
@@ -189,11 +189,11 @@ module.exports = {
         checkFormValidity: function() {
             var valid = this.$refs.form.checkValidity();
 
-            this.freqState = valid;
+            this.freq_state = valid;
             return valid
         },
         resetModal: function() {
-            this.freqState = null;
+            this.freq_state = null;
         },
         handleOk: function(e) {
             var new_freq = convFreq(this.edit_freq);
@@ -207,7 +207,7 @@ module.exports = {
                 uibuilder.send({topic: this.vfo, event: 'set', value: new_freq});
             }
             else {
-                this.freqState = false;
+                this.freq_state = false;
                 e.preventDefault();
             }
         },
