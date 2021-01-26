@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button @click="showList" @dblclick="toggleLastOpMode">{{ opMode }}</b-button>
+        <b-button @click="showList" @dblclick="toggleLastOpMode">{{ name }}</b-button>
 
         <b-modal
             id="list-op-modes"
@@ -10,7 +10,7 @@
             <template #modal-header>
                 <div class="px-2 d-flex justify-content-between align-items-left w-100">
                     <div @click="editOpMode">Edit</div>
-                    <div>{{ opMode }}</div>
+                    <div>{{ name }}</div>
                     <div @click="saveOpMode">Save</div>
                 </div>
             </template>
@@ -36,11 +36,16 @@
                 <b-form-input
                     id="name"
                     ref="name-input"
-                    @keyup.enter="handleOk"
-                    v-model="opModeName"
+                    v-model="nameInput"
                     :state="nameInputState"
                     required
                 ></b-form-input>
+                <b-form-textarea
+                    id="trigger"
+                    v-model="triggerInput"
+                    placeholder="Op Mode Trigger (JSON)"
+                    rows="6"
+                ></b-form-textarea>
             </b-form-group>
         </b-modal>
     </div>
@@ -50,9 +55,11 @@
 module.exports = {
     data: function() {
         return {
-            opMode: 'Op Mode',
+            name: 'Op Mode',
+            trigger: '',
             opModes: [],
-            opModeName: '',
+            nameInput: '',
+            triggerInput: '',
             nameInputState: null,
         }
     },
@@ -66,7 +73,8 @@ module.exports = {
             uibuilder.send({topic: 'op_mode', event: 'dblclick'});
         },
         editOpMode: function() {
-            this.opModeName = this.opMode;
+            this.nameInput = this.name;
+            this.triggerInput = this.trigger;
             this.$bvModal.show('edit-op-mode');
         },
         loadOpMode: function(name) {
@@ -97,17 +105,30 @@ module.exports = {
             this.nameInputState = null;
         },
         handleOk: function(e) {
-            if(this.opModeName) {
+            let hasErrors = true;
+
+            if(this.nameInput) {
+                // TODO: More validation?
+            }
+            if(this.triggerInput) {
+                try {
+                    JSON.parse(this.triggerInput);                    
+                } catch (error) {
+                    console.log('error ', error);
+                }
+            }
+
+            if(hasErrors) {
+                this.nameInputState = false;
+                e.preventDefault();
+            }
+            else {
                 this.resetModal();
                 this.$nextTick(function() {
                     this.$bvModal.hide('edit-op-mode');
                 });
 
-                uibuilder.send({topic: 'op_mode', event: 'update', value: {name: this.opModeName}});
-            }
-            else {
-                this.nameInputState = false;
-                e.preventDefault();
+                uibuilder.send({topic: 'op_mode', event: 'update', value: {name: this.nameInput, trigger: this.triggerInput}});
             }
         },
     },
@@ -118,7 +139,9 @@ module.exports = {
             var p = msg.payload;
 
             if(p.name === 'op_mode') {
-                self.opMode = p.value;
+console.log('op_mode: ', p.value);
+                self.name = p.value.name;
+                self.trigger = p.value.trigger;
             }
             else if(p.name === 'op_modes') {
                 self.opModes = p.value;
