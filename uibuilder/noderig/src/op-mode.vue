@@ -30,7 +30,7 @@
             <b-form-group
                 label="Name:"
                 label-for="name"
-                invalid-feedback="Invalid name"
+                :invalid-feedback="errorMessage"
                 :state="nameInputState"
             >
                 <b-form-input
@@ -61,6 +61,7 @@ module.exports = {
             nameInput: '',
             triggerInput: '',
             nameInputState: null,
+            errorMessage: 'an error message',
         }
     },
     methods: {
@@ -74,7 +75,7 @@ module.exports = {
         },
         editOpMode: function() {
             this.nameInput = this.name;
-            this.triggerInput = this.trigger;
+            this.triggerInput = JSON.stringify(this.trigger);
             this.$bvModal.show('edit-op-mode');
         },
         loadOpMode: function(name) {
@@ -105,16 +106,20 @@ module.exports = {
             this.nameInputState = null;
         },
         handleOk: function(e) {
-            let hasErrors = true;
+            let hasErrors = false;
 
-            if(this.nameInput) {
-                // TODO: More validation?
+            if(!this.nameInput) {
+                this.errorMessage = 'Op Mode name is required';
+                hasErrors = true;
             }
+
             if(this.triggerInput) {
+console.log('triggerInput: ' + this.triggerInput);
                 try {
                     JSON.parse(this.triggerInput);                    
                 } catch (error) {
-                    console.log('error ', error);
+                    this.errorMessage = error.message;
+                    hasErrors = true;
                 }
             }
 
@@ -128,7 +133,7 @@ module.exports = {
                     this.$bvModal.hide('edit-op-mode');
                 });
 
-                uibuilder.send({topic: 'op_mode', event: 'update', value: {name: this.nameInput, trigger: this.triggerInput}});
+                uibuilder.send({topic: 'op_mode', event: 'update', value: {name: this.nameInput, trigger: JSON.parse(this.triggerInput)}});
             }
         },
     },
