@@ -113,7 +113,9 @@ module.exports = {
                     self.menu_items[p.no].saved = p.saved;
                 }
                 if(p.hasOwnProperty('value')) {
-                    self.menu_items[p.no].value = p.value;
+                    var MenuValueConverter = this.$noderig.MenuValueConverter;
+
+                    self.menu_items[p.no].value = MenuValueConverter.toUi(p.no, p.value);
                 }
             }
 
