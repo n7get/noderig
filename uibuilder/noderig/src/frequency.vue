@@ -86,7 +86,7 @@ function scale_frac(dec, value) {
 
 function freq_hz(value) {
     var dot = value.indexOf('.'),
-    dec = parseInt(value.substring(0, dot), 10),
+        dec = parseInt(value.substring(0, dot), 10),
         frac = scale_frac(dec, value.substring(dot + 1));
         freq = add_dec_frac(dec, frac);
 
@@ -127,7 +127,7 @@ function convFreq(arg) {
     if(valid_freqs.some( function(f) {
         return (freq >= f[0] && freq <= f[1]);
     })) {
-        return freq;    
+        return parseInt(freq, 10);    
     }
 
     return null;
@@ -222,11 +222,16 @@ module.exports = {
                 if(p.hasOwnProperty('value')) {
                     if(p.freq !== self.freq) {
                         self.last_freq = self.freq;
-                        self.freq = p.value;
 
-                        self.mhz = p.value.substring(0, 3).replace(/ /g,'&nbsp;');;
-                        self.khz = p.value.substring(3, 6);
-                        self.hz  = p.value.substring(6, 9);
+                        let value = p.value.toString();
+                        while(value.length < 9) {
+                            value = ' ' + value;
+                        }
+                        self.freq = value;
+
+                        self.mhz = value.substring(0, 3).replace(/ /g,'&nbsp;');;
+                        self.khz = value.substring(3, 6);
+                        self.hz  = value.substring(6, 9);
                     }
                 }
             }

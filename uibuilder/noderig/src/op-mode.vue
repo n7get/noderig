@@ -44,7 +44,7 @@
                 <b-form-textarea
                     id="trigger"
                     v-model="triggerInput"
-                    placeholder="Op Mode Trigger (JSON)"
+                    placeholder="Op Mode Trigger"
                     rows="6"
                 ></b-form-textarea>
             </b-form-group>
@@ -76,7 +76,7 @@ module.exports = {
         },
         editOpMode: function() {
             this.nameInput = this.name;
-            this.triggerInput = JSON.stringify(this.trigger);
+            this.triggerInput = this.trigger;
             this.$bvModal.show('edit-op-mode');
         },
         loadOpMode: function(name) {
@@ -124,7 +124,7 @@ module.exports = {
             if(this.triggerInput) {
                 console.log('trigger: ' + this.triggerInput);
                 try {
-                    JSON.parse(this.triggerInput);                    
+                    new Function(this.triggerInput);                    
                 } catch (error) {
                     this.errorMessage = error.message;
                     hasErrors = true;
@@ -141,10 +141,7 @@ module.exports = {
                     this.$bvModal.hide('edit-op-mode');
                 });
 
-                var update = {name: this.nameInput};
-                if(this.triggerInput) {
-                    update.trigger = JSON.parse(this.triggerInput);
-                }
+                var update = {name: this.nameInput, trigger: this.triggerInput};
                 uibuilder.send({topic: 'op_mode', event: 'update', value: update});
             }
         },
@@ -158,7 +155,12 @@ module.exports = {
             if(p.name === 'op_mode') {
 console.log('op_mode: ', p.value);
                 self.name = p.value.name;
-                self.trigger = p.value.trigger;
+                if(typeof(p.value.trigger) === 'object') {
+                    self.trigger = JSON.stringify(p.value.trigger);
+                }
+                else {
+                    self.trigger = p.value.trigger;
+                }
             }
             else if(p.name === 'op_modes') {
                 self.opModes = p.value;
