@@ -15,8 +15,9 @@
                 </div>
             </template>
             <div v-for="name in opModes">
-                <div @click="loadOpMode(name)">
-                    {{ name }}
+                <div class="px-2 d-flex justify-content-between align-items-left">
+                    <div @click="loadOpMode(name)">{{ name }}</div>
+                    <div @click="removeOpMode(name)"><b-icon-trash></b-icon-trash></div>
                 </div>
             </div>
         </b-modal>
@@ -85,6 +86,14 @@ module.exports = {
 
             uibuilder.send({topic: 'op_mode', event: 'load', value: name});
         },
+        removeOpMode: function(name) {
+            this.$bvModal.msgBoxConfirm('Delete Op Mode ' + name + '?', {})
+                .then(function(result) {
+                    if(result) {
+                        uibuilder.send({topic: 'op_mode', event: 'remove', value: name});
+                    }
+                });
+        },
         saveOpMode: function() {
             this.$nextTick(function() {
                 this.$bvModal.hide('list-op-modes');
@@ -114,7 +123,6 @@ module.exports = {
             }
 
             if(this.triggerInput) {
-console.log('triggerInput: ' + this.triggerInput);
                 try {
                     JSON.parse(this.triggerInput);                    
                 } catch (error) {
