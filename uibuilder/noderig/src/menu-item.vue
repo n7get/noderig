@@ -1,5 +1,5 @@
 <template>
-    <b-card no-body border-variant="secondary">
+    <b-card class="mt-2" no-body border-variant="secondary">
         <b-card-header class="px-2 d-flex justify-content-between align-items-left">
             <div @click="toggleDisplayMode">{{ showDisplayMode() }}</div>
             <div text-variant="white" bg-variant="secondary">
@@ -8,7 +8,6 @@
             <div v-show="!edit_mode" @click="edit">Edit</div>
             <div v-show="edit_mode" @click="done">Done</div>
         </b-card-header>
-        <div>
             <div class="px-2 d-flex justify-content-between align-items-left bg-secondary text-light">
                 <div>no Description</div>
                 <div v-show="!edit_mode">Value</div>
@@ -16,6 +15,7 @@
                     <span>Fav</span>&nbsp;<span>Saved</span>
                 </div>
             </div>
+        <div class="list-area">
             <div class="px-2 d-flex justify-content-between align-items-left"
                 v-for="(mi, no) in menu_items"
                 :key="no"
@@ -127,6 +127,11 @@ module.exports = {
 }
 </script>
 <style scoped>
+    .list-area {
+        overflow: auto;
+        max-height: 20em;
+        min-height: 5em;
+    }
     .pad {
         padding-left: .5em;
     }

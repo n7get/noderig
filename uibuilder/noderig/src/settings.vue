@@ -1,5 +1,5 @@
 <template>
-    <b-card no-body border-variant="secondary">
+    <b-card class="mt-2" no-body border-variant="secondary">
         <b-card-header class="px-2 d-flex justify-content-between align-items-left">
             <div @click="toggleDisplayMode">{{ show_display_mode() }}</div>
             <div text-variant="white" bg-variant="secondary">
@@ -16,30 +16,32 @@
                 <span>Fav</span>&nbsp;<span>Saved</span>
             </div>
         </div>
-        <div class="px-2 d-flex justify-content-between align-items-left"
-            v-for="(s, name) in settings"
-            :key="name"
-            v-if="showConfigSetting(s)">
+        <div class="list-area">
+            <div class="px-2 d-flex justify-content-between align-items-left"
+                v-for="(s, name) in settings"
+                :key="name"
+                v-if="showConfigSetting(s)">
 
-            <div>{{ s.desc }}<span v-if="s.changed">*</span></div>
-            <div v-show="!edit_mode">{{ s.value }}</div>
-            <div v-show="edit_mode">
-                <span @click="toggleFav(name)">
-                    <span v-show="s.fav">
-                        <b-icon-check-square></b-icon-square>
+                <div>{{ s.desc }}<span v-if="s.changed">*</span></div>
+                <div v-show="!edit_mode">{{ s.value }}</div>
+                <div v-show="edit_mode">
+                    <span @click="toggleFav(name)">
+                        <span v-show="s.fav">
+                            <b-icon-check-square></b-icon-square>
+                        </span>
+                    <span v-show="!s.fav">
+                            <b-icon-square></b-icon-square>
+                        </span>
                     </span>
-                   <span v-show="!s.fav">
-                        <b-icon-square></b-icon-square>
+                    <span class="pl-3 pr-2" @click="togglesaved(name)">
+                        <span v-show="s.saved">
+                            <b-icon-check-square></b-icon-square>
+                        </span>
+                        <span v-show="!s.saved">
+                            <b-icon-square></b-icon-square>
+                        </span>
                     </span>
-                </span>
-                <span class="pl-3 pr-2" @click="togglesaved(name)">
-                    <span v-show="s.saved">
-                        <b-icon-check-square></b-icon-square>
-                    </span>
-                    <span v-show="!s.saved">
-                        <b-icon-square></b-icon-square>
-                    </span>
-                </span>
+                </div>
             </div>
         </div>
     </b-card>
@@ -120,3 +122,10 @@ module.exports = {
 }
 </script>
 
+<style scoped>
+    .list-area {
+        overflow: auto;
+        max-height: 20em;
+        min-height: 5em;
+    }
+</style>
