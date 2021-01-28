@@ -14,10 +14,10 @@
                     <div @click="saveOpMode">Save</div>
                 </div>
             </template>
-            <div v-for="name in opModes">
+            <div v-for="om in opModes">
                 <div class="px-2 d-flex justify-content-between align-items-left">
-                    <div @click="loadOpMode(name)">{{ name }}</div>
-                    <div @click="removeOpMode(name)"><b-icon-trash></b-icon-trash></div>
+                    <div @click="loadOpMode(om.name)">{{ om.name }}</div>
+                    <div @click="removeOpMode(om.name)" v-if="om.can_delete"><b-icon-trash></b-icon-trash></div>
                 </div>
             </div>
         </b-modal>
@@ -121,8 +121,8 @@ module.exports = {
                 this.errorMessage = 'Op Mode name is required';
                 hasErrors = true;
             }
-
             if(this.triggerInput) {
+                console.log('trigger: ' + this.triggerInput);
                 try {
                     JSON.parse(this.triggerInput);                    
                 } catch (error) {
@@ -141,7 +141,11 @@ module.exports = {
                     this.$bvModal.hide('edit-op-mode');
                 });
 
-                uibuilder.send({topic: 'op_mode', event: 'update', value: {name: this.nameInput, trigger: JSON.parse(this.triggerInput)}});
+                var update = {name: this.nameInput};
+                if(this.triggerInput) {
+                    update.trigger = JSON.parse(this.triggerInput);
+                }
+                uibuilder.send({topic: 'op_mode', event: 'update', value: update});
             }
         },
     },
@@ -158,7 +162,6 @@ console.log('op_mode: ', p.value);
             }
             else if(p.name === 'op_modes') {
                 self.opModes = p.value;
-console.log('op_modes: ', p.value);
             }
         });
     },
