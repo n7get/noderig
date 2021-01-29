@@ -10,7 +10,8 @@
         <lock-status class="mr-2">></lock-status>
         <pre-amp-status class="mr-2">></pre-amp-status>
         <alc-status class="mr-2">></alc-status>
-        <mode-status></mode-status>
+        <mode-status class="mr-2"></mode-status>
+        <manual-mode-status></manual-mode-status>
     </b-row>
     <s-meter v-show="!tx_on" class="mt-2"></s-meter>
     <swr-meter v-show="tx_on" class="mt-2"></swr-meter>
@@ -38,6 +39,7 @@ module.exports = {
         'frequency':        httpVueLoader('frequency.vue'),
         'id-meter':         httpVueLoader('id-meter.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
+        'manual-mode-status': httpVueLoader('manual-mode-status.vue'),
         'mode-status':      httpVueLoader('mode-status.vue'),
         'op-mode':          httpVueLoader('op-mode.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
