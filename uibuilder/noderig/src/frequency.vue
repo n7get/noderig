@@ -30,7 +30,6 @@
                     required
                 ></b-form-input>
             </b-form-group>
-        </form>
         </b-modal>
     </div>
 </template>
