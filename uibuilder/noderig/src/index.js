@@ -31,6 +31,7 @@ window.noderig = {
 Vue.prototype.$noderig = {
     settings: {
         af_gain: { desc: 'AF GAIN', value: null, changed: false, fav: false, saved: false},
+        tuner: { desc: 'ANTENNA TUNER CONTROL', value: null, changed: false, fav: false, saved: false},
         apf_freq: { desc: 'APF FREQ', value: null, changed: false, fav: false, saved: false},
         apf_on: { desc: 'APF ON/OFF', value: null, changed: false, fav: false, saved: false},
         auto_notch: { desc: 'AUTO NOTCH', value: null, changed: false, fav: false, saved: false},
@@ -45,6 +46,8 @@ Vue.prototype.$noderig = {
         date: { desc: 'DATE', value: null, changed: false, fav: false, saved: false},
         dcs_tone_frequency: { desc: 'DCS TONE FREQUENCY', value: null, changed: false, fav: false, saved: false},
         fast_step: { desc: 'FAST STEP', value: null, changed: false, fav: false, saved: false},
+        vfo_a: { desc: 'FREQUENCY VFO-A', value: null, changed: false, fav: false, saved: false},
+        vfo_b: { desc: 'FREQUENCY VFO-B', value: null, changed: false, fav: false, saved: false},
         if_shift: { desc: 'IF-SHIFT', value: null, changed: false, fav: false, saved: false},
         key_pitch: { desc: 'KEY PITCH', value: null, changed: false, fav: false, saved: false},
         key_speed: { desc: 'KEY SPEED', value: null, changed: false, fav: false, saved: false},
@@ -77,11 +80,8 @@ Vue.prototype.$noderig = {
         time: { desc: 'TIME', value: null, changed: false, fav: false, saved: false},
         time_differential: { desc: 'TIME DIFFERENTIAL', value: null, changed: false, fav: false, saved: false},
         transmit: { desc: 'TX SET', value: null, changed: false, fav: false, saved: false},
-        tuner: { desc: 'ANTENNA TUNER CONTROL', value: null, changed: false, fav: false, saved: false},
         tx_clar: { desc: 'TX CLAR', value: null, changed: false, fav: false, saved: false},
         txw: { desc: 'TXW', value: null, changed: false, fav: false, saved: false},
-        vfo_a: { desc: 'FREQUENCY VFO-A', value: null, changed: false, fav: false, saved: false},
-        vfo_b: { desc: 'FREQUENCY VFO-B', value: null, changed: false, fav: false, saved: false},
         vox_gain: { desc: 'VOX GAIN', value: null, changed: false, fav: false, saved: false},
         vox_status: { desc: 'VOX STATUS', value: null, changed: false, fav: false, saved: false},
     },
