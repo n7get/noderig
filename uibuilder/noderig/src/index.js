@@ -1194,7 +1194,7 @@ var app1 = new Vue({
     el: '#app',
 
     components: {
-        'data-hf':      httpVueLoader('data-hf.vue'),
+        'controls':     httpVueLoader('controls.vue'),
         'menu-item':    httpVueLoader('menu-item.vue'),
         'settings':     httpVueLoader('settings.vue'),
     },
