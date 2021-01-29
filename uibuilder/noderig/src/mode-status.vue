@@ -1,7 +1,18 @@
 
 <template>
     <div>
-        {{ mode }}
+        <span @click="handleClick">{{ mode }}<span>
+
+        <b-modal
+            id="new-mode"
+            size="sm"
+            hide-footer
+        >
+            <template #modal-title>
+                Set mode
+            </template>
+            <div class="font-weight-bold my-1 ml-0 py-3 pl-3 border text-light bg-primary" v-for="m in modes" @click="selectMode(m)">{{ m }}</div>
+        </b-modal>
     </div>
 </template>
 
@@ -9,8 +20,36 @@
 module.exports = {
     data: function() {
         return {
-            mode: 'mode'
+            mode: 'mode',
+            modes: [
+                'LSB',
+                'USB',
+                'FM',
+                'DATA-USB',
+                'DATA-FM',
+                'RTTY-LSB',
+                'RTTY-USB',
+                'CW',
+                'CW-R',
+                'DATA-LSB',
+                'AM',
+                'AM-N',
+                'FM-N',
+                'C4FM'
+            ],
         }
+    },
+    methods: {
+        handleClick: function() {
+            this.$bvModal.show('new-mode');
+        },
+        selectMode: function(m) {
+            this.$nextTick(function() {
+                this.$bvModal.hide('new-mode');
+            });
+
+            uibuilder.send({topic: 'mode', event: 'set', value: m});
+        },
     },
     mounted: function() {
         var self = this;
