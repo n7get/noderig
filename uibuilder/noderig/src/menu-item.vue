@@ -1,5 +1,5 @@
 <template>
-    <b-card class="mt-2" no-body border-variant="secondary">
+    <b-card class="mt-2 pb-2" no-body border-variant="secondary">
         <b-card-header class="px-2 d-flex justify-content-between align-items-left">
             <div @click="toggleDisplayMode">{{ showDisplayMode() }}</div>
             <div text-variant="white" bg-variant="secondary">
