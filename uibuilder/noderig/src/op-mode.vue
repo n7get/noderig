@@ -15,7 +15,7 @@
                 </div>
             </template>
             <div v-for="om in opModes">
-                <div class="px-2 d-flex justify-content-between align-items-left">
+                <div class="font-weight-bold my-1 ml-2 py-3 px-3 border text-light bg-primary d-flex justify-content-between align-items-left">
                     <div @click="loadOpMode(om.name)">{{ om.name }}</div>
                     <div @click="removeOpMode(om.name)" v-if="om.can_delete"><b-icon-trash></b-icon-trash></div>
                 </div>
