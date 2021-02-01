@@ -2,7 +2,6 @@
   "vue",
   "bootstrap",
   "bootstrap-vue",
-  "jquery",
   "socket.io",
   "http-vue-loader"
 ]
