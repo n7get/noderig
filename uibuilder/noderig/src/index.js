@@ -1192,25 +1192,7 @@ Vue.prototype.$noderig = {
 
 var app1 = new Vue({
     el: '#app',
-
     components: {
-        'controls':     httpVueLoader('controls.vue'),
-        'menu-item':    httpVueLoader('menu-item.vue'),
-        'settings':     httpVueLoader('settings.vue'),
+        'ui': httpVueLoader('ui.vue'),
     },
-    mounted: function(){
-        var self = this;
-        
-        uibuilder.start()
-
-        uibuilder.onChange('msg', msg => {
-            var p = msg.payload;
-
-            if(p.name === 'alert') {
-                console.log('alert: ', p.value);
-                self.$bvModal.msgBoxOk(p.value, {});
-            }
-        });
-    },
-
 });

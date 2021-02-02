@@ -11,6 +11,13 @@ The CAT (Computer Aided Transceiver) System in the FT-991A transceiver provides 
 
 That in a nutshell is the purpose of this software.  It's not a remote control application, there are already high quality applications such as HRD, flrig, Win4Yaesu, et al.  This software for the operator who is working to provide emergency communications (Emcomm).  The purpose o this software is to automate the radio to aid the operator in getting the messages to where they are going.
 
+### Features
+
+* Shuts down rig if high SWR is detected
+* Can show what changes to the rig's settings have been made since the last Op Mode was loaded.
+* Automaticly switches Op Modes based on frequency.
+* 
+
 ### Install
 Node-red Palettes to install:
 	node-red-node-serialport

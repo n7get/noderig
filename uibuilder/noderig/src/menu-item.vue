@@ -90,10 +90,10 @@ module.exports = {
             this.edit_mode = false;
         },
         toggleFav: function(no) {
-            uibuilder.send({topic: 'menu_item', event: 'toggle_fav', no: no});
+            uibuilder.send({topic: 'menu_item', event: 'toggle_fav', value: no});
         },
         togglesaved: function(no) {
-            uibuilder.send({topic: 'menu_item', event: 'toggle_saved', no: no});
+            uibuilder.send({topic: 'menu_item', event: 'toggle_saved', value: no});
         },
     },
     mounted: function() {

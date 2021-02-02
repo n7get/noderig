@@ -91,10 +91,10 @@ module.exports = {
             this.edit_mode = false;
         },
         toggleFav: function(name) {
-            uibuilder.send({topic: name, event: 'toggle_fav'});
+            uibuilder.send({topic: 'settings', event: 'toggle_fav', value: name});
         },
         togglesaved: function(name) {
-            uibuilder.send({topic: name, event: 'toggle_saved'});
+            uibuilder.send({topic: 'settings', event: 'toggle_saved', value: name});
         },
     },
     mounted: function() {
