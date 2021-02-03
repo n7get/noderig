@@ -5,7 +5,7 @@
         <frequency class="col-9 pt-3"></frequency>
     </b-row>
     <!-- <b-row v-show="isOpMode(['data-hf', 'voice-ssh'])" class="mt-2"> -->
-    <b-row class="mt-2">
+    <b-row class="ml-1 mt-2 pb-1 border-bottom d-flex justify-content-between align-items-left w-100">
         <tuner-status class="mr-2"></tuner-status>
         <lock-status class="mr-2">></lock-status>
         <pre-amp-status class="mr-2">></pre-amp-status>
@@ -78,6 +78,3 @@ module.exports = {
     },
 }
 </script>
-
-<style scoped>
-</style>

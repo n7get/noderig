@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button @click="showList" @dblclick="toggleLastOpMode">{{ name }}</b-button>
+        <b-button id="op-mode-button" @click="showList" @dblclick="toggleLastOpMode">{{ name }}</b-button>
 
         <b-modal
             id="list-op-modes"
@@ -222,3 +222,11 @@ module.exports = {
         });
     },
 };
+</script>
+
+<style scoped>
+    #op-mode-button {
+        height: 64px;
+        width: 80px;
+    }
+</style>
