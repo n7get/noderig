@@ -1,0 +1,47 @@
+TTD
+
+Import and export Op Modes.
+
+Move timers from UI to Node-red.
+
+Hide selected settings and menu item on UI.
+
+Add options to Op Mode to show/hide timers.  Set initial countdown time.
+
+Add Op Mode merge.
+
+Controls (WIP)
+    UI Controls
+        AG AF_GAIN
+
+        BC AUTO_NOTCH
+
+        BP00 MANUAL_NOTCH_ON/OFF
+        BP01 MANUAL_NOTCH_LEVEL
+
+        BS BAND_SELECT
+
+        CN00 CTCSS_TONE_FREQUENCY
+        CN01 DCS_TONE_FREQUENCY
+        CT CTCSS
+
+        CO00 CONTOUR_ON/OFF
+        CO01 CONTOUR_FREQ
+        CO02 APF_ON/OFF
+        CO03 APF_FREQ
+
+    Easy UI Controls?
+        AB VFO-A_TO_VFO-B
+        BA VFO-B_TO_VFO-A
+
+        AM VFO-A_TO_MEMORY_CHANNEL
+
+        BD BAND_DOWN
+        BU BAND_UP
+        CH0 CHANNEL_UP
+        CH1 CHANNEL_DOWN
+
+        BI BREAK-IN
+        CS CW_SPOT
+
+        DN MIC_DOWN
