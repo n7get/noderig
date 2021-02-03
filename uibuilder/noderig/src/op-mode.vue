@@ -31,7 +31,7 @@
             <b-form-group
                 label="Name:"
                 label-for="name"
-                :invalid-feedback="errorMessage"
+                invalid-feedback="Op Mode name is required."
                 :state="nameInputState"
             >
                 <b-form-input
@@ -41,13 +41,47 @@
                     :state="nameInputState"
                     required
                 ></b-form-input>
+            </b-form-group>
+
+            <b-form-checkbox v-model="primaryInput" name="primary-button" switch class="mt-4">
+                Primary Op Mode.
+            </b-form-checkbox>
+
+            <b-form-checkbox v-model="enabledInput" name="enabled-button" switch class="my-3">
+                Enable trigger.
+            </b-form-checkbox>
+
+            <b-form-group
+                label="Order:"
+                label-for="order"
+                label-cols="3"
+                inline
+                invalid-feedback="Order is required"
+                :state="orderInputState"
+            >
+                <b-form-input
+                    id="order"
+                    ref="order-input"
+                    type="number"
+                    v-model="orderInput"
+                    :state="orderInputState"
+                    required
+                ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+                label="Trigger:"
+                label-for="trigger"
+                :invalid-feedback="triggerError"
+                :state="triggerInputState"
+            >
                 <b-form-textarea
                     id="trigger"
                     v-model="triggerInput"
+                    :state="triggerInputState"
                     placeholder="Op Mode Trigger"
                     rows="6"
                 ></b-form-textarea>
-            </b-form-group>
         </b-modal>
     </div>
 </template>
@@ -56,13 +90,26 @@
 module.exports = {
     data: function() {
         return {
-            name: 'Op Mode',
-            trigger: '',
             opModes: [],
+
+            name: 'Op Mode',
             nameInput: '',
-            triggerInput: '',
             nameInputState: null,
-            errorMessage: 'an error message',
+
+            primary: true,
+            primaryInput: true,
+
+            enabled: true,
+            enabledInput: true,
+
+            order: 0,
+            orderInput: 0,
+            orderInputState: null,
+
+            trigger: '',
+            triggerInput: '',
+            triggerInputState: null,
+            triggerError: 'an error message',
         }
     },
     methods: {
@@ -76,8 +123,12 @@ module.exports = {
         },
         editOpMode: function() {
             this.nameInput = this.name;
+            this.primaryInput = this.primary;
+            this.enabledInput = this.enabled;
+            this.orderInput = this.order;
             this.triggerInput = this.trigger;
             this.$bvModal.show('edit-op-mode');
+            this.resetModal();
         },
         loadOpMode: function(name) {
             this.$nextTick(function() {
@@ -105,34 +156,33 @@ module.exports = {
             this.$refs['name-input'].focus();
             this.$refs['name-input'].select();
         },
-        checkFormValidity: function() {
-            var valid = this.$refs.form.checkValidity();
-
-            this.nameInputState = valid;
-            return valid
-        },
         resetModal: function() {
             this.nameInputState = null;
+            this.orderInputState = null;
+            this.triggerInputState = null;
         },
         handleOk: function(e) {
             let hasErrors = false;
 
             if(!this.nameInput) {
-                this.errorMessage = 'Op Mode name is required';
+                this.nameInputState = false;
                 hasErrors = true;
             }
+            if(!this.orderInput) {
+                hasErrors = true;
+                this.orderInputState = false;
+            }
             if(this.triggerInput) {
-                console.log('trigger: ' + this.triggerInput);
                 try {
                     new Function(this.triggerInput);                    
                 } catch (error) {
-                    this.errorMessage = error.message;
+                    this.triggerError = error.message;
+                    this.triggerInputState = false;
                     hasErrors = true;
                 }
             }
 
             if(hasErrors) {
-                this.nameInputState = false;
                 e.preventDefault();
             }
             else {
@@ -141,7 +191,14 @@ module.exports = {
                     this.$bvModal.hide('edit-op-mode');
                 });
 
-                var update = {name: this.nameInput, trigger: this.triggerInput};
+                var update = {
+                    name: this.nameInput,
+                    primary: this.primaryInput,
+                    enabled: this.enabledInput,
+                    order: this.orderInput,
+                    trigger: this.triggerInput
+                };
+                // console.log('save: ', {topic: 'op_mode', event: 'update', value: update});
                 uibuilder.send({topic: 'op_mode', event: 'update', value: update});
             }
         },
@@ -153,14 +210,11 @@ module.exports = {
             var p = msg.payload;
 
             if(p.name === 'op_mode') {
-console.log('op_mode: ', p.value);
                 self.name = p.value.name;
-                if(typeof(p.value.trigger) === 'object') {
-                    self.trigger = JSON.stringify(p.value.trigger);
-                }
-                else {
-                    self.trigger = p.value.trigger;
-                }
+                self.order = p.value.order || 0;
+                self.enabled = p.value.enabled || false;
+                self.primary = p.value.primary || false;
+                self.trigger = p.value.trigger;
             }
             else if(p.name === 'op_modes') {
                 self.opModes = p.value;
