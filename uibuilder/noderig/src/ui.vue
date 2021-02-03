@@ -12,6 +12,10 @@
             id="alert"
             size="sm"
             @ok="handleOk"
+            no-close-on-esc
+            no-close-on-backdrop
+            ok-only
+            hide-header-close
             header-bg-variant="danger"
             header-text-variant="light"
         >
