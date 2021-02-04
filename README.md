@@ -16,7 +16,6 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * Shuts down rig if high SWR is detected
 * Can show what changes to the rig's settings have been made since the last Op Mode was loaded.
 * Automaticly switches Op Modes based on frequency.
-* 
 
 ### Ideas for Docs
 
@@ -27,6 +26,8 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * Settings & Menu items have 4 views - fav, all, saved and changed.
 * Count up and down timers during transmit.
 * High SWR check, disabled while ATU auto tune.
+* All the indecators on the status bar are active.
+* Double click on tuner status to auto tune.
 
 ### Install
 Node-red Palettes to install:
