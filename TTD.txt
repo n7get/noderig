@@ -1,7 +1,5 @@
 TTD
 
-Disable high SWR check while doing auto tune.
-
 Import and export Op Modes.
 
 Move timers from UI to Node-red.

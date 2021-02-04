@@ -26,6 +26,7 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * Triggers and primary dont have effected until saved.
 * Settings & Menu items have 4 views - fav, all, saved and changed.
 * Count up and down timers during transmit.
+* High SWR check, disabled while ATU auto tune.
 
 ### Install
 Node-red Palettes to install:
