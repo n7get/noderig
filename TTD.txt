@@ -1,5 +1,11 @@
 TTD
 
+Disable high SWR check while doing auto tune.
+
+Finish primary channel.
+
+Get double clicks working.
+
 Import and export Op Modes.
 
 Move timers from UI to Node-red.
@@ -9,6 +15,10 @@ Hide selected settings and menu item on UI.
 Add options to Op Mode to show/hide timers.  Set initial countdown time.
 
 Add Op Mode merge.
+
+Test with Outpost.
+
+Test with pat.
 
 Controls (WIP)
     UI Controls
