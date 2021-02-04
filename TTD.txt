@@ -2,10 +2,6 @@ TTD
 
 Disable high SWR check while doing auto tune.
 
-Finish primary channel.
-
-Get double clicks working.
-
 Import and export Op Modes.
 
 Move timers from UI to Node-red.
@@ -19,6 +15,8 @@ Add Op Mode merge.
 Test with Outpost.
 
 Test with pat.
+
+CN00 and CN01 do not report changes when AI is enabled.
 
 Controls (WIP)
     UI Controls

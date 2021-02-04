@@ -18,6 +18,15 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * Automaticly switches Op Modes based on frequency.
 * 
 
+### Ideas for Docs
+
+* Double click on Op Mode button to switch to primary Op Mode.
+* Triggers are evaluated based on the Op Mode order value.
+* The man indecator on the status line disables triggers when lit.
+* Triggers and primary dont have effected until saved.
+* Settings & Menu items have 4 views - fav, all, saved and changed.
+* Count up and down timers during transmit.
+
 ### Install
 Node-red Palettes to install:
 	node-red-node-serialport

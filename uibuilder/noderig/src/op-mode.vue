@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button id="op-mode-button" @click="showList" @dblclick="toggleLastOpMode">{{ name }}</b-button>
+        <b-button id="op-mode-button" @click="clicked().then(e => handleClick(...e))">{{ name }}</b-button>
 
         <b-modal
             id="list-op-modes"
@@ -88,6 +88,7 @@
 
 <script>
 module.exports = {
+    mixins: [window.noderig.double_click_mixin],
     data: function() {
         return {
             opModes: [],
@@ -113,13 +114,15 @@ module.exports = {
         }
     },
     methods: {
-        showList: function(e) {
-            this.resetModal();
+        handleClick: function(e, v) {
+            if(e === 'click') {
+                this.resetModal();
 
-            this.$bvModal.show('list-op-modes');
-        },
-        toggleLastOpMode: function(e) {
-            uibuilder.send({topic: 'op_mode', event: 'dblclick'});
+                this.$bvModal.show('list-op-modes');
+            }
+            else {
+                uibuilder.send({topic: 'op_mode', event: 'load_primary'});
+            }
         },
         editOpMode: function() {
             this.nameInput = this.name;
