@@ -5,7 +5,7 @@ window.noderig = {
                 op_mode: ''
             }
         },
-        created() {
+        created: function() {
             var self = this;
 
             uibuilder.onChange('msg', msg => {
@@ -15,7 +15,7 @@ window.noderig = {
             });
         },
         methods: {
-            isOpMode(arg) {
+            isOpMode: function(arg) {
                 if(typeof(arg) === 'string') {
                     return this.op_mode === arg;
                 }
@@ -25,6 +25,27 @@ window.noderig = {
                 }
             }
         }
+    },
+    double_click_mixin: {
+        data: function() {
+            return {
+                click: undefined,
+            }
+        },
+        methods: {
+            clicked: function(value) {
+                return new Promise ((resolve, reject) => {
+                    if (this.click) {
+                        clearTimeout(this.click);
+                        resolve(['dblclick', value]);
+                    }
+                    this.click = setTimeout(() => {
+                        this.click = undefined;
+                        resolve(['click', value]);
+                    }, 300);
+                });
+            }
+        },
     },
 };
 
