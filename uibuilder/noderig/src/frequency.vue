@@ -259,6 +259,11 @@ module.exports = {
                     }
                 }
             }
+            else if(p.name === 'memory_channels') {
+                if(p.value === 'clear') {
+                    self.memoryChannels = [];
+                }
+            }
             else if(p.name === 'memory_channel') {
                 var mc = p.value;
 
