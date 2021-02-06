@@ -38,7 +38,7 @@
             hide-footer
         >
             <div v-for="mc in memoryChannels">
-                <div class="font-weight-bold my-1 ml-0 py-2 px-2 border text-light bg-primary" @click="loadMemoryChannel(mc.mem_chan)">{{ mc.tag }}</div>
+                <div class="font-weight-bold my-1 ml-0 py-2 px-2 border text-light bg-primary" @click="loadMemoryChannel(mc.name)">{{ mc.name }}</div>
             </div>
         </b-modal>
     </div>
@@ -162,7 +162,7 @@ module.exports = {
             tx_on:  false,
             edit_freq: '',
             freq_state: null,
-            memoryChannels: {},
+            memoryChannels: [],
         }
     },
     methods: {
@@ -261,14 +261,15 @@ module.exports = {
             }
             else if(p.name === 'memory_channels') {
                 if(p.value === 'clear') {
+console.log('memory_channels clear');
                     self.memoryChannels = [];
                 }
             }
             else if(p.name === 'memory_channel') {
                 var mc = p.value;
 
-                console.log('memory_channel: ', mc);
-                self.memoryChannels[mc.mem_chan] = mc;
+console.log('memory_channel: ', mc);
+                self.memoryChannels.push(mc);
             }
             else if(p.name === 'transmit') {
                 if(p.hasOwnProperty('value')) {

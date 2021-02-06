@@ -16,6 +16,7 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * Shuts down rig if high SWR is detected
 * Can show what changes to the rig's settings have been made since the last Op Mode was loaded.
 * Automaticly switches Op Modes based on frequency.
+* Unlimited memory channels.
 
 ### Ideas for Docs
 
@@ -28,6 +29,7 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * High SWR check, disabled while ATU auto tune.
 * All the indecators on the status bar are active.
 * Double click on tuner status to auto tune.
+* Noderig does not use the memory hannels built into the hardware, it's to flakey and buggy.  If somebody understands hoe to get it to work contact me and we can talk about it.
 
 ### Install
 Node-red Palettes to install:
