@@ -324,8 +324,8 @@
         "z": "32b9106a.4589e",
         "name": "Rig Port",
         "serial": "3ef5815c.6122be",
-        "x": 360,
-        "y": 320,
+        "x": 260,
+        "y": 340,
         "wires": []
     },
     {
@@ -366,8 +366,8 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 630,
-        "y": 260,
+        "x": 270,
+        "y": 280,
         "wires": []
     },
     {
@@ -751,12 +751,12 @@
             "f4dc38e4.d17288",
             "a85c9209.af998"
         ],
-        "x": 165,
-        "y": 300,
+        "x": 65,
+        "y": 320,
         "wires": [
             [
                 "3eb84881.bfc188",
-                "7e08951b.d91bdc"
+                "953f881.09fb578"
             ]
         ]
     },
@@ -1398,7 +1398,7 @@
         "type": "debug",
         "z": "754980e0.50707",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1650,7 +1650,7 @@
         "type": "function",
         "z": "754980e0.50707",
         "name": "Handle UI App Events",
-        "func": "'use strict';\n\nif(msg.topic === 'memory_channel') {\n    const MemoryChannels = flow.get('MemoryChannels');\n    \n    if(msg.event === 'load') {\n        MemoryChannels.load(msg.value, m => node.send([m.rig, m.ui]) );\n    }\n    else {\n        node.warn('Unknown memory_channel event: ' + msg.event);\n    }\n}\nelse {\n    const ui_events = flow.get('ui_events'),\n          ue = ui_events[msg.topic];\n    \n    if(ue) {\n        if(ue.hasOwnProperty('handler')) {\n            ue.handler.call(ue, msg.event, msg.value, m => node.send([m.rig, m.ui]));\n        }\n        else {\n            node.warn('Received UI event without handler: ' + JSON.stringify(ue));\n        }\n    }\n    else {\n        node.warn('Received unknown UI event: ' + msg.topic);\n    }\n}\n\nnode.done();",
+        "func": "'use strict';\n\nif(msg.topic === 'memory_channel') {\n    const MemoryChannels = flow.get('MemoryChannels');\n    \n    if(msg.event === 'load') {\n        MemoryChannels.load(msg.value, m => node.send([m.rig, m.ui]) );\n    }\n    else if(msg.event === 'remove') {\n        MemoryChannels.remove(msg.value);\n        MemoryChannels.initUi( m => node.send([null, m]) );\n    }\n    else if(msg.event === 'update') {\n        MemoryChannels.update(msg.value);\n        MemoryChannels.initUi( m => node.send([null, m]) );\n    }\n    else {\n        node.warn('Unknown memory_channel event: ' + msg.event);\n    }\n}\nelse {\n    const ui_events = flow.get('ui_events'),\n          ue = ui_events[msg.topic];\n    \n    if(ue) {\n        if(ue.hasOwnProperty('handler')) {\n            ue.handler.call(ue, msg.event, msg.value, m => node.send([m.rig, m.ui]));\n        }\n        else {\n            node.warn('Received UI event without handler: ' + JSON.stringify(ue));\n        }\n    }\n    else {\n        node.warn('Received unknown UI event: ' + msg.topic);\n    }\n}\n\nnode.done();",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -2265,32 +2265,14 @@
         "l": false
     },
     {
-        "id": "7e08951b.d91bdc",
-        "type": "function",
-        "z": "32b9106a.4589e",
-        "name": "Save last memory no",
-        "func": "const p = msg.payload,\n      cmd = p.substring(0,2);\n\nif(cmd === 'MR' || cmd === 'MT' || cmd === 'MW') {\n    flow.set('last_' + cmd, p.substring(2, 5));\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "x": 400,
-        "y": 260,
-        "wires": [
-            [
-                "953f881.09fb578"
-            ]
-        ]
-    },
-    {
         "id": "ea804a4b.cff7d8",
         "type": "function",
         "z": "754980e0.50707",
         "name": "MemoryChannels",
-        "func": "\nconst mc_init = [\n    {\n        \"name\":\"H01 Evening\",\n        \"frequency\":3965000,\n        \"mode\":\"LSB\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"H02 Daytime\",\n        \"frequency\":7280000,\n        \"mode\":\"LSB\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"V01 Angels P\",\n        \"frequency\":147180000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"DCS ENC/DEC\",\n        \"squelchTone\": \"244\",\n        \"offset\":\"+\",\n    },\n    {\n        \"name\":\"V02 N LV\",\n        \"frequency\":145460000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V03 Beacon H\",\n        \"frequency\":145300000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"DCS ENC/DEC\",\n        \"squelchTone\": '244',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V07 HP\",\n        \"frequency\":146880000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V08 LVARC\",\n        \"frequency\":146940000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V13 NCF\",\n        \"frequency\":146520000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U01 RM\",\n        \"frequency\":447325000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U03 Strip\",\n        \"frequency\":446700000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '118.8',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U04 MT View\",\n        \"frequency\":447300000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U05\",\n        \"frequency\":448075000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '127.3',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U06 LVARC\",\n        \"frequency\":448500000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U07\",\n        \"frequency\":449325000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U09 W7SCS\",\n        \"frequency\":447475000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '110.9',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U10 NCF\",\n        \"frequency\":446000000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U19\",\n        \"frequency\":446025000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U19\",\n        \"frequency\":446050000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U23 Apex\",\n        \"frequency\":449925000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC/DEC\",\n        \"squelchTone\": '131.8',\n        \"offset\":\"-\",\n    },\n];\n\nconst memory_channels = {};\n\nmc_init.forEach( mc => memory_channels[mc.name] = mc );\n\nglobal.set('memory_channels', memory_channels,  'persist');",
+        "func": "\nconst mc_init = [\n    {\n        \"name\":\"H01 Evening\",\n        \"frequency\":3965000,\n        \"mode\":\"LSB\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"H02 Daytime\",\n        \"frequency\":7280000,\n        \"mode\":\"LSB\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"V01 Angels P\",\n        \"frequency\":147180000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"DCS ENC\",\n        \"squelchTone\": \"244\",\n        \"offset\":\"+\",\n    },\n    {\n        \"name\":\"V02 N LV\",\n        \"frequency\":145460000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V03 Beacon H\",\n        \"frequency\":145300000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"DCS ENC\",\n        \"squelchTone\": '244',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V07 HP\",\n        \"frequency\":146880000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V08 LVARC\",\n        \"frequency\":146940000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"V13 NCF\",\n        \"frequency\":146520000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U01 RM\",\n        \"frequency\":447325000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U03 Strip\",\n        \"frequency\":446700000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '118.8',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U04 MT View\",\n        \"frequency\":447300000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U05\",\n        \"frequency\":448075000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '127.3',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U06 LVARC\",\n        \"frequency\":448500000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '100.0',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U07\",\n        \"frequency\":449325000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U09 W7SCS\",\n        \"frequency\":447475000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '110.9',\n        \"offset\":\"-\",\n    },\n    {\n        \"name\":\"U10 NCF\",\n        \"frequency\":446000000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U19\",\n        \"frequency\":446025000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U19\",\n        \"frequency\":446050000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS OFF\",\n        \"squelchTone\": null,\n        \"offset\":\"Simplex\",\n    },\n    {\n        \"name\":\"U23 Apex\",\n        \"frequency\":449925000,\n        \"mode\":\"FM\",\n        \"squelchMode\":\"CTCSS ENC\",\n        \"squelchTone\": '131.8',\n        \"offset\":\"-\",\n    },\n];\n\nconst MemoryChannels = flow.get('MemoryChannels');\n\nMemoryChannels.init();\n\nmc_init.forEach( mc => MemoryChannels.update(mc) );",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "'use strict';\n\nconst PERSIST = 'persist',\n      _ = global.get('_');\n\nfunction setSetting(name, value, f) {\n    const ui_events = flow.get('ui_events'),\n          ue = ui_events[name],\n          RigSetting = global.get('RigSetting'),\n          RigState = global.get('RigState');\n\n    if(ue) {\n        const rs = RigState.getRigSetting(ue.setting);\n\n        if(rs.value !== value) {\n            const payload = RigSetting.of(ue.setting, value).asSet;\n\n            f({rig: {payload: RigSetting.of(ue.setting, value).asSet}});\n        }\n    }\n    else {\n        throw new Error('UI Event has no handler: ' + name);\n    }\n}\n\nconst MemoryChannels = {\n    newChannel: function() {\n        return {\n            name: 'New Memory Channel',\n            frequency: 7000000,\n            offset: 'Simplex',\n            mode: 'USB', \n            squelchMode: 'CTCSS OFF',\n            squelchTone: null,\n            isNew: true,\n        };\n    },\n    set(mc) {\n        const memory_channels = global.get('memory_channels', PERSIST) || {};\nRigState.getRigSetting(this.setting);\n        memory_channels[mc.name] = _.cloneDeep(mc);\n        \n        global.set('memory_channels', memory_channels,  PERSIST);\n    },\n    get(name) {\n        const memory_channels = global.get('memory_channels', PERSIST) || {};\n\n        return _.cloneDeep(memory_channels[name]);\n    },\n    load(name, f) {\n        const memory_channels = global.get('memory_channels', PERSIST) || {},\n              mc = memory_channels[name];\n\n        if(mc) {\n            setSetting('mode', mc.mode, f);\n            setSetting('vfo_a', mc.frequency, f);\n            setSetting('offset', mc.offset, f);\n            setSetting('ctcss', mc.squelchMode, f);\n            \n            switch(mc.squelchMode) {\n            case 'CTCSS OFF':\n                break;\n            case 'CTCSS ENC/DEC':\n            case 'CTCSS ENC':\n                setSetting('ctcss_tone_frequency', mc.squelchTone, f);\n                break;\n            case 'DCS ENC/DEC':\n            case'DCS ENC':\n                setSetting('dcs_tone_frequency', mc.squelchTone, f);\n                break;\n            }\n        }\n    },\n    initUi(f) {\n        const memory_channels = global.get('memory_channels', PERSIST) || {};\n\n        f({name: 'memory_channels', value: 'clear'});\n    \n        for (const [k, v] of Object.entries(memory_channels)) {\n            f({name: 'memory_channel', value: v});\n        }\n    },\n};\n\nflow.set('MemoryChannels', MemoryChannels);",
+        "initialize": "'use strict';\n\nconst PERSIST = 'persist',\n      MEMORY_CHANNELS = 'memory_channels',\n      _ = global.get('_');\n\nlet memory_channels = global.get(MEMORY_CHANNELS, PERSIST) || [];\n\nfunction setSetting(name, value, f) {\n    const ui_events = flow.get('ui_events'),\n          ue = ui_events[name],\n          RigSetting = global.get('RigSetting'),\n          RigState = global.get('RigState');\n\n    if(ue) {\n        const rs = RigState.getRigSetting(ue.setting);\n\n        if(rs.value !== value) {\n            const payload = RigSetting.of(ue.setting, value).asSet;\n\n            f({rig: {payload: RigSetting.of(ue.setting, value).asSet}});\n        }\n    }\n    else {\n        throw new Error('UI Event has no handler: ' + name);\n    }\n}\n\nconst MemoryChannels = {\n    newChannel: function() {\n        return {\n            name: 'New Memory Channel',\n            frequency: 7000000,\n            offset: 'Simplex',\n            mode: 'USB', \n            squelchMode: 'CTCSS OFF',\n            squelchTone: null,\n            isNew: true,\n        };\n    },\n    init() {\n        memory_channels = [];\n        \n        MemoryChannels.save();\n    },\n    update(mc) {\n        if(mc.hasOwnProperty('no')) {\n            memory_channels[mc.no] = Object.assign({}, mc);\n        }\n        else {\n            memory_channels.push(Object.assign({}, mc, {no: memory_channels.length}));\n        }\n        \n        MemoryChannels.save();\n    },\n    remove(no) {\n        const mc = memory_channels[no];\n        \n        if(mc) {\n            memory_channels[no] = null;\n        \n            MemoryChannels.save();\n        }\n    },\n    get(no) {\n        const mc = memory_channels[name];\n        \n        if(mc) {\n            return Object.assign({}, mc);\n        }\n    },\n    load(no, f) {\n        const mc = memory_channels[no];\n\n        if(mc) {\n            setSetting('mode', mc.mode, f);\n            setSetting('vfo_a', mc.frequency, f);\n            setSetting('offset', mc.offset, f);\n            setSetting('ctcss', mc.squelchMode, f);\n            \n            switch(mc.squelchMode) {\n            case 'CTCSS OFF':\n                break;\n            case 'CTCSS ENC/DEC':\n            case 'CTCSS ENC':\n                setSetting('ctcss_tone_frequency', mc.squelchTone, f);\n                break;\n            case 'DCS ENC/DEC':\n            case'DCS ENC':\n                setSetting('dcs_tone_frequency', mc.squelchTone, f);\n                break;\n            }\n        }\n    },\n    save() {  \n        global.set(MEMORY_CHANNELS, memory_channels,  PERSIST);\n    },\n    initUi(f) {\n        f({name: 'memory_channels',\n            value: _.sortBy(memory_channels.filter( mc => mc != null), [ mc => mc.name ])\n        });\n    },\n};\n\nflow.set('MemoryChannels', MemoryChannels);",
         "finalize": "",
         "x": 490,
         "y": 100,

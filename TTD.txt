@@ -10,8 +10,7 @@ Add options to Op Mode to show/hide timers.  Set initial countdown time.
 
 Add Op Mode merge.
 
-Some way to recall saved memories.
-CRUD for memories.
+Memory groups.
 
 Test with Outpost.
 

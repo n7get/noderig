@@ -30,6 +30,8 @@ That in a nutshell is the purpose of this software.  It's not a remote control a
 * All the indecators on the status bar are active.
 * Double click on tuner status to auto tune.
 * Noderig does not use the memory hannels built into the hardware, it's to flakey and buggy.  If somebody understands hoe to get it to work contact me and we can talk about it.
+* Single click on frequency to enter the freuency directly and double click to show memory channel list.
+* frequencies can be entered as MHz - 14.070, KHz - 14070 or Hz - 14070000.
 
 ### Install
 Node-red Palettes to install:

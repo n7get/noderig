@@ -1,6 +1,6 @@
 <template>
     <div
-        @click="clicked().then(e => handleFrequencyEvent(...e))"
+        @click="clicked().then(e => freqHandleClicks(...e))"
         class="frequency-digits"
         :class="{tx: tx_on}">
 
@@ -9,8 +9,8 @@
         <b-modal
             id="new-freq"
             size="sm"
-            @ok="handleOk"
-            @shown="focusInput"
+            @ok="freqHandleOk"
+            @shown="freqFocusInput"
         >
             <template #modal-title>
                 Set VFO
@@ -19,14 +19,14 @@
                 label="Freq:"
                 label-for="freq-input"
                 invalid-feedback="Invalid frequency"
-                :state="freq_state"
+                :state="freqInputState"
             >
                 <b-form-input
                     id="freq-input"
                     ref="freqInput"
-                    @keyup.enter="handleOk"
-                    v-model="edit_freq"
-                    :state="freq_state"
+                    @keyup.enter="freqHandleOk"
+                    v-model="freqInput"
+                    :state="freqInputState"
                     required
                 ></b-form-input>
             </b-form-group>
@@ -37,111 +37,120 @@
             size="sm"
             hide-footer
         >
-            <div v-for="mc in memoryChannels">
-                <div class="font-weight-bold my-1 ml-0 py-2 px-2 border text-light bg-primary" @click="loadMemoryChannel(mc.name)">{{ mc.name }}</div>
+            <template #modal-header>
+                <div class="px-2 d-flex justify-content-between align-items-left w-100">
+                    <div>All</div>
+                    <div>Memory Channels</div>
+                    <div @click="addMemoryChannel()">Add</div>
+                </div>
+            </template>
+
+            <div v-for="mc in memoryChannels" :key="mc.no">
+                <b-row class="font-weight-bold pr-3 py-2 mx-2 my-1 border text-light bg-primary">
+                    <div class="col" @click="clicked(mc).then(e => mcHandleClickEvent(...e))">{{ mc.name }}</div>
+                    <div class="col-1" @click="mcRemove(mc)"><b-icon-trash></b-icon-trash></div>
+                </b-row>
+            </div>
+        </b-modal>
+
+        <b-modal
+            id="memory-channel-edit"
+            size="sm"
+            @ok="mcHandleOk"
+            @shown="mcFocusInput"
+        >
+            <b-form-group
+                label="Name:"
+                label-for="mc-name"
+                invalid-feedback="Name is required."
+                :state="mcNameInputState"
+            >
+                <b-form-input
+                    id="mc-name"
+                    ref="mc-name-input"
+                    v-model="mcEdit.name"
+                    :state="mcNameInputState"
+                    required
+                ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+                label="Frequency:"
+                label-for="mc-frequency"
+                :invalid-feedback="mcFrequencyFeedback"
+                :state="mcFrequencyInputState"
+            >
+                <b-form-input
+                    id="mc-frequency"
+                    ref="mc-frequency-input"
+                    v-model="mcEdit.frequency"
+                    :state="mcFrequencyInputState"
+                ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+                label="Mode:"
+                label-for="mc-mode"
+            >
+                <b-form-select
+                    id="mc-mode"
+                    v-model="mcEdit.mode"
+                    :options="modeOptions"
+                ></b-form-select>
+            </b-form-group>
+
+            <div v-if="mcEdit.mode === 'FM'">
+                <b-form-group
+                    label="Offset:"
+                    label-for="mc-offset"
+                >
+                    <b-form-select
+                        id="mc-offset"
+                        v-model="mcEdit.offset"
+                        :options="offsetOptions"
+                    ></b-form-select>
+                </b-form-group>
+
+                <b-form-group
+                    label="Squelch:"
+                    label-for="mc-squelch-mode"
+                >
+                    <b-form-select
+                        id="mc-squelch-mode"
+                        v-model="mcEdit.squelchMode"
+                        :options="squelchModeOptions"
+                    ></b-form-select>
+                </b-form-group>
+
+                <b-form-group
+                    label="CTCSS Tone:"
+                    label-for="mc-ctcss-tone"
+                    v-show="mcEdit.squelchMode=== 'CTCSS ENC/DEC' || mcEdit.squelchMode=== 'CTCSS ENC'"
+                >
+                    <b-form-select
+                        id="mc-ctcss-tone"
+                        v-model="mcEdit.ctcssTone"
+                        :options="ctcssToneOptions"
+                    ></b-form-select>
+                </b-form-group>
+
+                <b-form-group
+                    label="DCS Tone:"
+                    label-for="mc-dcs-tome"
+                    v-show="mcEdit.squelchMode=== 'DCS ENC/DEC' || mcEdit.squelchMode=== 'DCS ENC'"
+                >
+                    <b-form-select
+                        id="mc-dcs-tome"
+                        v-model="mcEdit.dcsTone"
+                        :options="dcsToneOptions"
+                    ></b-form-select>
+                </b-form-group>
             </div>
         </b-modal>
     </div>
 </template>
 
 <script>
-function trim_zeros(value) {
-    if(value.substring(value.length - 1) === '0') {
-        return trim_zeros(value.substring(0, value.length - 1));
-    }
-
-    if(value.substring(value.length - 1) === '.') {
-        return value.substring(0, value.length - 1);
-    }
-
-    return value;
-}
-
-function padTo(value, l) {
-    if(value.length < l) {
-        return padTo(value + '0', l);
-    }
-
-    if(value.length === l) {
-        return value;
-    }
-
-    return value.substring(0, l);
-}
-
-function add_dec_frac(dec, frac) {
-    if(dec < 1000) {
-        return dec * 1000000 + frac;
-    }
-
-    if(dec < 1000000) {
-        return dec * 1000 + frac;
-    }
-
-    return dec;
-}
-
-function scale_frac(dec, value) {
-    if(dec < 1000) {
-        return parseInt(padTo(value, 6), 10);
-    }
-
-    if(dec < 1000000) {
-        return parseInt(padTo(value, 3), 10);
-    }
-    
-    return 0;
-}
-
-function freq_hz(value) {
-    var dot = value.indexOf('.'),
-        dec = parseInt(value.substring(0, dot), 10),
-        frac = scale_frac(dec, value.substring(dot + 1));
-        freq = add_dec_frac(dec, frac);
-
-    if(dot === -1) {
-        return add_dec_frac(parseInt(value, 10), 0);
-    }
-
-    return freq;
-}
-
-function convFreq(arg) {
-    if(typeof(arg) === 'number') {
-        convFreq(arg.toString());
-    }
-
-    var freq = freq_hz(arg.trim());
-    
-    var valid_freqs = [
-        [  1800000,   2000000],
-        [  3500000,   4000000],
-        [  5332000,   5332000],
-        [  5348000,   5348000],
-        [  5358500,   5358500],
-        [  5373000,   5373000],
-        [  5405000,   5405000],
-        [  7000000,   7300000],
-        [ 10100000,  10150000],
-        [ 14000000,  14350000],
-        [ 18068000,  18168000],
-        [ 21000000,  21450000],
-        [ 24890000,  24990000],
-        [ 28000000,  29700000],
-        [ 50000000,  54000000],
-        [144000000, 148000000],
-        [420000000, 450000000],
-    ];
-    
-    if(valid_freqs.some( function(f) {
-        return (freq >= f[0] && freq <= f[1]);
-    })) {
-        return parseInt(freq, 10);    
-    }
-
-    return null;
-}
-
 module.exports = {
     mixins: [window.noderig.double_click_mixin],
     props: {
@@ -160,70 +169,60 @@ module.exports = {
             khz: 'kkk',
             hz:  'hhh',
             tx_on:  false,
-            edit_freq: '',
-            freq_state: null,
+            freqInput: '',
+            freqInputState: null,
             memoryChannels: [],
+            currentConfig: {name: 'New Memory Channel',},
+
+            mcEdit: {},
+            mcNameInputState: null,
+            mcFrequencyInputState: null,
+            mcFrequencyFeedback: '',
+
+            modeOptions: this.$noderig.modeOptions,
+            offsetOptions: this.$noderig.offsetOptions,
+            squelchModeOptions: this.$noderig.squelchModeOptions,
+            ctcssToneOptions: this.$noderig.ctcssToneOptions,
+            dcsToneOptions: this.$noderig.dcsToneOptions,
         }
     },
     methods: {
-        handleFrequencyEvent: function(e, v) {
+        freqHandleClicks: function(e, v) {
             if(e === 'click') {
-                this.openFrequencyDialog(v);
+                this.freqOpenDialog(v);
             }
             else {
                 this.openMemoryChannelList(v);
             }
         },
-        openFrequencyDialog: function(e) {
-            var m, k, h;
+        freqOpenDialog: function(e) {
+            var FreqUtils = this.$noderig.FreqUtils;
 
-            this.resetModal();
+            this.freqResetModal();
 
-            if(this.freq.length === 7) {
-                m = this.freq.substring(0,1);
-                k = this.freq.substring(1,4);
-                h = this.freq.substring(4);
-            }
-            else if(this.freq.length === 8) {
-                m = this.freq.substring(0,2);
-                k = this.freq.substring(2,5);
-                h = this.freq.substring(5);
-            }
-            else if(this.freq.length === 9) {
-                m = this.freq.substring(0,3);
-                k = this.freq.substring(3,6);
-                h = this.freq.substring(6);
-            }
-            this.edit_freq = trim_zeros(m + k + '.' + h);
+            this.freqInput = FreqUtils.formatFreq(this.freq);
 
             this.$bvModal.show('new-freq');
         },
-        openMemoryChannelList: function(e) {
-            this.$bvModal.show('memory-channel-list');
-        },
-        loadMemoryChannel: function(e) {
-            this.$bvModal.hide('memory-channel-list');
-
-            uibuilder.send({topic: 'memory_channel', event: 'load', value: e});
-        },
-        focusInput: function() {
+        freqFocusInput: function() {
             this.$refs.freqInput.focus();
             this.$refs.freqInput.select();
         },
-        checkFormValidity: function() {
+        freqCheckFormValidity: function() {
             var valid = this.$refs.form.checkValidity();
 
-            this.freq_state = valid;
+            this.freqInputState = valid;
             return valid
         },
-        resetModal: function() {
-            this.freq_state = null;
+        freqResetModal: function() {
+            this.freqInputState = null;
         },
-        handleOk: function(e) {
-            var new_freq = convFreq(this.edit_freq);
+        freqHandleOk: function(e) {
+            var FreqUtils = this.$noderig.FreqUtils,
+                new_freq = FreqUtils.convFreq(this.freqInput);
 
             if(new_freq) {
-                this.resetModal();
+                this.freqResetModal();
                 this.$nextTick(function() {
                     this.$bvModal.hide('new-freq');
                 });
@@ -231,8 +230,107 @@ module.exports = {
                 uibuilder.send({topic: this.vfo, event: 'set', value: new_freq});
             }
             else {
-                this.freq_state = false;
+                this.freqInputState = false;
                 e.preventDefault();
+            }
+        },
+        mcModalReset: function() {
+            this.mcNameInputState = null;
+            this.mcFrequencyInputState = null;
+            this.mcFrequencyFeedback = '';
+        },
+        openMemoryChannelList: function(e) {
+            this.mcModalReset();
+
+            this.$bvModal.show('memory-channel-list');
+        },
+        mcHandleClickEvent(e, mc) {
+            if(e === 'click') {
+                this.loadMemoryChannel(mc);
+            }
+            else {
+                this.editMemoryChannel(mc);
+            }
+        },
+        loadMemoryChannel: function(mc) {
+            this.$bvModal.hide('memory-channel-list');
+
+            uibuilder.send({topic: 'memory_channel', event: 'load', value: mc.no});
+        },
+        mcOpenEditModal: function(mc) {
+            var FreqUtils = this.$noderig.FreqUtils;
+
+            this.mcEdit = Object.assign({name: 'New Memory Channel'}, mc, {frequency: FreqUtils.formatFreq(mc.frequency)});
+
+            this.mcModalReset();
+
+            this.$bvModal.show('memory-channel-edit');
+        },
+        addMemoryChannel: function() {
+            this.mcOpenEditModal(this.currentConfig);
+        },
+        editMemoryChannel: function(mc) {
+            this.mcOpenEditModal(mc);
+        },
+        mcRemove: function(mc, e) {
+            this.$bvModal.msgBoxConfirm('Delete Memory Channel ' + mc.name + '?', {})
+                .then(function(result) {
+                    if(result) {
+                        uibuilder.send({topic: 'memory_channel', event: 'remove', value: mc.no});
+                    }
+                });
+        },
+        mcFocusInput: function() {
+            this.$refs['mc-name-input'].focus();
+            this.$refs['mc-name-input'].select();
+        },
+        mcHandleOk: function(e) {
+            var FreqUtils = this.$noderig.FreqUtils,
+                hasErrors = false,
+                newMc = {};
+
+            if(!this.mcEdit.name) {
+                this.mcNameInputState = false;
+                hasErrors = true;
+            }
+            else {
+                this.mcNameInputState = true;
+            }
+
+            if(!this.mcEdit.frequency) {
+                this.mcFrequencyInputState = false;
+                this.mcFrequencyFeedback = 'Frequency is required.';
+                hasErrors = true;
+            }
+            else if(!FreqUtils.convFreq(this.mcEdit.frequency)) {
+                this.mcFrequencyInputState = false;
+                this.mcFrequencyFeedback = 'Frequency is not valid.';
+                hasErrors = true;
+            }
+            else {
+                this.mcFrequencyInputState = false;
+            }
+
+            if(hasErrors) {
+                e.preventDefault();
+            }
+            else {
+                this.mcModalReset();
+                this.$nextTick(function() {
+                    this.$bvModal.hide('memory-channel-edit');
+                });
+
+                newMc.no = this.mcEdit.no;
+                newMc.name = this.mcEdit.name;
+                newMc.frequency = FreqUtils.convFreq(this.mcEdit.frequency);
+                newMc.mode = this.mcEdit.mode;
+                if(this.mcEdit.mode === 'FM') {
+                    newMc.offset = this.mcEdit.offset;
+                    newMc.squelchMode = this.mcEdit.squelchMode;
+                    newMc.ctcssTone = this.mcEdit.ctcssTone;
+                    newMc.dcsTone = this.mcEdit.dcsTone;
+                }
+                uibuilder.send({topic: 'memory_channel', event: 'update', value: newMc});
             }
         },
     },
@@ -245,13 +343,12 @@ module.exports = {
             if(p.name === self.vfo) {
                 if(p.hasOwnProperty('value')) {
                     if(p.freq !== self.freq) {
-                        self.last_freq = self.freq;
-
                         let value = p.value.toString();
                         while(value.length < 9) {
                             value = ' ' + value;
                         }
                         self.freq = value;
+                        self.currentConfig.frequency = p.value;
 
                         self.mhz = value.substring(0, 3).replace(/ /g,'&nbsp;');;
                         self.khz = value.substring(3, 6);
@@ -260,16 +357,22 @@ module.exports = {
                 }
             }
             else if(p.name === 'memory_channels') {
-                if(p.value === 'clear') {
-console.log('memory_channels clear');
-                    self.memoryChannels = [];
-                }
+                self.memoryChannels = p.value;
             }
-            else if(p.name === 'memory_channel') {
-                var mc = p.value;
-
-console.log('memory_channel: ', mc);
-                self.memoryChannels.push(mc);
+            else if(p.name === 'offset') {
+                self.currentConfig.offset = p.value;
+            }
+            else if(p.name === 'mode') {
+                self.currentConfig.mode = p.value;
+            }
+            else if(p.name === 'ctcss') {
+                self.currentConfig.squelchMode = p.value;
+            }
+            else if(p.name === 'ctcss_tone_frequency') {
+                self.currentConfig.ctcssTone = p.value;
+            }
+            else if(p.name === 'dcs_tone_frequency') {
+                self.currentConfig.dcsTone = p.value;
             }
             else if(p.name === 'transmit') {
                 if(p.hasOwnProperty('value')) {
