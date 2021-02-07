@@ -15,10 +15,10 @@
                 </div>
             </template>
             <div v-for="om in opModes">
-                <div class="font-weight-bold my-1 ml-2 py-3 px-3 border text-light bg-primary d-flex justify-content-between align-items-left">
-                    <div @click="loadOpMode(om.name)">{{ om.name }}</div>
-                    <div @click="removeOpMode(om.name)" v-if="om.can_delete"><b-icon-trash></b-icon-trash></div>
-                </div>
+                <b-row class="font-weight-bold pr-3 py-2 mx-2 my-1 border text-light bg-primary">
+                    <div class="col" @click="loadOpMode(om.name)">{{ om.name }}</div>
+                    <div class="col-1" @click="removeOpMode(om.name)"><b-icon-trash></b-icon-trash></div>
+                </b-row>
             </div>
         </b-modal>
 
