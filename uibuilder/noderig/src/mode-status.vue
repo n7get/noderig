@@ -11,7 +11,7 @@
             <template #modal-title>
                 Set mode
             </template>
-            <div class="font-weight-bold my-1 ml-0 py-3 pl-3 border text-light bg-primary" v-for="m in modes" @click="selectMode(m)">{{ m }}</div>
+            <div class="font-weight-bold my-1 ml-0 py-3 pl-3 border text-light bg-primary" v-for="m in modeOptions" @click="selectMode(m)">{{ m }}</div>
         </b-modal>
     </div>
 </template>
@@ -21,22 +21,7 @@ module.exports = {
     data: function() {
         return {
             mode: 'mode',
-            modes: [
-                'LSB',
-                'USB',
-                'FM',
-                'DATA-USB',
-                'DATA-FM',
-                'RTTY-LSB',
-                'RTTY-USB',
-                'CW',
-                'CW-R',
-                'DATA-LSB',
-                'AM',
-                'AM-N',
-                'FM-N',
-                'C4FM'
-            ],
+            modeOptions: this.$noderig.modeOptions,
         }
     },
     methods: {

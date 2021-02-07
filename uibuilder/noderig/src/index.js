@@ -261,6 +261,35 @@ Vue.prototype.$noderig = {
         152: {desc: 'SEARCH SETUP', value: null, changed: false, fav: false, saved: false},
         153: {desc: 'WIRES DG-ID', value: null, changed: false, fav: false, saved: false},
     },
+    modeOptions: [
+        'LSB', 'USB', 'FM', 'DATA-USB', 'DATA-FM', 'RTTY-LSB', 'RTTY-USB',
+        'CW', 'CW-R', 'DATA-LSB', 'AM', 'AM-N', 'FM-N', 'C4FM'
+    ],
+    offsetOptions: ['Simplex','+','-'],
+    squelchModeOptions: ['CTCSS OFF', 'CTCSS ENC/DEC', 'CTCSS ENC', 'DCS ENC/DEC', 'DCS ENC'],
+    ctcssToneOptions: [
+        '67.0', '69.3', '71.9', '74.4', '77.0', '79.7', '82.5', '85.4',
+        '88.5', '91.5', '94.8', '97.4', '100.0', '103.5', '107.2',
+        '110.9', '114.8', '118.8', '123.0', '127.3', '131.8', '136.5',
+        '141.3', '146.2', '151.4', '156.7', '159.8', '162.2', '165.5',
+        '167.9', '171.3', '173.8', '177.3', '179.9', '183.5', '186.2',
+        '189.9', '192.8', '196.6', '199.5', '203.5', '206.5', '210.7',
+        '218.1', '225.7', '229.1', '233.6', '241.8', '250.3', '254.1'
+    ],
+    dcsToneOptions: [
+        '23',  '25',  '26',  '31',  '32',  '36',  '43',  '47',  '51',
+        '53',  '54',  '65',  '71',  '72', '73',  '74', '114', '115',
+        '116', '122', '125', '131', '132', '134', '143', '145', '152',
+        '155', '156', '162', '165', '172', '174', '205', '212', '223',
+        '225', '226', '243', '244', '245', '246', '251', '252', '255',
+        '261', '263', '265', '266', '271', '274', '306', '311', '315',
+        '325', '331', '332', '343', '346', '351', '356', '364', '365',
+        '371', '411', '412', '413', '423', '431', '432', '445', '446',
+        '452', '454', '455', '462', '464', '465', '466', '503', '506',
+        '516', '523', '526', '532', '546', '565', '606', '612', '624',
+        '627', '631', '632', '654', '662', '664', '703', '712', '723',
+        '731', '732', '734', '743', '754'
+    ],
     MenuValueConverter: (function () {
         function isEmptyValue(value) {
             if (typeof (value) === 'string' && value.length === 0) {
@@ -1184,7 +1213,7 @@ Vue.prototype.$noderig = {
                 if(isEmptyValue(mi)) {
                     throw new Error('MenuItems.fromUi(' + no + ') not found');
                 }
-                
+
                 if (value !== null) {
                     if(mi.hasOwnProperty('rig_ui_map')) {
                         if(!mi.hasOwnProperty('ui_rig_map')) {
@@ -1207,6 +1236,135 @@ Vue.prototype.$noderig = {
 
                 throw new Error('MenuItems.fromUi(' + no + ') has no value');
             },
+        };
+    })(),
+    FreqUtils: (function () {
+        function trim_zeros(value) {
+            if(value.substring(value.length - 1) === '0') {
+                return trim_zeros(value.substring(0, value.length - 1));
+            }
+
+            if(value.substring(value.length - 1) === '.') {
+                return value.substring(0, value.length - 1);
+            }
+
+            return value;
+        }
+
+        function padTo(value, l) {
+            if(value.length < l) {
+                return padTo(value + '0', l);
+            }
+
+            if(value.length === l) {
+                return value;
+            }
+
+            return value.substring(0, l);
+        }
+
+        function add_dec_frac(dec, frac) {
+            if(dec < 1000) {
+                return dec * 1000000 + frac;
+            }
+
+            if(dec < 1000000) {
+                return dec * 1000 + frac;
+            }
+
+            return dec;
+        }
+
+        function scale_frac(dec, value) {
+            if(dec < 1000) {
+                return parseInt(padTo(value, 6), 10);
+            }
+
+            if(dec < 1000000) {
+                return parseInt(padTo(value, 3), 10);
+            }
+
+            return 0;
+        }
+
+        function freq_hz(value) {
+            var dot = value.indexOf('.'),
+                dec = parseInt(value.substring(0, dot), 10),
+                frac = scale_frac(dec, value.substring(dot + 1));
+                freq = add_dec_frac(dec, frac);
+
+            if(dot === -1) {
+                return add_dec_frac(parseInt(value, 10), 0);
+            }
+
+            return freq;
+        }
+
+        function convFreq(arg) {
+            if(typeof(arg) === 'number') {
+                convFreq(arg.toString());
+            }
+
+            var freq = freq_hz(arg.trim());
+
+            var valid_freqs = [
+                [  1800000,   2000000],
+                [  3500000,   4000000],
+                [  5332000,   5332000],
+                [  5348000,   5348000],
+                [  5358500,   5358500],
+                [  5373000,   5373000],
+                [  5405000,   5405000],
+                [  7000000,   7300000],
+                [ 10100000,  10150000],
+                [ 14000000,  14350000],
+                [ 18068000,  18168000],
+                [ 21000000,  21450000],
+                [ 24890000,  24990000],
+                [ 28000000,  29700000],
+                [ 50000000,  54000000],
+                [144000000, 148000000],
+                [420000000, 450000000],
+            ];
+
+            if(valid_freqs.some( function(f) {
+                return (freq >= f[0] && freq <= f[1]);
+            })) {
+                return parseInt(freq, 10);
+            }
+
+            return null;
+        }
+
+        function formatFreq(freq) {
+            var m, k, h;
+
+            if(typeof(freq) === 'number') {
+                return formatFreq(freq.toString());
+            }
+
+            if(freq.length === 7) {
+                m = freq.substring(0,1);
+                k = freq.substring(1,4);
+                h = freq.substring(4);
+            }
+            else if(freq.length === 8) {
+                m = freq.substring(0,2);
+                k = freq.substring(2,5);
+                h = freq.substring(5);
+            }
+            else if(freq.length === 9) {
+                m = freq.substring(0,3);
+                k = freq.substring(3,6);
+                h = freq.substring(6);
+            }
+
+            return trim_zeros(m + k + '.' + h);
+        }
+
+        return {
+            convFreq: convFreq,
+            formatFreq: formatFreq,
         };
     })(),
 };
