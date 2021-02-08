@@ -676,7 +676,7 @@
         "type": "function",
         "z": "754980e0.50707",
         "name": "alc_status",
-        "func": "'use strict';\n\nif(msg.name === 'alc_status') {\n    return {alc_status: (msg.value > 5)};\n}",
+        "func": "'use strict';\n\nif(msg.name === 'alc_meter') {\n    return {name: 'alc_status', value: msg.value > 5};\n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
