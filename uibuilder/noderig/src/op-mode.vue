@@ -10,7 +10,7 @@
             <template #modal-header>
                 <div class="px-2 d-flex justify-content-between align-items-left w-100">
                     <div @click="editOpMode">Edit</div>
-                    <div>{{ name }}</div>
+                    <div @click="closeOpModeList()">{{ name }}</div>
                     <div @click="saveOpMode">Save</div>
                 </div>
             </template>
@@ -123,6 +123,9 @@ module.exports = {
             else {
                 uibuilder.send({topic: 'op_mode', event: 'load_primary'});
             }
+        },
+        closeOpModeList: function() {
+            this.$bvModal.hide('list-op-modes');
         },
         editOpMode: function() {
             this.nameInput = this.name;

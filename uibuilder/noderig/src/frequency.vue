@@ -40,7 +40,7 @@
             <template #modal-header>
                 <div class="px-2 d-flex justify-content-between align-items-left w-100">
                     <div>All</div>
-                    <div>Memory Channels</div>
+                    <div @click="closeMemoryChannelList()">Memory Channels</div>
                     <div @click="addMemoryChannel()">Add</div>
                 </div>
             </template>
@@ -243,6 +243,11 @@ module.exports = {
             this.mcModalReset();
 
             this.$bvModal.show('memory-channel-list');
+        },
+        closeMemoryChannelList: function(e) {
+            this.mcModalReset();
+
+            this.$bvModal.hide('memory-channel-list');
         },
         mcHandleClickEvent(e, mc) {
             if(e === 'click') {

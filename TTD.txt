@@ -1,6 +1,6 @@
 TTD
 
-Import and export Op Modes.
+Import and export Op Modes & memory channels.
 
 Move timers from UI to Node-red.
 
@@ -11,12 +11,15 @@ Add options to Op Mode to show/hide timers.  Set initial countdown time.
 Add Op Mode merge.
 
 Memory groups.
+Added other settings to memory channels, e.g. power level.  The problem that needs 
+to be solved is how to keep Op Modes from conflicting with Memory Channels and vice versa.
 
 Test with Outpost.
 
 Test with pat.
 
 CN00 and CN01 do not report changes when AI is enabled.
+Understand how to get built in memory channels to play nicely.
 
 Controls (WIP)
     UI Controls

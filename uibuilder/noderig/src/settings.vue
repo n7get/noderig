@@ -2,45 +2,46 @@
     <b-card class="pb-2" no-body border-variant="secondary">
         <b-card-header class="px-2 d-flex justify-content-between align-items-left">
             <div @click="toggleDisplayMode">{{ show_display_mode() }}</div>
-            <div text-variant="white" bg-variant="secondary">
+            <div @click="toggleShowSettings" text-variant="white" bg-variant="secondary">
                  Settings
             </div>
             <div v-show="!edit_mode" @click="edit">Edit</div>
             <div v-show="edit_mode" @click="done">Done</div>
         </b-card-header>
-        <div flush>
-        <div class="px-2 d-flex justify-content-between align-items-left bg-secondary text-light">
-            <div>Description</div>
-            <div v-show="!edit_mode">Value</div>
-            <div v-show="edit_mode">
-                <span>Fav</span>&nbsp;<span>Saved</span>
-            </div>
-        </div>
-        <div class="list-area">
-            <div class="px-2 d-flex justify-content-between align-items-left"
-                v-for="(s, name) in settings"
-                :key="name"
-                v-if="showConfigSetting(s)">
-
-                <div>{{ s.desc }}<span v-if="s.changed">*</span></div>
-                <div v-show="!edit_mode">{{ s.value }}</div>
+        <div v-show="show_settings" flush>
+            <div class="px-2 d-flex justify-content-between align-items-left bg-secondary text-light">
+                <div>Description</div>
+                <div v-show="!edit_mode">Value</div>
                 <div v-show="edit_mode">
-                    <span @click="toggleFav(name)">
-                        <span v-show="s.fav">
-                            <b-icon-check-square></b-icon-square>
+                    <span>Fav</span>&nbsp;<span>Saved</span>
+                </div>
+            </div>
+            <div class="list-area">
+                <div class="px-2 d-flex justify-content-between align-items-left"
+                    v-for="(s, name) in settings"
+                    :key="name"
+                    v-if="showConfigSetting(s)">
+
+                    <div>{{ s.desc }}<span v-if="s.changed">*</span></div>
+                    <div v-show="!edit_mode">{{ s.value }}</div>
+                    <div v-show="edit_mode">
+                        <span @click="toggleFav(name)">
+                            <span v-show="s.fav">
+                                <b-icon-check-square></b-icon-square>
+                            </span>
+                        <span v-show="!s.fav">
+                                <b-icon-square></b-icon-square>
+                            </span>
                         </span>
-                    <span v-show="!s.fav">
-                            <b-icon-square></b-icon-square>
+                        <span class="pl-3 pr-2" @click="togglesaved(name)">
+                            <span v-show="s.saved">
+                                <b-icon-check-square></b-icon-square>
+                            </span>
+                            <span v-show="!s.saved">
+                                <b-icon-square></b-icon-square>
+                            </span>
                         </span>
-                    </span>
-                    <span class="pl-3 pr-2" @click="togglesaved(name)">
-                        <span v-show="s.saved">
-                            <b-icon-check-square></b-icon-square>
-                        </span>
-                        <span v-show="!s.saved">
-                            <b-icon-square></b-icon-square>
-                        </span>
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,6 +52,7 @@
 module.exports = {
     data: function() {
         return {
+            show_settings: true,
             display_mode: 'fav',
             edit_mode: false,
             show_changed_only: false,
@@ -58,6 +60,9 @@ module.exports = {
         };
     },
     methods: {
+        toggleShowSettings: function() {
+            this.show_settings = !this.show_settings;
+        },
         toggleDisplayMode: function() {
             switch(this.display_mode) {
             case 'all':     this.display_mode = 'saved'; break;
