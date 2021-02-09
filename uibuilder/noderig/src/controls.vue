@@ -24,7 +24,22 @@
     </div>
     <tx-timer class="mt-2"></tx-timer>
     <!-- <tx-count-down secs="90" warn="30"></tx-count-down> -->
-    <power-level class="mt-2 mb-2"></power-level>
+    <s-level label="Power" event="power_level" class="mt-2 mb-2"></s-level>
+    <s-level 
+        v-show="mode === 'FM' || mode === 'LSB' || mode === 'USB'"
+        label="Mic-G"
+        event="mic_gain"
+        class="mt-2 mb-2"></s-level>
+    <s-level
+        v-show="mode === 'FM'"
+        label="SQ"
+        event="squelclh_level"
+        class="mt-2 mb-2"></s-level>
+    <s-level
+        v-show="mode === 'DATA-USB'"
+        label="Mon"
+        event="monitor_level"
+        class="mt-2 mb-2"></s-level>
 </div>
 </template>
 
@@ -43,8 +58,8 @@ module.exports = {
         'mode-status':      httpVueLoader('mode-status.vue'),
         'op-mode':          httpVueLoader('op-mode.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
-        'power-level':      httpVueLoader('power-level.vue'),
         'pre-amp-status':   httpVueLoader('pre-amp-status.vue'),
+        's-level':          httpVueLoader('s-level.vue'),
         's-meter':          httpVueLoader('s-meter-vue-bootstrap-progressbar.vue'),
         'swr-meter':        httpVueLoader('swr-meter.vue'),
         'tuner-status':     httpVueLoader('tuner-status.vue'),
@@ -56,6 +71,7 @@ module.exports = {
         return {
             meter_switch: '',
             tx_on: false,
+            mode: undefined,
         }
     },
     mounted: function() {
@@ -72,6 +88,11 @@ module.exports = {
             else if(p.name === 'meter_switch') {
                 if(p.hasOwnProperty('value')) {
                     self.meter_switch = p.value;
+                }
+            }
+            else if(p.name === 'mode') {
+                if(p.hasOwnProperty('value')) {
+                    self.mode = p.value;
                 }
             }
         });
