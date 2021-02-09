@@ -125,7 +125,7 @@
                 <b-form-group
                     label="CTCSS Tone:"
                     label-for="mc-ctcss-tone"
-                    v-show="mcEdit.squelchMode=== 'CTCSS ENC/DEC' || mcEdit.squelchMode=== 'CTCSS ENC'"
+                    v-show="mcEdit.squelchMode === 'CTCSS ENC/DEC' || mcEdit.squelchMode === 'CTCSS ENC'"
                 >
                     <b-form-select
                         id="mc-ctcss-tone"
@@ -137,7 +137,7 @@
                 <b-form-group
                     label="DCS Tone:"
                     label-for="mc-dcs-tome"
-                    v-show="mcEdit.squelchMode=== 'DCS ENC/DEC' || mcEdit.squelchMode=== 'DCS ENC'"
+                    v-show="mcEdit.squelchMode === 'DCS ENC/DEC' || mcEdit.squelchMode === 'DCS ENC'"
                 >
                     <b-form-select
                         id="mc-dcs-tome"
@@ -275,7 +275,15 @@ module.exports = {
             this.mcOpenEditModal(this.currentConfig);
         },
         editMemoryChannel: function(mc) {
-            this.mcOpenEditModal(mc);
+            var editMc = Object.assign({}, mc);
+
+            if(mc.squelchMode === 'CTCSS ENC/DEC' || mc.squelchMode === 'CTCSS ENC') {
+                editMc.ctcssTone = mc.squelchTone;
+            }
+            if(mc.squelchMode === 'DCS ENC/DEC' || mc.squelchMode === 'DCS ENC') {
+                editMc.dcsTone = mc.squelchTone;
+            }
+            this.mcOpenEditModal(editMc);
         },
         mcRemove: function(mc, e) {
             this.$bvModal.msgBoxConfirm('Delete Memory Channel ' + mc.name + '?', {})
@@ -332,8 +340,12 @@ module.exports = {
                 if(this.mcEdit.mode === 'FM') {
                     newMc.offset = this.mcEdit.offset;
                     newMc.squelchMode = this.mcEdit.squelchMode;
-                    newMc.ctcssTone = this.mcEdit.ctcssTone;
-                    newMc.dcsTone = this.mcEdit.dcsTone;
+                    if(this.mcEdit.squelchMode === 'CTCSS ENC/DEC' || this.mcEdit.squelchMode === 'CTCSS ENC') {
+                        newMc.squelchTone = this.mcEdit.ctcssTone;
+                    }
+                    if(this.mcEdit.squelchMode === 'DCS ENC/DEC' || this.mcEdit.squelchMode === 'DCS ENC') {
+                        newMc.squelchTone = this.mcEdit.dcsTone;
+                    }
                 }
                 uibuilder.send({topic: 'memory_channel', event: 'update', value: newMc});
             }

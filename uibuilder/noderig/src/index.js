@@ -1132,7 +1132,7 @@ Vue.prototype.$noderig = {
             142: {
                 rig_ui_map: {
                     '0': 'MIC',
-                    '0': 'DATA',
+                    '1': 'DATA',
                 },
             },
             143: {
