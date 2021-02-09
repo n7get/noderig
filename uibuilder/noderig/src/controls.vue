@@ -40,6 +40,11 @@
         label="Mon"
         event="monitor_level"
         class="mt-2 mb-2"></s-level>
+    <mi-level
+        v-show="mode === 'DATA-USB'"
+        :no="73"
+        label="D-LVL"
+        class="mt-2 mb-2"></mi-level>
 </div>
 </template>
 
@@ -55,6 +60,7 @@ module.exports = {
         'id-meter':         httpVueLoader('id-meter.vue'),
         'lock-status':      httpVueLoader('lock-status.vue'),
         'manual-mode-status': httpVueLoader('manual-mode-status.vue'),
+        'mi-level':         httpVueLoader('mi-level.vue'),
         'mode-status':      httpVueLoader('mode-status.vue'),
         'op-mode':          httpVueLoader('op-mode.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
