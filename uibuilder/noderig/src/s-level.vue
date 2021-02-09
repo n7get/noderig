@@ -50,7 +50,6 @@ module.exports = {
     },
     mounted: function() {
         var self = this;
-console.log('show: ' + this.show);
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
