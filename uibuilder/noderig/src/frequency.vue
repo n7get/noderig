@@ -1,10 +1,13 @@
 <template>
-    <div
-        @click="clicked().then(e => freqHandleClicks(...e))"
-        class="frequency-digits"
-        :class="{tx: tx_on}">
-
-        <span v-html="mhz"></span>&nbsp;<span v-html="khz"></span>&nbsp;<span v-html="hz"></span>
+    <div class="mx-auto">
+        <div
+            @click="clicked().then(e => freqHandleClicks(...e))"
+            class="frequency-digits"
+            :class="{tx: tx_on}"
+        >
+            <!-- <span class="mhz">{{ mhz }}</span><span class="khz">{{ khz }}</span><span class="hz">{{ hz }}</span> -->
+            {{ mhz }}&nbsp;{{ khz }}&nbsp;{{ hz }}
+        </div>
 
         <b-modal
             id="new-freq"
@@ -260,7 +263,7 @@ module.exports = {
         loadMemoryChannel: function(mc) {
             this.$bvModal.hide('memory-channel-list');
 
-            uibuilder.send({topic: 'memory_channel', event: 'load', value: mc.no});
+            uibuilder.send({topic: 'memory_channels', event: 'load', value: mc.no});
         },
         mcOpenEditModal: function(mc) {
             var FreqUtils = this.$noderig.FreqUtils;
@@ -289,7 +292,7 @@ module.exports = {
             this.$bvModal.msgBoxConfirm('Delete Memory Channel ' + mc.name + '?', {})
                 .then(function(result) {
                     if(result) {
-                        uibuilder.send({topic: 'memory_channel', event: 'remove', value: mc.no});
+                        uibuilder.send({topic: 'memory_channels', event: 'remove', value: mc.no});
                     }
                 });
         },
@@ -347,7 +350,7 @@ module.exports = {
                         newMc.squelchTone = this.mcEdit.dcsTone;
                     }
                 }
-                uibuilder.send({topic: 'memory_channel', event: 'update', value: newMc});
+                uibuilder.send({topic: 'memory_channels', event: 'update', value: newMc});
             }
         },
     },
@@ -367,7 +370,7 @@ module.exports = {
                         self.freq = value;
                         self.currentConfig.frequency = p.value;
 
-                        self.mhz = value.substring(0, 3).replace(/ /g,'&nbsp;');;
+                        self.mhz = value.substring(0, 3);
                         self.khz = value.substring(3, 6);
                         self.hz  = value.substring(6, 9);
                     }
@@ -401,14 +404,20 @@ module.exports = {
 }
 </script>
 
-<style scoped>
+<style>
     .frequency-digits {
         font-family: "Monaco", "Lucida Console", "Andalé Mono";
-        font-size: 32px;
+        font-size: 30px;
         color: green;
         padding-right: 0;
     }
     .frequency-digits.tx {
         color: red;
+    }
+    .mhz, .khz, .hz {
+        display: inline-block;
+    }
+    .khz, .hz {
+        padding-left: 10px;
     }
 </style>

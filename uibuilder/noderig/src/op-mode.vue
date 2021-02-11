@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pl-0">
         <b-button id="op-mode-button" @click="clicked().then(e => handleClick(...e))">{{ name }}</b-button>
 
         <b-modal
@@ -180,7 +180,7 @@ module.exports = {
             }
             if(this.triggerInput) {
                 try {
-                    new Function(this.triggerInput);                    
+                    new Function(this.triggerInput);
                 } catch (error) {
                     this.triggerError = error.message;
                     this.triggerInputState = false;

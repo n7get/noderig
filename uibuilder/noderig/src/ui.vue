@@ -1,13 +1,11 @@
 <template>
     <div>
-        <b-container id="app_container">
-            <b-row>
-                <controls class="col-sm-12 col-md-6 col-lg-4"></controls>
-                <settings class="col-sm-12 col-md-6 col-lg-4"></settings>
-                <menu-item class="col-sm-12 col-md-6 col-lg-4"></menu-item>
-            </b-row>
-        </b-container>
-        
+        <div>
+            <controls class="col-sm-12 col-md-6 col-lg-4"></controls>
+            <settings class="col-sm-12 col-md-6 col-lg-4"></settings>
+            <menu-item class="col-sm-12 col-md-6 col-lg-4"></menu-item>
+        </div>
+
         <b-modal
             id="alert"
             size="sm"
@@ -51,7 +49,6 @@ module.exports = {
                 self.$bvModal.msgBoxOk(p.value, {});
             }
             else if(p.name === 'high_swr') {
-console.log('high_swr: ', p);
                 if(p.value) {
                     this.$bvModal.show('alert');
                 }

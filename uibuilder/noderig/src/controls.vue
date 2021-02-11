@@ -1,18 +1,18 @@
 <template>
 <div>
-    <b-row>
-        <op-mode class="col-3"></op-mode>
-        <frequency class="col-9 pt-3"></frequency>
-    </b-row>
+    <div class="d-flex justify-content-between">
+        <op-mode></op-mode>
+        <frequency class="pt-3"></frequency>
+    </div>
     <!-- <b-row v-show="isOpMode(['data-hf', 'voice-ssh'])" class="mt-2"> -->
-    <b-row class="ml-1 my-2 pb-1 border-bottom d-flex justify-content-between w-100">
-        <tuner-status class="mr-2"></tuner-status>
-        <lock-status class="mr-2">></lock-status>
-        <pre-amp-status class="mr-2">></pre-amp-status>
-        <alc-status class="mr-2">></alc-status>
-        <mode-status class="mr-2"></mode-status>
+    <div class="ml-1 my-2 pb-1 border-bottom d-flex justify-content-between w-100">
+        <tuner-status></tuner-status>
+        <lock-status>></lock-status>
+        <pre-amp-status>></pre-amp-status>
+        <alc-status>></alc-status>
+        <mode-status></mode-status>
         <manual-mode-status></manual-mode-status>
-    </b-row>
+    </div>
     <s-meter v-show="!tx_on" class="mt-2"></s-meter>
     <swr-meter v-show="tx_on" class="mt-2"></swr-meter>
     <div v-show="tx_on" class="mt-2">
