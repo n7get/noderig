@@ -4,6 +4,7 @@
             <controls class="col-sm-12 col-md-6 col-lg-4"></controls>
             <settings class="col-sm-12 col-md-6 col-lg-4"></settings>
             <menu-item class="col-sm-12 col-md-6 col-lg-4"></menu-item>
+            <config></config>
         </div>
 
         <b-modal
@@ -28,6 +29,7 @@
 <script>
 module.exports = {
     components: {
+        'config':       httpVueLoader('config.vue'),
         'controls':     httpVueLoader('controls.vue'),
         'menu-item':    httpVueLoader('menu-item.vue'),
         'settings':     httpVueLoader('settings.vue'),
