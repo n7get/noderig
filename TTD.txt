@@ -1,6 +1,6 @@
 TTD
 
-Import and export Op Modes & memory channels.
+Import file upload for Op Modes & memory channels.
 
 Move timers from UI to Node-red.
 
