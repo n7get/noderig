@@ -15,7 +15,6 @@ module.exports = {
     },
     methods: {
         sendClick: function(e, v) {
-            console.log('sendClick: ' + e + ', value: ' + v);
             if(e === 'click') {
                 uibuilder.send({topic: 'tuner', event: 'click'});
             }

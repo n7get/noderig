@@ -204,7 +204,6 @@ module.exports = {
                     order: this.orderInput,
                     trigger: this.triggerInput
                 };
-                // console.log('save: ', {topic: 'op_mode', event: 'update', value: update});
                 uibuilder.send({topic: 'op_mode', event: 'update', value: update});
             }
         },

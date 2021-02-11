@@ -47,7 +47,6 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
             if(p.name === 'alert') {
-                console.log('alert: ', p.value);
                 self.$bvModal.msgBoxOk(p.value, {});
             }
             else if(p.name === 'high_swr') {

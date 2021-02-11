@@ -122,10 +122,6 @@ module.exports = {
                     self.menu_items[p.no].value = p.value;
                 }
             }
-
-            if(p.name === 'config') {
-                console.log('config: ' + config);
-            }
         });
     }
 }

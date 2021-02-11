@@ -121,7 +121,7 @@ module.exports = {
                 this.jsonTextInputError = '';
 
                 var paylaod = {topic: this.topic, event: 'save_json', value: this.jsonTextInput};
-console.log('payload: ', paylaod);
+
                 uibuilder.send(paylaod);
             }
 
