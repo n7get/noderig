@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div>
-            <controls class="col-sm-12 col-md-6 col-lg-4"></controls>
-            <settings class="col-sm-12 col-md-6 col-lg-4"></settings>
-            <menu-item class="col-sm-12 col-md-6 col-lg-4"></menu-item>
+        <div class="col-sm-12 col-md-6 col-lg-4 px-0">
+            <controls class="px-3"></controls>
+            <settings></settings>
+            <menu-item></menu-item>
             <config></config>
         </div>
 
