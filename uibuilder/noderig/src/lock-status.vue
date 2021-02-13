@@ -1,6 +1,6 @@
 
 <template>
-    <div :class="{lock: true, on: on}" @click="sendClick">
+    <div :class="{lock: true, on: on}" @click="toggle">
         LOCK
     </div>
 </template>
@@ -13,8 +13,8 @@ module.exports = {
         }
     },
     methods: {
-        sendClick: e => {
-            uibuilder.send({topic: 'lock', event: 'click'});
+        toggle: e => {
+            uibuilder.send({topic: 'lock', event: 'toggle'});
         },
     },
     mounted: function() {
