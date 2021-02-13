@@ -1,7 +1,7 @@
 <template>
     <b-row>
-        <div class="col-4">
-            {{ label }}<span v-if="show !== 'none'"> ({{ value }})</span>
+        <div class="col-4" :class="{disabled: disabled}">
+            <span @click="sendToggle">{{ label }}</span><span v-if="show !== 'none'"> ({{ value }})</span>
         </div>
         <b-form-input
 	    class="col-7"
@@ -10,6 +10,7 @@
             :min="min"
             :max="max"
             @change="sendChange"
+            :disabled="disabled"
         ></b-form-input>
     </b-row>
 </template>
@@ -37,9 +38,14 @@ module.exports = {
             type: String,
             default: '',
         },
+        'toggle': {
+            type: String,
+            default: null,
+        }
     },
     data: function() {
         return {
+            disabled: false,
             value: undefined,
         }
     },
@@ -47,15 +53,26 @@ module.exports = {
         sendChange: function(new_value) {
             uibuilder.send({topic: this.event, event: 'set', value: new_value});
         },
+        sendToggle: function() {
+            if(this.toggle) {
+                uibuilder.send({topic: this.toggle, event: 'toggle'});
+            }
+        }
     },
     mounted: function() {
         var self = this;
+
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.name === this.event) {
+            if(p.name === self.event) {
                 if(p.hasOwnProperty('value')) {
                     self.value = p.value;
+                }
+            }
+            else if(self.toggle && p.name === self.toggle) {
+                if(p.hasOwnProperty('value')) {
+                    self.disabled = !p.value;
                 }
             }
         });
@@ -64,4 +81,7 @@ module.exports = {
 </script>
 
 <style scoped>
+    .disabled {
+        color: lightgray;
+    }
 </style>

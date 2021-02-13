@@ -39,6 +39,7 @@
         v-show="mode === 'DATA-USB'"
         label="Mon"
         event="monitor_level"
+        toggle="monitor_on"
         class="mt-2 mb-2"></s-level>
     <mi-level
         v-show="mode === 'DATA-USB'"
