@@ -45,6 +45,13 @@
         :no="73"
         label="D-LVL"
         class="mt-2 mb-2"></mi-level>
+    <div class="mb-2">
+        <div>
+        <s-button event="swap_vfo" label="Swap VFO" class="mt-2"></s-button>
+        <s-button event="vfo_a_to_b" label="VFO A > B" class="mt-2"></s-button>
+        <s-button event="vfo_b_to_a" label="VFO B > A" class="mt-2"></s-button>
+        </div>
+    </div>
 </div>
 </template>
 
@@ -65,8 +72,10 @@ module.exports = {
         'op-mode':          httpVueLoader('op-mode.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
         'pre-amp-status':   httpVueLoader('pre-amp-status.vue'),
+        's-button':         httpVueLoader('s-button.vue'),
         's-level':          httpVueLoader('s-level.vue'),
         's-meter':          httpVueLoader('s-meter-vue-bootstrap-progressbar.vue'),
+//      's-toggle':         httpVueLoader('s-toggle.vue'),
         'swr-meter':        httpVueLoader('swr-meter.vue'),
         'tuner-status':     httpVueLoader('tuner-status.vue'),
         'tx-count-down':    httpVueLoader('tx-count-down.vue'),
