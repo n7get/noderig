@@ -1,7 +1,7 @@
 <template>
     <b-row>
-        <div class="col-4" :class="{disabled: disabled}">
-            <span @click="sendToggle">{{ label }}</span><span v-if="show !== 'none'"> ({{ value }})</span>
+        <div @click="sendToggle" class="col-4" :class="{disabled: disabled}">
+            {{ label }}<span v-if="show !== 'none'"> ({{ value }})</span>
         </div>
         <b-form-input
 	    class="col-7"
