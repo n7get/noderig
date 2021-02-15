@@ -1,5 +1,5 @@
 <template>
-<b-row v-show="tx_on">
+<b-row v-show="tx_on && enabled">
     <div class="col-4 timer-label">
         TX Rem:
     </div>
@@ -34,10 +34,6 @@ function pad2(value) {
 
 module.exports = {
     props: {
-        secs: {
-            type: Number,
-            required: true
-        },
         warn: {
             type: Number,
             default: 30,
@@ -46,8 +42,10 @@ module.exports = {
     data: function() {
         return {
             counter: 0,
-            tx_on: false,
+            enabled: false,
             is_warn: false,
+            startTime: 90,
+            tx_on: false,
         }
     },
     computed: {
@@ -71,7 +69,7 @@ module.exports = {
 
                     if(self.tx_on) {
                        if(intervalID == null) {
-                            self.counter = self.secs;
+                            self.counter = self.startTime;
                             self.is_warn = false;
 
                            intervalID = window.setInterval(increment, 1000, self);
@@ -82,6 +80,10 @@ module.exports = {
                        intervalID = null;
                     }
                 }
+            }
+            if(p.name === 'op_mode') {
+                self.enabled = p.value.enableCountdown;
+                self.startTime = p.value.startTime || 90;
             }
         });
     }

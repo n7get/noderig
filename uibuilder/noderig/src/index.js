@@ -2,26 +2,29 @@ window.noderig = {
     op_mode_mixin: {
         data: function () {
             return {
-                op_mode: ''
+                op_mode: {},
             }
         },
         created: function() {
             var self = this;
 
             uibuilder.onChange('msg', msg => {
-                if(msg.hasOwnProperty('op_mode')) {
-                    self.$data.op_mode = msg.op_mode;
+                const p = msg.payload;
+
+                if(p.name === 'op_mode') {
+                    console.log('op_mode: ', p.value)
+                    self.$data.op_mode = p.value;
                 }
             });
         },
         methods: {
             isOpMode: function(arg) {
                 if(typeof(arg) === 'string') {
-                    return this.op_mode === arg;
+                    return this.op_mode.name === arg;
                 }
 
                 if(Array.isArray(arg)) {
-                    return arg.find( e => e === this.op_mode );
+                    return arg.find( e => e === this.op_mode.name );
                 }
             }
         }

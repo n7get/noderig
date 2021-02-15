@@ -1,5 +1,5 @@
 <template>
-<b-row v-show="tx_on">
+<b-row v-show="tx_on && enabled">
     <div class="col-4 timer-label">
         TX Time:
     </div>
@@ -28,6 +28,7 @@ module.exports = {
     data: function() {
         return {
             counter: 0,
+            enabled: false,
             tx_on: false,
         }
     },
@@ -46,7 +47,10 @@ module.exports = {
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.name === 'transmit') {
+            if(p.name === 'op_mode') {
+                self.enabled = p.value.enableTimer;
+            }
+            else if(p.name === 'transmit') {
                 if(p.hasOwnProperty('value')) {
                     self.tx_on = p.value;
 

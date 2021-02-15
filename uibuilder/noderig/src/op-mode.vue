@@ -54,7 +54,9 @@
             <b-form-group
                 label="Order:"
                 label-for="order"
-                label-cols="3"
+                label-cols="auto"
+                content-cols="3"
+                class="mt-2"
                 inline
                 invalid-feedback="Order is required"
                 :state="orderInputState"
@@ -69,9 +71,38 @@
                 ></b-form-input>
             </b-form-group>
 
+            <b-form-checkbox v-model="enableTimerInput" name="primary-button" switch class="mt-4">
+                Enable timer.
+            </b-form-checkbox>
+
+            <b-form-checkbox v-model="enableCountdownInput" name="primary-button" switch class="mt-4">
+                Enable countdown.
+            </b-form-checkbox>
+
+            <b-form-group
+                label="Start time:"
+                label-for="start-time"
+                label-cols="auto"
+                content-cols="3"
+                class="mt-2"
+                inline
+                invalid-feedback="Start time is required"
+                :state="startTimeInputState"
+                v-show="enableCountdownInput"
+            >
+                <b-form-input
+                    id="start-time"
+                    ref="start-time-input"
+                    type="number"
+                    v-model="startTimeInput"
+                    :state="startTimeInputState"
+                ></b-form-input>
+            </b-form-group>
+
             <b-form-group
                 label="Trigger:"
                 label-for="trigger"
+                label-class="mt-2"
                 :invalid-feedback="triggerError"
                 :state="triggerInputState"
             >
@@ -107,6 +138,16 @@ module.exports = {
             orderInput: 0,
             orderInputState: null,
 
+            enableTimer: false,
+            enableTimerInput: false,
+
+            enableCountdown: false,
+            enableCountdownInput: false,
+
+            startTime: 0,
+            startTimeInput: 0,
+            startTimeInputState: null,
+
             trigger: '',
             triggerInput: '',
             triggerInputState: null,
@@ -132,6 +173,9 @@ module.exports = {
             this.primaryInput = this.primary;
             this.enabledInput = this.enabled;
             this.orderInput = this.order;
+            this.enableTimerInput = this.enableTimer;
+            this.enableCountdownInput = this.enableCountdown;
+            this.startTimeInput = this.startTime;
             this.triggerInput = this.trigger;
             this.$bvModal.show('edit-op-mode');
             this.resetModal();
@@ -165,18 +209,23 @@ module.exports = {
         resetModal: function() {
             this.nameInputState = null;
             this.orderInputState = null;
+            this.startTimeInputState = null;
             this.triggerInputState = null;
         },
         handleOk: function(e) {
             let hasErrors = false;
 
             if(!this.nameInput) {
-                this.nameInputState = false;
                 hasErrors = true;
+                this.nameInputState = false;
             }
             if(!this.orderInput) {
                 hasErrors = true;
                 this.orderInputState = false;
+            }
+            if(this.enableCountdownInput && !this.startTimeInput) {
+                hasErrors = true;
+                this.startTimeInputState = false;
             }
             if(this.triggerInput) {
                 try {
@@ -202,6 +251,9 @@ module.exports = {
                     primary: this.primaryInput,
                     enabled: this.enabledInput,
                     order: this.orderInput,
+                    enableTimer: this.enableTimerInput,
+                    enableCountdown: this.enableCountdownInput,
+                    startTime: this.startTimeInput,
                     trigger: this.triggerInput
                 };
                 uibuilder.send({topic: 'op_mode', event: 'update', value: update});
@@ -219,6 +271,9 @@ module.exports = {
                 self.order = p.value.order || 0;
                 self.enabled = p.value.enabled || false;
                 self.primary = p.value.primary || false;
+                self.enableTimer = p.value.enableTimer || false;
+                self.enableCountdown = p.value.enableCountdown || false;
+                self.startTime = p.value.startTime || 0;
                 self.trigger = p.value.trigger;
             }
             else if(p.name === 'op_modes') {

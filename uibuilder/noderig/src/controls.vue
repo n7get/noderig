@@ -23,7 +23,7 @@
         <vdd-meter v-show="meter_switch === 'VDD'"></vdd-meter>
     </div>
     <tx-timer class="mt-2"></tx-timer>
-    <!-- <tx-count-down secs="90" warn="30"></tx-count-down> -->
+    <tx-count-down :warn="30"></tx-count-down>
     <s-level label="Power" event="power_level" class="mt-2 mb-2"></s-level>
     <s-level 
         v-show="mode === 'FM' || mode === 'LSB' || mode === 'USB'"
@@ -46,15 +46,15 @@
         label="NB"
         event="noise_blanker_level"
         toggle="noise_blanker_status"
-        max="10"
+        :max="10"
         class="mt-2 mb-2"></s-level>
     <s-level
         v-show="mode === 'LSB' || mode === 'USB'"
         label="NR"
         event="noise_reduction_level"
         toggle="noise_reduction"
-        min="1"
-        max="15"
+        :min="1"
+        :max="15"
         class="mt-2 mb-2"></s-level>
     <mi-level
         v-show="mode === 'DATA-USB'"
