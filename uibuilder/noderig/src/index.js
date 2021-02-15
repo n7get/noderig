@@ -52,6 +52,7 @@ window.noderig = {
 Vue.prototype.$noderig = {
     settings: {
         af_gain: { desc: 'AF GAIN', value: null, changed: false, fav: false, saved: false},
+        agc: {desc: 'AGC', value: null, changed: false, fav: false, saved: false},
         tuner: { desc: 'ANTENNA TUNER CONTROL', value: null, changed: false, fav: false, saved: false},
         apf_freq: { desc: 'APF FREQ', value: null, changed: false, fav: false, saved: false},
         apf_on: { desc: 'APF ON/OFF', value: null, changed: false, fav: false, saved: false},
