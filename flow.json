@@ -391,7 +391,7 @@
         "type": "function",
         "z": "32b9106a.4589e",
         "name": "Poll Menu",
-        "func": "'use strict';\n\nif(msg.payload.substring(0,2) === 'EX') {\n    const RigSetting = global.get('RigSetting');\n\n    let next_menu_item = flow.get('next_menu_item');\n    \n    if(next_menu_item === 154) {\n        next_menu_item = 1;\n        \n        if(flow.get('initial_load')) {\n            flow.set('initial_load', false);\n            \n            node.send([null, {payload: 'end_of_load'}]);\n        }\n    }\n    \n    flow.set('next_menu_item', next_menu_item + 1);\n\n    node.send([{ payload: RigSetting.of('MENU', {no: next_menu_item}).asRead }, null]);\n}\n\nnode.done();",
+        "func": "'use strict';\n\nfunction sendNextEx() {\n    const RigSetting = global.get('RigSetting');\n    \n    let next_menu_item = flow.get('next_menu_item');\n\n    if(next_menu_item === 154) {\n        next_menu_item = 1;\n    }\n\n    flow.set('next_menu_item', next_menu_item + 1);\n    flow.set('last_ex', Date.now());\n\n    node.send([{ payload: RigSetting.of('MENU', {no: next_menu_item}).asRead }, null]);\n    \n    return next_menu_item;\n}\n\nif(msg.payload.substring(0,2) === 'EX') {\n    if(sendNextEx() === 1 && flow.get('initial_load')) {\n        flow.set('initial_load', false);\n\n        node.send([null, {payload: 'end_of_load'}]);\n    }\n}\nelse {\n    if(Date.now() - flow.get('last_ex') > 5000) {\n        node.warn('Polling for MENU changes has timed out, restarting');\n        sendNextEx();\n    }\n}\n\nnode.done();",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
