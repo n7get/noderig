@@ -41,6 +41,21 @@
         event="monitor_level"
         toggle="monitor_on"
         class="mt-2 mb-2"></s-level>
+    <s-level
+        v-show="mode === 'LSB' || mode === 'USB'"
+        label="NB"
+        event="noise_blanker_level"
+        toggle="noise_blanker_status"
+        max="10"
+        class="mt-2 mb-2"></s-level>
+    <s-level
+        v-show="mode === 'LSB' || mode === 'USB'"
+        label="NR"
+        event="noise_reduction_level"
+        toggle="noise_reduction"
+        min="1"
+        max="15"
+        class="mt-2 mb-2"></s-level>
     <mi-level
         v-show="mode === 'DATA-USB'"
         :no="73"
