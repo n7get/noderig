@@ -50,40 +50,32 @@ module.exports = {
     },
     computed: {
         minutes: function() {
-            return Math.floor(this.counter / 60);
+            const countDown = this.startTime - this.counter;
+
+            return Math.floor(countDown / 60);
         },
         seconds: function() {
-            return pad2(this.counter % 60);
+            const countDown = this.startTime - this.counter;
+
+            return pad2(countDown % 60);
         },
     },
     mounted: function() {
-        var self = this,
-            intervalID = null;
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
 
-            if(p.name === 'transmit') {
-                if(p.hasOwnProperty('value')) {
-                    self.tx_on = p.value;
-
-                    if(self.tx_on) {
-                       if(intervalID == null) {
-                            self.counter = self.startTime;
-                            self.is_warn = false;
-
-                           intervalID = window.setInterval(increment, 1000, self);
-                       }
-                    }
-                    else {
-                       window.clearInterval(intervalID);
-                       intervalID = null;
-                    }
-                }
-            }
             if(p.name === 'op_mode') {
                 self.enabled = p.value.enableCountdown;
                 self.startTime = p.value.startTime || 90;
+            }
+            else if(p.name === 'transmit') {
+                self.tx_on = p.value;
+                self.counter = 0;
+            }
+            else if(p.name === 'interval') {
+                self.counter = p.value;
             }
         });
     }

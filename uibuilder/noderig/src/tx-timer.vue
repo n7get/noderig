@@ -10,10 +10,6 @@
 </template>
 
 <script>
-function increment(self) {
-    self.counter++;
-}
-
 function pad2(value) {
     let n = value.toString();
 
@@ -41,8 +37,7 @@ module.exports = {
         },
     },
     mounted: function() {
-        var self = this,
-            intervalID = null;
+        var self = this;
 
         uibuilder.onChange('msg', msg => {
             var p = msg.payload;
@@ -51,21 +46,11 @@ module.exports = {
                 self.enabled = p.value.enableTimer;
             }
             else if(p.name === 'transmit') {
-                if(p.hasOwnProperty('value')) {
-                    self.tx_on = p.value;
-
-                    if(self.tx_on) {
-                       if(intervalID == null) {
-                           self.counter = 0;
-
-                           intervalID = window.setInterval(increment, 1000, self);
-                       }
-                    }
-                    else {
-                       window.clearInterval(intervalID);
-                       intervalID = null;
-                    }
-                }
+                self.tx_on = p.value;
+                self.counter = 0;
+            }
+            else if(p.name === 'interval') {
+                self.counter = p.value;
             }
         });
     }

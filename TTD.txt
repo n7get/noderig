@@ -2,11 +2,7 @@ TTD
 
 Import file upload for Op Modes & memory channels.
 
-Move timers from UI to Node-red.
-
 Hide selected settings and menu item on UI.
-
-Add options to Op Mode to show/hide timers.  Set initial countdown time.
 
 Add Op Mode merge.
 
