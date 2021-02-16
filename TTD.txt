@@ -10,6 +10,8 @@ Memory groups.
 Added other settings to memory channels, e.g. power level.  The problem that needs 
 to be solved is how to keep Op Modes from conflicting with Memory Channels and vice versa.
 
+Figure out why the polling for MENU items keeps failing.
+
 Test with Outpost.
 
 Test with pat.
@@ -38,17 +40,8 @@ Controls (WIP)
         CO03 APF_FREQ
 
     Easy UI Controls?
-        AB VFO-A_TO_VFO-B
-        BA VFO-B_TO_VFO-A
-
-        AM VFO-A_TO_MEMORY_CHANNEL
-
         BD BAND_DOWN
         BU BAND_UP
         CH0 CHANNEL_UP
         CH1 CHANNEL_DOWN
-
-        BI BREAK-IN
-        CS CW_SPOT
-
         DN MIC_DOWN
