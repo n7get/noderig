@@ -1,5 +1,4 @@
 *.backup
-*.patch
 *.swp
 *.tar.gz
 *.tar.bz2
