@@ -1,0 +1,3 @@
+SET RIG_TTY=COM4
+SET APP_TTY=COM8
+node-red
