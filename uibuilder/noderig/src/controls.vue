@@ -26,12 +26,12 @@
     <tx-count-down :warn="30"></tx-count-down>
     <s-level label="Power" event="power_level" class="mt-2 mb-2"></s-level>
     <s-level 
-        v-show="mode === 'FM' || mode === 'LSB' || mode === 'USB'"
+        v-show="mode === 'FM' || mode === 'C4FM' || mode === 'LSB' || mode === 'USB'"
         label="Mic-G"
         event="mic_gain"
         class="mt-2 mb-2"></s-level>
     <s-level
-        v-show="mode === 'FM'"
+        v-show="mode === 'FM' || mode === 'C4FM'"
         label="SQ"
         event="squelclh_level"
         class="mt-2 mb-2"></s-level>

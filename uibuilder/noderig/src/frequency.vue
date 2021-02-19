@@ -102,7 +102,7 @@
                 ></b-form-select>
             </b-form-group>
 
-            <div v-if="mcEdit.mode === 'FM'">
+            <div v-if="mcEdit.mode === 'FM' || mcEdit.mode === 'C4FM'">
                 <b-form-group
                     label="Offset:"
                     label-for="mc-offset"
@@ -340,7 +340,7 @@ module.exports = {
                 newMc.name = this.mcEdit.name;
                 newMc.frequency = FreqUtils.convFreq(this.mcEdit.frequency);
                 newMc.mode = this.mcEdit.mode;
-                if(this.mcEdit.mode === 'FM') {
+                if(this.mcEdit.mode === 'FM' || this.mcEdit.mode === 'C4FM') {
                     newMc.offset = this.mcEdit.offset;
                     newMc.squelchMode = this.mcEdit.squelchMode;
                     if(this.mcEdit.squelchMode === 'CTCSS ENC/DEC' || this.mcEdit.squelchMode === 'CTCSS ENC') {
