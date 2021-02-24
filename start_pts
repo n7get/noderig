@@ -1,0 +1,7 @@
+
+sudo /usr/bin/socat pty,cfmakeraw,link=/dev/tty98 pty,cfmakeraw,link=/dev/tty99 > /tmp/socat 2>&1 &
+
+sleep 1
+
+sudo chgrp dialout /dev/tty9?
+sudo chmod 660 /dev/tty9?
