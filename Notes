@@ -1,0 +1,18 @@
+Notes for documemtation:
+
+* Double click on Op Mode button to switch to primary Op Mode.
+* Triggers are evaluated based on the Op Mode order value.
+* The man indecator on the status line disables triggers when lit.
+* Triggers and primary dont have effected until saved.
+* Settings & Menu items have 4 views - fav, all, saved and changed.
+* Count up and down timers during transmit.
+* High SWR check, disabled while ATU auto tune.
+* All the indecators on the status bar are active.
+* Double click on tuner status to auto tune.
+* Noderig does not use the memory hannels built into the hardware, it's to flakey and buggy.  If somebody understands hoe to get it to work contact me and we can talk about it.
+* Single click on frequency to enter the freuency directly and double click to show memory channel list.
+* frequencies can be entered as MHz - 14.070, KHz - 14070 or Hz - 14070000.
+* Added generic widget for level type settings, s-level.  Changed power level to use new UI widget.  Added widgets for mic gain, squelclh level amd monitor level.  Level controls can also toggle the overstate of the setting.
+* Generic widget for level type of menu items.  This allows menu items to be presented to the UI in the same way as power level or mic gain.  The menu item implemented is 73 - DATA OUT LEVEL.
+* Import and export for Op Modes and Mem Chans.
+* Added support to load an OpMode just before loading a memory channel.

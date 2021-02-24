@@ -92,6 +92,17 @@
             </b-form-group>
 
             <b-form-group
+                label="OpMode:"
+                label-for="mc-op-mode"
+            >
+                <b-form-select
+                    id="mc-op-mode"
+                    v-model="mcEdit.opMode"
+                    :options="opModeOptions"
+                ></b-form-select>
+            </b-form-group>
+
+            <b-form-group
                 label="Mode:"
                 label-for="mc-mode"
             >
@@ -182,6 +193,7 @@ module.exports = {
             mcFrequencyInputState: null,
             mcFrequencyFeedback: '',
 
+            opModeOptions: [],
             modeOptions: this.$noderig.modeOptions,
             offsetOptions: this.$noderig.offsetOptions,
             squelchModeOptions: this.$noderig.squelchModeOptions,
@@ -339,6 +351,7 @@ module.exports = {
                 newMc.no = this.mcEdit.no;
                 newMc.name = this.mcEdit.name;
                 newMc.frequency = FreqUtils.convFreq(this.mcEdit.frequency);
+                newMc.opMode = this.mcEdit.opMode;
                 newMc.mode = this.mcEdit.mode;
                 if(this.mcEdit.mode === 'FM' || this.mcEdit.mode === 'C4FM') {
                     newMc.offset = this.mcEdit.offset;
@@ -393,6 +406,10 @@ module.exports = {
             }
             else if(p.name === 'dcs_tone_frequency') {
                 self.currentConfig.dcsTone = p.value;
+            }
+            else if(p.name === 'op_modes') {
+                self.opModeOptions = Object.values(p.value).filter( om => om.can_delete ).map( om => om.name );
+                self.opModeOptions.unshift('');
             }
             else if(p.name === 'transmit') {
                 if(p.hasOwnProperty('value')) {
