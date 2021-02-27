@@ -1,0 +1,62 @@
+[
+  {
+    "name": "A 80m SSB",
+    "frequency": 3995000,
+    "mode": "LSB",
+    "squelchMode": "CTCSS OFF",
+    "squelchTone": null,
+    "offset": "Simplex",
+    "no": 0
+  },
+  {
+    "name": "A 40m SSB",
+    "frequency": 7295000,
+    "mode": "LSB",
+    "squelchMode": "CTCSS OFF",
+    "squelchTone": null,
+    "offset": "Simplex",
+    "no": 1
+  },
+  {
+    "no": 2,
+    "name": "A 2m repeater",
+    "frequency": 147100000,
+    "mode": "FM",
+    "offset": "+",
+    "squelchMode": "DCS ENC",
+    "squelchTone": "244"
+  },
+  {
+    "no": 3,
+    "name": "A 70cm repeater",
+    "frequency": 446400000,
+    "mode": "FM",
+    "offset": "-",
+    "squelchMode": "CTCSS ENC",
+    "squelchTone": "118.8"
+  },
+  {
+    "no": 4,
+    "name": "2m NCF",
+    "frequency": 146520000,
+    "mode": "FM",
+    "offset": "Simplex",
+    "squelchMode": "CTCSS OFF"
+  },
+  {
+    "no": 5,
+    "name": "70cm NCF",
+    "frequency": 446000000,
+    "mode": "FM",
+    "offset": "Simplex",
+    "squelchMode": "CTCSS OFF"
+  },
+  {
+    "no": 6,
+    "name": "010 Packet",
+    "frequency": 145010000,
+    "mode": "FM",
+    "offset": "Simplex",
+    "squelchMode": "CTCSS OFF"
+  }
+]

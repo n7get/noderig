@@ -1,0 +1,365 @@
+{
+  "Data HF": {
+    "name": "Data HF",
+    "primary": false,
+    "enabled": true,
+    "order": 20,
+    "trigger": "const freq_list = [\n    [1845000, 1864500],\n    [3567400, 3765000],\n    [7044500, 7185000],\n    [10128000, 10150000],\n    [14065000, 14117900],\n    [18017800, 18115900],\n    [21080000, 21118000],\n    [28124500, 28312500],\n];\n\nif(this.trigger && this.trigger.name === 'vfo_a') {\n    return freq_list.some( f => this.trigger.value >= f[0] && this.trigger.value <= f[1] );\n}\n\nreturn false;",
+    "settings": {
+      "tuner": {
+        "saved": true,
+        "value": "on",
+        "fav": true
+      },
+      "pre_amp": {
+        "saved": true,
+        "value": "IPO",
+        "fav": true
+      },
+      "power_level": {
+        "saved": true,
+        "value": 25
+      },
+      "mode": {
+        "saved": true,
+        "value": "DATA-USB"
+      },
+      "agc": {
+        "saved": true,
+        "value": "OFF",
+        "fav": true
+      },
+      "squelclh_level": {
+        "saved": true,
+        "value": 0
+      }
+    },
+    "menus": {
+      "62": {
+        "saved": true,
+        "value": "OTHER"
+      },
+      "64": {
+        "saved": true,
+        "value": "+1500",
+        "fav": true
+      },
+      "65": {
+        "saved": true,
+        "value": "+1500",
+        "fav": true
+      },
+      "70": {
+        "saved": true,
+        "value": "REAR",
+        "fav": true
+      },
+      "72": {
+        "saved": true,
+        "value": "USB",
+        "fav": true
+      },
+      "73": {
+        "saved": true,
+        "value": "63",
+        "fav": true
+      }
+    }
+  },
+  "Voice SSB": {
+    "name": "Voice SSB",
+    "primary": false,
+    "enabled": true,
+    "order": 30,
+    "enableTimer": true,
+    "enableCountdown": false,
+    "startTime": 0,
+    "trigger": "const freq_list = [\n    [1843000, 2000000],\n    [3750000, 4000000],\n    [7150000, 7300000],\n    [14150000, 14350000],\n    [18110000, 18168000],\n    [21200000, 21450000],\n    [24930000, 24990000],\n    [28300000, 29000000],\n];\n\nif(this.trigger && this.trigger.name === 'vfo_a') {\n    return freq_list.some( f => this.trigger.value >= f[0] && this.trigger.value <= f[1] );\n}\n\nreturn false;",
+    "settings": {
+      "tuner": {
+        "saved": true,
+        "value": "on",
+        "fav": true
+      },
+      "mode": {
+        "saved": true,
+        "value": "LSB"
+      },
+      "pre_amp": {
+        "saved": true,
+        "value": "IPO",
+        "fav": true
+      },
+      "power_level": {
+        "saved": true,
+        "value": 5
+      },
+      "agc": {
+        "saved": true,
+        "value": "AUTO",
+        "fav": true
+      }
+    },
+    "menus": {
+      "64": {
+        "saved": true,
+        "value": "+0000",
+        "fav": true
+      },
+      "65": {
+        "saved": true,
+        "value": "+0000",
+        "fav": true
+      },
+      "106": {
+        "saved": true,
+        "value": "MIC",
+        "fav": true
+      },
+      "107": {
+        "saved": true,
+        "value": "50",
+        "fav": true
+      },
+      "108": {
+        "saved": true,
+        "value": "DAKY"
+      },
+      "109": {
+        "saved": true,
+        "value": "USB",
+        "fav": true
+      }
+    }
+  },
+  "WSPR": {
+    "name": "WSPR",
+    "primary": false,
+    "enabled": true,
+    "order": 10,
+    "trigger": "const freq_list = [\n    1836600,\n    3568600,\n    5287200,\n    5364700,\n    7038600,\n    10138700,\n    14095600,\n    18104600,\n    21094600,\n    24924600,\n    28124600,\n    50293000,\n    144489000,\n    432300000,\n];\n\nif(this.trigger) {\n    if(this.trigger.name === 'vfo_a') {\n        return freq_list.some( v => v === this.trigger.value  );\n     }\n}\n\nreturn false;",
+    "settings": {
+      "tuner": {
+        "saved": true,
+        "value": "on",
+        "fav": true
+      },
+      "pre_amp": {
+        "saved": true,
+        "value": "IPO",
+        "fav": true
+      },
+      "power_level": {
+        "saved": true,
+        "value": 5
+      },
+      "mode": {
+        "saved": true,
+        "value": "DATA-USB"
+      },
+      "agc": {
+        "saved": true,
+        "value": "OFF",
+        "fav": true
+      }
+    },
+    "menus": {
+      "62": {
+        "saved": true,
+        "value": "OTHER"
+      },
+      "64": {
+        "saved": true,
+        "value": "+1500",
+        "fav": true
+      },
+      "65": {
+        "saved": true,
+        "value": "+1500",
+        "fav": true
+      },
+      "70": {
+        "saved": true,
+        "value": "REAR",
+        "fav": true
+      },
+      "72": {
+        "saved": true,
+        "value": "USB",
+        "fav": true
+      },
+      "73": {
+        "saved": true,
+        "value": "63",
+        "fav": true
+      }
+    }
+  },
+  "FT8": {
+    "name": "FT8",
+    "primary": false,
+    "enabled": true,
+    "order": 10,
+    "trigger": "const freq_list = [\n    1840000,\n    3573000,\n    7074000,\n    10136000,\n    14074000,\n    18100000,\n    21074000,\n    24915000,\n    28074000,\n    50313000,\n    50323000,\n    701000,\n    144174000,\n];\n\nif(this.trigger) {\n    if(this.trigger.name === 'vfo_a') {\n        return freq_list.some( v => v === this.trigger.value  );\n     }\n}\n\nreturn false;",
+    "settings": {
+      "tuner": {
+        "saved": true,
+        "value": "on",
+        "fav": true
+      },
+      "pre_amp": {
+        "saved": true,
+        "value": "IPO",
+        "fav": true
+      },
+      "power_level": {
+        "saved": true,
+        "value": 20
+      },
+      "mode": {
+        "saved": true,
+        "value": "DATA-USB"
+      },
+      "agc": {
+        "saved": true,
+        "value": "AUTO",
+        "fav": true
+      }
+    },
+    "menus": {
+      "62": {
+        "saved": true,
+        "value": "OTHER"
+      },
+      "64": {
+        "saved": true,
+        "value": "+1500",
+        "fav": true
+      },
+      "65": {
+        "saved": true,
+        "value": "+1500",
+        "fav": true
+      },
+      "70": {
+        "fav": true
+      },
+      "72": {
+        "fav": true
+      },
+      "73": {
+        "saved": true,
+        "value": "63",
+        "fav": true
+      }
+    }
+  },
+  "Packet": {
+    "name": "Packet",
+    "primary": false,
+    "enabled": true,
+    "order": 20,
+    "trigger": "const freq_list = [\n    144350000,\n    144390000,\n    144910000,\n    145010000,\n    145030000,\n    145050000,\n    145070000,\n    145090000,\n    145610000,\n    440875000,\n    445925000,\n];\n\nif(this.trigger) {\n    if(this.trigger.name === 'vfo_a') {\n        return freq_list.some( v => v === this.trigger.value  );\n     }\n}\n\nreturn false;",
+    "settings": {
+      "ctcss": {
+        "saved": true,
+        "value": "CTCSS OFF",
+        "fav": true
+      },
+      "mode": {
+        "saved": true,
+        "value": "FM",
+        "fav": true
+      },
+      "offset": {
+        "saved": true,
+        "value": "Simplex",
+        "fav": true
+      },
+      "power_level": {
+        "saved": true,
+        "value": 10,
+        "fav": true
+      },
+      "squelclh_level": {
+        "saved": true,
+        "value": 0,
+        "fav": true
+      }
+    },
+    "menus": {
+      "74": {
+        "saved": true,
+        "value": "REAR",
+        "fav": true
+      },
+      "75": {
+        "saved": true,
+        "value": "50",
+        "fav": true
+      },
+      "77": {
+        "saved": true,
+        "value": "DATA",
+        "fav": true
+      },
+      "78": {
+        "fav": true
+      },
+      "79": {
+        "saved": true,
+        "value": "1200",
+        "fav": true
+      }
+    }
+  },
+  "VHF+ Voice": {
+    "name": "VHF+ Voice",
+    "primary": true,
+    "enabled": true,
+    "order": 30,
+    "enableTimer": false,
+    "enableCountdown": true,
+    "startTime": 120,
+    "trigger": "const freq_list = [\n    [144000000, 148000000],\n    [420000000, 450000000],\n];\n\nif(this.trigger && this.trigger.name === 'vfo_a') {\n    return freq_list.some( f => this.trigger.value >= f[0] && this.trigger.value <= f[1] );\n}\n\nreturn false;",
+    "settings": {
+      "mode": {
+        "saved": true,
+        "value": "FM",
+        "fav": true
+      },
+      "power_level": {
+        "saved": true,
+        "value": 20,
+        "fav": true
+      },
+      "squelclh_level": {
+        "saved": true,
+        "value": 5,
+        "fav": true
+      },
+      "ctcss_tone_frequency": {
+        "fav": true
+      },
+      "dcs_tone_frequency": {
+        "fav": true
+      },
+      "ctcss": {
+        "fav": true
+      },
+      "mic_gain": {
+        "fav": true
+      },
+      "offset": {
+        "fav": true
+      }
+    },
+    "menus": {
+      "74": {
+        "saved": true,
+        "value": "MIC",
+        "fav": true
+      }
+    }
+  }
+}

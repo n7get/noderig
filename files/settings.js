@@ -238,8 +238,8 @@ module.exports = {
         // os:require('os'),
         // jfive:require("johnny-five"),
         // j5board:require("johnny-five").Board({repl:false})
-	_: require('lodash'),
-	Ajv: require('ajv').default,
+        _: require('lodash'),
+        Ajv: require('ajv').default,
     },
     // `global.keys()` returns a list of all properties set in global context.
     // This allows them to be displayed in the Context Sidebar within the editor.
@@ -258,7 +258,7 @@ module.exports = {
     //
     contextStorage: {
         persist: { module:"localfilesystem" },
-	default: { module: "memory" },
+        default: { module: "memory" },
     },
 
     // The following property can be used to order the categories in the editor

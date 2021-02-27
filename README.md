@@ -1,9 +1,8 @@
-noderig
-=======
+# NodeRig
 
-Ham Radio ('rig') automation program for a Yaesu FT-991A.
+Ham Radio ('rig') automation program for a Yaesu FT-991A. (so far).
 
-### About
+## About
 
 From the 'CAT Operation Reference Manual':
 
@@ -15,10 +14,20 @@ Right now NodeRig is *mostly* ‘read only’, i.e. you will need to use the rig
 
 NodeRig is also tested on a regular basis with Fldigi and WSJT-X.
 
-### Features (totally incomplete)
+## Features (incomplete)
 
 * Automaticly switches Op Modes based on any rig setting.  So it's been frequency and maybe mode == 'C4FM'.
 * Shuts down rig if high SWR is detected
 * Can declutter the UI by only showing the rig and menu settings of interest.
 * Can show what changes to the rig's settings have been made since the last Op Mode was loaded.
 * Unlimited memory channels.
+
+## Installing NodeRig
+
+First follow either [INSTaLL-RPi](/INSTaLL-RPi.md) for Linux/RPi or INsTALL-Windoes (TBD) for WIndows 10.  
+
+## Initial Op Modes and Memory Channels
+
+At this point you may want to import some starter Op Modes and Memory Channels to NodeRig.
+
+Scroll to tbe bottom of the NodeRig page and click on 'Configuration'.  Click the 'Import Op Modes' and copy and paste the content of [Op Modes](/files/op_modes.json).  Same for Memory Channels, click on 'Import Memory Channels' and copy and paste [Memory Channels](files/memory_channels.json).  
