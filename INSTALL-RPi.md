@@ -1,25 +1,37 @@
 # NodeRig install for Raspberry Pi and Linux in general
 
+## Install git if it's not already installed
+
+Chances are git is installed, verify by entering the following command on a command line:
+
+     sudo apt list git
+
+If you don't see something like:
+
+     git/stable,now 1:2.20.1-2+deb10u3 armhf [installed]
+
+install it using:
+
+     sudo apt-get install git
+
 ## Install node.js
 
-First thing is to install node.js: 
-
-Navigate to nodejs.org’s [download page](https://nodejs.org/en/download/).
+Open a browser on nodejs.org's [download page](https://nodejs.org/en/download/).
 
 The easiest way is to use a package manager based on your platform.
-Here’s a [link](https://nodejs.org/en/download/package-manager/) to the nodejs.org website for installing using a package manager.
+Here's a [link](https://nodejs.org/en/download/package-manager/) to the nodejs.org website for installing using a package manager.
 
-Node-RED recomends nodejs 12.x, but supports 14.x so I’ve opted to use nodejs LTS 14.x from [NodeSource](https://github.com/nodesource/distributions/blob/master/README.md#debinstall).  I've developed on both.
+Node-RED recommends nodejs 12.x, but supports 14.x so I've opted to use nodejs LTS 14.x from [NodeSource](https://github.com/nodesource/distributions/blob/master/README.md#debinstall).  I've developed on both.
 
 ## Install Node-RED
 
 Next step is to install Node-RED:
 
-Here’s the [link](https://nodered.org/docs/getting-started/local) to Node-RED’s install page.
+Here's the [link](https://nodered.org/docs/getting-started/local) to Node-RED's install page.
 
 Install Node-RED globally.  The version I got just how is 1.2.9.
 
-From the command line type ‘node-red’.  Wait for the message about Started flows.  Press control-C to exit Node-Red.
+From the command line type 'node-red'.  Wait for the message about Started flows.  Press control-C to exit Node-Red.
 
 Next change directory to ~/.node-red
 
@@ -27,9 +39,9 @@ Install additional packages required by NodeRig:
 
      npm i vue bootstrap-vue @popperjs/core ajv lodash
 
-Don’t worry about the warning for jquery, it doesn’t get used by NodeRig.
+Don't worry about the warning for jquery, it doesn't get used by NodeRig.
 
-Next run node-red again and open a browser with [http://localhost:1880](http://localhost:1880).  Click on the hamburger menu at the top right and click on ‘Manage palette’.  Click on install and install the following Node-RED packages:  
+Next run node-red again and open a browser with [http://localhost:1880](http://localhost:1880).  Click on the hamburger menu at the top right and click on 'Manage palette'.  Click on install and install the following Node-RED packages:  
 
      node-red-node-serialport
      node-red-contrib-uibuilder
@@ -80,18 +92,18 @@ Apply the following patch to settings.js:
 
 Run node-red again and refresh your browser.
 You will get a dialog box about projects under Node-RED.
-Click on the ‘Clone Repository’ button.
-Enter your name and email addrress and click Next.
+Click on the 'Clone Repository' button.
+Enter your name and email address and click Next.
 
-Enter ‘noderig’ as the Project Name and ‘https://github.com/n7get/noderig.git’ in the Get Repository URL.  
-Don’t enter anything in the Username/password fields unless you have a login already on GitHub.  
+Enter 'noderig' as the Project Name and 'https://github.com/n7get/noderig.git' in the Get Repository URL.  
+Don't enter anything in the Username/password fields unless you have a login already on GitHub.  
 Click Next.
 
 You should now see a whole bunch of 'flows' like:
 
 ![NodeRig Serial I/O](/files/noderig-serial-io.png)
 
-Click on the 'UI' tab near the top of the page, you sould see this:
+Click on the 'UI' tab near the top of the page, you should see this:
 
 ![NodeRig UI](/files/noderig-ui.png)
 
@@ -103,13 +115,13 @@ You'll see 'Edit uibuilder node' at the top.  Click on the 'Manage front-end lib
 
 ## Running NodeRig
 
-Almost there!  In the ‘~/.node-red/projects/noderig’ drectory, there are a couple of scripts that will be useful.  
+Almost there!  In the '~/.node-red/projects/noderig' directory, there are a couple of scripts that will be useful.  
 
 The first, files/start_pts, creates a pair or pseudo ttys that will be used by the digital application (Winlink/fldigi, et al.) to connect to what it thinks is the rig, but it is really the NodeRig program.  
 The start_pts script will create two ttys, /dev/tty98 and /dev/tty99.  
 NodeRig will connect to /dev/tty98 and digital app will connect to /dev/tty99.
 
-The ttys are picked up by NodeRig via environment variables, with RIG_TTY specifing the rig's tty and APP_TTY the digital app's.
+The ttys are picked up by NodeRig via environment variables, with RIG_TTY specifying the rig's tty and APP_TTY the digital app's.
 A script, files/nr, is a simple script to set the ttys and run node-red.  
 On my systems the enhanced serial USB appears /dev/USB0.  
 If your USB tty is different, edit nr to reflect your actual port.  
