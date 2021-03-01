@@ -4,15 +4,15 @@
 
 Chances are git is installed, verify by entering the following command on a command line:
 
-     sudo apt list git
+     `sudo apt list git`
 
 If you don't see something like:
 
-     git/stable,now 1:2.20.1-2+deb10u3 armhf [installed]
+     `git/stable,now 1:2.20.1-2+deb10u3 armhf [installed]`
 
 install it using:
 
-     sudo apt-get install git
+     `sudo apt-get install git`
 
 ## Install node.js
 
@@ -37,18 +37,19 @@ Next change directory to ~/.node-red
 
 Install additional packages required by NodeRig:
 
-     npm i vue bootstrap-vue @popperjs/core ajv lodash
+`npm i vue bootstrap-vue @popperjs/core ajv lodash`
 
 Don't worry about the warning for jquery, it doesn't get used by NodeRig.
 
 Next run node-red again and open a browser with [http://localhost:1880](http://localhost:1880).  Click on the hamburger menu at the top right and click on 'Manage palette'.  Click on install and install the following Node-RED packages:  
 
-     node-red-node-serialport
-     node-red-contrib-uibuilder
+`node-red-node-serialport`
+
+`node-red-contrib-uibuilder`
 
 Next, exit Node-RED (control-C) and make a copy of the settings.js file (in ~/.node-red):
 
-     cp settings.js settings.js-orig
+`cp settings.js settings.js-orig`
 
 Apply the following patch to settings.js:
 ```diff
@@ -113,17 +114,21 @@ Double click on the 'noderig' node:
 
 You'll see 'Edit uibuilder node' at the top.  Click on the 'Manage front-end libraries' button.  Under the list of installed packages, click the +.  Enter 'http-vue-loader' and click Install.  You can now click Done at the top.
 
+# Create a pseudo tty pair
+
+A pseudo tty pair is used to allow a digital app to communicate with NodeRig as if it were the FT-991A.  There's a sample script, `~/.node-red/projects/noderig/files/start_pts`, that creates a linked pair of pseudo ttys - /dev/tty98 and /dev/tty99.  Just run this script prior to running Node-RED. 
+
 ## Running NodeRig
 
-Almost there!  In the '~/.node-red/projects/noderig' directory, there are a couple of scripts that will be useful.  
+Almost there! 
 
-The first, files/start_pts, creates a pair or pseudo ttys that will be used by the digital application (Winlink/fldigi, et al.) to connect to what it thinks is the rig, but it is really the NodeRig program.  
-The start_pts script will create two ttys, /dev/tty98 and /dev/tty99.  
-NodeRig will connect to /dev/tty98 and digital app will connect to /dev/tty99.
+Right now, I'm still running NodeRig from the shell because I like to watch the log output from NodeRig.  Making NodeRig run as a systemd service is on my TTD list.  
 
-The ttys are picked up by NodeRig via environment variables, with RIG_TTY specifying the rig's tty and APP_TTY the digital app's.
-A script, files/nr, is a simple script to set the ttys and run node-red.  
+NodeRig needs to know what serial and pseudo ports to connect to.  This is picked up by NodeRig via environment variables, with RIG_TTY specifying the rig's tty and APP_TTY the digital app's.
+
+A script, `~/.node-red/projects/noderig/files/nr`, is a simple script to set the ttys and run Node-RED.  
+
 On my systems the enhanced serial USB appears /dev/USB0.  
-If your USB tty is different, edit nr to reflect your actual port.  
+If your USB tty is different, edit `nr` to reflect your actual port.  
 
 Open a a browser window on [NodeRig](http://localhost:1880/noderig).

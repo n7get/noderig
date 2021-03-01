@@ -85,4 +85,12 @@ Then the Configuration box has buttons for exporting and importing Op Modes and 
 
 That's it for now.  NodeRig is still in early stages of it's development, I'm hoping people will find it useful.
 
+## Digital apps
+
+Lots of items on my TTD list to document here ;-).
+
+Briefly, set the digital app to use the 'other end' of the virtual com ports or the pseudo ttys.  Use CAT control and configure the rig as a FT-119A.  NodeRig ignores RTS/DTR, etc.
+
+I know there's lots more to do, fix and document, but this is at least a start.
+
 73, N7GET
