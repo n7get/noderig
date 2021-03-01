@@ -63,17 +63,17 @@ A couple of important notes are warranted here:
 
 Below the Op Mode and frequency line is a row of status indicators.  Most of these work when clicked.  Clicking on 'TUNER' will toggle the ATU on and off.  Same for 'LOCK'.  Clicking on IPO/AMP1/AMP2 will cycle the setting of the pre amp.  
 
-Clicking on the 'ALC' indicator doesn't do anything right now.  While transmitting, when the ALC indicators is light grey, it means the ALC is at a good value.  If the ALC indicator goes black, it means the ALC is to high.
+Clicking on the 'ALC' indicator doesn't do anything right now.  While transmitting, when the ALC indicators is light grey, it means the ALC meter is showing little or no ALC.  If the ALC indicator goes black, it means the ALC is to high.
 
 To the right of the ALC is the current mode.  Clicking on the mode will bring up a dialog so the current mode can be changed.
 
-The MAN button enables/disables manual mode.  When manual mode is enabled, no Op Modes will be triggered.
+The MAN button enables/disables manual mode.  When manual mode is enabled, no Op Modes triggers will be evaluated.
 
-Below the status line are various controls that I've implemented so far.  For the most part they do what they look like they should do.
+Below the status line are some of the controls that I've implemented so far.  For the most part they do what they look like they should do.
 
 Below that are the Settings and Menu Items boxes.  There are four views for the Setting/Menu Items boxes, Fav, All, Saved and Changed.  
 
-Every Setting and Menu Item has two toggles associated with them.  Fav and Saved.  Fav and Saved can be toggled via the check boxes shown when the 'Edit' button is clicked.  When the Fav toggle is checked, that Setting or Menu Item will be displayed when in the Fav view.  The Saved toggle is the heart of NodeRig.  When Saved is clicked, that Setting/Menu Item will be saved **when the Op Mode is saved** and restored when the Op Mode is loaded.
+Every Setting and Menu Item has two toggles associated with them.  Fav and Saved.  Fav and Saved can be toggled via the check boxes shown when the 'Edit' button is clicked.  When the Fav toggle is checked, that Setting or Menu Item will be displayed when in the Fav view.  The Saved toggle is the heart of NodeRig.  When Saved is checked, that Setting/Menu Item will be saved **when the Op Mode is saved** and restored when the Op Mode is loaded.
 
 The All view of the Settings/Menu Items boxes shows all the settings and Menu Items.  
 
