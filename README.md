@@ -24,11 +24,11 @@ NodeRig is also tested on a regular basis with Fldigi and WSJT-X.
 
 ## Installing NodeRig
 
-First follow either [INSTaLL-RPi](/INSTaLL-RPi.md) for Linux/RPi or INsTALL-Windows (TBD) for Window 10.  
+First follow either [INSTaLL-RPi](/INSTALL-RPi.md) for Linux/RPi or [INsTALL-Windows](/INSTALL-Windows.md) for Window 10.  
 
 Hopefully you'll see something like this:
 
-![NodeRig](files/noderig.png)
+![NodeRig](files/images/noderig.png)
 
 ## Initial Op Modes and Memory Channels
 

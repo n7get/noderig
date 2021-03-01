@@ -32,7 +32,11 @@ Install additional packages required by NodeRig:
 
 Don't worry about the warning for jquery, it doesn't get used by NodeRig.
 
-Next run node-red again and open a browser with [http://localhost:1880](http://localhost:1880).  Click on the hamburger menu at the top right and click on 'Manage palette'.  Click on install and install the following Node-RED packages:  
+Next run node-red again and open a browser with [http://localhost:1880](http://localhost:1880).  Your browser should look like this:
+
+![Initial Node-RED](files/images/initial-node-RED.png)
+
+Click on the hamburger menu at the top right and click on 'Manage palette'.  Click on install and install the following Node-RED packages:  
 
 `node-red-node-serialport`
 
@@ -42,7 +46,7 @@ Next, exit Node-RED (control-C) and make a copy of the settings.js file (in ~/.n
 
 `copy settings.js settings.js-orig`
 
-Copy and paste the following text into a file called settings.js.patch:
+Copy and paste the following text into a file called settings.js.patch or download the patch from files/settings.js.patch on the Github page:
 ```diff
 --- settings.js-orig	2021-01-18 08:35:16.417432800 -0800
 +++ settings.js	2021-02-10 18:15:27.264486600 -0800
@@ -96,15 +100,15 @@ Click Next.
 
 You should now see a whole bunch of 'flows' like:
 
-![NodeRig Serial I/O](/files/noderig-serial-io.png)
+![NodeRig Serial I/O](/files/images/noderig-serial-io.png)
 
 Click on the 'UI' tab near the top of the page, you should see this:
 
-![NodeRig UI](/files/noderig-ui.png)
+![NodeRig UI](/files/images/noderig-ui.png)
 
 Double click on the 'noderig' node:
 
-![NodeRig node](files/noderig-node.png)
+![NodeRig node](files/images/noderig-node.png)
 
 You'll see 'Edit uibuilder node' at the top.  Click on the 'Manage front-end libraries' button.  Under the list of installed packages, click the +.  Enter `http-vue-loader` and click Install.  You can now click Done at the top.
 
@@ -114,7 +118,7 @@ A virtual serial port pair is used to allow a digital app to communicate with No
 
 I've created a the virtual serial port pair on my system as COM8/COM18:
 
-![com0com](files/com0com.png)
+![com0com](files/images/com0com.png)
 
 ## Running NodeRig
 
@@ -126,7 +130,6 @@ NodeRig needs to know what physical and virtual com ports to connect to.  This i
 
 A script, `~/.node-red/projects/noderig/files/nr.cmd`, is a simple script to set the ttys and run Node-RED.  
 
-On my systems the enhanced serial USB appears COM4.  
-If your USB com port is different, edit `nr` to reflect your actual port.   
+On my systems the enhanced serial USB appears as COM4.  If your USB com port is different, edit `nr` to reflect your actual port.   
 
 Open a a browser window on [NodeRig](http://localhost:1880/noderig).
