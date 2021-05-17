@@ -24,7 +24,8 @@
     </div>
     <tx-timer class="mt-2"></tx-timer>
     <tx-count-down :warn="30"></tx-count-down>
-    <s-level label="Power" event="power_level" class="mt-2 mb-2"></s-level>
+    <!-- <s-level label="Power" event="power_level" class="mt-2 mb-2"></s-level> -->
+    <power-level  class="mt-2 mb-2"></power-level>
     <s-level 
         v-show="mode === 'FM' || mode === 'C4FM' || mode === 'LSB' || mode === 'USB'"
         label="Mic-G"
