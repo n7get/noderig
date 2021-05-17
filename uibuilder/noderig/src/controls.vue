@@ -61,6 +61,16 @@
         :no="73"
         label="D-LVL"
         class="mt-2 mb-2"></mi-level>
+    <mi-level
+        v-show="mode === 'DATA-FM'"
+        :no="75"
+        label="FM OUT"
+        class="mt-2 mb-2"></mi-level>
+    <mi-level
+        v-show="mode === 'DATA-FM'"
+        :no="78"
+        label="FM TX GAIN"
+        class="mt-2 mb-2"></mi-level>
     <div class="mb-2">
         <div>
         <s-button event="swap_vfo" label="Swap VFO" class="mt-2"></s-button>
@@ -87,6 +97,7 @@ module.exports = {
         'mode-status':      httpVueLoader('mode-status.vue'),
         'op-mode':          httpVueLoader('op-mode.vue'),
         'po-meter':         httpVueLoader('po-meter.vue'),
+        'power-level':      httpVueLoader('power-level.vue'),
         'pre-amp-status':   httpVueLoader('pre-amp-status.vue'),
         's-button':         httpVueLoader('s-button.vue'),
         's-level':          httpVueLoader('s-level.vue'),
