@@ -14,6 +14,13 @@
         "info": ""
     },
     {
+        "id": "185dfa3e.b3a076",
+        "type": "tab",
+        "label": "POTA",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "3ef5815c.6122be",
         "type": "serial-port",
         "serialport": "${RIG_TTY}",
@@ -352,7 +359,8 @@
             "5d213f36.1289e",
             "9fc8940d.188508",
             "f4dc38e4.d17288",
-            "a85c9209.af998"
+            "a85c9209.af998",
+            "bc463857.1f1318"
         ],
         "x": 65,
         "y": 320,
@@ -515,7 +523,7 @@
         "type": "debug",
         "z": "754980e0.50707",
         "name": "",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -712,7 +720,8 @@
                 "8c489ecb.12776"
             ],
             [
-                "364285b5.c8a42a"
+                "364285b5.c8a42a",
+                "d5c4a6c3.9a5d58"
             ]
         ]
     },
@@ -1517,6 +1526,305 @@
         "statusType": "auto",
         "x": 170,
         "y": 760,
+        "wires": []
+    },
+    {
+        "id": "d5c4a6c3.9a5d58",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "ce8df98b.d29c38",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 1781,
+        "wires": []
+    },
+    {
+        "id": "af3dcca1.fc99a",
+        "type": "uibuilder",
+        "z": "754980e0.50707",
+        "name": "",
+        "topic": "",
+        "url": "pota",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "useSecurity": false,
+        "sessionLength": 432000,
+        "tokenAutoExtend": false,
+        "x": 130,
+        "y": 1841,
+        "wires": [
+            [
+                "ce8df98b.d29c38",
+                "2f93749d.174f0c"
+            ],
+            [
+                "ab7b1458.005d48",
+                "96fab824.8e3aa8"
+            ]
+        ]
+    },
+    {
+        "id": "2f93749d.174f0c",
+        "type": "function",
+        "z": "754980e0.50707",
+        "name": "",
+        "func": "'use strict';\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a) {\n        Object.values(activators).forEach(b => {b.selected = false});\n        a.selected = true;\n        flow.set('activators', activators);\n        \n        const frequency = parseInt(a.frequency, 10) * 1000;\n        \n        const uiController = flow.get('uiController');\n    \n        uiController.handle('vfo_a', 'set', frequency, m => node.send([null, m.rig]));\n    \n        node.done();\n    }\n}\n\nreturn [null, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 380,
+        "y": 1821,
+        "wires": [
+            [
+                "94768cd2.59817"
+            ],
+            [
+                "25dcfbb8.7ba0d4",
+                "bc463857.1f1318"
+            ]
+        ]
+    },
+    {
+        "id": "ab7b1458.005d48",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 370,
+        "y": 1921,
+        "wires": []
+    },
+    {
+        "id": "96fab824.8e3aa8",
+        "type": "function",
+        "z": "754980e0.50707",
+        "name": "",
+        "func": "if(msg.uibuilderCtrl === 'ready for content') {\n    return {payload: ''}\n}\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 380,
+        "y": 1881,
+        "wires": [
+            [
+                "94768cd2.59817"
+            ]
+        ]
+    },
+    {
+        "id": "6a7ab6b0.8b8db8",
+        "type": "function",
+        "z": "754980e0.50707",
+        "name": "",
+        "func": "'use strict'\n\nlet activators = msg.payload.sort((a, b) => {\n    fa = parseFloat(a.frequency);\n    fb = parseFloat(b.frequency);\n    \n    if(fa < fb) {\n        return -1;\n    }\n    if(fa > fb) {\n        return 1;\n    }\n    return 0;\n})\n\nlet oa = flow.get('activators');\nif(!oa) {\n    oa = {};\n}\nlet na = {};\n\nactivators.forEach(a => {\n    if(oa.hasOwnProperty(a.spotId)) {\n        a.status = oa[a.spotId].status;\n        a.selected = oa[a.spotId].selected;\n    }\n    else {\n        a.status = 'new';\n        a.selected = false;\n    }\n    na[a.spotId] = a;\n});\n\nflow.set('activators', na);\n\nreturn {payload: activators};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 780,
+        "y": 1661,
+        "wires": [
+            [
+                "af3dcca1.fc99a",
+                "e7441cad.f522"
+            ]
+        ]
+    },
+    {
+        "id": "94768cd2.59817",
+        "type": "http request",
+        "z": "754980e0.50707",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "https://api.pota.app/spot/activator",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 610,
+        "y": 1661,
+        "wires": [
+            [
+                "6a7ab6b0.8b8db8"
+            ]
+        ]
+    },
+    {
+        "id": "25dcfbb8.7ba0d4",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "e7441cad.f522",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 830,
+        "y": 1601,
+        "wires": []
+    },
+    {
+        "id": "3ced53fd.aebdcc",
+        "type": "inject",
+        "z": "754980e0.50707",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 475,
+        "y": 1661,
+        "wires": [
+            [
+                "94768cd2.59817"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "bc463857.1f1318",
+        "type": "link out",
+        "z": "754980e0.50707",
+        "name": "",
+        "links": [
+            "9725b52b.0bb248"
+        ],
+        "x": 575,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "2d3fee4.8414712",
+        "type": "inject",
+        "z": "754980e0.50707",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 95,
+        "y": 1600,
+        "wires": [
+            [
+                "aaca1095.c012a"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "aaca1095.c012a",
+        "type": "function",
+        "z": "754980e0.50707",
+        "name": "",
+        "func": "var payload = [];\n\npayload.push(JSON.parse('{\"spotId\": 2064479, \"activator\": \"KI5DDO\", \"frequency\": \"7032.0\", \"mode\": \"CW\", \"reference\": \"K-2999\", \"parkName\": \"Colorado Bend\", \"spotTime\": \"2021-12-29T04:12:14\", \"spotter\": \"NA0B\", \"comments\": \"RBN 7 dB 20 WPM via NA0B-#\", \"source\": \"RBN\", \"invalid\": null, \"name\": \"Colorado Bend State Park\", \"locationDesc\": \"US-TX\", \"grid4\": \"EM01\", \"grid6\": \"EM01sb\", \"latitude\": 31.0451, \"longitude\": -98.4762, \"count\": 4}'));\npayload.push(JSON.parse('{\"spotId\": 2064467, \"activator\": \"JA1EQO\", \"frequency\": \"7041\", \"mode\": \"\", \"reference\": \"JA-1196\", \"parkName\": \"Teganuma Shizen Fureai Greenway\", \"spotTime\": \"2021-12-29T03:54:19\", \"spotter\": \"JA1EQO\", \"comments\": \"FT8, closed, moving to next park\", \"source\": \"Web\", \"invalid\": null, \"name\": \"Teganuma Shizen Fureai Greenway Provincial Park\", \"locationDesc\": \"JP-CH\", \"grid4\": \"QM05\", \"grid6\": \"QM05au\", \"latitude\": 35.8572, \"longitude\": 140.041, \"count\": 1}'));\npayload.push(JSON.parse('{\"spotId\": 2064471, \"activator\": \"K5KUA\", \"frequency\": \"7036.0\", \"mode\": \"CW\", \"reference\": \"K-3037\", \"parkName\": \"Martin Dies, Jr.\", \"spotTime\": \"2021-12-29T04:02:20\", \"spotter\": \"K5KUA\", \"comments\": \"QRT for tonight. Be back in the morning\", \"source\": \"Web\", \"invalid\": null, \"name\": \"Martin Dies, Jr. State Park\", \"locationDesc\": \"US-TX\", \"grid4\": \"EM20\", \"grid6\": \"EM20vu\", \"latitude\": 30.848, \"longitude\": -94.1673, \"count\": 16}'));\n\nreturn {payload: payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 260,
+        "y": 1600,
+        "wires": [
+            [
+                "abb3f607.a8e4a8",
+                "af3dcca1.fc99a"
+            ]
+        ]
+    },
+    {
+        "id": "abb3f607.a8e4a8",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 450,
+        "y": 1600,
         "wires": []
     }
 ]
