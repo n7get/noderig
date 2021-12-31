@@ -1595,7 +1595,7 @@
         "type": "function",
         "z": "754980e0.50707",
         "name": "",
-        "func": "'use strict';\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a) {\n        Object.values(activators).forEach(b => {b.selected = false});\n        a.selected = true;\n        flow.set('activators', activators);\n        \n        const frequency = parseInt(a.frequency, 10) * 1000;\n        \n        const uiController = flow.get('uiController');\n    \n        uiController.handle('vfo_a', 'set', frequency, m => node.send([null, m.rig]));\n    \n        node.done();\n    }\n}\n\nreturn [null, null];",
+        "func": "'use strict';\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a) {\n        Object.values(activators).forEach(b => {b.selected = false});\n        a.selected = true;\n        if(a.status === 'new') {\n            a.status = 'old';\n        }\n        flow.set('activators', activators);\n        \n        const frequency = parseInt(a.frequency, 10) * 1000;\n        \n        const uiController = flow.get('uiController');\n    \n        uiController.handle('vfo_a', 'set', frequency, m => node.send([null, m.rig]));\n    \n        node.done();\n    }\n}\n\nreturn [null, null];",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",

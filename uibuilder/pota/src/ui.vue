@@ -19,11 +19,12 @@
                 </div>
                 <div flush>
                     <div
-                    class="px-1 my-3"
+                        class="px-1 py-1 border-bottom activation"
                         @click="toggleSelected(a)"
                         v-for="a in activators"
                         :key="a.spotId"
                         v-show="showActivation(a)"
+                        :class="{selected: a.selected, new: a.status === 'new', worked: a.status === 'worked', skip: a.status === 'skip'}"
                     >
                     <div 
                         class="
@@ -36,7 +37,7 @@
                             {{ a.activator }}
                         </div>
                         <div>{{ a.frequency }}</div>
-                        <div>{{ a.locationDesc }}</div>
+                        <div>{{ locationDesc(a) }}</div>
                         <div>{{ a.mode }}</div>
                     </div>
                     <div v-show="a.selected">
@@ -68,6 +69,13 @@ module.exports = {
         clear: function () {
             uibuilder.send({ topic: "activators", event: "clear" });
         },
+        locationDesc: function (a) {
+            var tkn = a.locationDesc.split(",");
+            if (tkn.length > 1) {
+                return tkn[0] + "+" + (tkn.length - 1);
+            }
+            return a.locationDesc;
+        },
         refresh: function () {
             uibuilder.send({ topic: "activators", event: "refresh" });
         },
@@ -85,6 +93,9 @@ module.exports = {
                 element.selected = false;
             });
             a.selected = true;
+            if (a.status === "new") {
+                a.status = "old";
+            }
             uibuilder.send({
                 topic: "activators",
                 event: "selected",
@@ -108,7 +119,19 @@ module.exports = {
             if (self.autoRefresh) {
                 uibuilder.send({ topic: "activators", event: "refresh" });
             }
-        }, 30000);
+        }, 300000);
     },
 };
 </script>
+
+<style scoped>
+    .activation {
+        background-color: #ddd;
+    }
+    .new {
+        font-weight: bold;
+    }
+    .selected {
+        background-color: #fff;
+    }
+</stype>
