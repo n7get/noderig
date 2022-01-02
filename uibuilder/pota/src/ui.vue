@@ -10,23 +10,51 @@
                     <div @click="refresh">Refresh</div>
                 </b-card-header>
                 <div class="px-1 py-2 border-primary border-bottom">
-                    <b-form-checkbox
-                        v-model="autoRefresh"
-                        name="check-button"
-                        switch
-                    >
-                        Auto refresh
-                    </b-form-checkbox>
-                    <b-form-checkbox
-                        v-model="showQRT"
-                        name="check-button"
-                        switch
-                    >
-                        Show QRT
-                    </b-form-checkbox>
+                    <b-container>
+                        <b-row no-gutters>
+                            <b-col>
+                                <b-form-checkbox
+                                    v-model="autoRefresh"
+                                    name="check-button"
+                                    switch
+                                >
+                                    Auto refresh
+                                </b-form-checkbox>
+                            </b-col>
+                            <b-col>
+                                <b-form-checkbox
+                                    v-model="showQRT"
+                                    name="check-button"
+                                    switch
+                                >
+                                    Show QRT
+                                </b-form-checkbox>
+                            </b-col>
+                        </b-row>
+                        <b-row no-gutters>
+                            <b-col>
+                                <b-form-checkbox
+                                    v-model="showSkipped"
+                                    name="check-button"
+                                    switch
+                                >
+                                    Show Skipped
+                                </b-form-checkbox>
+                            </b-col>
+                            <b-col>
+                                <b-form-checkbox
+                                    v-model="showWorked"
+                                    name="check-button"
+                                    switch
+                                >
+                                    Show Worked
+                                </b-form-checkbox>
+                            </b-col>
+                        </b-row>
+                    </b-container>
                 </div>
                 <div flush>
-                    <div
+                    <b-container
                         class="
                             px-1
                             py-1
@@ -44,28 +72,28 @@
                             skip: a.status === 'skip',
                         }"
                     >
-                        <div
-                            class="
-                                my-1
-                                d-flex
-                                justify-content-between
-                                align-items-left
-                            "
-                        >
-                            <div>
-                                {{ a.activator }}
-                            </div>
-                            <div>{{ a.frequency }}</div>
-                            <div>{{ locationDesc(a) }}</div>
-                            <div>{{ a.mode }}</div>
-                        </div>
-                        <div v-show="a.selected">
-                            <div class="pl-2 my-1">
-                                {{ a.reference }} {{ a.grid6 }}
-                            </div>
-                            <div class="pl-2 my-1">{{ a.parkName }}</div>
-                            <div class="pl-2 my-1">{{ a.comments }}</div>
-                        </div>
+                        <b-row class="my-1"  no-gutters>
+                            <b-col cols="4">{{ a.activator }}</b-col>
+                            <b-col cols="3">{{ a.frequency }}</b-col>
+                            <b-col cols="3">{{ locationDesc(a) }}</b-col>
+                            <b-col cols="2">{{ a.mode }}</b-col>
+                        </b-row>
+                        <b-row class="pl-2" v-show="a.selected">
+                            <b-col cols="7">
+                                <div>{{ a.reference }}</div>
+                                <div>{{ a.parkName }}</div>
+                                <div>{{ a.comments }}</div>
+                            </b-col>
+                            <b-col cols="5" class="pt-3">
+                                <b-button
+                                    class="mr-2"
+                                    @click.stop="worked(a)"
+                                >
+                                    <b-icon-check></b-icon-check>
+                                </b-button>
+                                <b-button @click.stop="skip(a)">X</b-button>
+                            </b-col>
+                        </b-row>
                     </div>
                 </div>
             </b-card>
@@ -82,6 +110,8 @@ module.exports = {
             band: "",
             mode: "",
             selected: false,
+            showSkipped: false,
+            showWorked: true,
             showQRT: false,
         };
     },
@@ -105,12 +135,32 @@ module.exports = {
                     return false;
                 }
             }
+            if (a.status == "skip") {
+                return this.showSkipped;
+            }
+            if (a.status === "worked") {
+                return this.showWorked;
+            }
             return true;
+        },
+        skip: function (a) {
+            uibuilder.send({
+                topic: "activators",
+                event: "skip",
+                value: a.id,
+            });
         },
         toggleSelected: function (a) {
             uibuilder.send({
                 topic: "activators",
                 event: "selected",
+                value: a.id,
+            });
+        },
+        worked: function (a) {
+            uibuilder.send({
+                topic: "activators",
+                event: "worked",
                 value: a.id,
             });
         },
@@ -158,14 +208,20 @@ module.exports = {
 };
 </script>
 
-<style scoped>
+<style>
 .activation {
-    background-color: #ddd;
+    background-color: #fff;
 }
 .new {
     font-weight: bold;
 }
 .selected {
     background-color: #fff;
+}
+.skip {
+    background-color: #555;
+}
+.worked {
+    background-color: lightgreen;
 }
 </style>
