@@ -1558,8 +1558,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 370,
-        "y": 1781,
+        "x": 650,
+        "y": 1760,
         "wires": []
     },
     {
@@ -1577,7 +1577,7 @@
         "useSecurity": false,
         "sessionLength": 432000,
         "tokenAutoExtend": false,
-        "x": 130,
+        "x": 411,
         "y": 1841,
         "wires": [
             [
@@ -1594,22 +1594,30 @@
         "id": "2f93749d.174f0c",
         "type": "function",
         "z": "754980e0.50707",
-        "name": "",
-        "func": "'use strict';\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a) {\n        Object.values(activators).forEach(b => {b.selected = false});\n        a.selected = true;\n        if(a.status === 'new') {\n            a.status = 'old';\n        }\n        flow.set('activators', activators);\n        \n        const frequency = parseInt(a.frequency, 10) * 1000;\n        \n        const uiController = flow.get('uiController');\n    \n        uiController.handle('vfo_a', 'set', frequency, m => node.send([null, m.rig]));\n    \n        node.done();\n    }\n}\n\nreturn [null, null];",
-        "outputs": 2,
+        "name": "Handle POTA UI Event",
+        "func": "'use strict';\n\nif(msg.event === 'clear') {\n    const activators = flow.get('activators');\n\n    Object.values(activators).forEach(a => {\n        a.status = 'new';\n        a.selected = false;\n    });\n\n    return [{payload: 'refresh'}, null, null];\n}\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a && !a.selected) {\n        Object.values(activators).forEach(b => {\n            if(b.selected) {\n                b.selected = false;\n                node.send([null, {name: 'selected', id: b.id, value: b.selected}, null])\n            }\n        });\n\n        a.selected = true;\n        node.send([null, {name: 'selected', id: a.id, value: a.selected}, null])\n\n        if(a.status === 'new') {\n            a.status = 'old';\n            node.send([null, {name: 'status', id: a.id, value: 'old'}, null])\n        }\n\n        flow.set('activators', activators);\n        \n        const frequency = parseInt(a.frequency, 10) * 1000;\n        \n        const uiController = flow.get('uiController');\n    \n        uiController.handle('vfo_a', 'set', frequency, m => node.send([null, null, m.rig]));\n    \n        node.done();\n    }\n}\n\nreturn [null, null, null];",
+        "outputs": 3,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 380,
+        "x": 701,
         "y": 1821,
         "wires": [
             [
                 "94768cd2.59817"
             ],
             [
+                "d0048a51.c92738"
+            ],
+            [
                 "25dcfbb8.7ba0d4",
                 "bc463857.1f1318"
             ]
+        ],
+        "outputLabels": [
+            "New POTA request",
+            "Send POTA UI update",
+            "Send rig change"
         ]
     },
     {
@@ -1625,8 +1633,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 370,
-        "y": 1921,
+        "x": 650,
+        "y": 1940,
         "wires": []
     },
     {
@@ -1639,7 +1647,7 @@
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 380,
+        "x": 661,
         "y": 1881,
         "wires": [
             [
@@ -1651,18 +1659,18 @@
         "id": "6a7ab6b0.8b8db8",
         "type": "function",
         "z": "754980e0.50707",
-        "name": "",
-        "func": "'use strict'\n\nlet activators = msg.payload.sort((a, b) => {\n    fa = parseFloat(a.frequency);\n    fb = parseFloat(b.frequency);\n    \n    if(fa < fb) {\n        return -1;\n    }\n    if(fa > fb) {\n        return 1;\n    }\n    return 0;\n})\n\nlet oa = flow.get('activators');\nif(!oa) {\n    oa = {};\n}\nlet na = {};\n\nactivators.forEach(a => {\n    if(oa.hasOwnProperty(a.spotId)) {\n        a.status = oa[a.spotId].status;\n        a.selected = oa[a.spotId].selected;\n    }\n    else {\n        a.status = 'new';\n        a.selected = false;\n    }\n    na[a.spotId] = a;\n});\n\nflow.set('activators', na);\n\nreturn {payload: activators};",
+        "name": "Merge POTA activations requests",
+        "func": "'use strict'\n\nlet activators = msg.payload.sort((a, b) => {\n    fa = parseFloat(a.frequency);\n    fb = parseFloat(b.frequency);\n    \n    if(fa < fb) {\n        return -1;\n    }\n    if(fa > fb) {\n        return 1;\n    }\n    return 0;\n})\n\nlet oa = flow.get('activators');\nif(!oa) {\n    oa = {};\n}\nlet na = {};\n\nactivators.forEach(a => {\n    const id = a.activator + '/' + a.reference;\n\n    a.id = id;\n    if(oa.hasOwnProperty(a.id)) {\n        a.status = oa[a.id].status;\n        a.selected = oa[a.id].selected;\n    }\n    else {\n        a.status = 'new';\n        a.selected = false;\n    }\n\n    na[a.id] = a;\n});\n\nflow.set('activators', na);\n\nreturn {name: 'activators', value: activators};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
-        "x": 780,
-        "y": 1661,
+        "x": 1180,
+        "y": 1760,
         "wires": [
             [
-                "af3dcca1.fc99a",
-                "e7441cad.f522"
+                "e7441cad.f522",
+                "725822d8.b4b56c"
             ]
         ]
     },
@@ -1679,8 +1687,8 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 610,
-        "y": 1661,
+        "x": 930,
+        "y": 1760,
         "wires": [
             [
                 "6a7ab6b0.8b8db8"
@@ -1692,7 +1700,7 @@
         "type": "debug",
         "z": "754980e0.50707",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1700,8 +1708,8 @@
         "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 590,
-        "y": 1880,
+        "x": 910,
+        "y": 1920,
         "wires": []
     },
     {
@@ -1713,42 +1721,13 @@
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "true",
+        "targetType": "full",
         "statusVal": "",
         "statusType": "auto",
-        "x": 830,
-        "y": 1601,
+        "x": 1430,
+        "y": 1700,
         "wires": []
-    },
-    {
-        "id": "3ced53fd.aebdcc",
-        "type": "inject",
-        "z": "754980e0.50707",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 475,
-        "y": 1661,
-        "wires": [
-            [
-                "94768cd2.59817"
-            ]
-        ],
-        "l": false
     },
     {
         "id": "bc463857.1f1318",
@@ -1758,8 +1737,8 @@
         "links": [
             "9725b52b.0bb248"
         ],
-        "x": 575,
-        "y": 1820,
+        "x": 875,
+        "y": 1880,
         "wires": []
     },
     {
@@ -1807,7 +1786,7 @@
         "wires": [
             [
                 "abb3f607.a8e4a8",
-                "af3dcca1.fc99a"
+                "cdf4ed9d.4da31"
             ]
         ]
     },
@@ -1823,8 +1802,98 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 450,
+        "x": 430,
+        "y": 1560,
+        "wires": []
+    },
+    {
+        "id": "224ea586.dccaaa",
+        "type": "link in",
+        "z": "754980e0.50707",
+        "name": "POTA_UI",
+        "links": [
+            "cdf4ed9d.4da31",
+            "725822d8.b4b56c",
+            "d0048a51.c92738"
+        ],
+        "x": 76,
+        "y": 1840,
+        "wires": [
+            [
+                "6a3a3bb2.e4b564"
+            ]
+        ]
+    },
+    {
+        "id": "cdf4ed9d.4da31",
+        "type": "link out",
+        "z": "754980e0.50707",
+        "name": "",
+        "links": [
+            "224ea586.dccaaa"
+        ],
+        "x": 415,
         "y": 1600,
+        "wires": []
+    },
+    {
+        "id": "725822d8.b4b56c",
+        "type": "link out",
+        "z": "754980e0.50707",
+        "name": "",
+        "links": [
+            "224ea586.dccaaa"
+        ],
+        "x": 1395,
+        "y": 1760,
+        "wires": []
+    },
+    {
+        "id": "d0048a51.c92738",
+        "type": "link out",
+        "z": "754980e0.50707",
+        "name": "",
+        "links": [
+            "224ea586.dccaaa"
+        ],
+        "x": 875,
+        "y": 1820,
+        "wires": []
+    },
+    {
+        "id": "6a3a3bb2.e4b564",
+        "type": "function",
+        "z": "754980e0.50707",
+        "name": "Package in paylaod",
+        "func": "return {payload: msg};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 230,
+        "y": 1840,
+        "wires": [
+            [
+                "af3dcca1.fc99a",
+                "62350b95.6f66a4"
+            ]
+        ]
+    },
+    {
+        "id": "62350b95.6f66a4",
+        "type": "debug",
+        "z": "754980e0.50707",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 430,
+        "y": 1780,
         "wires": []
     }
 ]

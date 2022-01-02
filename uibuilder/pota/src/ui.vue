@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="col-sm-12 col-md-6 col-lg-4 px-0">
-            <b-card class="pb-2" no-body border-variant="secondary">
+            <b-card class="" no-body border-variant="secondary">
                 <b-card-header
                     class="px-2 d-flex justify-content-between align-items-left"
                 >
@@ -9,7 +9,7 @@
                     <div text-variant="white" bg-variant="secondary">POTA</div>
                     <div @click="refresh">Refresh</div>
                 </b-card-header>
-                <div class="px-1 my-2">
+                <div class="px-1 py-2 border-primary border-bottom">
                     <b-form-checkbox v-model="autoRefresh" name="check-button" switch>
                         Auto refresh
                     </b-form-checkbox>
@@ -19,33 +19,33 @@
                 </div>
                 <div flush>
                     <div
-                        class="px-1 py-1 border-bottom activation"
+                        class="px-1 py-1 border-primary border-bottom activation"
                         @click="toggleSelected(a)"
                         v-for="a in activators"
-                        :key="a.spotId"
+                        :key="a.id"
                         v-show="showActivation(a)"
                         :class="{selected: a.selected, new: a.status === 'new', worked: a.status === 'worked', skip: a.status === 'skip'}"
                     >
-                    <div 
-                        class="
-                            my-1
-                            d-flex
-                            justify-content-between
-                            align-items-left
-                        ">
-                        <div>
-                            {{ a.activator }}
+                        <div 
+                            class="
+                                my-1
+                                d-flex
+                                justify-content-between
+                                align-items-left
+                            ">
+                            <div>
+                                {{ a.activator }}
+                            </div>
+                            <div>{{ a.frequency }}</div>
+                            <div>{{ locationDesc(a) }}</div>
+                            <div>{{ a.mode }}</div>
                         </div>
-                        <div>{{ a.frequency }}</div>
-                        <div>{{ locationDesc(a) }}</div>
-                        <div>{{ a.mode }}</div>
-                    </div>
-                    <div v-show="a.selected">
-                    <div class="pl-2 my-1">
-                        <div>{{ a.reference }} {{ a.grid6 }}</div>
-                    </div>
-                    <div class="pl-2 my-1">{{ a.parkName }}</div>
-                    <div class="pl-2 my-1">{{ a.comments }}</div>
+                        <div v-show="a.selected">
+                        <div class="pl-2 my-1">
+                            <div>{{ a.reference }} {{ a.grid6 }}</div>
+                        </div>
+                        <div class="pl-2 my-1">{{ a.parkName }}</div>
+                        <div class="pl-2 my-1">{{ a.comments }}</div>
                     </div>
                 </div>
             </b-card>
@@ -88,18 +88,10 @@ module.exports = {
             return true;
         },
         toggleSelected: function (a) {
-            console.log("toggleSelected: ", a);
-            this.activators.forEach((element) => {
-                element.selected = false;
-            });
-            a.selected = true;
-            if (a.status === "new") {
-                a.status = "old";
-            }
             uibuilder.send({
                 topic: "activators",
                 event: "selected",
-                value: a.spotId,
+                value: a.id,
             });
         },
     },
@@ -111,8 +103,30 @@ module.exports = {
         uibuilder.start();
 
         uibuilder.onChange("msg", function (msg) {
-            console.log("activators: ", msg.payload);
-            self.activators = msg.payload;
+            var p = msg.payload;
+
+            switch (p.name) {
+                case "activators":
+                    self.activators = p.value;
+                    break;
+
+                case "selected":
+                    self.activators.forEach((a) => {
+                        if (p.id === a.id) {
+                            a.selected = p.value;
+                        }
+                    });
+                    break;
+
+                case "status":
+                    self.activators.forEach((a) => {
+                        if (p.id === a.id) {
+                            a.status = p.value;
+                            console.log("status change", a);
+                        }
+                    });
+                    break;
+            }
         });
 
         setInterval(() => {
