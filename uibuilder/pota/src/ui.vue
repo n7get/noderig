@@ -10,29 +10,48 @@
                     <div @click="refresh">Refresh</div>
                 </b-card-header>
                 <div class="px-1 py-2 border-primary border-bottom">
-                    <b-form-checkbox v-model="autoRefresh" name="check-button" switch>
+                    <b-form-checkbox
+                        v-model="autoRefresh"
+                        name="check-button"
+                        switch
+                    >
                         Auto refresh
                     </b-form-checkbox>
-                    <b-form-checkbox v-model="showQRT" name="check-button" switch>
+                    <b-form-checkbox
+                        v-model="showQRT"
+                        name="check-button"
+                        switch
+                    >
                         Show QRT
                     </b-form-checkbox>
                 </div>
                 <div flush>
                     <div
-                        class="px-1 py-1 border-primary border-bottom activation"
+                        class="
+                            px-1
+                            py-1
+                            border-primary border-bottom
+                            activation
+                        "
                         @click="toggleSelected(a)"
                         v-for="a in activators"
                         :key="a.id"
                         v-show="showActivation(a)"
-                        :class="{selected: a.selected, new: a.status === 'new', worked: a.status === 'worked', skip: a.status === 'skip'}"
+                        :class="{
+                            selected: a.selected,
+                            new: a.status === 'new',
+                            worked: a.status === 'worked',
+                            skip: a.status === 'skip',
+                        }"
                     >
-                        <div 
+                        <div
                             class="
                                 my-1
                                 d-flex
                                 justify-content-between
                                 align-items-left
-                            ">
+                            "
+                        >
                             <div>
                                 {{ a.activator }}
                             </div>
@@ -41,11 +60,12 @@
                             <div>{{ a.mode }}</div>
                         </div>
                         <div v-show="a.selected">
-                        <div class="pl-2 my-1">
-                            <div>{{ a.reference }} {{ a.grid6 }}</div>
+                            <div class="pl-2 my-1">
+                                {{ a.reference }} {{ a.grid6 }}
+                            </div>
+                            <div class="pl-2 my-1">{{ a.parkName }}</div>
+                            <div class="pl-2 my-1">{{ a.comments }}</div>
                         </div>
-                        <div class="pl-2 my-1">{{ a.parkName }}</div>
-                        <div class="pl-2 my-1">{{ a.comments }}</div>
                     </div>
                 </div>
             </b-card>
@@ -139,13 +159,13 @@ module.exports = {
 </script>
 
 <style scoped>
-    .activation {
-        background-color: #ddd;
-    }
-    .new {
-        font-weight: bold;
-    }
-    .selected {
-        background-color: #fff;
-    }
-</stype>
+.activation {
+    background-color: #ddd;
+}
+.new {
+    font-weight: bold;
+}
+.selected {
+    background-color: #fff;
+}
+</style>
