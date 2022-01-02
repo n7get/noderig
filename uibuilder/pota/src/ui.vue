@@ -11,6 +11,28 @@
                 </b-card-header>
                 <div class="px-1 py-2 border-primary border-bottom">
                     <b-container>
+                        <b-row class="pb-2" no-gutters>
+                            <b-col cols="2">
+                                <label class="pt-1" for="band">Band:</label>
+                            </b-col>
+                            <b-col cols="4">
+                                <b-form-select
+                                    id="band"
+                                    v-model="band"
+                                    :options="bands"
+                                ></b-form-select>
+                            </b-col>
+                            <b-col cols="2">
+                                <label class="pt-1 pl-1" for="mode">Mode:</label>
+                            </b-col>
+                            <b-col cols="4">
+                                <b-form-select
+                                    id="mode"
+                                    v-model="mode"
+                                    :options="modes"
+                                ></b-form-select>
+                            </b-col>
+                        </b-row>
                         <b-row no-gutters>
                             <b-col>
                                 <b-form-checkbox
@@ -107,8 +129,88 @@ module.exports = {
         return {
             activators: [],
             autoRefresh: false,
-            band: "",
-            mode: "",
+            band: null,
+            bands: [
+                {
+                    text: "All",
+                    value: {
+                        start: 0,
+                        stop: 999999,
+                    },
+                },
+                {
+                    text: "160",
+                    value: {
+                        start: 1800,
+                        stop: 2000,
+                    },
+                },
+                {
+                    text: "80",
+                    value: {
+                        start: 3500,
+                        stop: 4000,
+                    },
+                },
+                {
+                    text: "60",
+                    value: {
+                        start: 5000,
+                        stop: 5999,
+                    },
+                },
+                {
+                    text: "40",
+                    value: {
+                        start: 7000,
+                        stop: 7300,
+                    },
+                },
+                {
+                    text: "30",
+                    value: {
+                        start: 10100,
+                        stop: 10150,
+                    },
+                },
+                {
+                    text: "20",
+                    value: {
+                        start: 14000,
+                        stop: 14350,
+                    },
+                },
+                {
+                    text: "17",
+                    value: {
+                        start: 18068,
+                        stop: 18168,
+                    },
+                },
+                {
+                    text: "15",
+                    value: {
+                        start: 21000,
+                        stop: 21450,
+                    },
+                },
+                {
+                    text: "12",
+                    value: {
+                        start: 24890,
+                        stop: 24990,
+                    },
+                },
+                {
+                    text: "10",
+                    value: {
+                        start: 28000,
+                        stop: 29700,
+                    },
+                },
+            ],
+            mode: "*",
+            modes: null,
             selected: false,
             showSkipped: false,
             showWorked: true,
@@ -130,6 +232,21 @@ module.exports = {
             uibuilder.send({ topic: "activators", event: "refresh" });
         },
         showActivation: function (a) {
+            var b = this.band;
+            if (b) {
+                var f = parseInt(a.frequency, 10);
+
+                if (f < b.start || f > b.stop) {
+                    return false;
+                }
+            }
+
+            if (this.mode !== "*") {
+                if (this.mode !== a.mode) {
+                    return false;
+                }
+            }
+
             if (!this.showQRT) {
                 if (a.comments.toLowerCase().indexOf("qrt") !== -1) {
                     return false;
@@ -141,6 +258,7 @@ module.exports = {
             if (a.status === "worked") {
                 return this.showWorked;
             }
+
             return true;
         },
         skip: function (a) {
@@ -168,7 +286,7 @@ module.exports = {
     mounted: function () {
         var self = this;
 
-        console.log("mounted");
+        self.band = self.bands[0].value;
 
         uibuilder.start();
 
@@ -178,6 +296,21 @@ module.exports = {
             switch (p.name) {
                 case "activators":
                     self.activators = p.value;
+
+                    var modes = {};
+                    self.activators.forEach((a) => {
+                        if (modes.hasOwnProperty(a.mode)) {
+                            modes[a.mode]++;
+                        } else {
+                            modes[a.mode] = 1;
+                        }
+                    });
+
+                    self.modes = [{ text: "All", value: "*" }];
+                    for (const [k, v] of Object.entries(modes)) {
+                        self.modes.push({ text: k, value: k });
+                    }
+
                     break;
 
                 case "selected":
