@@ -23,7 +23,9 @@
                                 ></b-form-select>
                             </b-col>
                             <b-col cols="2">
-                                <label class="pt-1 pl-1" for="mode">Mode:</label>
+                                <label class="pt-1 pl-1" for="mode"
+                                    >Mode:</label
+                                >
                             </b-col>
                             <b-col cols="4">
                                 <b-form-select
@@ -94,7 +96,7 @@
                             skip: a.status === 'skip',
                         }"
                     >
-                        <b-row class="my-1"  no-gutters>
+                        <b-row class="my-1" no-gutters>
                             <b-col cols="4">{{ a.activator }}</b-col>
                             <b-col cols="3">{{ a.frequency }}</b-col>
                             <b-col cols="3">{{ locationDesc(a) }}</b-col>
@@ -107,16 +109,13 @@
                                 <div>{{ a.comments }}</div>
                             </b-col>
                             <b-col cols="5" class="pt-3">
-                                <b-button
-                                    class="mr-2"
-                                    @click.stop="worked(a)"
-                                >
+                                <b-button class="mr-2" @click.stop="worked(a)">
                                     <b-icon-check></b-icon-check>
                                 </b-button>
                                 <b-button @click.stop="skip(a)">X</b-button>
                             </b-col>
                         </b-row>
-                    </div>
+                    </b-container>
                 </div>
             </b-card>
         </div>
@@ -130,83 +129,75 @@ module.exports = {
             activators: [],
             autoRefresh: false,
             band: null,
-            bands: [
+            bands: [],
+            bandList: [
                 {
                     text: "All",
-                    value: {
-                        start: 0,
-                        stop: 999999,
-                    },
+                    value: { start: 0.0, stop: 999999.0 },
+                },
+                {
+                    text: "2200",
+                    value: { start: 135.7, stop: 137.8 },
+                },
+                {
+                    text: "630",
+                    value: { start: 472.0, stop: 479.0 },
                 },
                 {
                     text: "160",
-                    value: {
-                        start: 1800,
-                        stop: 2000,
-                    },
+                    value: { start: 1800.0, stop: 2000.0 },
                 },
                 {
                     text: "80",
-                    value: {
-                        start: 3500,
-                        stop: 4000,
-                    },
+                    value: { start: 3500.0, stop: 4000.0 },
                 },
                 {
                     text: "60",
-                    value: {
-                        start: 5000,
-                        stop: 5999,
-                    },
+                    value: { start: 5000.0, stop: 5999.0 },
                 },
                 {
                     text: "40",
-                    value: {
-                        start: 7000,
-                        stop: 7300,
-                    },
+                    value: { start: 7000.0, stop: 7300.0 },
                 },
                 {
                     text: "30",
-                    value: {
-                        start: 10100,
-                        stop: 10150,
-                    },
+                    value: { start: 10100.0, stop: 10150.0 },
                 },
                 {
                     text: "20",
-                    value: {
-                        start: 14000,
-                        stop: 14350,
-                    },
+                    value: { start: 14000.0, stop: 14350.0 },
                 },
                 {
                     text: "17",
-                    value: {
-                        start: 18068,
-                        stop: 18168,
-                    },
+                    value: { start: 18068.0, stop: 18168.0 },
                 },
                 {
                     text: "15",
-                    value: {
-                        start: 21000,
-                        stop: 21450,
-                    },
+                    value: { start: 21000.0, stop: 21450.0 },
                 },
                 {
                     text: "12",
-                    value: {
-                        start: 24890,
-                        stop: 24990,
-                    },
+                    value: { start: 24890.0, stop: 24990.0 },
                 },
                 {
                     text: "10",
-                    value: {
-                        start: 28000,
-                        stop: 29700,
-                    },
+                    value: { start: 28000.0, stop: 29700.0 },
+                },
+                {
+                    text: "6",
+                    value: { start: 50000.0, stop: 54000.0 },
+                },
+                {
+                    text: "2",
+                    value: { start: 144000.0, stop: 148000.0 },
+                },
+                {
+                    text: "1.25",
+                    value: { start: 219000.0, stop: 225000.0 },
+                },
+                {
+                    text: "70cm",
+                    value: { start: 420000.0, stop: 450000.0 },
                 },
             ],
             mode: "*",
@@ -234,7 +225,7 @@ module.exports = {
         showActivation: function (a) {
             var b = this.band;
             if (b) {
-                var f = parseInt(a.frequency, 10);
+                var f = parseFloat(a.frequency);
 
                 if (f < b.start || f > b.stop) {
                     return false;
@@ -286,7 +277,7 @@ module.exports = {
     mounted: function () {
         var self = this;
 
-        self.band = self.bands[0].value;
+        self.band = self.bandList[0].value;
 
         uibuilder.start();
 
@@ -297,12 +288,28 @@ module.exports = {
                 case "activators":
                     self.activators = p.value;
 
+                    self.bands = [];
+                    self.bandList.forEach((b) => {
+                        if (
+                            self.activators.some((a) => {
+                                var f = parseFloat(a.frequency);
+
+                                return f >= b.value.start && f <= b.value.stop;
+                            })
+                        ) {
+                            console.log("push", b);
+                            self.bands.push(b);
+                        }
+                    });
+
                     var modes = {};
                     self.activators.forEach((a) => {
-                        if (modes.hasOwnProperty(a.mode)) {
-                            modes[a.mode]++;
-                        } else {
-                            modes[a.mode] = 1;
+                        if (a.mode.length > 0) {
+                            if (modes.hasOwnProperty(a.mode)) {
+                                modes[a.mode]++;
+                            } else {
+                                modes[a.mode] = 1;
+                            }
                         }
                     });
 
