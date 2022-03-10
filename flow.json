@@ -14,13 +14,6 @@
         "info": ""
     },
     {
-        "id": "185dfa3e.b3a076",
-        "type": "tab",
-        "label": "POTA",
-        "disabled": false,
-        "info": ""
-    },
-    {
         "id": "3ef5815c.6122be",
         "type": "serial-port",
         "serialport": "${RIG_TTY}",
@@ -1595,7 +1588,7 @@
         "type": "function",
         "z": "754980e0.50707",
         "name": "Handle POTA UI Event",
-        "func": "'use strict';\n\nif(msg.event === 'clear') {\n    const activators = flow.get('activators');\n\n    Object.values(activators).forEach(a => {\n        a.status = 'new';\n        a.selected = false;\n    });\n\n    return [{payload: 'refresh'}, null, null];\n}\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a) {\n        const wasSelected = a.selected;\n\n        Object.values(activators).forEach(b => {\n            if(b.selected) {\n                b.selected = false;\n                node.send([null, {name: 'selected', id: b.id, value: b.selected}, null])\n            }\n        });\n\n        if(!wasSelected) {\n            a.selected = true;\n            node.send([null, {name: 'selected', id: a.id, value: a.selected}, null])\n    \n            if(a.status === 'new') {\n                a.status = 'old';\n                node.send([null, {name: 'status', id: a.id, value: a.status}, null])\n            }\n    \n            flow.set('activators', activators);\n            \n            const frequency = parseInt(a.frequency, 10) * 1000;\n            \n            const uiController = flow.get('uiController');\n        \n            uiController.handle('vfo_a', 'set', frequency, m => node.send([null, null, m.rig]));\n        }\n        else {\n            node.send([null, {name: 'status', id: a.id, value: a.status}, null])\n        }\n\n        node.done();\n    }\n}\n\nif(msg.event === 'skip' || msg.event === 'worked') {\n    const activators = flow.get('activators');\n    const a = activators[msg.value];\n    \n    if(a) {\n        a.status = a.status === msg.event ? 'old' : msg.event;\n        flow.set('activators', activators);\n\n        return [null, {name: 'status', id: a.id, value: a.status}, null];\n    }\n}\n\nreturn [null, null, null];",
+        "func": "'use strict';\n\nif(msg.event === 'clear') {\n    const activators = flow.get('activators', 'persist');\n\n    Object.values(activators).forEach(a => {\n        a.status = 'new';\n        a.selected = false;\n    });\n\n    return [{payload: 'refresh'}, null, null];\n}\n\nif(msg.event === 'refresh') {\n    return [{payload: 'refresh'}, null, null];\n}\n\nif(msg.event === 'selected') {\n    const activators = flow.get('activators', 'persist');\n    const a = activators[msg.value];\n    \n    if(a) {\n        const wasSelected = a.selected;\n\n        Object.values(activators).forEach(b => {\n            if(b.selected) {\n                b.selected = false;\n                node.send([null, {name: 'selected', id: b.id, value: b.selected}, null])\n            }\n        });\n\n        if(!wasSelected) {\n            a.selected = true;\n            node.send([null, {name: 'selected', id: a.id, value: a.selected}, null])\n    \n            if(a.status === 'new') {\n                a.status = 'old';\n                node.send([null, {name: 'status', id: a.id, value: a.status}, null])\n            }\n    \n            flow.set('activators', activators, 'persist');\n            \n            const frequency = (parseFloat(a.frequency) * 1000).toFixed();\n            \n            const uiController = flow.get('uiController');\n        \n            uiController.handle('vfo_a', 'set', frequency, m => node.send([null, null, m.rig]));\n        }\n        else {\n            node.send([null, {name: 'status', id: a.id, value: a.status}, null])\n        }\n\n        node.done();\n    }\n}\n\nif(msg.event === 'skip' || msg.event === 'worked') {\n    const activators = flow.get('activators', 'persist');\n    const a = activators[msg.value];\n    \n    if(a) {\n        a.status = a.status === msg.event ? 'old' : msg.event;\n        flow.set('activators', activators, 'persist');\n\n        return [null, {name: 'status', id: a.id, value: a.status}, null];\n    }\n}\n\nreturn [null, null, null];",
         "outputs": 3,
         "noerr": 0,
         "initialize": "",
@@ -1660,7 +1653,7 @@
         "type": "function",
         "z": "754980e0.50707",
         "name": "Merge POTA activations requests",
-        "func": "'use strict'\n\nlet activators = msg.payload.sort((a, b) => {\n    fa = parseFloat(a.frequency);\n    fb = parseFloat(b.frequency);\n    \n    if(fa < fb) {\n        return -1;\n    }\n    if(fa > fb) {\n        return 1;\n    }\n    return 0;\n})\n\nlet oa = flow.get('activators');\nif(!oa) {\n    oa = {};\n}\nlet na = {};\n\nactivators.forEach(a => {\n    const id = a.activator + '/' + a.reference;\n\n    a.id = id;\n    if(oa.hasOwnProperty(a.id)) {\n        a.status = oa[a.id].status;\n        a.selected = oa[a.id].selected;\n    }\n    else {\n        a.status = 'new';\n        a.selected = false;\n    }\n\n    na[a.id] = a;\n});\n\nflow.set('activators', na);\n\nreturn {name: 'activators', value: activators};",
+        "func": "'use strict'\n\nlet activators = msg.payload.sort((a, b) => {\n    fa = parseFloat(a.frequency);\n    fb = parseFloat(b.frequency);\n    \n    if(fa < fb) {\n        return -1;\n    }\n    if(fa > fb) {\n        return 1;\n    }\n    return 0;\n})\n\nlet oa = flow.get('activators', 'persist');\nif(!oa) {\n    oa = {};\n}\nlet na = {};\n\nactivators.forEach(a => {\n    const id = a.activator + '/' + a.reference + '/' + a.mode;\n\n    a.id = id;\n    if(oa.hasOwnProperty(a.id)) {\n        a.status = oa[a.id].status;\n        a.selected = oa[a.id].selected;\n    }\n    else {\n        a.status = 'new';\n        a.selected = false;\n    }\n\n    na[a.id] = a;\n});\n\nflow.set('activators', na, 'persist');\n\nreturn {name: 'activators', value: activators};",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1717,7 +1710,7 @@
         "type": "debug",
         "z": "754980e0.50707",
         "name": "",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
