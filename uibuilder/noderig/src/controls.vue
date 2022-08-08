@@ -15,6 +15,7 @@
     </div>
     <s-meter v-show="!tx_on" class="mt-2"></s-meter>
     <swr-meter v-show="tx_on" class="mt-2"></swr-meter>
+    <alc-meter v-show="tx_on" class="mt-2"></alc-meter>
     <div v-show="tx_on" class="mt-2">
         <alc-meter v-show="meter_switch === 'ALC'"></alc-meter>
         <comp-meter v-show="meter_switch === 'COMP'"></comp-meter>
@@ -86,7 +87,6 @@
 module.exports = {
     mixins: [window.noderig.op_mode_mixin],
     components: {
-        'alc-meter':        httpVueLoader('alc-meter.vue'),
         'alc-meter':        httpVueLoader('alc-meter.vue'),
         'alc-status':       httpVueLoader('alc-status.vue'),
         'comp-meter':        httpVueLoader('comp-meter.vue'),
