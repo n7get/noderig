@@ -3,6 +3,7 @@
         <div @click="toggle" class="col-4">Power({{ value }})</div>
         <div v-if="pl_buttons" class="col-7 px-0">
             <button @click="powerLevel(5)" class="pl-btn" :class="{selected: value === 5}">5</button>
+            <button @click="powerLevel(10)" class="pl-btn" :class="{selected: value === 10}">10</button>
             <button @click="powerLevel(20)" class="pl-btn" :class="{selected: value === 20}">20</button>
             <button @click="powerLevel(50)" class="pl-btn" :class="{selected: value === 50}">50</button>
             <button @click="powerLevel(100)" :class="{selected: value === 100}">100</button>
