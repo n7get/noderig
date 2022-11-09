@@ -27,7 +27,7 @@
                     <div v-show="edit_mode">
                         <span @click="toggleFav(no)">
                             <span v-show="mi.fav">
-                                <b-icon-check-square></b-icon-square>
+                                <b-icon-check-square></b-icon-check-square>
                             </span>
                             <span v-show="!mi.fav">
                                 <b-icon-square></b-icon-square>
@@ -35,7 +35,7 @@
                         </span>
                         <span class="pl-3 pr-2" @click="togglesaved(no)">
                             <span v-show="mi.saved">
-                                <b-icon-check-square></b-icon-square>
+                                <b-icon-check-square></b-icon-check-square>
                             </span>
                             <span v-show="!mi.saved">
                                 <b-icon-square></b-icon-square>
