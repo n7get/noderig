@@ -4,6 +4,7 @@
             <controls class="px-3"></controls>
             <settings></settings>
             <menu-item></menu-item>
+            <rbn></rbn>
             <config></config>
         </div>
 
@@ -33,6 +34,7 @@ module.exports = {
         'controls':     httpVueLoader('controls.vue'),
         'menu-item':    httpVueLoader('menu-item.vue'),
         'settings':     httpVueLoader('settings.vue'),
+        'rbn':          httpVueLoader("rbn.vue"),
     },
     methods: {
         handleOk: function(e) {
