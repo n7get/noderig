@@ -55,6 +55,7 @@
                 <b-form-input
                     id="callsign"
                     ref="callsign-input"
+                    @keyup.enter="callsignInputEnter"
                     v-model="callsignInput"
                     :state="callsignInputState"
                     required
@@ -72,6 +73,7 @@
                 <b-form-input
                     id="text"
                     ref="text-input"
+                    @keyup.enter="textEnter"
                     v-model="textInput"
                     :state="textInputState"
                     required
@@ -111,6 +113,10 @@ module.exports = {
                 this.callsignInputState = false;
                 e.preventDefault();
             }
+        },
+        callsignInputEnter: function (e) {
+            this.$bvModal.hide("add-callsign");
+            this.handleCallsignOk(e);
         },
         openAddCallsign: function () {
             this.callsignInput = "";
@@ -160,6 +166,10 @@ module.exports = {
                 this.textInputState = false;
                 e.preventDefault();
             }
+        },
+        textEnter: function (e) {
+            this.$bvModal.hide("edit-text");
+            this.handleTextOk(e);
         },
         openTextEdit: function () {
             this.textInput = this.text;
